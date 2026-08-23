@@ -1,0 +1,403 @@
+<header class="sc-masthead">
+  <a class="sc-brand" href="#top">
+    <img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt="">
+    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.0.0</span></span>
+  </a>
+  <div class="sc-masthead__right">
+    <span class="sc-hide-sm">Living reference</span>
+    <span class="sc-sep sc-hide-sm" aria-hidden="true"></span>
+    <div class="sc-theme-toggle" role="group" aria-label="Theme">
+      <button type="button" data-theme="dark">Dark</button>
+      <button type="button" data-theme="light">Light</button>
+      <button type="button" data-theme="auto">Auto</button>
+    </div>
+  </div>
+</header>
+
+<section class="sg-cover" id="top">
+  <div class="sg-cover__inner">
+    <div>
+      <div class="sc-eyebrow">Mohammed Tahir Madni · SpicyChicken</div>
+      <h1>Cobalt structure. One spice accent. Dark by default.</h1>
+      <p class="sg-cover__dek">The standard every SpicyChicken project is built on — dashboards, documents, READMEs, decks. Every color below is validated, every component is rendered live in both modes, and the whole thing ships as one CSS file.</p>
+      <div class="sg-cover__meta"><span>sc.css · v2.0.0</span><span>160 tokens</span><span>18 components</span><span>the chick · everywhere</span></div>
+    </div>
+    <div>
+      <div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and the spice accent"></div>
+      <div class="sg-bar__caption">Cobalt 300 → 950, then spice 400 and 600. Lightness carried over exactly from the template greens; hue rotated to 255°.</div>
+    </div>
+  </div>
+</section>
+
+<div class="sg-layout">
+  <nav class="sg-nav" id="sg-nav" aria-label="Sections">
+    <div class="sc-eyebrow">Foundations</div>
+    <a href="#hierarchy">Hierarchy &amp; voice</a>
+    <a href="#color">Color</a>
+    <a href="#type">Typography</a>
+    <a href="#space">Space, shape, motion</a>
+    <a href="#themes">Themes</a>
+    <div class="sc-eyebrow">Build</div>
+    <a href="#components">Components</a>
+    <a href="#charts">Data visualization</a>
+    <a href="#marks">Marks &amp; watermark</a>
+    <div class="sc-eyebrow">Ship</div>
+    <a href="#checklist">Pre-ship checklist</a>
+    <a href="#dont">Do / don't</a>
+  </nav>
+
+  <main class="sg-main">
+
+    <section class="sg-section" id="hierarchy">
+      <div class="sc-eyebrow">01 · Foundations</div>
+      <h2>Hierarchy &amp; voice</h2>
+      <p class="sc-dek">Three names appear on anything shipped. Each has one place to live.</p>
+      <div class="sc-grid sc-grid--3">
+        <div class="sc-card"><div class="sc-eyebrow">The project leads</div><h4>Named in type</h4><p class="sc-hint">Masthead-left: the chick, then the project's name in the display face. The name is the project's identity; the mark is the maker's.</p></div>
+        <div class="sc-card"><div class="sc-eyebrow sc-eyebrow--accent">One mark, everywhere</div><h4>The chick</h4><p class="sc-hint">Masthead, favicon, avatar, and the footer watermark on every site. One character across every project is what makes the profile feel uniform.</p></div>
+        <div class="sc-card"><div class="sc-eyebrow sc-eyebrow--muted">The person authors</div><h4>Mohammed Tahir Madni</h4><p class="sc-hint">READMEs, document covers, <code>rel="author"</code>. Never in UI chrome.</p></div>
+      </div>
+      <div class="sc-callout sc-callout--core" style="margin-top:20px">
+        <div class="sc-callout__label">Voice</div>
+        <p>Plain-spoken and specific. State the outcome and the reason, never the hype. Sentence case everywhere except mono eyebrows and short labels. Every page, document, and deck ends with <strong>exactly one</strong> next action.</p>
+      </div>
+    </section>
+
+    <section class="sg-section" id="color">
+      <div class="sc-eyebrow">02 · Foundations</div>
+      <h2>Color</h2>
+      <p class="sc-dek">Cobalt is structure. Spice is heat. No new hues, no gradients, flat fills only.</p>
+
+      <div class="sg-block">
+        <h3>Primitives</h3>
+        <p class="sc-hint">Raw ramps. Pages never reference these — they reference the semantic roles below, which pick a step per mode.</p>
+        <div id="ramps"></div>
+      </div>
+
+      <div class="sg-block">
+        <h3>Semantic roles — live in the current mode</h3>
+        <p class="sc-hint">What each token does, its resolved value right now, and its WCAG contrast against the page and card surfaces. Toggle the theme in the masthead to re-check.</p>
+        <div class="sc-table-scroll"><table class="sc-table sc-table--compact sg-roles" id="roles"></table></div>
+      </div>
+
+      <div class="sc-callout sc-callout--ink">
+        <div class="sc-callout__label">The two jobs</div>
+        <p><strong>Cobalt is structure:</strong> surfaces, headings, eyebrows, rules, table headers, the emphasized data series. <strong>Spice is heat:</strong> links, the primary button, focus rings, the one "look here" moment. Spice never colors body text, headings, or large fills — if everything is spicy, nothing is.</p>
+      </div>
+    </section>
+
+    <section class="sg-section" id="type">
+      <div class="sc-eyebrow">03 · Foundations</div>
+      <h2>Typography</h2>
+      <p class="sc-dek">Bricolage Grotesque for display, Instrument Sans for body and numbers, IBM Plex Mono for labels. The signature is a lowercase mono eyebrow opened by "//".</p>
+      <div class="sg-block">
+        <div class="sg-spec"><div class="m">display · 56 / 1.0 · Bricolage 700 · −1px</div><p class="s" style="font:700 56px/1 var(--sc-font-display);letter-spacing:-1px">Landed price.</p></div>
+        <div class="sg-spec"><div class="m">h1 · 40 / 1.1 · Bricolage 700 · −.6px</div><p class="s" style="font:700 40px/1.1 var(--sc-font-display);letter-spacing:-.6px">What it costs to put it in your driveway.</p></div>
+        <div class="sg-spec"><div class="m">h2 · 28 / 1.2 · Bricolage 700 · −.35px</div><p class="s" style="font:700 28px/1.2 var(--sc-font-display);letter-spacing:-.35px">Price changes since the last snapshot</p></div>
+        <div class="sg-spec"><div class="m">h3 · 20 / 1.2 · Bricolage 700 · −.2px</div><p class="s" style="font:700 20px/1.2 var(--sc-font-display);letter-spacing:-.2px">Gone from the market</p></div>
+        <div class="sg-spec"><div class="m">lead · 18 / 1.5 · Instrument 400 · muted</div><p class="s" style="font:400 18px/1.5 var(--sc-font-body);color:var(--sc-text-2)">Seventy-four vehicles, two of them within two hundred miles.</p></div>
+        <div class="sg-spec"><div class="m">body · 15 / 1.6 · Instrument 400</div><p class="s" style="font:400 15px/1.6 var(--sc-font-body);color:var(--sc-text);max-width:62ch">The tracker pulls every listing once a day, keeps the cheapest price it saw per vehicle, and flags the ones that moved. Body copy stays near 65 characters wide.</p></div>
+        <div class="sg-spec"><div class="m">caption · 13 / 1.5 · Instrument 400 · muted</div><p class="s" style="font:400 13px/1.5 var(--sc-font-body);color:var(--sc-text-2)">Prices include $1,100 shipping for cars outside the region.</p></div>
+        <div class="sg-spec"><div class="m">eyebrow · 12 / 1 · Plex Mono 600 · lowercase · "//"</div><p class="s sc-eyebrow" style="margin:0">Best value right now</p></div>
+        <div class="sg-spec"><div class="m">stat value · 32 / 1.1 · Instrument 700 · −.5px</div><p class="s" style="font:700 32px/1.1 var(--sc-font-body);letter-spacing:-.5px">$36,646</p></div>
+        <div class="sg-spec"><div class="m">mono · 12 / 1.5 · Plex Mono 500</div><p class="s sc-mono" style="font-size:12px;color:var(--sc-text-2)">WBY33FK08RCS83536 · 2026-08-23 · 17,263 mi</p></div>
+        <div class="sg-spec"><div class="m">code</div><p class="s"><code>--sc-accent</code> inline, and <kbd>⌘</kbd> <kbd>K</kbd> for keys.</p></div>
+      </div>
+      <p class="sg-rule">Numbers in tiles and hero figures use Instrument Sans, proportional figures. <code>tabular-nums</code> only in columns that must align. Headings get <code>text-wrap: balance</code>. Labels are lowercase mono with modest tracking — never ALL-CAPS with wide tracking, which is the previous system's tell.</p>
+    </section>
+
+    <section class="sg-section" id="space">
+      <div class="sc-eyebrow">04 · Foundations</div>
+      <h2>Space, shape, motion</h2>
+      <p class="sc-dek">An 8px rhythm, three radii, one shadow, one easing.</p>
+      <div class="sg-block">
+        <h3>Spacing scale</h3>
+        <div class="sg-space" style="padding-bottom:18px">
+          <div data-l="4" style="width:4px;height:4px"></div><div data-l="8" style="width:8px;height:8px"></div><div data-l="16" style="width:16px;height:16px"></div><div data-l="24" style="width:24px;height:24px"></div><div data-l="32" style="width:32px;height:32px"></div><div data-l="40" style="width:40px;height:40px"></div><div data-l="48" style="width:48px;height:48px"></div><div data-l="64" style="width:64px;height:64px"></div><div data-l="80" style="width:80px;height:80px"></div><div data-l="96" style="width:96px;height:96px"></div>
+        </div>
+      </div>
+      <div class="sg-block">
+        <h3>Radii &amp; shadow</h3>
+        <div class="sg-radii">
+          <div style="border-radius:var(--sc-r-sm)">6 · inputs</div>
+          <div style="border-radius:var(--sc-r-md)">10 · callouts</div>
+          <div style="border-radius:var(--sc-r-lg)">14 · cards</div>
+          <div style="border-radius:var(--sc-r-pill)">pill</div>
+          <div style="border-radius:var(--sc-r-lg);box-shadow:var(--sc-shadow);border-color:var(--sc-border)">shadow</div>
+        </div>
+      </div>
+      <p class="sg-rule">Motion: fades and short slides, 240ms, <code>cubic-bezier(.2,.7,.3,1)</code>. Hover signals with color, never scale. Base state is the finished state. <code>prefers-reduced-motion</code> sets it to zero.</p>
+      <p class="sg-rule">Widths: prose 800 · content 1120 · wide 1280 (dashboards, tables).</p>
+    </section>
+
+    <section class="sg-section" id="themes">
+      <div class="sc-eyebrow">05 · Foundations</div>
+      <h2>Themes</h2>
+      <p class="sc-dek">Dark is the default. Light is a designed mode, not an inversion.</p>
+      <div class="sc-grid sc-grid--2">
+        <div class="sc-card">
+          <h4>How it resolves</h4>
+          <p class="sc-hint"><code>:root</code> carries the dark set. <code>@media (prefers-color-scheme: light)</code> and <code>[data-theme="light"]</code> carry the light set; <code>[data-theme="dark"]</code> pins dark. The toggle writes <code>data-theme</code> on <code>&lt;html&gt;</code> and remembers it per browser; the script runs before paint, so there is no flash.</p>
+        </div>
+        <div class="sc-card">
+          <h4>What stays dark in both modes</h4>
+          <p class="sc-hint">Masthead, footer, code blocks, tooltips, covers — on <code>--sc-ink</code>. That shared spine is what makes a light page recognisably the same product as its dark sibling.</p>
+        </div>
+      </div>
+      <div class="sg-demo" style="margin-top:16px">
+        <div class="sg-row">
+          <span class="sc-field">Try it</span>
+          <div class="sc-theme-toggle" role="group" aria-label="Theme" style="border-color:var(--sc-border-strong)">
+            <button type="button" data-theme="dark" style="color:var(--sc-heading)">Dark</button>
+            <button type="button" data-theme="light" style="color:var(--sc-heading)">Light</button>
+            <button type="button" data-theme="auto" style="color:var(--sc-heading)">Auto</button>
+          </div>
+          <span class="sc-hint" id="theme-state"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sg-section" id="components">
+      <div class="sc-eyebrow">06 · Build</div>
+      <h2>Components</h2>
+      <p class="sc-dek">Eighteen pieces, all prefixed <code>sc-</code>. Reproduce these; don't invent siblings.</p>
+
+      <div class="sg-block">
+        <h3>Masthead</h3>
+        <p class="sc-hint">Project left (mark, name, sub-line); endorsement, nav and theme toggle right. Dark in both modes. Nav underline is spice.</p>
+        <div class="sg-demo sg-demo--flush">
+          <div class="sc-masthead" style="border-bottom:0">
+            <span class="sc-brand"><span class="sc-brand__mark" aria-hidden="true">AM</span><span><span class="sc-brand__name">Auto Market Tracker</span><span class="sc-brand__sub">Daily used-car snapshot</span></span></span>
+            <div class="sc-masthead__right"><nav class="sc-nav" aria-label="Demo"><a href="#components" aria-current="page">Overview</a><a href="#components">Listings</a></nav><span class="sc-sep"></span><span>Snapshot · 2026-08-23</span></div>
+          </div>
+        </div>
+        <p class="sg-rule"><code>.sc-masthead</code> · <code>.sc-brand</code> <code>.sc-brand__mark</code> <code>.sc-brand__name</code> <code>.sc-brand__sub</code> · <code>.sc-masthead__right</code> · <code>.sc-nav</code> · <code>.sc-theme-toggle</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Title block</h3>
+        <p class="sc-hint">Lowercase "//" eyebrow, h1, one-sentence dek, mono meta row.</p>
+        <div class="sg-demo">
+          <div class="sc-eyebrow">2024–2025 · Cincinnati · Chicago · Indianapolis</div>
+          <h1 style="font-size:32px;margin-bottom:6px">BMW i5 eDrive40</h1>
+          <p class="sc-dek" style="margin-bottom:10px">Landed price = asking price + $1,100 shipping for out-of-region cars, adjusted $0.30/mi against a 20,000-mile baseline.</p>
+          <div class="sc-meta"><span>Updated Sun, August 23, 2026</span><span class="sc-sep">·</span><span>1 snapshot day</span><span class="sc-sep">·</span><span>Listings under $20,000 ignored</span></div>
+        </div>
+        <p class="sg-rule"><code>.sc-eyebrow</code> (<code>--accent</code> <code>--muted</code>) · <code>h1</code> · <code>.sc-dek</code> · <code>.sc-meta</code> <code>.sc-sep</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Stat tiles &amp; hero figure</h3>
+        <p class="sc-hint">Label · value · context · signed delta against a named period. Direction plus color, never color alone. Exactly one hero figure per view.</p>
+        <div class="sg-demo">
+          <div class="sc-grid sc-grid--3">
+            <div class="sc-tile"><div class="sc-tile__label">Lowest landed price</div><div class="sc-tile__value">$36,646</div><div class="sc-tile__sub">2024 · 17,263 mi · San Diego, CA</div><div class="sc-delta sc-delta--good">▼ $1,500 vs Aug 23</div></div>
+            <div class="sc-tile"><div class="sc-tile__label">Median landed price</div><div class="sc-tile__value">$46,653</div><div class="sc-tile__sub">70 priced vehicles</div><div class="sc-delta sc-delta--bad">▲ $104 vs Aug 23</div></div>
+            <div class="sc-tile"><div class="sc-tile__label">Since the previous snapshot</div><div class="sc-tile__value sc-tile__value--sm">2 price cuts</div><div class="sc-tile__sub">1 new · 3 gone</div><div class="sc-delta sc-delta--flat">= inventory</div></div>
+          </div>
+          <div style="margin-top:18px"><div class="sc-eyebrow">Hero figure</div><div class="sc-hero">74</div><div class="sc-tile__sub">vehicles tracked today</div></div>
+        </div>
+        <p class="sg-rule"><code>.sc-tile</code> <code>.sc-tile__label</code> <code>.sc-tile__value</code> (<code>--sm</code>) <code>.sc-tile__sub</code> · <code>.sc-delta</code> (<code>--good</code> <code>--bad</code> <code>--flat</code>) · <code>.sc-hero</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Cards</h3>
+        <p class="sc-hint">One discrete idea each. Heading plus hint, optional action on the right.</p>
+        <div class="sg-demo">
+          <div class="sc-grid sc-grid--2">
+            <div class="sc-card"><div class="sc-card__head"><div><h3 style="font-size:18px">Listings</h3><p class="sc-hint">One row per VIN, local listing preferred.</p></div><a class="sc-btn sc-btn--primary sc-btn--sm" href="#components">Export CSV →</a></div><p style="margin:0">Card body. Hairline border, 14px radius, soft shadow.</p></div>
+            <div class="sc-card sc-card--raised"><div class="sc-eyebrow">Raised variant</div><h4>For nested or secondary surfaces</h4><p class="sc-hint" style="margin:0">Sits one step above the page without a heavier shadow.</p></div>
+          </div>
+        </div>
+        <p class="sg-rule"><code>.sc-card</code> (<code>--raised</code>) · <code>.sc-card__head</code> · <code>.sc-hint</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Callouts</h3>
+        <p class="sc-hint">Tinted fill with the file-fold corner from the mark. <em>Core</em> is the single takeaway — max one per section. <em>Ink</em> is must-remember. <em>Spice</em> is the one next action. <em>Warning</em> adds the 2px danger border.</p>
+        <div class="sg-demo">
+          <div class="sc-callout sc-callout--core"><div class="sc-callout__label">Core takeaway</div><p>The cheapest landed car is a 17k-mile 2024 in San Diego at $36,646 — $1,500 under yesterday.</p></div>
+          <div class="sc-callout sc-callout--ink"><div class="sc-callout__label">Remember</div><p>Prices in the CSV are the lowest seen that day per vehicle; the dashboard always shows the local listing over the national copy.</p></div>
+          <div class="sc-callout sc-callout--spice"><div class="sc-callout__label">Next action</div><p>Open the San Diego listing and ask for the out-the-door number before Friday. <a href="#components">Open the listing →</a></p></div>
+          <div class="sc-callout sc-callout--warning"><div class="sc-callout__label">Check before you act</div><p>Two listings under $1,000 were monthly payments, not prices. They are filtered now; confirm any price that looks too good.</p></div>
+        </div>
+        <p class="sg-rule"><code>.sc-callout</code> (<code>--core</code> <code>--ink</code> <code>--spice</code> <code>--warning</code>) · <code>.sc-callout__label</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Chips</h3>
+        <p class="sc-hint">Squared lowercase mono chips. The word carries the meaning; the tone reinforces it. Danger is the outline form — stop and check.</p>
+        <div class="sg-demo"><div class="sg-row">
+          <span class="sc-chip sc-chip--brand">Chicago</span><span class="sc-chip sc-chip--neutral">National</span><span class="sc-chip sc-chip--spice">New</span><span class="sc-chip sc-chip--good">CPO</span><span class="sc-chip sc-chip--warn">2 owners</span><span class="sc-chip sc-chip--danger">1 accident</span><span class="sc-chip sc-chip--solid">Best value</span>
+        </div></div>
+        <p class="sg-rule"><code>.sc-chip</code> (<code>--brand</code> <code>--neutral</code> <code>--spice</code> <code>--good</code> <code>--warn</code> <code>--danger</code> <code>--solid</code>). In documents the provenance letters <code>K B A Q W</code> can ride on these tones.</p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Buttons</h3>
+        <p class="sc-hint">Primary is spice — one per view. Secondary is a cobalt-leaning outline. Ghost for the quiet third option.</p>
+        <div class="sg-demo"><div class="sg-row">
+          <button class="sc-btn sc-btn--primary" type="button">Open the listing →</button>
+          <button class="sc-btn sc-btn--secondary" type="button">Download CSV</button>
+          <button class="sc-btn sc-btn--ghost" type="button">Reset filters</button>
+          <button class="sc-btn sc-btn--primary sc-btn--sm" type="button">Small primary</button>
+          <button class="sc-btn sc-btn--secondary sc-btn--sm" type="button" disabled>Disabled</button>
+        </div></div>
+        <p class="sg-rule"><code>.sc-btn</code> (<code>--primary</code> <code>--secondary</code> <code>--ghost</code> <code>--sm</code>) · <code>[disabled]</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Filters &amp; inputs</h3>
+        <p class="sc-hint">One row, above everything it scopes. Labels are mono eyebrows; controls are 14px Archivo on the card surface.</p>
+        <div class="sg-demo">
+          <div class="sc-filters" style="padding:0">
+            <label class="sc-field">Market <select class="sc-select"><option>All markets</option><option>Local only</option><option>Chicago (200 mi)</option></select></label>
+            <label class="sc-field">Year <select class="sc-select"><option>All years</option><option>2024</option><option>2025</option></select></label>
+            <label class="sc-field">Search <input class="sc-input" type="search" placeholder="VIN or city"></label>
+            <label class="sc-field sc-check"><input type="checkbox" checked> Hide reported accidents</label>
+          </div>
+        </div>
+        <p class="sg-rule"><code>.sc-filters</code> · <code>.sc-field</code> · <code>.sc-select</code> · <code>.sc-input</code> · <code>.sc-check</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Table</h3>
+        <p class="sc-hint">Open header — lowercase mono labels over a 2px cobalt rule, no filled bar — hairline rows, row hover, numbers right-aligned and tabular. Sortable headers get <code>is-sortable</code>; the active one <code>is-sorted</code>.</p>
+        <div class="sg-demo sg-demo--flush">
+          <div class="sc-table-scroll"><table class="sc-table">
+            <thead><tr><th>Vehicle</th><th class="sc-num is-sortable">Asking</th><th class="sc-num is-sortable">Miles</th><th class="sc-num is-sortable is-sorted">Landed</th><th>Location</th><th>History</th></tr></thead>
+            <tbody>
+              <tr><td><strong>2024 eDrive40</strong><br><span class="sc-mono sc-muted" style="font-size:11px">WBY33FK08RCS83536</span></td><td class="sc-num"><strong>$36,368</strong><br><span class="sc-mono sc-text-good" style="font-size:10.5px">↓ $1,500 · 1 cut</span></td><td class="sc-num">17,263</td><td class="sc-num sc-text-brand"><strong>$36,646</strong></td><td>San Diego, CA <span class="sc-chip sc-chip--neutral">National</span></td><td class="sc-mono sc-muted" style="font-size:11.5px">1-owner · no accidents</td></tr>
+              <tr><td><strong>2025 eDrive40</strong><br><span class="sc-mono sc-muted" style="font-size:11px">WBY33FK0XRCNEW001</span></td><td class="sc-num"><strong>$41,000</strong><br><span class="sc-mono sc-text-accent" style="font-size:10.5px">NEW</span></td><td class="sc-num">9,000</td><td class="sc-num sc-text-brand"><strong>$37,700</strong></td><td>Naperville, IL <span class="sc-chip sc-chip--brand">Chicago</span></td><td class="sc-mono sc-muted" style="font-size:11.5px">CPO · 2 owners · <span class="sc-text-danger">1 accident</span></td></tr>
+              <tr><td><strong>2024 eDrive40</strong><br><span class="sc-mono sc-muted" style="font-size:11px">WBY33FK02RCS83564</span></td><td class="sc-num"><strong>$38,698</strong></td><td class="sc-num">20,224</td><td class="sc-num sc-text-brand"><strong>$39,865</strong></td><td>Torrance, CA <span class="sc-chip sc-chip--neutral">National</span></td><td class="sc-mono sc-muted" style="font-size:11.5px">1-owner · ex-lease</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <p class="sg-rule"><code>.sc-table</code> (<code>--compact</code>) · <code>.sc-table-scroll</code> · <code>th.is-sortable</code> <code>.is-sorted</code> · <code>.sc-num</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Tooltip, legend, tabs, details</h3>
+        <p class="sc-hint">Tooltips sit on ink with values leading. Legends use line keys for lines and swatches for bars. Tabs switch the subject, not the site. Details hide a chart's table twin.</p>
+        <div class="sg-demo"><div class="sg-row" style="align-items:flex-start;gap:28px">
+          <div class="sc-tooltip is-on"><div class="sc-tooltip__date">Mon, August 24, 2026</div><div class="sc-tooltip__row"><i style="background:var(--sc-chart-emphasis)"></i><b>$36,646</b><span>lowest landed</span></div><div class="sc-tooltip__row"><i style="background:var(--sc-chart-context)"></i><b>$46,652</b><span>median landed</span></div><div class="sc-tooltip__meta">70 vehicles · 1 local</div></div>
+          <div>
+            <div class="sc-legend" style="margin-top:0"><span><i style="background:var(--sc-chart-emphasis)"></i>Lowest landed</span><span><i style="background:var(--sc-chart-context)"></i>Median landed</span><span><i class="is-swatch" style="background:var(--sc-chart-1)"></i>Local</span><span><i class="is-swatch" style="background:var(--sc-chart-2)"></i>National</span></div>
+            <div class="sc-tabs" style="margin-top:14px"><button class="sc-tab" aria-selected="true" type="button">BMW i5 eDrive40</button><button class="sc-tab" type="button">Second target</button></div>
+            <details class="sc-details" style="margin-top:14px"><summary>Table view</summary><p class="sc-hint" style="margin-top:8px">The chart's values as a table — every chart has one.</p></details>
+          </div>
+        </div></div>
+        <p class="sg-rule"><code>.sc-tooltip</code> (<code>__date</code> <code>__row</code> <code>__meta</code>, <code>is-on</code>) · <code>.sc-legend</code> (<code>i.is-swatch</code>) · <code>.sc-tabs</code> <code>.sc-tab[aria-selected]</code> (<code>--case</code> keeps proper-noun casing) · <code>.sc-details</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Notice</h3>
+        <p class="sc-hint">The stop-and-read block: what failed and what to do. No apology, no vagueness.</p>
+        <div class="sg-demo"><div class="sc-notice" style="margin:0"><div class="sc-eyebrow">Could not load data.json</div><p style="margin:0">This page reads <code>data.json</code> from the same folder, so it needs to be served over HTTP — GitHub Pages, or <code>python -m http.server</code> from the docs folder.</p></div></div>
+        <p class="sg-rule"><code>.sc-notice</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Footer &amp; watermark</h3>
+        <p class="sc-hint">Source line left; the SpicyChicken watermark right — mark, wordmark, 70% opacity, links to the profile. On every page, the same size.</p>
+        <div class="sg-demo sg-demo--flush"><div class="sc-foot" style="margin:0;border-top:0"><span>Source: auto.dev listings API · snapshot 2026-08-23</span><a class="sc-watermark" href="https://github.com/spicyChicken59"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt="" style="height:20px"><span class="sc-watermark__name">SpicyChicken</span></a></div></div>
+        <p class="sg-rule"><code>.sc-foot</code> · <code>.sc-watermark</code> <code>.sc-watermark__name</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Document surface</h3>
+        <p class="sc-hint">On-screen prose at 800px with section rules in the brand line. The print-bound deliverable template is on the roadmap.</p>
+        <div class="sg-demo sg-demo--flush"><div class="sc-doc" style="margin:0;max-width:none;border:0;border-radius:0"><div class="sc-eyebrow">Deliverable 01 · Method</div><h2 style="border:0;padding:0;margin:0 0 8px">How landed price is computed</h2><p class="sc-dek" style="font-size:16px">Asking price, plus shipping when the car is outside the region, adjusted for mileage against a baseline.</p><p style="margin:0;max-width:62ch">Each day the tracker keeps the lowest price it saw per VIN. The adjustment is thirty cents a mile either side of twenty thousand miles — a used-EV rule of thumb, not an appraisal.</p></div></div>
+        <p class="sg-rule"><code>.sc-doc</code></p>
+      </div>
+    </section>
+
+    <section class="sg-section" id="charts">
+      <div class="sc-eyebrow">07 · Build</div>
+      <h2>Data visualization</h2>
+      <p class="sc-dek">Five categorical slots in fixed order, a cobalt sequential ramp, an emphasis pair. Every slot passes the colorblind and normal-vision separation checks against the card surface in both modes.</p>
+      <div class="sg-block">
+        <h3>Palettes — live in the current mode</h3>
+        <div id="chart-palettes"></div>
+      </div>
+      <div class="sc-grid sc-grid--2">
+        <div class="sc-card">
+          <div class="sc-card__head"><div><h3 style="font-size:18px">Emphasis line</h3><p class="sc-hint">The series that matters in cobalt, context in gray. Crosshair finds the day; arrow keys step.</p></div></div>
+          <div class="sc-legend"><span><i style="background:var(--sc-chart-emphasis)"></i>Lowest landed</span><span><i style="background:var(--sc-chart-context)"></i>Median landed</span></div>
+          <div class="sg-chart" id="demo-line" tabindex="0" aria-label="Demo line chart"></div>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card__head"><div><h3 style="font-size:18px">Categorical bars</h3><p class="sc-hint">Listings by state, per week. Slots 1–5 in order, ≤24px thick, 4px rounded data-ends, 2px surface gap.</p></div></div>
+          <div class="sc-legend" id="demo-bar-legend"></div>
+          <div class="sg-chart" id="demo-bar"></div>
+        </div>
+      </div>
+      <div class="sc-callout sc-callout--core" style="margin-top:16px"><div class="sc-callout__label">Rules</div><p>One y-axis, always. Color follows the entity, never its rank. Status colors are never a series. Legend for two or more series; direct-label selectively. Text wears text tokens, never the series color. Every chart has a table twin. All-pairs forms (scatter, bubble, maps) use slots 1–3 only.</p></div>
+    </section>
+
+    <section class="sg-section" id="marks">
+      <div class="sc-eyebrow">08 · Build</div>
+      <h2>The mark</h2>
+      <p class="sc-dek">The chick — locked August 2026. Wine head, teardrop flame, file-fold corner, cream face. It is the one mark for everything: every project wears it in the masthead and favicon, with the project's name set beside it in type.</p>
+      <div class="sg-block">
+        <h3>The four forms</h3>
+        <div class="sg-marks">
+          <figure><span style="display:inline-block;background:#FFFFFF;border-radius:10px;padding:14px"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-color-light.svg" alt="Color on light"></span><figcaption>color · light</figcaption></figure>
+          <figure><span style="display:inline-block;background:var(--sc-night-950);border-radius:10px;padding:14px"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-color-dark.svg" alt="Color on dark"></span><figcaption>color · dark</figcaption></figure>
+          <figure><span style="display:inline-block;background:var(--sc-night-950);border-radius:10px;padding:14px"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-mono-cream.svg" alt="Mono cream"></span><figcaption>mono · cream</figcaption></figure>
+          <figure><span style="display:inline-block;background:#FFFFFF;border-radius:10px;padding:14px"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-mono-ink.svg" alt="Mono ink"></span><figcaption>mono · ink</figcaption></figure>
+          <figure><img src="assets/sc-avatar-tile.svg" alt="Avatar tile" style="width:76px;height:76px;display:block"><figcaption>avatar tile · favicon</figcaption></figure>
+          <figure><span style="display:inline-block;background:var(--sc-night-950);border-radius:10px;padding:14px 18px"><img src="assets/sc-lockup-cream.svg" alt="SpicyChicken lockup" style="height:34px;width:auto;display:block"></span><figcaption>lockup · wordmark in Bricolage 700</figcaption></figure>
+        </div>
+      </div>
+      <div class="sg-block">
+        <h3>Sizes</h3>
+        <div class="sg-marks" style="align-items:center">
+          <figure><img src="assets/sc-avatar-tile.svg" style="width:16px;height:16px;display:block" alt=""><figcaption>16 · favicon</figcaption></figure>
+          <figure><img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt=""><figcaption>26 · masthead</figcaption></figure>
+          <figure><img class="sc-mark sc-mark--lg" src="assets/sc-mark-color-dark.svg" alt=""><figcaption>48</figcaption></figure>
+          <figure><img src="assets/sc-mark-color-dark.svg" style="height:96px;width:auto;display:block" alt=""><figcaption>96 · cover</figcaption></figure>
+          <figure><span style="display:inline-flex;background:var(--sc-ink);border-radius:10px;padding:12px 16px"><a class="sc-watermark" href="#marks" style="color:#F4F7FB"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt="" style="height:20px"><span class="sc-watermark__name">SpicyChicken</span></a></span><figcaption>watermark lockup (mono, on ink)</figcaption></figure>
+          <figure><span style="display:inline-flex;align-items:center;gap:10px;background:var(--sc-ink);border-radius:10px;padding:12px 16px"><img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt=""><span style="font:700 16px/1 var(--sc-font-display);letter-spacing:-.3px;color:#F4F7FB">Auto Market Tracker</span></span><figcaption>a project masthead — the chick + the name in type</figcaption></figure>
+        </div>
+      </div>
+      <div class="sc-grid sc-grid--2">
+        <div class="sc-card"><div class="sc-eyebrow">Usage</div><p class="sc-hint" style="margin:0">Color-dark on ink and dark surfaces, color-light on white and cream, mono for the watermark and one-color uses. Files in <code>assets/</code>: four mark SVGs, the avatar tile, lockups (SVG + PNG), favicon set. Clear space ≥ the flame's height on all sides. Never recolor, outline, rotate, or add effects.</p></div>
+        <div class="sc-card"><div class="sc-eyebrow sc-eyebrow--accent">Watermark spec</div><p class="sc-hint" style="margin:0">Mono mark 20px tall + wordmark in the display face at 12px, footer-right, 70% opacity, links to the profile. The masthead shows the color form; the watermark shows the mono form. One chick per surface, always the same sizes.</p></div>
+      </div>
+    </section>
+
+    <section class="sg-section" id="checklist">
+      <div class="sc-eyebrow">09 · Ship</div>
+      <h2>Pre-ship checklist</h2>
+      <p class="sc-dek">Open the style guide beside the page. If something on the page has no equivalent here, it's a new component — fold it in or take it out.</p>
+      <ol class="sg-check">
+        <li>Masthead: project mark + name left, theme toggle right, <code>--sc-ink</code> in both modes.</li>
+        <li>Title block opens with an eyebrow; h1 is one plain sentence; dek is one sentence.</li>
+        <li>Exactly one spice action per view (primary button or next-action callout).</li>
+        <li>At most one core callout per section.</li>
+        <li>Page CSS references semantic tokens only — no hex, no primitives.</li>
+        <li>Charts use <code>--sc-chart-*</code>; one y-axis; legend for ≥2 series; a table twin under each.</li>
+        <li>Text never wears a chart or accent color; deltas carry ▲▼; chips carry words.</li>
+        <li>Screenshotted at 1280 and 390 in dark and light; nothing scrolls sideways.</li>
+        <li>Footer has the source line and the watermark; favicon is the project mark.</li>
+        <li>Page ends with one next action, not a list.</li>
+      </ol>
+    </section>
+
+    <section class="sg-section" id="dont">
+      <div class="sc-eyebrow">10 · Ship</div>
+      <h2>Do / don't</h2>
+      <div class="sg-dont">
+        <div class="sc-card"><h3 class="sc-text-good">Do</h3><ul><li>Lead with a lowercase "//" eyebrow.</li><li>Keep the masthead and footer dark in both modes.</li><li>Put the chick in the masthead and the watermark; name the project in type.</li><li>Use Instrument Sans for numbers, proportional figures.</li><li>Separate with hairlines and color, not shadow.</li><li>Write the outcome and the reason.</li></ul></div>
+        <div class="sc-card"><h3 class="sc-text-danger">Don't</h3><ul><li>Add a hue or a gradient.</li><li>Use spice for text, headings, or large fills.</li><li>ALL-CAPS a tracked label — lowercase mono is the house style.</li><li>Use a display face or tabular figures for a big number.</li><li>Ship an icon set without noting the substitution.</li><li>End with a menu of next steps.</li></ul></div>
+      </div>
+      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Move <code>design-system/</code> into its own repository with Pages enabled, tag it v2.0, and link <code>sc.css</code> from projects instead of copying it.</p></div>
+    </section>
+  </main>
+</div>
+
+<footer class="sc-foot">
+  <span>SpicyChicken Design System · v2.0.0 · sc.css · tokens.json · DESIGN_SYSTEM.md</span>
+  <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt="" style="height:20px"><span class="sc-watermark__name">SpicyChicken</span></a>
+</footer>
