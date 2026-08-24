@@ -2,6 +2,7 @@
   "name": "@spicychicken/react",
   "version": "2.1.0",
   "private": true,
+  "license": "MIT",
   "description": "React bindings for the SpicyChicken design system (sc.css). Thin wrappers — the CSS is the source of truth. ESM only.",
   "type": "module",
   "module": "./dist/index.mjs",

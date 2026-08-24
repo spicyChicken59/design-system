@@ -18,6 +18,7 @@ dashboards, documents, READMEs, decks. Cobalt structure, one spice accent, dark 
 | `PLAIN-HTML.md` | Inline-style equivalents (eyebrow, chip, card, callout) for email and exported HTML. |
 | `AUDIT-AND-ROADMAP.md` | Where it came from, what changed and why, what's next, changelog. |
 | `CHECKLIST.md` | The pre-ship check: the lines to tick before any page ships. |
+| `LICENSE` | MIT for the code; the SpicyChicken mark and `assets/` are excluded — all rights reserved. |
 | `assets/` | The SpicyChicken mark: SVG forms, avatar tile, lockups, favicons. Hosted URLs in `DESIGN_SYSTEM.md` §11. |
 | `build/` | Maintainer tooling, Node only: `node build/gen-tokens.mjs` (tokens.json), `node build/assemble.mjs` (styleguide.html), `check.mjs` (the pre-ship gate behind `npm run check` and CI), `contrast.mjs` (the contrast gate), `color.mjs` (OKLCH/contrast math), `theme.js` (source of `sc-theme.js`). |
 | `react/` | Optional thin React wrappers that emit the exact `sc-*` markup. Private, unpublished; the CSS is the source of truth. |
@@ -55,5 +56,5 @@ Assets are at `https://spicychicken59.github.io/design-system/assets/<file>` (ta
 - Releases: bump the `sc.css` header (and both `package.json` versions), add the changelog entry in
   `AUDIT-AND-ROADMAP.md` §5, rebuild, tag `vX.Y.Z`. One number everywhere; repo-only changes bump the patch.
 - Node ≥ 20. No Python.
-- License: not yet stated — the owner decides before anyone beyond the owner's projects vendors it
+- License: MIT for the CSS, tooling and wrappers; the chick and everything in `assets/` stay all rights reserved (`LICENSE`).
   (the mark in `assets/` would need its own terms either way).

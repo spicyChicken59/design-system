@@ -83,8 +83,7 @@ and `DESIGN_SYSTEM.md` §10.
    US Letter, running header, numbered section rules — as `deliverable.html`, for reports and one-pagers.
 9. **Slide template.** Six-slide arc (cover on `--sc-ink`, problem, summary, architecture, roadmap,
    ask) as standalone 1280×720 HTML pages.
-10. **License.** None is stated yet. Decide the terms for the CSS and tooling, and separate terms for
-    the mark in `assets/`, before anyone outside the owner's projects vendors it.
+10. **License.** ✅ Done (v2.1.0): MIT for the CSS, tooling and wrappers; the chick and everything in `assets/` stay all rights reserved (`LICENSE`).
 11. **Keep the pre-ship check honest.** `CHECKLIST.md` ships with every release; re-read it and
     add a line whenever a real mistake slips through (2.1 added three).
 

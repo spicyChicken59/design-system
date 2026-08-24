@@ -2,6 +2,7 @@
   "name": "spicychicken-design-system",
   "version": "2.1.0",
   "private": true,
+  "license": "MIT",
   "description": "SpicyChicken design system: sc.css (tokens + base + components), generated tokens.json and style guide, optional React wrappers.",
   "type": "module",
   "engines": { "node": ">=20" },
