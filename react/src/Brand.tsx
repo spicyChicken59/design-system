@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { cx } from './cx';
-import { Mark } from './Mark';
-import type { MarkForm } from './marks.generated';
+import { cx } from './cx.js';
+import { Mark } from './Mark.js';
+import type { MarkForm } from './marks.generated.js';
 
 export interface BrandProps extends React.ComponentPropsWithoutRef<'a'> {
   /** The project's name — this leads, the brand only endorses. */
@@ -17,9 +17,12 @@ export interface BrandProps extends React.ComponentPropsWithoutRef<'a'> {
  * description. The project's name is the big one — SpicyChicken endorses from
  * the footer, never from here.
  */
-export function Brand({ name, sub, form = 'colorDark', className, href = './', ...rest }: BrandProps) {
+export const Brand = React.forwardRef<HTMLAnchorElement, BrandProps>(function Brand(
+  { name, sub, form = 'colorDark', className, href = './', ...rest },
+  ref,
+) {
   return (
-    <a className={cx('sc-brand', className)} href={href} {...rest}>
+    <a ref={ref} className={cx('sc-brand', className)} href={href} {...rest}>
       <Mark form={form} />
       <span>
         <span className="sc-brand__name">{name}</span>
@@ -27,4 +30,5 @@ export function Brand({ name, sub, form = 'colorDark', className, href = './', .
       </span>
     </a>
   );
-}
+});
+Brand.displayName = 'Brand';

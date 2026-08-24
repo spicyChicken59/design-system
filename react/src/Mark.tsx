@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { cx } from './cx';
-import { SC_MARKS, type MarkForm } from './marks.generated';
+import { cx } from './cx.js';
+import { SC_MARKS, type MarkForm } from './marks.generated.js';
 
 export interface MarkProps extends Omit<React.ComponentPropsWithoutRef<'img'>, 'src'> {
   /**
@@ -16,13 +16,18 @@ export interface MarkProps extends Omit<React.ComponentPropsWithoutRef<'img'>, '
  * The SpicyChicken mark — the chick. Inlined, so it needs no network and no
  * asset path. Never recolour it, never stretch it, never rebuild it from parts.
  */
-export function Mark({ form = 'colorDark', size = 'md', className, alt = '', ...rest }: MarkProps) {
+export const Mark = React.forwardRef<HTMLImageElement, MarkProps>(function Mark(
+  { form = 'colorDark', size = 'md', className, alt = '', ...rest },
+  ref,
+) {
   return (
     <img
+      ref={ref}
       className={cx('sc-mark', size === 'lg' && 'sc-mark--lg', className)}
       src={SC_MARKS[form]}
       alt={alt}
       {...rest}
     />
   );
-}
+});
+Mark.displayName = 'Mark';

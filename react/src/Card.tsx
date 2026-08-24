@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cx } from './cx';
+import { cx } from './cx.js';
 
 export interface CardProps extends Omit<React.ComponentPropsWithoutRef<'section'>, 'title'> {
   /** Heading for the card. Omit for a card that is pure content. */
@@ -16,22 +16,17 @@ export interface CardProps extends Omit<React.ComponentPropsWithoutRef<'section'
 
 /**
  * One discrete idea per card: a hairline-bordered surface with an optional
- * head row (heading + hint on the left, one action on the right).
+ * head row (heading + hint on the left, one action on the right). The heading
+ * is sized by the stylesheet (`--sc-h3`) — no inline font sizes.
  */
-export function Card({
-  title,
-  hint,
-  action,
-  headingLevel = 2,
-  raised = false,
-  className,
-  children,
-  ...rest
-}: CardProps) {
+export const Card = React.forwardRef<HTMLElement, CardProps>(function Card(
+  { title, hint, action, headingLevel = 2, raised = false, className, children, ...rest },
+  ref,
+) {
   const Heading = (headingLevel === 3 ? 'h3' : 'h2') as React.ElementType;
   const head = title || hint || action;
   return (
-    <section className={cx('sc-card', raised && 'sc-card--raised', className)} {...rest}>
+    <section ref={ref} className={cx('sc-card', raised && 'sc-card--raised', className)} {...rest}>
       {head ? (
         <div className="sc-card__head">
           <div>
@@ -44,4 +39,5 @@ export function Card({
       {children}
     </section>
   );
-}
+});
+Card.displayName = 'Card';

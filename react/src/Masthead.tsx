@@ -1,11 +1,17 @@
 import * as React from 'react';
-import { cx } from './cx';
+import { cx } from './cx.js';
+import { SkipLink } from './SkipLink.js';
 
 export interface MastheadProps extends React.ComponentPropsWithoutRef<'header'> {
   /** The project lockup on the left — normally a `Brand`. */
   brand: React.ReactNode;
-  /** What sits on the right: a `Nav`, then a divider, then a `ThemeToggle`. */
+  /** What sits on the right: a `Nav`, then a `Sep`, then a `ThemeToggle`. */
   right?: React.ReactNode;
+  /**
+   * Render a skip link before the masthead pointing at this target, e.g. `"#main"`.
+   * Give the page's `<main>` the matching id. Off unless set.
+   */
+  skipTo?: string;
 }
 
 /**
@@ -13,11 +19,22 @@ export interface MastheadProps extends React.ComponentPropsWithoutRef<'header'> 
  * the right. Stays ink-dark in both themes — that is what keeps a light page
  * recognisably the same product as its dark sibling.
  */
-export function Masthead({ brand, right, className, ...rest }: MastheadProps) {
-  return (
-    <header className={cx('sc-masthead', className)} {...rest}>
+export const Masthead = React.forwardRef<HTMLElement, MastheadProps>(function Masthead(
+  { brand, right, skipTo, className, ...rest },
+  ref,
+) {
+  const header = (
+    <header ref={ref} className={cx('sc-masthead', className)} {...rest}>
       {brand}
       {right ? <div className="sc-masthead__right">{right}</div> : null}
     </header>
   );
-}
+  if (!skipTo) return header;
+  return (
+    <>
+      <SkipLink href={skipTo} />
+      {header}
+    </>
+  );
+});
+Masthead.displayName = 'Masthead';

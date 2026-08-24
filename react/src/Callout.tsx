@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cx } from './cx';
+import { cx } from './cx.js';
 
 export interface CalloutProps extends React.ComponentPropsWithoutRef<'div'> {
   /**
@@ -10,17 +10,24 @@ export interface CalloutProps extends React.ComponentPropsWithoutRef<'div'> {
   variant?: 'core' | 'ink' | 'spice' | 'warning';
   /** Lowercase mono label above the body. The `//` prefix is drawn by CSS. */
   label?: React.ReactNode;
+  /** A lead figure between the label and the body — "$38,570 landed for $42,000 asking". */
+  figure?: React.ReactNode;
 }
 
 /**
  * A tinted block with the family's file-fold corner. Callouts interrupt —
  * spend them sparingly: one `core` per section, one `spice` per view.
  */
-export function Callout({ variant = 'core', label, className, children, ...rest }: CalloutProps) {
+export const Callout = React.forwardRef<HTMLDivElement, CalloutProps>(function Callout(
+  { variant = 'core', label, figure, className, children, ...rest },
+  ref,
+) {
   return (
-    <div className={cx('sc-callout', `sc-callout--${variant}`, className)} {...rest}>
+    <div ref={ref} className={cx('sc-callout', `sc-callout--${variant}`, className)} {...rest}>
       {label ? <div className="sc-callout__label">{label}</div> : null}
+      {figure ? <div className="sc-callout__figure">{figure}</div> : null}
       {children}
     </div>
   );
-}
+});
+Callout.displayName = 'Callout';

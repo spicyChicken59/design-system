@@ -2,15 +2,15 @@ import * as React from 'react';
 import { Mark, Row } from '@spicychicken/react';
 
 const ink = { background: 'var(--sc-ink)', padding: 24 } as const;
-const light = { background: 'var(--sc-white)', padding: 24 } as const;
+const surface = { background: 'var(--sc-surface)', padding: 24 } as const;
 
-/** The colour forms: dark-surface form on ink, light-surface form on white. */
+/** The colour forms: dark-surface form on ink, light-surface form on the page surface. */
 export const ColorForms = () => (
   <div>
     <div style={ink}>
       <Mark form="colorDark" size="lg" />
     </div>
-    <div style={light}>
+    <div style={surface}>
       <Mark form="colorLight" size="lg" />
     </div>
   </div>
@@ -22,7 +22,7 @@ export const MonoForms = () => (
     <div style={ink}>
       <Mark form="monoCream" size="lg" />
     </div>
-    <div style={light}>
+    <div style={surface}>
       <Mark form="monoInk" size="lg" />
     </div>
   </div>

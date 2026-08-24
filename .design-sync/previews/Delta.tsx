@@ -18,9 +18,9 @@ export const Tones = () => (
   </div>
 );
 
-/** Without the glyph, when the surrounding copy already carries direction. */
+/** A delta in words: the glyph still carries the direction, the words carry the period. */
 export const WordsOnly = () => (
   <div style={page}>
-    <Delta tone="good">best week since March</Delta>
+    <Delta tone="good" arrow="up">best week since March</Delta>
   </div>
 );

@@ -1,7 +1,7 @@
 // Bundles the React wrappers to dist/index.mjs and ships sc.css + tokens.json
 // alongside, so the package is self-describing for design-sync.
 import { build } from 'esbuild';
-import { copyFileSync, mkdirSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -24,6 +24,8 @@ await build({
 });
 
 // sc.css is the design system. Ship it verbatim — never a rewritten copy.
-copyFileSync(join(repo, 'sc.css'), join(dist, 'sc.css'));
-copyFileSync(join(repo, 'tokens.json'), join(dist, 'tokens.json'));
+// Always LF, whatever the checkout's line endings: these bytes must equal what Pages/jsDelivr serve.
+const lf = (p) => readFileSync(p, 'utf8').split(String.fromCharCode(13)).join('');
+writeFileSync(join(dist, 'sc.css'), lf(join(repo, 'sc.css')));
+writeFileSync(join(dist, 'tokens.json'), lf(join(repo, 'tokens.json')));
 console.log('build: dist/index.mjs + dist/sc.css + dist/tokens.json');

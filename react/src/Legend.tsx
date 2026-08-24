@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cx } from './cx';
+import { cx } from './cx.js';
 
 export interface LegendItem {
   /** Series name. */
@@ -19,9 +19,9 @@ export interface LegendProps extends React.ComponentPropsWithoutRef<'div'> {
  * The chart key. Required whenever a chart carries two or more series.
  * Line charts get line keys; bars and areas get square swatches.
  */
-export function Legend({ items, className, ...rest }: LegendProps) {
+export const Legend = React.forwardRef<HTMLDivElement, LegendProps>(function Legend({ items, className, ...rest }, ref) {
   return (
-    <div className={cx('sc-legend', className)} {...rest}>
+    <div ref={ref} className={cx('sc-legend', className)} {...rest}>
       {items.map((item, i) => (
         <span key={i}>
           <i className={cx(item.swatch && 'is-swatch')} style={{ background: item.color }} />
@@ -30,4 +30,5 @@ export function Legend({ items, className, ...rest }: LegendProps) {
       ))}
     </div>
   );
-}
+});
+Legend.displayName = 'Legend';

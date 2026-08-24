@@ -1,20 +1,30 @@
 import * as React from 'react';
-import { cx } from './cx';
+import { cx } from './cx.js';
 
 export interface RowProps extends React.ComponentPropsWithoutRef<'div'> {
-  /** Push everything after this point to the far right (adds `sc-right` to the last child slot). */
+  /**
+   * Items pushed to the far right, after `children`. Rendered as a nested
+   * `sc-row sc-right`, so several end items keep the 16px gap between them.
+   */
+  end?: React.ReactNode;
+  /** @deprecated 2.1 — did nothing. Use `end` for right-aligned items. Removed in 3.0. */
   spread?: boolean;
 }
 
 /**
  * A horizontal run of items — chips, buttons, meta — centred on their baseline
- * with a 16px gap, wrapping when it runs out of room.
+ * with a 16px gap, wrapping when it runs out of room. Put right-aligned items
+ * in `end`.
  */
-export function Row({ spread = false, className, children, ...rest }: RowProps) {
+export const Row = React.forwardRef<HTMLDivElement, RowProps>(function Row(
+  { end, spread: _spread, className, children, ...rest },
+  ref,
+) {
   return (
-    <div className={cx('sc-row', className)} {...rest}>
+    <div ref={ref} className={cx('sc-row', className)} {...rest}>
       {children}
-      {spread ? <span className="sc-right" /> : null}
+      {end != null && end !== false && end !== true ? <div className="sc-row sc-right">{end}</div> : null}
     </div>
   );
-}
+});
+Row.displayName = 'Row';

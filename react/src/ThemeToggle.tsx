@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cx } from './cx';
+import { cx } from './cx.js';
 
 /** The three theme states: pinned dark, pinned light, or follow the OS. */
 export type ThemeChoice = 'dark' | 'light' | 'auto';
@@ -7,6 +7,15 @@ export type ThemeChoice = 'dark' | 'light' | 'auto';
 export interface ThemeToggleProps extends React.ComponentPropsWithoutRef<'div'> {}
 
 const KEY = 'sc-theme';
+const OPTIONS: ThemeChoice[] = ['dark', 'light', 'auto'];
+
+const subscribe = (onChange: () => void) => {
+  if (typeof MutationObserver === 'undefined') return () => {};
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  return () => observer.disconnect();
+};
+const serverSnapshot = (): ThemeChoice => 'auto';
 
 function read(): ThemeChoice {
   if (typeof document === 'undefined') return 'auto';
@@ -16,24 +25,33 @@ function read(): ThemeChoice {
 
 /**
  * The masthead's theme control: a three-way segmented pill (dark / light / auto).
- * Self-contained — it sets `data-theme` on the document and remembers the choice
- * in `localStorage`, the same contract `starter.html` uses. Dark is the default
- * and auto follows the OS.
+ * It sets `data-theme` on the document and remembers the choice in
+ * `localStorage` under `sc-theme` — the same contract `sc-theme.js` uses.
+ *
+ * For a no-flash first paint put `THEME_BOOT_SCRIPT` in an inline `<script>` in
+ * `<head>`; the toggle then reads the document's state on its first render and
+ * only reflects it. Without the script it applies the saved choice after mount.
+ * The pressed pill is read straight from the document (`useSyncExternalStore`
+ * over a `data-theme` observer): server markup renders `auto`, hydration
+ * re-renders with the real state, and changes made elsewhere are followed.
  */
-export function ThemeToggle({ className, ...rest }: ThemeToggleProps) {
-  const [choice, setChoice] = React.useState<ThemeChoice>('auto');
+export const ThemeToggle = React.forwardRef<HTMLDivElement, ThemeToggleProps>(function ThemeToggle(
+  { className, ...rest },
+  ref,
+) {
+  const choice = React.useSyncExternalStore(subscribe, read, serverSnapshot);
 
   React.useEffect(() => {
-    let saved: string | null = null;
-    try {
-      saved = localStorage.getItem(KEY);
-    } catch {
-      /* storage unavailable — fall back to the document's own state */
+    const root = document.documentElement;
+    if (!root.hasAttribute('data-theme')) {
+      let saved: string | null = null;
+      try {
+        saved = localStorage.getItem(KEY);
+      } catch {
+        /* storage unavailable — the document's own state stands */
+      }
+      if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
     }
-    if (saved === 'dark' || saved === 'light') {
-      document.documentElement.setAttribute('data-theme', saved);
-    }
-    setChoice(read());
   }, []);
 
   const pick = (next: ThemeChoice) => {
@@ -53,13 +71,11 @@ export function ThemeToggle({ className, ...rest }: ThemeToggleProps) {
         /* ignore */
       }
     }
-    setChoice(next);
   };
 
-  const options: ThemeChoice[] = ['dark', 'light', 'auto'];
   return (
-    <div className={cx('sc-theme-toggle', className)} role="group" aria-label="Theme" {...rest}>
-      {options.map((option) => (
+    <div ref={ref} className={cx('sc-theme-toggle', className)} role="group" aria-label="Theme" {...rest}>
+      {OPTIONS.map((option) => (
         <button
           key={option}
           type="button"
@@ -72,4 +88,5 @@ export function ThemeToggle({ className, ...rest }: ThemeToggleProps) {
       ))}
     </div>
   );
-}
+});
+ThemeToggle.displayName = 'ThemeToggle';

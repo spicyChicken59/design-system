@@ -1,20 +1,22 @@
 {
   "name": "@spicychicken/react",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
-  "description": "React bindings for the SpicyChicken design system (sc.css). Thin wrappers — the CSS is the source of truth.",
+  "description": "React bindings for the SpicyChicken design system (sc.css). Thin wrappers — the CSS is the source of truth. ESM only.",
   "type": "module",
   "module": "./dist/index.mjs",
   "main": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.mjs" },
-    "./sc.css": "./dist/sc.css"
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.mjs", "default": "./dist/index.mjs" },
+    "./sc.css": "./dist/sc.css",
+    "./tokens.json": "./dist/tokens.json"
   },
   "files": ["dist"],
   "sideEffects": ["*.css"],
   "scripts": {
     "gen:assets": "node scripts/gen-assets.mjs",
+    "postinstall": "node scripts/gen-assets.mjs || exit 0",
     "build": "node scripts/gen-assets.mjs && tsc -p tsconfig.json && node scripts/build.mjs"
   },
   "peerDependencies": { "react": ">=18" },

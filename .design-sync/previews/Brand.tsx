@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Brand, Masthead, ThemeToggle } from '@spicychicken/react';
 
-// Brand is an <a>, and only `.sc-masthead a { border: 0 }` clears the base link
-// underline — so the masthead is the only context in which it renders true.
+// Brand is an <a>; the masthead is its home, and the on-ink context there is
+// what gives the name and sub their colours.
 
 /** The lockup in the masthead it belongs to: mark, project name, four-word sub. */
 export const InAMasthead = () => (
@@ -14,7 +14,7 @@ export const NameOnly = () => (
   <Masthead brand={<Brand name="Q3 Cost Review" />} right={<ThemeToggle />} />
 );
 
-/** The light-surface mark form, for a masthead on a light cover. */
-export const LightMarkForm = () => (
+/** The mono cream form of the mark, for a single-colour masthead. */
+export const MonoForm = () => (
   <Masthead brand={<Brand name="Depot Dashboard" sub="live, refreshed hourly" form="monoCream" />} />
 );

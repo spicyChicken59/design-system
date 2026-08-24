@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cx } from './cx';
+import { cx } from './cx.js';
 
 export interface DeltaProps extends React.ComponentPropsWithoutRef<'div'> {
   /**
@@ -7,20 +7,24 @@ export interface DeltaProps extends React.ComponentPropsWithoutRef<'div'> {
    * `good`. `bad` reads amber, not red: red is reserved for danger states.
    */
   tone?: 'good' | 'bad' | 'flat';
-  /** Prepends the direction glyph the system requires (▲ ▼ —). */
-  arrow?: 'up' | 'down' | 'flat';
+  /** The direction glyph the system requires (▲ ▼ —). Required: colour never carries direction alone. */
+  arrow: 'up' | 'down' | 'flat';
 }
 
 /**
  * The change line under a tile value. Colour carries the judgement, the glyph
  * carries the direction, and the words carry the period — all three, always.
  */
-export function Delta({ tone = 'flat', arrow, className, children, ...rest }: DeltaProps) {
-  const glyph = arrow === 'up' ? '▲ ' : arrow === 'down' ? '▼ ' : arrow === 'flat' ? '— ' : null;
+export const Delta = React.forwardRef<HTMLDivElement, DeltaProps>(function Delta(
+  { tone = 'flat', arrow, className, children, ...rest },
+  ref,
+) {
+  const glyph = arrow === 'up' ? '▲ ' : arrow === 'down' ? '▼ ' : '— ';
   return (
-    <div className={cx('sc-delta', `sc-delta--${tone}`, className)} {...rest}>
+    <div ref={ref} className={cx('sc-delta', `sc-delta--${tone}`, className)} {...rest}>
       {glyph}
       {children}
     </div>
   );
-}
+});
+Delta.displayName = 'Delta';

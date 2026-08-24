@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cx } from './cx';
+import { cx } from './cx.js';
 
 export interface GridProps extends React.ComponentPropsWithoutRef<'div'> {
   /**
@@ -13,6 +13,7 @@ export interface GridProps extends React.ComponentPropsWithoutRef<'div'> {
  * The 16px-gutter grid used for tile rows and card decks.
  * Columns collapse on their own — never add media queries around it.
  */
-export function Grid({ cols = 3, className, ...rest }: GridProps) {
-  return <div className={cx('sc-grid', `sc-grid--${cols}`, className)} {...rest} />;
-}
+export const Grid = React.forwardRef<HTMLDivElement, GridProps>(function Grid({ cols = 3, className, ...rest }, ref) {
+  return <div ref={ref} className={cx('sc-grid', `sc-grid--${cols}`, className)} {...rest} />;
+});
+Grid.displayName = 'Grid';

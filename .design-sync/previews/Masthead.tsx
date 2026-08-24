@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Brand, Masthead, Nav, ThemeToggle } from '@spicychicken/react';
+import { Brand, Masthead, Nav, Sep, ThemeToggle } from '@spicychicken/react';
 
 /** The full masthead: project lockup left, nav, divider and theme toggle right. */
 export const Full = () => (
@@ -14,7 +14,7 @@ export const Full = () => (
             { href: '#about', label: 'About' },
           ]}
         />
-        <span className="sc-sep" aria-hidden="true" />
+        <Sep />
         <ThemeToggle />
       </>
     }
@@ -31,5 +31,17 @@ export const WithToggle = () => (
   <Masthead
     brand={<Brand name="Depot Dashboard" sub="live, refreshed hourly" />}
     right={<ThemeToggle />}
+  />
+);
+
+/**
+ * With a skip link: `skipTo` renders `a.sc-skip` before the header. It sits
+ * off-screen until a keyboard user tabs onto it, then jumps to `<main id="main">`.
+ */
+export const WithSkipLink = () => (
+  <Masthead
+    skipTo="#main"
+    brand={<Brand name="Fleet Review" sub="depot performance, monthly" />}
+    right={<Nav items={[{ href: '#overview', label: 'Overview', current: true }]} />}
   />
 );

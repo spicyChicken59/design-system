@@ -30,6 +30,15 @@
     },
     "Filters": {
       "cardMode": "column"
+    },
+    "Title": {
+      "cardMode": "column"
+    },
+    "Chart": {
+      "cardMode": "column"
+    },
+    "Media": {
+      "cardMode": "column"
     }
   },
   "readmeHeader": ".design-sync/conventions.md"
