@@ -5,22 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SpicyChicken Design System</title>
 <meta name="description" content="Living style guide for the SpicyChicken design system: tokens, components and chart palettes, rendered in dark and light.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#111F31">
+<link rel="canonical" href="https://spicychicken59.github.io/design-system/styleguide.html">
+<link rel="icon" href="assets/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" href="assets/sc-avatar-tile.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SpicyChicken Design System">
+<meta property="og:description" content="Living style guide for the SpicyChicken design system: tokens, components and chart palettes, rendered in dark and light.">
+<meta property="og:image" content="https://spicychicken59.github.io/design-system/assets/favicon-512.png">
+<meta property="og:url" content="https://spicychicken59.github.io/design-system/styleguide.html">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="sc.css">
 <style>
-/* Style guide page styles — everything references semantic tokens from sc.css */
-.sg-cover { background: var(--sc-ink); color: var(--sc-on-ink); border-bottom: 1px solid rgba(255,255,255,.06); }
+/* Style guide page styles — semantic tokens only (no hex, no primitives, no raw rgba; --sc-white is the one fixed value — the light mark form sits on white in both modes).
+   The cover is an ink surface, so it carries .sc-on-ink and reads the re-scoped tokens. */
+.sg-cover { background: var(--sc-ink); color: var(--sc-on-ink); border-bottom: 1px solid var(--sc-ink-line); }
 .sg-cover__inner { max-width: var(--sc-w-wide); margin: 0 auto; padding: 56px 32px 40px; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr); gap: 32px 48px; align-items: end; }
 .sg-cover h1 { color: var(--sc-on-ink); font-size: clamp(36px, 5vw, 56px); letter-spacing: -1.5px; line-height: 1.02; margin: 0 0 16px; text-wrap: balance; }
-.sg-cover .sc-eyebrow { color: var(--sc-on-ink-2); }
-.sg-cover__dek { font: 400 18px/1.5 var(--sc-font-body); color: var(--sc-cobalt-200); margin: 0 0 24px; max-width: 560px; }
-.sg-cover__meta { display: flex; flex-wrap: wrap; gap: 8px 18px; font: 500 11px/1.6 var(--sc-font-mono); letter-spacing: .3px; color: var(--sc-cobalt-300); text-transform: lowercase; }
+.sg-cover__dek { font: 400 18px/1.5 var(--sc-font-body); color: var(--sc-on-ink-3); margin: 0 0 24px; max-width: 560px; }
+.sg-cover__meta { display: flex; flex-wrap: wrap; gap: 8px 18px; font: 500 11px/1.6 var(--sc-font-mono); letter-spacing: .3px; color: var(--sc-on-ink-2); text-transform: lowercase; }
 .sg-bar { display: grid; grid-template-columns: repeat(9, 1fr); gap: 3px; }
-.sg-bar div { height: 72px; border-radius: 4px; position: relative; border: 1px solid rgba(255,255,255,.14); }
+.sg-bar div { height: 72px; border-radius: 4px; position: relative; border: 1px solid var(--sc-ink-fill); }
 .sg-bar div span { position: absolute; left: 6px; bottom: 5px; font: 700 9px/1 var(--sc-font-mono); letter-spacing: .5px; }
 .sg-bar div:first-child { border-radius: 8px 4px 4px 8px; }
 .sg-bar div:last-child { border-radius: 4px 8px 8px 4px; }
-.sg-bar__caption { font: 500 10.5px/1.6 var(--sc-font-mono); color: var(--sc-cobalt-300); margin-top: 10px; letter-spacing: .4px; }
+.sg-bar__caption { font: 500 10.5px/1.6 var(--sc-font-mono); color: var(--sc-on-ink-2); margin-top: 10px; letter-spacing: .4px; }
 
 .sg-layout { max-width: var(--sc-w-wide); margin: 0 auto; padding: 0 32px; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 48px; }
 .sg-nav { position: sticky; top: 0; align-self: start; padding: 32px 0; max-height: 100vh; overflow: auto; }
@@ -40,39 +52,78 @@
 .sg-rule code { font-size: 11.5px; }
 
 .sg-ramp { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 3px; margin: 8px 0 4px; }
-.sg-ramp div { height: 58px; border-radius: 4px; position: relative; border: 1px solid rgba(127,127,127,.12); }
+.sg-ramp div { height: 58px; border-radius: 4px; position: relative; border: 1px solid var(--sc-border); border-color: color-mix(in srgb, var(--sc-text) 12%, transparent); }
 .sg-ramp div b { position: absolute; left: 6px; top: 5px; font: 700 9.5px/1 var(--sc-font-mono); }
 .sg-ramp div span { position: absolute; left: 6px; bottom: 5px; font: 500 8.5px/1 var(--sc-font-mono); letter-spacing: .3px; }
 .sg-ramp__label { font: 600 11px/1 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; color: var(--sc-text-2); margin-top: 14px; }
 
 .sg-roles td:first-child { font-family: var(--sc-font-mono); font-size: 12px; color: var(--sc-heading); white-space: nowrap; }
+.sg-roles .sc-note { display: inline; margin-left: 8px; }
 .sg-sw { display: inline-block; width: 18px; height: 18px; border-radius: 4px; border: 1px solid var(--sc-border-strong); vertical-align: middle; margin-right: 8px; }
 .sg-cr { font: 700 10px/1 var(--sc-font-mono); padding: 3px 7px; border-radius: 999px; white-space: nowrap; }
 .sg-cr--aaa { background: var(--sc-good-fill); color: var(--sc-good); }
 .sg-cr--aa  { background: var(--sc-brand-fill); color: var(--sc-brand); }
 .sg-cr--lg  { background: var(--sc-warn-fill); color: var(--sc-warn); }
 .sg-cr--na  { background: var(--sc-raised); color: var(--sc-text-2); }
+.sg-cr--fail { background: var(--sc-danger-fill); color: var(--sc-danger); }
 
 .sg-spec { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 8px 24px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--sc-border); }
 .sg-spec:last-child { border-bottom: 0; }
 .sg-spec .m { font: 500 10.5px/1.6 var(--sc-font-mono); color: var(--sc-text-2); letter-spacing: .3px; }
 .sg-spec .s { color: var(--sc-heading); margin: 0; overflow-wrap: anywhere; }
 
-.sg-space { display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap; }
+.sg-space { display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap; padding-bottom: 18px; }
 .sg-space div { background: var(--sc-brand-fill); border: 1px solid var(--sc-brand-line); border-radius: 3px; position: relative; }
 .sg-space div::after { content: attr(data-l); position: absolute; top: 100%; left: 0; margin-top: 4px; font: 500 10px/1 var(--sc-font-mono); color: var(--sc-text-2); }
 .sg-radii { display: flex; gap: 16px; flex-wrap: wrap; }
 .sg-radii div { width: 88px; height: 56px; background: var(--sc-surface); border: 1px solid var(--sc-border-strong); display: grid; place-items: center; font: 700 10px/1 var(--sc-font-mono); color: var(--sc-text-2); }
+.sg-radii .sg-shadow { border-color: var(--sc-border); box-shadow: var(--sc-shadow); }
+
+/* Demo frames — dashed boundary around live component markup */
 .sg-demo { border: 1px dashed var(--sc-border-strong); border-radius: var(--sc-r-md); padding: 18px; margin: 10px 0 6px; background: color-mix(in srgb, var(--sc-bg) 70%, var(--sc-surface)); }
 .sg-demo--flush { padding: 0; overflow: hidden; }
-.sg-demo .sc-tooltip { position: static; opacity: 1; display: inline-block; }
+.sg-demo .sc-masthead { border-bottom: 0; }
+.sg-demo .sc-foot { margin: 0; border-top: 0; }
+.sg-demo .sc-notice { margin: 0; }
+.sg-demo .sc-title { padding-top: 0; }
+.sg-demo .sc-callout:first-child { margin-top: 0; }
+.sg-demo .sc-doc { margin: 0; max-width: none; border: 0; border-radius: 0; }
+.sg-demo .sc-doc--flat { padding: 0; }
+.sg-demo .sc-filters { padding: 0; }
+.sg-demo .sc-table-scroll--tall { max-height: 150px; }   /* short enough that the sticky header is visible in the demo */
+.sg-demo .sc-empty { padding: 0; }
+.sg-demo .sc-skip { position: static; display: inline-block; padding: 8px 12px; background: var(--sc-surface); color: var(--sc-heading); border: 1px solid var(--sc-border-strong); border-radius: var(--sc-r-sm); }   /* shown in its focused form */
+.sg-tip { position: static; display: inline-block; }   /* a tooltip pinned open as a specimen */
 .sg-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.sg-chart { position: relative; }
-.sg-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-row--top { align-items: flex-start; gap: 28px; }
+.sg-narrow { width: 190px; font-size: 13px; line-height: 1.5; border: 1px dashed var(--sc-border); border-radius: 4px; padding: 4px 6px; }
+.sg-widths { display: grid; gap: 6px; }
+.sg-widths div { height: 24px; background: var(--sc-brand-fill); border: 1px solid var(--sc-brand-line); border-radius: 3px; font: 600 10.5px/22px var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; color: var(--sc-brand); padding: 0 8px; white-space: nowrap; }
+.sg-rhythm > div { background: var(--sc-surface); border: 1px solid var(--sc-border); border-radius: var(--sc-r-sm); padding: 8px 12px; font: 600 10.5px/1 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; color: var(--sc-text-2); }
+.sg-stack-item { background: var(--sc-surface); border: 1px solid var(--sc-border); border-radius: var(--sc-r-sm); padding: 8px 12px; font: 600 10.5px/1 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; color: var(--sc-text-2); }
+.sg-tone { font: 600 12px/1 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; }
+.is-focus { outline: 2px solid var(--sc-focus); outline-offset: 2px; border-radius: 2px; }   /* the focus ring, held still for the guide */
+.sg-static-chart { margin-top: 0; overflow-x: auto; }   /* a fixed-size specimen: scrolls inside its host rather than shrinking its text */
+.sg-static-chart svg { width: 540px; max-width: none; }
+.sg-tile-spark { max-width: 260px; }
+
 .sg-marks { display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; }
 .sg-marks figure { margin: 0; text-align: center; }
+.sg-marks--center { align-items: center; }
 .sg-marks figcaption { font: 500 10px/1.6 var(--sc-font-mono); color: var(--sc-text-2); margin-top: 8px; }
 .sg-marks .sc-brand__mark { margin: 0 auto; }
+.sg-rule .sc-brand__mark { display: inline-grid; vertical-align: middle; }
+.sg-tile { display: inline-flex; align-items: center; gap: 10px; border-radius: 10px; padding: 14px; }
+.sg-tile--light { background: var(--sc-white); }   /* the light form always sits on white, in both modes */
+.sg-tile--ink { background: var(--sc-ink); }
+.sg-tile--wide { padding: 14px 18px; }
+.sg-tile--row { padding: 12px 16px; }
+.sg-tile .sc-brand__name { color: var(--sc-on-ink); font-size: 16px; }
+.sg-mark-96 { height: 96px; width: auto; display: block; }
+.sg-mark-76 { width: 76px; height: 76px; display: block; }
+.sg-mark-16 { width: 16px; height: 16px; display: block; }
+.sg-lockup { height: 34px; width: auto; display: block; }
+
 .sg-check { list-style: none; padding: 0; margin: 0; counter-reset: c; }
 .sg-check li { padding: 9px 0 9px 34px; border-bottom: 1px solid var(--sc-border); position: relative; font-size: 14px; }
 .sg-check li::before { counter-increment: c; content: counter(c, decimal-leading-zero); position: absolute; left: 0; top: 10px; font: 700 11px/1.4 var(--sc-font-mono); color: var(--sc-brand); }
@@ -114,14 +165,29 @@
   });
   document.addEventListener('DOMContentLoaded', sync);
   if (window.MutationObserver) new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  // Print: the stylesheet already prints "auto" pages light; a pinned-dark page
+  // is switched to light for the print job and restored after (not persisted).
+  var printPinned = false;
+  function onPrint(printing) {
+    if (printing) { printPinned = root.getAttribute('data-theme') === 'dark'; if (printPinned) root.setAttribute('data-theme', 'light'); }
+    else if (printPinned) { root.setAttribute('data-theme', 'dark'); printPinned = false; }
+  }
+  if (window.addEventListener) {
+    window.addEventListener('beforeprint', function () { onPrint(true); });
+    window.addEventListener('afterprint', function () { onPrint(false); });
+  } else if (window.matchMedia) {
+    var mq = window.matchMedia('print');
+    if (mq && mq.addListener) mq.addListener(function (m) { onPrint(m.matches); });
+  }
 })();
 </script>
 </head>
 <body>
+<a class="sc-skip" href="#main-content">Skip to content</a>
 <header class="sc-masthead">
   <a class="sc-brand" href="#top">
     <img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt="">
-    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.0.0</span></span>
+    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.1.0</span></span>
   </a>
   <div class="sc-masthead__right">
     <span class="sc-hide-sm">Living reference</span>
@@ -134,17 +200,17 @@
   </div>
 </header>
 
-<section class="sg-cover" id="top">
+<section class="sg-cover sc-on-ink" id="top">
   <div class="sg-cover__inner">
     <div>
       <div class="sc-eyebrow">Mohammed Tahir Madni · SpicyChicken</div>
       <h1>Cobalt structure. One spice accent. Dark by default.</h1>
       <p class="sg-cover__dek">The standard every SpicyChicken project is built on — dashboards, documents, READMEs, decks. Every color below is validated, every component is rendered live in both modes, and the whole thing ships as one CSS file.</p>
-      <div class="sg-cover__meta"><span>sc.css · v2.0.0</span><span>160 tokens</span><span>18 components</span><span>the chick · everywhere</span></div>
+      <div class="sg-cover__meta"><span>sc.css · v2.1.0</span><span>123 named tokens</span><span>20 component blocks</span><span>the chick · everywhere</span></div>
     </div>
     <div>
       <div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and the spice accent"></div>
-      <div class="sg-bar__caption">Cobalt 300 → 950, then spice 400 and 600. Lightness carried over exactly from the template greens; hue rotated to 255°.</div>
+      <div class="sg-bar__caption">Cobalt 300 → 950, then spice 400 and 700. Lightness held on the text steps (300, 700); 900/950 moved and chroma raised. Hue rotated to 255°.</div>
     </div>
   </div>
 </section>
@@ -166,7 +232,7 @@
     <a href="#dont">Do / don't</a>
   </nav>
 
-  <main class="sg-main">
+  <main class="sg-main" id="main-content">
 
     <section class="sg-section" id="hierarchy">
       <div class="sc-eyebrow">01 · Foundations</div>
@@ -177,7 +243,7 @@
         <div class="sc-card"><div class="sc-eyebrow sc-eyebrow--accent">One mark, everywhere</div><h4>The chick</h4><p class="sc-hint">Masthead, favicon, avatar, and the footer watermark on every site. One character across every project is what makes the profile feel uniform.</p></div>
         <div class="sc-card"><div class="sc-eyebrow sc-eyebrow--muted">The person authors</div><h4>Mohammed Tahir Madni</h4><p class="sc-hint">READMEs, document covers, <code>rel="author"</code>. Never in UI chrome.</p></div>
       </div>
-      <div class="sc-callout sc-callout--core" style="margin-top:20px">
+      <div class="sc-callout sc-callout--core">
         <div class="sc-callout__label">Voice</div>
         <p>Plain-spoken and specific. State the outcome and the reason, never the hype. Sentence case everywhere except mono eyebrows and short labels. Every page, document, and deck ends with <strong>exactly one</strong> next action.</p>
       </div>
@@ -196,7 +262,7 @@
 
       <div class="sg-block">
         <h3>Semantic roles — live in the current mode</h3>
-        <p class="sc-hint">What each token does, its resolved value right now, and its WCAG contrast against the page and card surfaces. Toggle the theme in the masthead to re-check.</p>
+        <p class="sc-hint">What each token does, its resolved value right now, and its WCAG contrast against the surfaces it actually sits on. Text pairs need 4.5:1; focus rings, control borders and chart marks need 3:1. Toggle the theme in the masthead to re-check.</p>
         <div class="sc-table-scroll"><table class="sc-table sc-table--compact sg-roles" id="roles"></table></div>
       </div>
 
@@ -220,10 +286,10 @@
         <div class="sg-spec"><div class="m">caption · 13 / 1.5 · Instrument 400 · muted</div><p class="s" style="font:400 13px/1.5 var(--sc-font-body);color:var(--sc-text-2)">Prices include $1,100 shipping for cars outside the region.</p></div>
         <div class="sg-spec"><div class="m">eyebrow · 12 / 1 · Plex Mono 600 · lowercase · "//"</div><p class="s sc-eyebrow" style="margin:0">Best value right now</p></div>
         <div class="sg-spec"><div class="m">stat value · 32 / 1.1 · Instrument 700 · −.5px</div><p class="s" style="font:700 32px/1.1 var(--sc-font-body);letter-spacing:-.5px">$36,646</p></div>
-        <div class="sg-spec"><div class="m">mono · 12 / 1.5 · Plex Mono 500</div><p class="s sc-mono" style="font-size:12px;color:var(--sc-text-2)">WBY33FK08RCS83536 · 2026-08-23 · 17,263 mi</p></div>
+        <div class="sg-spec"><div class="m">note · 10.5 / 1.4 · Plex Mono 500 · muted</div><p class="s sc-note">WBY33FK08RCS83536 · 2026-08-23 · 17,263 mi</p></div>
         <div class="sg-spec"><div class="m">code</div><p class="s"><code>--sc-accent</code> inline, and <kbd>⌘</kbd> <kbd>K</kbd> for keys.</p></div>
       </div>
-      <p class="sg-rule">Numbers in tiles and hero figures use Instrument Sans, proportional figures. <code>tabular-nums</code> only in columns that must align. Headings get <code>text-wrap: balance</code>. Labels are lowercase mono with modest tracking — never ALL-CAPS with wide tracking, which is the previous system's tell.</p>
+      <p class="sg-rule">Numbers in tiles and hero figures use Instrument Sans, proportional figures. <code>tabular-nums</code> only in columns that must align. Headings get <code>text-wrap: balance</code>. Labels are lowercase mono with modest tracking — never ALL-CAPS with wide tracking, which is the previous system's tell. The mono stack falls back to Consolas on Windows.</p>
     </section>
 
     <section class="sg-section" id="space">
@@ -232,7 +298,7 @@
       <p class="sc-dek">An 8px rhythm, three radii, one shadow, one easing.</p>
       <div class="sg-block">
         <h3>Spacing scale</h3>
-        <div class="sg-space" style="padding-bottom:18px">
+        <div class="sg-space">
           <div data-l="4" style="width:4px;height:4px"></div><div data-l="8" style="width:8px;height:8px"></div><div data-l="16" style="width:16px;height:16px"></div><div data-l="24" style="width:24px;height:24px"></div><div data-l="32" style="width:32px;height:32px"></div><div data-l="40" style="width:40px;height:40px"></div><div data-l="48" style="width:48px;height:48px"></div><div data-l="64" style="width:64px;height:64px"></div><div data-l="80" style="width:80px;height:80px"></div><div data-l="96" style="width:96px;height:96px"></div>
         </div>
       </div>
@@ -243,11 +309,11 @@
           <div style="border-radius:var(--sc-r-md)">10 · callouts</div>
           <div style="border-radius:var(--sc-r-lg)">14 · cards</div>
           <div style="border-radius:var(--sc-r-pill)">pill</div>
-          <div style="border-radius:var(--sc-r-lg);box-shadow:var(--sc-shadow);border-color:var(--sc-border)">shadow</div>
+          <div class="sg-shadow" style="border-radius:var(--sc-r-lg)">shadow</div>
         </div>
       </div>
-      <p class="sg-rule">Motion: fades and short slides, 240ms, <code>cubic-bezier(.2,.7,.3,1)</code>. Hover signals with color, never scale. Base state is the finished state. <code>prefers-reduced-motion</code> sets it to zero.</p>
-      <p class="sg-rule">Widths: prose 800 · content 1120 · wide 1280 (dashboards, tables).</p>
+      <p class="sg-rule">Motion: fades and short slides, 240ms, <code>cubic-bezier(.2,.7,.3,1)</code>. Hover signals with color, never scale. Base state is the finished state. <code>prefers-reduced-motion</code> sets it to zero. Pointer targets are at least 24px tall.</p>
+      <p class="sg-rule">Widths: prose 800 · content 1120 · wide 1280 (dashboards, tables). See <a href="#layout">Layout &amp; utilities</a>.</p>
     </section>
 
     <section class="sg-section" id="themes">
@@ -257,53 +323,105 @@
       <div class="sc-grid sc-grid--2">
         <div class="sc-card">
           <h4>How it resolves</h4>
-          <p class="sc-hint"><code>:root</code> carries the dark set. <code>@media (prefers-color-scheme: light)</code> and <code>[data-theme="light"]</code> carry the light set; <code>[data-theme="dark"]</code> pins dark. The toggle writes <code>data-theme</code> on <code>&lt;html&gt;</code> and remembers it per browser; the script runs before paint, so there is no flash.</p>
+          <p class="sc-hint"><code>:root</code> carries the dark set. <code>@media (prefers-color-scheme: light)</code> and <code>[data-theme="light"]</code> carry the light set; <code>[data-theme="dark"]</code> pins dark. The hosted <code>sc-theme.js</code> writes <code>data-theme</code> on <code>&lt;html&gt;</code> and remembers it per browser; it runs before paint, so there is no flash, and it prints a pinned-dark page light.</p>
         </div>
         <div class="sc-card">
           <h4>What stays dark in both modes</h4>
-          <p class="sc-hint">Masthead, footer, code blocks, tooltips, covers — on <code>--sc-ink</code>. That shared spine is what makes a light page recognisably the same product as its dark sibling.</p>
+          <p class="sc-hint">Masthead, footer, code blocks, tooltips, covers — on <code>--sc-ink</code>. Anything nested in them re-reads the text, brand and accent tokens as on-ink ones; add <code>.sc-on-ink</code> to any other ink-filled block for the same treatment. That shared spine is what makes a light page recognisably the same product as its dark sibling.</p>
         </div>
       </div>
-      <div class="sg-demo" style="margin-top:16px">
-        <div class="sg-row">
-          <span class="sc-field">Try it</span>
-          <div class="sc-theme-toggle" role="group" aria-label="Theme" style="border-color:var(--sc-border-strong)">
-            <button type="button" data-theme="dark" style="color:var(--sc-heading)">Dark</button>
-            <button type="button" data-theme="light" style="color:var(--sc-heading)">Light</button>
-            <button type="button" data-theme="auto" style="color:var(--sc-heading)">Auto</button>
+      <div class="sg-block">
+        <h3>Try it</h3>
+        <p class="sc-hint">The toggle is a masthead control — it is designed for ink, so the demo sits on one.</p>
+        <div class="sg-demo sg-demo--flush">
+          <div class="sc-masthead">
+            <span class="sc-masthead__right">Theme</span>
+            <div class="sc-theme-toggle" role="group" aria-label="Theme">
+              <button type="button" data-theme="dark">Dark</button>
+              <button type="button" data-theme="light">Light</button>
+              <button type="button" data-theme="auto">Auto</button>
+            </div>
           </div>
-          <span class="sc-hint" id="theme-state"></span>
         </div>
+        <p class="sg-rule" id="theme-state"></p>
       </div>
     </section>
 
     <section class="sg-section" id="components">
       <div class="sc-eyebrow">06 · Build</div>
       <h2>Components</h2>
-      <p class="sc-dek">Eighteen pieces, all prefixed <code>sc-</code>. Reproduce these; don't invent siblings.</p>
+      <p class="sc-dek">Twenty blocks, all prefixed <code>sc-</code>. Reproduce these; don't invent siblings. Blocks marked <span class="sc-chip sc-chip--spice">2.1</span> were promoted from the first production consumer, the SpicyCar tracker.</p>
 
       <div class="sg-block">
         <h3>Masthead</h3>
-        <p class="sc-hint">Project left (mark, name, sub-line); endorsement, nav and theme toggle right. Dark in both modes. Nav underline is spice.</p>
+        <p class="sc-hint">Project left (the chick, then the project's name and sub-line in type); endorsement, nav and theme toggle right. Dark in both modes. Nav underline is spice; the nav carries an <code>aria-label</code>.</p>
         <div class="sg-demo sg-demo--flush">
-          <div class="sc-masthead" style="border-bottom:0">
-            <span class="sc-brand"><span class="sc-brand__mark" aria-hidden="true">AM</span><span><span class="sc-brand__name">Auto Market Tracker</span><span class="sc-brand__sub">Daily used-car snapshot</span></span></span>
-            <div class="sc-masthead__right"><nav class="sc-nav" aria-label="Demo"><a href="#components" aria-current="page">Overview</a><a href="#components">Listings</a></nav><span class="sc-sep"></span><span>Snapshot · 2026-08-23</span></div>
+          <div class="sc-masthead">
+            <span class="sc-brand"><img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt=""><span><span class="sc-brand__name">Auto Market Tracker</span><span class="sc-brand__sub">Daily used-car snapshot</span></span></span>
+            <div class="sc-masthead__right"><nav class="sc-nav" aria-label="Demo"><a href="#components" aria-current="page">Overview</a><a href="#components">Listings</a></nav><span class="sc-sep" aria-hidden="true"></span><span>Snapshot · 2026-08-23</span></div>
           </div>
         </div>
-        <p class="sg-rule"><code>.sc-masthead</code> · <code>.sc-brand</code> <code>.sc-brand__mark</code> <code>.sc-brand__name</code> <code>.sc-brand__sub</code> · <code>.sc-masthead__right</code> · <code>.sc-nav</code> · <code>.sc-theme-toggle</code></p>
+        <p class="sg-rule"><code>.sc-masthead</code> · <code>.sc-brand</code> <code>img.sc-mark</code> <code>.sc-brand__name</code> <code>.sc-brand__sub</code> · <code>.sc-masthead__right</code> <code>.sc-sep</code> · <code>.sc-nav</code> · <code>.sc-theme-toggle</code></p>
+        <p class="sg-rule">Fallback: <code>.sc-brand__mark</code> is a 26px letter tile on <code>--sc-brand-line</code> for a project with no SVG mark yet — <span class="sc-brand__mark" aria-hidden="true">AM</span> — never the chick's replacement.</p>
       </div>
 
-      <div class="sg-block">
-        <h3>Title block</h3>
-        <p class="sc-hint">Lowercase "//" eyebrow, h1, one-sentence dek, mono meta row.</p>
+      <div class="sg-block" id="title-block">
+        <h3>Title block <span class="sc-chip sc-chip--spice">2.1</span></h3>
+        <p class="sc-hint">One container for the opening of every page: lowercase "//" eyebrow, h1, one-sentence dek, mono meta row, and an optional segmented control that switches the subject. 40px above, 8px below; 24px above on phones.</p>
         <div class="sg-demo">
-          <div class="sc-eyebrow">2024–2025 · Cincinnati · Chicago · Indianapolis</div>
-          <h1 style="font-size:32px;margin-bottom:6px">BMW i5 eDrive40</h1>
-          <p class="sc-dek" style="margin-bottom:10px">Landed price = asking price + $1,100 shipping for out-of-region cars, adjusted $0.30/mi against a 20,000-mile baseline.</p>
-          <div class="sc-meta"><span>Updated Sun, August 23, 2026</span><span class="sc-sep">·</span><span>1 snapshot day</span><span class="sc-sep">·</span><span>Listings under $20,000 ignored</span></div>
+          <div class="sc-title">
+            <div class="sc-eyebrow">2024–2025 · Cincinnati · Chicago · Indianapolis</div>
+            <h1>What it costs to put it in your driveway</h1>
+            <p class="sc-dek">Landed price = asking price + $1,100 shipping for out-of-region cars, adjusted $0.30/mi against a 20,000-mile baseline.</p>
+            <div class="sc-meta"><span>Updated Sun, August 23, 2026</span><span class="sc-sep">·</span><span>1 snapshot day</span><span class="sc-sep">·</span><span>Listings under $20,000 ignored</span></div>
+            <div class="sc-tabs" role="group" aria-label="Model"><button class="sc-tab sc-tab--case" aria-pressed="true" type="button">BMW i5</button><button class="sc-tab" aria-pressed="false" type="button">Second target</button></div>
+          </div>
         </div>
-        <p class="sg-rule"><code>.sc-eyebrow</code> (<code>--accent</code> <code>--muted</code>) · <code>h1</code> · <code>.sc-dek</code> · <code>.sc-meta</code> <code>.sc-sep</code></p>
+        <p class="sg-rule"><code>.sc-title</code> · <code>.sc-eyebrow</code> (<code>--accent</code> <code>--muted</code>) · <code>h1</code> · <code>.sc-dek</code> · <code>.sc-meta</code> <code>.sc-sep</code> · <code>.sc-title .sc-tabs</code></p>
+      </div>
+
+      <div class="sg-block" id="layout">
+        <h3>Layout &amp; utilities</h3>
+        <p class="sc-hint">The page frame and the small helpers. Widths are the three measures; sections are 48px apart; a stack puts 16px between siblings; a row is a flex line with <code>.sc-right</code> pushing the tail to the edge.</p>
+        <div class="sg-demo">
+          <div class="sc-eyebrow">.sc-wrap widths</div>
+          <div class="sg-widths">
+            <div style="width:62.5%">.sc-wrap--prose · 800</div>
+            <div style="width:87.5%">.sc-wrap · 1120</div>
+            <div style="width:100%">.sc-wrap--wide · 1280</div>
+          </div>
+          <div class="sc-eyebrow" style="margin-top:24px">.sc-section rhythm</div>
+          <div class="sg-rhythm">
+            <div>a block</div>
+            <div class="sc-section">.sc-section — 48px above</div>
+          </div>
+          <div class="sc-eyebrow" style="margin-top:24px">.sc-grid--4 kpi row</div>
+          <div class="sc-grid sc-grid--4">
+            <div class="sc-tile"><div class="sc-tile__label">Tracked</div><div class="sc-tile__value sc-tile__value--sm">74</div></div>
+            <div class="sc-tile"><div class="sc-tile__label">Local</div><div class="sc-tile__value sc-tile__value--sm">2</div></div>
+            <div class="sc-tile"><div class="sc-tile__label">Price cuts</div><div class="sc-tile__value sc-tile__value--sm">2</div></div>
+            <div class="sc-tile"><div class="sc-tile__label">Gone</div><div class="sc-tile__value sc-tile__value--sm">3</div></div>
+          </div>
+          <div class="sc-eyebrow" style="margin-top:24px">.sc-row + .sc-right toolbar</div>
+          <div class="sc-row"><strong>Listings</strong><span class="sc-chip sc-chip--neutral">74 rows</span><span class="sc-right sc-row"><button class="sc-btn sc-btn--ghost sc-btn--sm" type="button">Reset</button><button class="sc-btn sc-btn--secondary sc-btn--sm" type="button">Export CSV</button></span></div>
+          <div class="sc-eyebrow" style="margin-top:24px">.sc-stack</div>
+          <div class="sc-stack">
+            <div class="sg-stack-item">first</div>
+            <div class="sg-stack-item">second — 16px above</div>
+            <div class="sg-stack-item">third</div>
+          </div>
+          <div class="sc-eyebrow" style="margin-top:24px">text tone utilities</div>
+          <div class="sg-row"><span class="sg-tone">default</span><span class="sg-tone sc-muted">.sc-muted</span><span class="sg-tone sc-faint">.sc-faint</span><span class="sg-tone sc-text-brand">.sc-text-brand</span><span class="sg-tone sc-text-good">.sc-text-good</span><span class="sg-tone sc-text-warn">.sc-text-warn</span><span class="sg-tone sc-text-danger">.sc-text-danger</span><span class="sg-tone sc-text-info">.sc-text-info</span><span class="sg-tone sc-mono">.sc-mono</span><span class="sg-tone sc-num">.sc-num 1,234</span></div>
+          <div class="sc-eyebrow" style="margin-top:24px">nowrap · truncate · case</div>
+          <div class="sg-row sg-row--top">
+            <div class="sg-narrow">wraps: BMW of Naperville, Naperville, IL</div>
+            <div class="sg-narrow"><span class="sc-truncate">.sc-truncate: BMW of Naperville, Naperville, IL</span></div>
+            <div class="sg-narrow">landed <span class="sc-nowrap">$46,653 · local</span> — .sc-nowrap keeps the figure whole</div>
+            <div class="sg-narrow"><span class="sc-chip sc-chip--brand">chip <span class="sc-case">IL</span></span> .sc-case</div>
+          </div>
+        </div>
+        <p class="sg-rule"><code>.sc-wrap</code> (<code>--prose</code> <code>--wide</code>) · <code>.sc-section</code> · <code>.sc-grid</code> (<code>--2</code> <code>--3</code> <code>--4</code>) · <code>.sc-row</code> <code>.sc-right</code> · <code>.sc-stack</code> · <code>.sc-muted</code> <code>.sc-faint</code> <code>.sc-text-brand</code> <code>.sc-text-good</code> <code>.sc-text-warn</code> <code>.sc-text-danger</code> <code>.sc-text-info</code> · <code>.sc-mono</code> <code>.sc-num</code> · <code>.sc-nowrap</code> <code>.sc-truncate</code> <code>.sc-case</code></p>
+        <p class="sg-rule"><code>.sc-sr-only</code> hides text visually and keeps it for assistive tech — the caption on every chart's table twin uses it. <code>.sc-hide-sm</code> drops an element under 720px (the masthead's "Living reference" above uses it). <code>hidden</code> works on every component. <code>.sc-text-accent</code> is deprecated in 2.1 — use <code>.sc-chip--spice</code>; it goes in 3.0.</p>
       </div>
 
       <div class="sg-block">
@@ -315,144 +433,279 @@
             <div class="sc-tile"><div class="sc-tile__label">Median landed price</div><div class="sc-tile__value">$46,653</div><div class="sc-tile__sub">70 priced vehicles</div><div class="sc-delta sc-delta--bad">▲ $104 vs Aug 23</div></div>
             <div class="sc-tile"><div class="sc-tile__label">Since the previous snapshot</div><div class="sc-tile__value sc-tile__value--sm">2 price cuts</div><div class="sc-tile__sub">1 new · 3 gone</div><div class="sc-delta sc-delta--flat">= inventory</div></div>
           </div>
-          <div style="margin-top:18px"><div class="sc-eyebrow">Hero figure</div><div class="sc-hero">74</div><div class="sc-tile__sub">vehicles tracked today</div></div>
+          <div class="sc-section"><div class="sc-eyebrow">Hero figure</div><div class="sc-hero">74</div><div class="sc-tile__sub">vehicles tracked today</div></div>
         </div>
         <p class="sg-rule"><code>.sc-tile</code> <code>.sc-tile__label</code> <code>.sc-tile__value</code> (<code>--sm</code>) <code>.sc-tile__sub</code> · <code>.sc-delta</code> (<code>--good</code> <code>--bad</code> <code>--flat</code>) · <code>.sc-hero</code></p>
       </div>
 
       <div class="sg-block">
         <h3>Cards</h3>
-        <p class="sc-hint">One discrete idea each. Heading plus hint, optional action on the right.</p>
+        <p class="sc-hint">One discrete idea each. Heading plus hint, optional action on the right. A card head's h2/h3 sits at 20px; the last child loses its bottom margin, so no inline resets.</p>
         <div class="sg-demo">
           <div class="sc-grid sc-grid--2">
-            <div class="sc-card"><div class="sc-card__head"><div><h3 style="font-size:18px">Listings</h3><p class="sc-hint">One row per VIN, local listing preferred.</p></div><a class="sc-btn sc-btn--primary sc-btn--sm" href="#components">Export CSV →</a></div><p style="margin:0">Card body. Hairline border, 14px radius, soft shadow.</p></div>
-            <div class="sc-card sc-card--raised"><div class="sc-eyebrow">Raised variant</div><h4>For nested or secondary surfaces</h4><p class="sc-hint" style="margin:0">Sits one step above the page without a heavier shadow.</p></div>
+            <div class="sc-card"><div class="sc-card__head"><div><h3>Listings</h3><p class="sc-hint">One row per VIN, local listing preferred.</p></div><a class="sc-btn sc-btn--primary sc-btn--sm" href="#components">Export CSV →</a></div><p>Card body. Hairline border, 14px radius, soft shadow.</p></div>
+            <div class="sc-card sc-card--raised"><div class="sc-eyebrow">Raised variant</div><h4>For nested or secondary surfaces</h4><p class="sc-hint">Sits one step above the page without a heavier shadow.</p></div>
           </div>
         </div>
-        <p class="sg-rule"><code>.sc-card</code> (<code>--raised</code>) · <code>.sc-card__head</code> · <code>.sc-hint</code></p>
+        <p class="sg-rule"><code>.sc-card</code> (<code>--raised</code>) · <code>.sc-card__head</code> · <code>.sc-hint</code> · <code>a.sc-card</code> is the linked-card form</p>
       </div>
 
       <div class="sg-block">
         <h3>Callouts</h3>
-        <p class="sc-hint">Tinted fill with the file-fold corner from the mark. <em>Core</em> is the single takeaway — max one per section. <em>Ink</em> is must-remember. <em>Spice</em> is the one next action. <em>Warning</em> adds the 2px danger border.</p>
+        <p class="sc-hint">Tinted fill with the file-fold corner from the mark. <em>Core</em> is the single takeaway — max one per section — and may lead with a figure. <em>Ink</em> is must-remember. <em>Spice</em> is the one next action. <em>Warning</em> adds the 2px danger border.</p>
         <div class="sg-demo">
-          <div class="sc-callout sc-callout--core"><div class="sc-callout__label">Core takeaway</div><p>The cheapest landed car is a 17k-mile 2024 in San Diego at $36,646 — $1,500 under yesterday.</p></div>
-          <div class="sc-callout sc-callout--ink"><div class="sc-callout__label">Remember</div><p>Prices in the CSV are the lowest seen that day per vehicle; the dashboard always shows the local listing over the national copy.</p></div>
+          <div class="sc-callout sc-callout--core"><div class="sc-callout__label">Core takeaway</div><div class="sc-callout__figure">$36,646 landed for $36,368 asking</div><p>The cheapest landed car is a 17k-mile 2024 in San Diego — $1,500 under yesterday.</p></div>
+          <div class="sc-callout sc-callout--ink"><div class="sc-callout__label">Remember</div><p>Prices in the CSV are the <strong>lowest seen that day</strong> per vehicle; the dashboard always shows the local listing over the national copy. <a href="#components">Read the method →</a></p></div>
           <div class="sc-callout sc-callout--spice"><div class="sc-callout__label">Next action</div><p>Open the San Diego listing and ask for the out-the-door number before Friday. <a href="#components">Open the listing →</a></p></div>
           <div class="sc-callout sc-callout--warning"><div class="sc-callout__label">Check before you act</div><p>Two listings under $1,000 were monthly payments, not prices. They are filtered now; confirm any price that looks too good.</p></div>
         </div>
-        <p class="sg-rule"><code>.sc-callout</code> (<code>--core</code> <code>--ink</code> <code>--spice</code> <code>--warning</code>) · <code>.sc-callout__label</code></p>
+        <p class="sg-rule"><code>.sc-callout</code> (<code>--core</code> <code>--ink</code> <code>--spice</code> <code>--warning</code>) · <code>.sc-callout__label</code> · <code>.sc-callout__figure</code> <span class="sc-chip sc-chip--spice">2.1</span></p>
       </div>
 
       <div class="sg-block">
         <h3>Chips</h3>
-        <p class="sc-hint">Squared lowercase mono chips. The word carries the meaning; the tone reinforces it. Danger is the outline form — stop and check.</p>
+        <p class="sc-hint">Squared lowercase mono chips. The word carries the meaning; the tone reinforces it. Danger is the outline form — stop and check. Codes and proper nouns keep their casing with <code>--case</code>.</p>
         <div class="sg-demo"><div class="sg-row">
-          <span class="sc-chip sc-chip--brand">Chicago</span><span class="sc-chip sc-chip--neutral">National</span><span class="sc-chip sc-chip--spice">New</span><span class="sc-chip sc-chip--good">CPO</span><span class="sc-chip sc-chip--warn">2 owners</span><span class="sc-chip sc-chip--danger">1 accident</span><span class="sc-chip sc-chip--solid">Best value</span>
+          <span class="sc-chip sc-chip--brand">Chicago</span><span class="sc-chip sc-chip--neutral">National</span><span class="sc-chip sc-chip--spice">New</span><span class="sc-chip sc-chip--good">CPO</span><span class="sc-chip sc-chip--warn">2 owners</span><span class="sc-chip sc-chip--danger">1 accident</span><span class="sc-chip sc-chip--info">Ex-lease</span><span class="sc-chip sc-chip--solid">Best value</span><span class="sc-chip sc-chip--brand sc-chip--case">IL</span><span class="sc-chip sc-chip--neutral sc-chip--case">BMW i5</span>
         </div></div>
-        <p class="sg-rule"><code>.sc-chip</code> (<code>--brand</code> <code>--neutral</code> <code>--spice</code> <code>--good</code> <code>--warn</code> <code>--danger</code> <code>--solid</code>). In documents the provenance letters <code>K B A Q W</code> can ride on these tones.</p>
+        <p class="sg-rule"><code>.sc-chip</code> (<code>--brand</code> <code>--neutral</code> <code>--spice</code> <code>--good</code> <code>--warn</code> <code>--danger</code> <code>--info</code> <code>--solid</code> · <code>--case</code>) <span class="sc-chip sc-chip--spice">2.1</span> for <code>--info</code> and <code>--case</code>. In documents the provenance letters <code>K B A Q W</code> can ride on these tones.</p>
       </div>
 
       <div class="sg-block">
         <h3>Buttons</h3>
-        <p class="sc-hint">Primary is spice — one per view. Secondary is a cobalt-leaning outline. Ghost for the quiet third option.</p>
+        <p class="sc-hint">Primary is spice — one per view (this demo shows two only to compare sizes). Secondary is a cobalt-leaning outline. Ghost for the quiet third option. Pressed states shift the fill toward <code>--sc-hover</code>; nothing scales or filters.</p>
         <div class="sg-demo"><div class="sg-row">
           <button class="sc-btn sc-btn--primary" type="button">Open the listing →</button>
           <button class="sc-btn sc-btn--secondary" type="button">Download CSV</button>
           <button class="sc-btn sc-btn--ghost" type="button">Reset filters</button>
           <button class="sc-btn sc-btn--primary sc-btn--sm" type="button">Small primary</button>
           <button class="sc-btn sc-btn--secondary sc-btn--sm" type="button" disabled>Disabled</button>
+          <a class="sc-btn sc-btn--secondary sc-btn--sm" aria-disabled="true" role="link">Disabled link</a>
+          <button class="sc-btn sc-btn--secondary is-focus" type="button">Focus ring</button>
         </div></div>
-        <p class="sg-rule"><code>.sc-btn</code> (<code>--primary</code> <code>--secondary</code> <code>--ghost</code> <code>--sm</code>) · <code>[disabled]</code></p>
+        <p class="sg-rule"><code>.sc-btn</code> (<code>--primary</code> <code>--secondary</code> <code>--ghost</code> <code>--sm</code>) · <code>[disabled]</code> · <code>a.sc-btn[aria-disabled="true"]</code> drops its <code>href</code> · the ring is <code>:focus-visible</code> on every control — 2px <code>--sc-focus</code>, 2px offset (held still here with a page class).</p>
       </div>
 
       <div class="sg-block">
         <h3>Filters &amp; inputs</h3>
-        <p class="sc-hint">One row, above everything it scopes. Labels are mono eyebrows; controls are 14px Archivo on the card surface.</p>
+        <p class="sc-hint">One row, above everything it scopes. Labels are mono eyebrows; controls are 14px Instrument Sans on the card surface with a 3:1 control border. A bare <code>label.sc-check</code> carries the same label type as <code>.sc-field</code>.</p>
         <div class="sg-demo">
-          <div class="sc-filters" style="padding:0">
+          <div class="sc-filters">
             <label class="sc-field">Market <select class="sc-select"><option>All markets</option><option>Local only</option><option>Chicago (200 mi)</option></select></label>
             <label class="sc-field">Year <select class="sc-select"><option>All years</option><option>2024</option><option>2025</option></select></label>
             <label class="sc-field">Search <input class="sc-input" type="search" placeholder="VIN or city"></label>
-            <label class="sc-field sc-check"><input type="checkbox" checked> Hide reported accidents</label>
+            <label class="sc-check"><input type="checkbox" checked> Hide reported accidents</label>
+          </div>
+          <div class="sc-filters" style="margin-top:14px">
+            <label class="sc-field">Disabled <input class="sc-input" type="text" value="Cincinnati" disabled></label>
+            <label class="sc-field">Invalid <input class="sc-input" type="text" value="WBY33FK0" aria-invalid="true" aria-describedby="vin-err"></label>
+            <span class="sc-note sc-text-danger" id="vin-err">17 characters expected</span>
+            <label class="sc-field">Read-only <input class="sc-input" type="text" value="2026-08-23" readonly></label>
           </div>
         </div>
-        <p class="sg-rule"><code>.sc-filters</code> · <code>.sc-field</code> · <code>.sc-select</code> · <code>.sc-input</code> · <code>.sc-check</code></p>
+        <p class="sg-rule"><code>.sc-filters</code> · <code>.sc-field</code> · <code>.sc-select</code> · <code>.sc-input</code> (<code>:disabled</code> <code>[aria-invalid="true"]</code> <code>:read-only</code>) · <code>.sc-check</code></p>
       </div>
 
       <div class="sg-block">
         <h3>Table</h3>
-        <p class="sc-hint">Open header — lowercase mono labels over a 2px cobalt rule, no filled bar — hairline rows, row hover, numbers right-aligned and tabular. Sortable headers get <code>is-sortable</code>; the active one <code>is-sorted</code>.</p>
+        <p class="sc-hint">Open header — lowercase mono labels over a 2px cobalt rule, no filled bar — hairline rows, row hover, numbers right-aligned, tabular and non-wrapping. Sortable columns hold a <code>button.sc-table__sort</code>; the arrow is drawn from <code>aria-sort</code>. Secondary lines are <code>.sc-note</code>; the lead value is <code>.sc-figure</code>; row links are quiet.</p>
         <div class="sg-demo sg-demo--flush">
           <div class="sc-table-scroll"><table class="sc-table">
-            <thead><tr><th>Vehicle</th><th class="sc-num is-sortable">Asking</th><th class="sc-num is-sortable">Miles</th><th class="sc-num is-sortable is-sorted">Landed</th><th>Location</th><th>History</th></tr></thead>
+            <thead><tr><th scope="col">Vehicle</th><th scope="col" class="sc-num is-sortable" aria-sort="ascending"><button type="button" class="sc-table__sort">Asking</button></th><th scope="col" class="sc-num is-sortable"><button type="button" class="sc-table__sort">Miles</button></th><th scope="col" class="sc-num is-sortable" aria-sort="descending"><button type="button" class="sc-table__sort">Landed</button></th><th scope="col">Location</th><th scope="col">History</th><th scope="col">Trend</th></tr></thead>
             <tbody>
-              <tr><td><strong>2024 eDrive40</strong><br><span class="sc-mono sc-muted" style="font-size:11px">WBY33FK08RCS83536</span></td><td class="sc-num"><strong>$36,368</strong><br><span class="sc-mono sc-text-good" style="font-size:10.5px">↓ $1,500 · 1 cut</span></td><td class="sc-num">17,263</td><td class="sc-num sc-text-brand"><strong>$36,646</strong></td><td>San Diego, CA <span class="sc-chip sc-chip--neutral">National</span></td><td class="sc-mono sc-muted" style="font-size:11.5px">1-owner · no accidents</td></tr>
-              <tr><td><strong>2025 eDrive40</strong><br><span class="sc-mono sc-muted" style="font-size:11px">WBY33FK0XRCNEW001</span></td><td class="sc-num"><strong>$41,000</strong><br><span class="sc-mono sc-text-accent" style="font-size:10.5px">NEW</span></td><td class="sc-num">9,000</td><td class="sc-num sc-text-brand"><strong>$37,700</strong></td><td>Naperville, IL <span class="sc-chip sc-chip--brand">Chicago</span></td><td class="sc-mono sc-muted" style="font-size:11.5px">CPO · 2 owners · <span class="sc-text-danger">1 accident</span></td></tr>
-              <tr><td><strong>2024 eDrive40</strong><br><span class="sc-mono sc-muted" style="font-size:11px">WBY33FK02RCS83564</span></td><td class="sc-num"><strong>$38,698</strong></td><td class="sc-num">20,224</td><td class="sc-num sc-text-brand"><strong>$39,865</strong></td><td>Torrance, CA <span class="sc-chip sc-chip--neutral">National</span></td><td class="sc-mono sc-muted" style="font-size:11.5px">1-owner · ex-lease</td></tr>
+              <tr><td><div class="sc-media"><img class="sc-frame" src="assets/sc-avatar-tile.svg" alt=""><div class="sc-media__body"><div class="sc-media__title">2024 eDrive40</div><div class="sc-media__sub">BMW of San Diego</div><div class="sc-media__code">WBY33FK08RCS83536</div><div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a><a class="sc-link--quiet" href="#components">carfax ↗</a></div></div></div></td><td class="sc-num"><span class="sc-figure">$36,368</span><span class="sc-note sc-text-good">▼ $1,500 · 1 cut</span></td><td class="sc-num">17,263</td><td class="sc-num"><span class="sc-figure sc-text-brand">$36,646</span><span class="sc-note">+ $1,100 ship</span></td><td>San Diego, CA <span class="sc-chip sc-chip--neutral">National</span></td><td><span class="sc-note">1-owner · no accidents</span></td><td><svg class="sc-spark sc-spark--emphasis" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,6 L15,6 L28,10 L41,10 L54,16 L67,19 L78,21"/><circle cx="78" cy="21" r="3"/></svg></td></tr>
+              <tr><td><div class="sc-media"><span class="sc-frame sc-frame--empty">no photo</span><div class="sc-media__body"><div class="sc-media__title">2025 eDrive40</div><div class="sc-media__sub">BMW of Naperville</div><div class="sc-media__code">WBY33FK0XRCNEW001</div><div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a></div></div></div></td><td class="sc-num"><span class="sc-figure">$41,000</span><span class="sc-note"><span class="sc-chip sc-chip--spice">new</span></span></td><td class="sc-num">9,000</td><td class="sc-num"><span class="sc-figure sc-text-brand">$37,700</span><span class="sc-note">local</span></td><td>Naperville, IL <span class="sc-chip sc-chip--brand">Chicago</span></td><td><span class="sc-note">CPO · 2 owners · <span class="sc-text-danger">1 accident</span></span></td><td><svg class="sc-spark" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,14 L40,14 L78,14"/><circle cx="78" cy="14" r="3"/></svg></td></tr>
+              <tr><td><div class="sc-media"><span class="sc-frame sc-frame--empty">no photo</span><div class="sc-media__body"><div class="sc-media__title">2024 eDrive40</div><div class="sc-media__sub">Torrance Auto Plaza</div><div class="sc-media__code">WBY33FK02RCS83564</div><div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a><a class="sc-link--quiet" href="#components">carfax ↗</a></div></div></div></td><td class="sc-num"><span class="sc-figure">$38,698</span></td><td class="sc-num">20,224</td><td class="sc-num"><span class="sc-figure sc-text-brand">$39,865</span><span class="sc-note">+ $1,100 ship · + $67 mi</span></td><td>Torrance, CA <span class="sc-chip sc-chip--neutral">National</span></td><td><span class="sc-note">1-owner · <span class="sc-faint">history n/a</span></span></td><td><svg class="sc-spark" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,8 L27,8 L52,12 L78,12"/><circle cx="78" cy="12" r="3"/></svg></td></tr>
             </tbody>
           </table></div>
         </div>
-        <p class="sg-rule"><code>.sc-table</code> (<code>--compact</code>) · <code>.sc-table-scroll</code> · <code>th.is-sortable</code> <code>.is-sorted</code> · <code>.sc-num</code></p>
+        <p class="sg-rule"><code>.sc-table</code> (<code>--compact</code>) · <code>.sc-table-scroll</code> · <code>th.is-sortable</code> <code>th[aria-sort]</code> <code>.sc-table__sort</code> <span class="sc-chip sc-chip--spice">2.1</span> · <code>.sc-num</code> · <code>.sc-figure</code> <code>.sc-note</code> · <code>.sc-link--quiet</code> · <code>th.is-sorted</code> is deprecated (removed in 3.0)</p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Tall table — sticky header <span class="sc-chip sc-chip--spice">2.1</span></h3>
+        <p class="sc-hint">The header sticks only inside a bounded, vertically scrolling wrapper. Plain <code>.sc-table-scroll</code> scrolls sideways and never pins anything. Scroll the demo.</p>
+        <div class="sg-demo sg-demo--flush">
+          <div class="sc-table-scroll sc-table-scroll--tall"><table class="sc-table sc-table--compact">
+            <thead><tr><th scope="col">Day</th><th scope="col" class="sc-num">Lowest landed</th><th scope="col" class="sc-num">Median landed</th><th scope="col" class="sc-num">Vehicles</th></tr></thead>
+            <tbody>
+              <tr><td>Aug 17</td><td class="sc-num">$37,868</td><td class="sc-num">$46,548</td><td class="sc-num">68</td></tr>
+              <tr><td>Aug 18</td><td class="sc-num">$37,868</td><td class="sc-num">$46,600</td><td class="sc-num">69</td></tr>
+              <tr><td>Aug 19</td><td class="sc-num">$37,200</td><td class="sc-num">$46,652</td><td class="sc-num">71</td></tr>
+              <tr><td>Aug 20</td><td class="sc-num">$37,200</td><td class="sc-num">$46,500</td><td class="sc-num">72</td></tr>
+              <tr><td>Aug 21</td><td class="sc-num">$36,900</td><td class="sc-num">$46,480</td><td class="sc-num">73</td></tr>
+              <tr><td>Aug 22</td><td class="sc-num">$36,646</td><td class="sc-num">$46,652</td><td class="sc-num">74</td></tr>
+              <tr><td>Aug 23</td><td class="sc-num">$36,646</td><td class="sc-num">$46,653</td><td class="sc-num">74</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <p class="sg-rule"><code>.sc-table-scroll--tall</code> (70vh max; the demo caps it lower) · inside <code>.sc-card--raised</code> the header takes the raised fill</p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Empty state <span class="sc-chip sc-chip--spice">2.1</span></h3>
+        <p class="sc-hint">Nothing to show yet — one sentence, no apology, no graphic. The table form spans the row.</p>
+        <div class="sg-demo">
+          <p class="sc-empty">No price changes since the previous snapshot.</p>
+          <div class="sc-table-scroll" style="margin-top:14px"><table class="sc-table sc-table--compact">
+            <thead><tr><th scope="col">Vehicle</th><th scope="col" class="sc-num">Last seen</th><th scope="col" class="sc-num">Last price</th></tr></thead>
+            <tbody><tr class="sc-empty"><td colspan="3">Nothing has left the market yet.</td></tr></tbody>
+          </table></div>
+        </div>
+        <p class="sg-rule"><code>.sc-empty</code> · <code>tr.sc-empty</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Frame &amp; media row <span class="sc-chip sc-chip--spice">2.1</span></h3>
+        <p class="sc-hint">Photos are content: a hairline-bordered 6px frame, 56×40 by default, 120×80 with <code>--lg</code>; <code>object-fit: cover</code> crops any aspect (the avatar tile stands in for a photo here). The empty twin says so in words. A media row puts the frame beside title, sub-line, code and quiet links; on narrow screens a table row becomes the card twin — frame, title, aside first (the grid places them), then sub-line, code and the foot.</p>
+        <div class="sg-demo">
+          <div class="sg-row sg-row--top">
+            <img class="sc-frame" src="assets/sc-avatar-tile.svg" alt="">
+            <span class="sc-frame sc-frame--empty">no photo</span>
+            <img class="sc-frame sc-frame--lg" src="assets/sc-avatar-tile.svg" alt="">
+            <span class="sc-frame sc-frame--empty sc-frame--lg">no photo</span>
+          </div>
+          <div class="sc-media" style="margin-top:18px">
+            <img class="sc-frame" src="assets/sc-avatar-tile.svg" alt="">
+            <div class="sc-media__body"><div class="sc-media__title">2024 eDrive40</div><div class="sc-media__sub">BMW of San Diego · San Diego, CA</div><div class="sc-media__code">WBY33FK08RCS83536</div><div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a><a class="sc-link--quiet" href="#components">carfax ↗</a></div></div>
+          </div>
+          <div class="sc-media sc-media--card" style="margin-top:18px;max-width:420px">
+            <span class="sc-frame sc-frame--empty">no photo</span>
+            <div class="sc-media__title">2025 eDrive40</div>
+            <div class="sc-media__aside"><span class="sc-figure">$41,000</span><span class="sc-note">$37,700 landed</span><span class="sc-chip sc-chip--spice">new</span></div>
+            <div class="sc-media__sub">BMW of Naperville · Naperville, IL</div>
+            <div class="sc-media__code">WBY33FK0XRCNEW001</div>
+            <div class="sc-media__foot"><span class="sc-chip sc-chip--brand">Chicago</span><span>CPO · 2 owners</span><span class="sc-right sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a><a class="sc-link--quiet" href="#components">carfax ↗</a></span></div>
+          </div>
+        </div>
+        <p class="sg-rule"><code>.sc-frame</code> (<code>--empty</code> <code>--lg</code>) · <code>.sc-media</code> <code>.sc-media__body</code> <code>.sc-media__title</code> <code>.sc-media__sub</code> <code>.sc-media__code</code> <code>.sc-media__links</code> · <code>.sc-media--card</code> <code>.sc-media__aside</code> <code>.sc-media__foot</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Figure, note &amp; quiet link <span class="sc-chip sc-chip--spice">2.1</span></h3>
+        <p class="sc-hint">Inside a cell or a row: the lead value is bold heading-colored and never wraps; the footnote under it is mono muted. Links in dense tables and media rows are quiet — spice is reserved for the one action and prose links.</p>
+        <div class="sg-demo"><div class="sg-row sg-row--top">
+          <div><span class="sc-figure">$36,646</span><span class="sc-note">landed · + $1,100 ship</span></div>
+          <div><span class="sc-figure sc-text-brand">$37,700</span><span class="sc-note">local · no shipping</span></div>
+          <div><span class="sc-figure">17,263 mi</span><span class="sc-note sc-text-good">▼ 2,737 under baseline</span></div>
+          <div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a><a class="sc-link--quiet" href="#components">carfax ↗</a></div>
+          <div><a href="#components">a prose link →</a></div>
+        </div></div>
+        <p class="sg-rule"><code>.sc-figure</code> · <code>.sc-note</code> · <code>.sc-link--quiet</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Chart container &amp; sparkline <span class="sc-chip sc-chip--spice">2.1</span></h3>
+        <p class="sc-hint">Every chart lives in a focusable host with a name, an <code>aria-hidden</code> SVG, and a table twin below it. Marks wear the <code>.sc-chart__*</code> classes so they follow the tokens; text inside wears text tokens. A sparkline is the same idea at 80×26 — chart tokens for the line, never text tokens. The live charts in <a href="#charts">Data visualization</a> use exactly this contract. On phones this fixed-width specimen scrolls sideways inside its host.</p>
+        <div class="sg-demo">
+          <div class="sc-chart sg-static-chart" role="group" tabindex="0" aria-label="Lowest and median landed price, Aug 17 to 23">
+            <svg viewBox="0 0 540 150" aria-hidden="true">
+              <line class="sc-chart__grid" x1="44" x2="470" y1="16" y2="16"/><line class="sc-chart__grid" x1="44" x2="470" y1="66" y2="66"/><line class="sc-chart__grid" x1="44" x2="470" y1="116" y2="116"/>
+              <text x="36" y="20" text-anchor="end">$48K</text><text x="36" y="70" text-anchor="end">$42K</text><text x="36" y="120" text-anchor="end">$36K</text>
+              <text x="44" y="140" text-anchor="middle">Aug 17</text><text x="257" y="140" text-anchor="middle">Aug 20</text><text x="470" y="140" text-anchor="middle">Aug 23</text>
+              <line class="sc-chart__crosshair" x1="399" x2="399" y1="16" y2="116"/>
+              <path class="sc-chart__series sc-chart__series--context" d="M44,28 L115,27 L186,26 L257,27 L328,28 L399,26 L470,26"/>
+              <path class="sc-chart__series sc-chart__series--emphasis" d="M44,100 L115,100 L186,106 L257,106 L328,108 L399,111 L470,111"/>
+              <circle class="sc-chart__marker" cx="399" cy="26" r="4" style="fill:var(--sc-chart-context)"/><circle class="sc-chart__marker" cx="399" cy="111" r="5.5" style="fill:var(--sc-chart-emphasis)"/><circle class="sc-chart__marker" cx="470" cy="111" r="4" style="fill:var(--sc-chart-emphasis)"/>
+              <text class="sc-chart__label" x="480" y="115">$36,646</text><text class="sc-chart__label" x="480" y="30">$46,653</text>
+            </svg>
+          </div>
+          <details class="sc-details" open>
+            <summary>Table view</summary>
+            <div class="sc-table-scroll" style="margin-top:8px"><table class="sc-table sc-table--compact">
+              <caption class="sc-sr-only">Lowest and median landed price by day</caption>
+              <thead><tr><th scope="col">Day</th><th scope="col" class="sc-num">Lowest landed</th><th scope="col" class="sc-num">Median landed</th></tr></thead>
+              <tbody><tr><td>Aug 22</td><td class="sc-num">$36,646</td><td class="sc-num">$46,652</td></tr><tr><td>Aug 23</td><td class="sc-num">$36,646</td><td class="sc-num">$46,653</td></tr></tbody>
+            </table></div>
+          </details>
+          <div class="sc-grid sc-grid--2" style="margin-top:18px">
+            <div class="sc-tile sg-tile-spark"><div class="sc-tile__label">Vehicles tracked</div><div class="sc-tile__value">74</div><div class="sc-tile__sub">+ 6 this week</div><svg class="sc-spark sc-spark--emphasis sc-tile__spark" viewBox="0 0 120 26" width="120" height="26" aria-hidden="true"><path d="M2,22 L22,20 L42,19 L62,13 L82,12 L102,7 L118,4"/><circle cx="118" cy="4" r="3"/></svg></div>
+            <div class="sc-table-scroll"><table class="sc-table sc-table--compact">
+              <thead><tr><th scope="col">Vehicle</th><th scope="col" class="sc-num">Landed</th><th scope="col">Trend</th></tr></thead>
+              <tbody>
+                <tr><td>2024 eDrive40</td><td class="sc-num"><span class="sc-figure">$36,646</span></td><td><svg class="sc-spark sc-spark--emphasis" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,6 L28,10 L54,16 L78,21"/><circle cx="78" cy="21" r="3"/></svg><span class="sc-sr-only">Aug 17 $38,900; Aug 23 $36,646</span></td></tr>
+                <tr><td>2025 eDrive40</td><td class="sc-num"><span class="sc-figure">$37,700</span></td><td><svg class="sc-spark" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,14 L40,14 L78,14"/><circle cx="78" cy="14" r="3"/></svg><span class="sc-sr-only">Aug 17 $37,700; Aug 23 $37,700</span></td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </div>
+        <p class="sg-rule"><code>.sc-chart</code> (<code>role="group" tabindex="0" aria-label</code>) · <code>.sc-chart__grid</code> <code>.sc-chart__crosshair</code> <code>.sc-chart__series</code> (<code>--emphasis</code> <code>--context</code>) <code>.sc-chart__marker</code> <code>.sc-chart__label</code> · <code>.sc-spark</code> (<code>--emphasis</code>) <code>.sc-tile__spark</code> · a sparkline's values ride along in <code>.sc-sr-only</code> or the row's details twin</p>
       </div>
 
       <div class="sg-block">
         <h3>Tooltip, legend, tabs, details</h3>
-        <p class="sc-hint">Tooltips sit on ink with values leading. Legends use line keys for lines and swatches for bars. Tabs switch the subject, not the site. Details hide a chart's table twin.</p>
-        <div class="sg-demo"><div class="sg-row" style="align-items:flex-start;gap:28px">
-          <div class="sc-tooltip is-on"><div class="sc-tooltip__date">Mon, August 24, 2026</div><div class="sc-tooltip__row"><i style="background:var(--sc-chart-emphasis)"></i><b>$36,646</b><span>lowest landed</span></div><div class="sc-tooltip__row"><i style="background:var(--sc-chart-context)"></i><b>$46,652</b><span>median landed</span></div><div class="sc-tooltip__meta">70 vehicles · 1 local</div></div>
-          <div>
+        <p class="sc-hint">Tooltips sit on ink with values leading and are hidden from assistive tech while off. Legends use line keys for lines and swatches for bars. Tabs are a segmented control — <code>role="group"</code> with <code>aria-pressed</code> — that switches the subject, not the site. Details hide a chart's table twin; the arrow turns when open.</p>
+        <div class="sg-demo"><div class="sg-row sg-row--top">
+          <div class="sc-tooltip sg-tip is-on"><div class="sc-tooltip__date">Mon, August 24, 2026</div><div class="sc-tooltip__row"><i style="background:var(--sc-chart-emphasis)"></i><b>$36,646</b><span>lowest landed</span></div><div class="sc-tooltip__row"><i style="background:var(--sc-chart-context)"></i><b>$46,652</b><span>median landed</span></div><div class="sc-tooltip__meta">70 vehicles · 1 local</div></div>
+          <div class="sc-stack">
             <div class="sc-legend" style="margin-top:0"><span><i style="background:var(--sc-chart-emphasis)"></i>Lowest landed</span><span><i style="background:var(--sc-chart-context)"></i>Median landed</span><span><i class="is-swatch" style="background:var(--sc-chart-1)"></i>Local</span><span><i class="is-swatch" style="background:var(--sc-chart-2)"></i>National</span></div>
-            <div class="sc-tabs" style="margin-top:14px"><button class="sc-tab" aria-selected="true" type="button">BMW i5 eDrive40</button><button class="sc-tab" type="button">Second target</button></div>
-            <details class="sc-details" style="margin-top:14px"><summary>Table view</summary><p class="sc-hint" style="margin-top:8px">The chart's values as a table — every chart has one.</p></details>
+            <div class="sc-tabs" role="group" aria-label="Model"><button class="sc-tab sc-tab--case" aria-pressed="true" type="button">BMW i5</button><button class="sc-tab" aria-pressed="false" type="button">Second target</button><button class="sc-tab" aria-pressed="false" type="button">All models</button></div>
+            <details class="sc-details"><summary>Table view</summary><p class="sc-hint" style="margin-top:8px">The chart's values as a table — every chart has one.</p></details>
+            <details class="sc-details" open><summary>Table view, open</summary><p class="sc-hint" style="margin-top:8px">The same twin, expanded: the glyph points down.</p></details>
           </div>
         </div></div>
-        <p class="sg-rule"><code>.sc-tooltip</code> (<code>__date</code> <code>__row</code> <code>__meta</code>, <code>is-on</code>) · <code>.sc-legend</code> (<code>i.is-swatch</code>) · <code>.sc-tabs</code> <code>.sc-tab[aria-selected]</code> (<code>--case</code> keeps proper-noun casing) · <code>.sc-details</code></p>
+        <p class="sg-rule"><code>.sc-tooltip</code> (<code>__date</code> <code>__row</code> <code>__meta</code>, <code>is-on</code>) · <code>.sc-legend</code> (<code>i.is-swatch</code>) · <code>.sc-tabs[role="group"]</code> <code>.sc-tab[aria-pressed]</code> (<code>--case</code> keeps proper-noun casing; <code>aria-selected</code> is still styled for old markup) · <code>.sc-details</code> (<code>[open]</code>)</p>
       </div>
 
       <div class="sg-block">
         <h3>Notice</h3>
         <p class="sc-hint">The stop-and-read block: what failed and what to do. No apology, no vagueness.</p>
-        <div class="sg-demo"><div class="sc-notice" style="margin:0"><div class="sc-eyebrow">Could not load data.json</div><p style="margin:0">This page reads <code>data.json</code> from the same folder, so it needs to be served over HTTP — GitHub Pages, or <code>python -m http.server</code> from the docs folder.</p></div></div>
+        <div class="sg-demo"><div class="sc-notice"><div class="sc-eyebrow">Could not load data.json</div><p>This page reads <code>data.json</code> from the same folder, so it needs to be served over HTTP — GitHub Pages, or a local static server from the docs folder.</p></div></div>
         <p class="sg-rule"><code>.sc-notice</code></p>
       </div>
 
       <div class="sg-block">
         <h3>Footer &amp; watermark</h3>
-        <p class="sc-hint">Source line left; the SpicyChicken watermark right — mark, wordmark, 70% opacity, links to the profile. On every page, the same size.</p>
-        <div class="sg-demo sg-demo--flush"><div class="sc-foot" style="margin:0;border-top:0"><span>Source: auto.dev listings API · snapshot 2026-08-23</span><a class="sc-watermark" href="https://github.com/spicyChicken59"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt="" style="height:20px"><span class="sc-watermark__name">SpicyChicken</span></a></div></div>
-        <p class="sg-rule"><code>.sc-foot</code> · <code>.sc-watermark</code> <code>.sc-watermark__name</code></p>
+        <p class="sc-hint">Source line left; the SpicyChicken watermark right — mono mark, wordmark, 70% opacity, links to the profile. On every page, the same size; the class sets it, so no inline height.</p>
+        <div class="sg-demo sg-demo--flush"><div class="sc-foot"><span>Source: auto.dev listings API · snapshot 2026-08-23 · <a href="#components">method</a></span><a class="sc-watermark" href="https://github.com/spicyChicken59"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a></div></div>
+        <p class="sg-rule"><code>.sc-foot</code> · <code>.sc-watermark</code> <code>img.sc-mark</code> <code>.sc-watermark__name</code></p>
       </div>
 
       <div class="sg-block">
         <h3>Document surface</h3>
-        <p class="sc-hint">On-screen prose at 800px with section rules in the brand line. The print-bound deliverable template is on the roadmap.</p>
-        <div class="sg-demo sg-demo--flush"><div class="sc-doc" style="margin:0;max-width:none;border:0;border-radius:0"><div class="sc-eyebrow">Deliverable 01 · Method</div><h2 style="border:0;padding:0;margin:0 0 8px">How landed price is computed</h2><p class="sc-dek" style="font-size:16px">Asking price, plus shipping when the car is outside the region, adjusted for mileage against a baseline.</p><p style="margin:0;max-width:62ch">Each day the tracker keeps the lowest price it saw per VIN. The adjustment is thirty cents a mile either side of twenty thousand miles — a used-EV rule of thumb, not an appraisal.</p></div></div>
-        <p class="sg-rule"><code>.sc-doc</code></p>
+        <p class="sc-hint">On-screen prose at 800px with section rules in the brand line. The flat form drops the card for prose straight on the page, with h3 rhythm, a 68ch measure and a table of contents.</p>
+        <div class="sg-demo sg-demo--flush"><div class="sc-doc"><div class="sc-eyebrow">Deliverable 01 · Method</div><h2 style="border:0;padding:0;margin:0 0 8px">How landed price is computed</h2><p class="sc-dek" style="font-size:16px">Asking price, plus shipping when the car is outside the region, adjusted for mileage against a baseline.</p><p>Each day the tracker keeps the lowest price it saw per VIN. The adjustment is thirty cents a mile either side of twenty thousand miles — a used-EV rule of thumb, not an appraisal.</p></div></div>
+        <div class="sg-demo"><div class="sc-doc sc-doc--flat">
+          <div class="sc-eyebrow">How it works</div>
+          <nav class="sc-toc" aria-label="On this page"><a href="#components">Landed price</a><a href="#components">Mileage adjustment</a><a href="#components">Snapshots</a><a href="#components">Sources</a></nav>
+          <h3>Mileage adjustment</h3>
+          <p>Thirty cents a mile either side of a 20,000-mile baseline, so a 10,000-mile car is landed $3,000 higher and a 30,000-mile car $3,000 lower than its asking price suggests.</p>
+          <ul><li>Shipping applies outside a 200-mile radius.</li><li>Listings under $20,000 are ignored as payment-not-price errors.</li></ul>
+        </div></div>
+        <p class="sg-rule"><code>.sc-doc</code> (<code>--flat</code>) · <code>.sc-toc</code> <span class="sc-chip sc-chip--spice">2.1</span></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Skip link</h3>
+        <p class="sc-hint">The first focusable thing on a page: off-screen until focused, then a small card at the top-left. This guide has one — press <kbd>Tab</kbd> from the address bar. Shown here in its focused form.</p>
+        <div class="sg-demo"><a class="sc-skip" href="#main-content">Skip to content</a></div>
+        <p class="sg-rule"><code>.sc-skip</code> before the masthead, pointing at <code>main#main-content</code></p>
       </div>
     </section>
 
     <section class="sg-section" id="charts">
       <div class="sc-eyebrow">07 · Build</div>
       <h2>Data visualization</h2>
-      <p class="sc-dek">Five categorical slots in fixed order, a cobalt sequential ramp, an emphasis pair. Every slot passes the colorblind and normal-vision separation checks against the card surface in both modes.</p>
+      <p class="sc-dek">Five categorical slots in fixed order, a cobalt sequential ramp, an emphasis pair. Adjacent slots pass the colorblind and normal-vision separation checks against the card surface in both modes; all-pairs separation is verified for slots 1–3.</p>
       <div class="sg-block">
         <h3>Palettes — live in the current mode</h3>
         <div id="chart-palettes"></div>
       </div>
       <div class="sc-grid sc-grid--2">
         <div class="sc-card">
-          <div class="sc-card__head"><div><h3 style="font-size:18px">Emphasis line</h3><p class="sc-hint">The series that matters in cobalt, context in gray. Crosshair finds the day; arrow keys step.</p></div></div>
+          <div class="sc-card__head"><div><h3>Emphasis line</h3><p class="sc-hint">The series that matters in cobalt, context in gray. Crosshair finds the day; arrow keys step; the table twin carries the values.</p></div></div>
           <div class="sc-legend"><span><i style="background:var(--sc-chart-emphasis)"></i>Lowest landed</span><span><i style="background:var(--sc-chart-context)"></i>Median landed</span></div>
-          <div class="sg-chart" id="demo-line" tabindex="0" aria-label="Demo line chart"></div>
+          <div class="sc-chart" id="demo-line" role="group" tabindex="0" aria-label="Lowest and median landed price by day, Aug 12 to 23. Use the arrow keys to step through days."></div>
+          <div id="demo-line-twin"></div>
         </div>
         <div class="sc-card">
-          <div class="sc-card__head"><div><h3 style="font-size:18px">Categorical bars</h3><p class="sc-hint">Listings by state, per week. Slots 1–5 in order, ≤24px thick, 4px rounded data-ends, 2px surface gap.</p></div></div>
+          <div class="sc-card__head"><div><h3>Categorical bars</h3><p class="sc-hint">Listings by state, per week. Slots 1–5 in order, ≤24px thick, 4px rounded data-ends, 2px surface gap. Hover or arrow through the weeks.</p></div></div>
           <div class="sc-legend" id="demo-bar-legend"></div>
-          <div class="sg-chart" id="demo-bar"></div>
+          <div class="sc-chart" id="demo-bar" role="group" tabindex="0" aria-label="Listings by state per week, weeks 31 to 34. Use the arrow keys to step through weeks."></div>
+          <div id="demo-bar-twin"></div>
         </div>
       </div>
-      <div class="sc-callout sc-callout--core" style="margin-top:16px"><div class="sc-callout__label">Rules</div><p>One y-axis, always. Color follows the entity, never its rank. Status colors are never a series. Legend for two or more series; direct-label selectively. Text wears text tokens, never the series color. Every chart has a table twin. All-pairs forms (scatter, bubble, maps) use slots 1–3 only.</p></div>
+      <div class="sc-callout sc-callout--core"><div class="sc-callout__label">Rules</div><p>One y-axis, always. Color follows the entity, never its rank. Status colors are never a series. Legend for two or more series; direct-label selectively. Text wears text tokens, never the series color. Every chart has a table twin. All-pairs forms (scatter, bubble, maps) use slots 1–3 only; lines on slots 4–5 add end-labels or markers.</p></div>
     </section>
 
     <section class="sg-section" id="marks">
@@ -462,28 +715,28 @@
       <div class="sg-block">
         <h3>The four forms</h3>
         <div class="sg-marks">
-          <figure><span style="display:inline-block;background:#FFFFFF;border-radius:10px;padding:14px"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-color-light.svg" alt="Color on light"></span><figcaption>color · light</figcaption></figure>
-          <figure><span style="display:inline-block;background:var(--sc-night-950);border-radius:10px;padding:14px"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-color-dark.svg" alt="Color on dark"></span><figcaption>color · dark</figcaption></figure>
-          <figure><span style="display:inline-block;background:var(--sc-night-950);border-radius:10px;padding:14px"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-mono-cream.svg" alt="Mono cream"></span><figcaption>mono · cream</figcaption></figure>
-          <figure><span style="display:inline-block;background:#FFFFFF;border-radius:10px;padding:14px"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-mono-ink.svg" alt="Mono ink"></span><figcaption>mono · ink</figcaption></figure>
-          <figure><img src="assets/sc-avatar-tile.svg" alt="Avatar tile" style="width:76px;height:76px;display:block"><figcaption>avatar tile · favicon</figcaption></figure>
-          <figure><span style="display:inline-block;background:var(--sc-night-950);border-radius:10px;padding:14px 18px"><img src="assets/sc-lockup-cream.svg" alt="SpicyChicken lockup" style="height:34px;width:auto;display:block"></span><figcaption>lockup · wordmark in Bricolage 700</figcaption></figure>
+          <figure><span class="sg-tile sg-tile--light"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-color-light.svg" alt="Color on light"></span><figcaption>color · light</figcaption></figure>
+          <figure><span class="sg-tile sg-tile--ink"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-color-dark.svg" alt="Color on dark"></span><figcaption>color · dark</figcaption></figure>
+          <figure><span class="sg-tile sg-tile--ink"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-mono-cream.svg" alt="Mono cream"></span><figcaption>mono · cream</figcaption></figure>
+          <figure><span class="sg-tile sg-tile--light"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-mono-ink.svg" alt="Mono ink"></span><figcaption>mono · ink</figcaption></figure>
+          <figure><img class="sg-mark-76" src="assets/sc-avatar-tile.svg" alt="Avatar tile"><figcaption>avatar tile · favicon</figcaption></figure>
+          <figure><span class="sg-tile sg-tile--ink sg-tile--wide"><img class="sg-lockup" src="assets/sc-lockup-cream.svg" alt="SpicyChicken lockup"></span><figcaption>lockup · wordmark in the display face, Bricolage Grotesque 700</figcaption></figure>
         </div>
       </div>
       <div class="sg-block">
         <h3>Sizes</h3>
-        <div class="sg-marks" style="align-items:center">
-          <figure><img src="assets/sc-avatar-tile.svg" style="width:16px;height:16px;display:block" alt=""><figcaption>16 · favicon</figcaption></figure>
+        <div class="sg-marks sg-marks--center">
+          <figure><img class="sg-mark-16" src="assets/sc-avatar-tile.svg" alt=""><figcaption>16 · favicon</figcaption></figure>
           <figure><img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt=""><figcaption>26 · masthead</figcaption></figure>
           <figure><img class="sc-mark sc-mark--lg" src="assets/sc-mark-color-dark.svg" alt=""><figcaption>48</figcaption></figure>
-          <figure><img src="assets/sc-mark-color-dark.svg" style="height:96px;width:auto;display:block" alt=""><figcaption>96 · cover</figcaption></figure>
-          <figure><span style="display:inline-flex;background:var(--sc-ink);border-radius:10px;padding:12px 16px"><a class="sc-watermark" href="#marks" style="color:#F4F7FB"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt="" style="height:20px"><span class="sc-watermark__name">SpicyChicken</span></a></span><figcaption>watermark lockup (mono, on ink)</figcaption></figure>
-          <figure><span style="display:inline-flex;align-items:center;gap:10px;background:var(--sc-ink);border-radius:10px;padding:12px 16px"><img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt=""><span style="font:700 16px/1 var(--sc-font-display);letter-spacing:-.3px;color:#F4F7FB">Auto Market Tracker</span></span><figcaption>a project masthead — the chick + the name in type</figcaption></figure>
+          <figure><img class="sg-mark-96" src="assets/sc-mark-color-dark.svg" alt=""><figcaption>96 · cover</figcaption></figure>
+          <figure><span class="sg-tile sg-tile--ink sg-tile--row sc-on-ink"><a class="sc-watermark" href="#marks"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a></span><figcaption>watermark lockup (mono, on ink)</figcaption></figure>
+          <figure><span class="sg-tile sg-tile--ink sg-tile--row"><img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt=""><span class="sc-brand__name">Auto Market Tracker</span></span><figcaption>a project masthead — the chick + the name in type</figcaption></figure>
         </div>
       </div>
       <div class="sc-grid sc-grid--2">
-        <div class="sc-card"><div class="sc-eyebrow">Usage</div><p class="sc-hint" style="margin:0">Color-dark on ink and dark surfaces, color-light on white and cream, mono for the watermark and one-color uses. Files in <code>assets/</code>: four mark SVGs, the avatar tile, lockups (SVG + PNG), favicon set. Clear space ≥ the flame's height on all sides. Never recolor, outline, rotate, or add effects.</p></div>
-        <div class="sc-card"><div class="sc-eyebrow sc-eyebrow--accent">Watermark spec</div><p class="sc-hint" style="margin:0">Mono mark 20px tall + wordmark in the display face at 12px, footer-right, 70% opacity, links to the profile. The masthead shows the color form; the watermark shows the mono form. One chick per surface, always the same sizes.</p></div>
+        <div class="sc-card"><div class="sc-eyebrow">Usage</div><p class="sc-hint">Color-dark on ink and dark surfaces, color-light on white and cream, mono for the watermark and one-color uses. Files in <code>assets/</code>: four mark SVGs, the avatar tile, lockups (SVG + PNG), favicon set — hosted at <code>spicychicken59.github.io/design-system/assets/</code>. Clear space ≥ the flame's height on all sides. Never recolor, outline, rotate, or add effects.</p></div>
+        <div class="sc-card"><div class="sc-eyebrow sc-eyebrow--accent">Watermark spec</div><p class="sc-hint">Mono mark 20px tall + wordmark in the display face at 12px, footer-right, 70% opacity, links to the profile. The masthead shows the color form; the watermark shows the mono form. One chick per surface, always the same sizes.</p></div>
       </div>
     </section>
 
@@ -492,16 +745,16 @@
       <h2>Pre-ship checklist</h2>
       <p class="sc-dek">Open the style guide beside the page. If something on the page has no equivalent here, it's a new component — fold it in or take it out.</p>
       <ol class="sg-check">
-        <li>Masthead: project mark + name left, theme toggle right, <code>--sc-ink</code> in both modes.</li>
-        <li>Title block opens with an eyebrow; h1 is one plain sentence; dek is one sentence.</li>
-        <li>Exactly one spice action per view (primary button or next-action callout).</li>
-        <li>At most one core callout per section.</li>
-        <li>Page CSS references semantic tokens only — no hex, no primitives.</li>
-        <li>Charts use <code>--sc-chart-*</code>; one y-axis; legend for ≥2 series; a table twin under each.</li>
-        <li>Text never wears a chart or accent color; deltas carry ▲▼; chips carry words.</li>
-        <li>Screenshotted at 1280 and 390 in dark and light; nothing scrolls sideways.</li>
-        <li>Footer has the source line and the watermark; favicon is the project mark.</li>
-        <li>Page ends with one next action, not a list.</li>
+        <li>Head: <code>color-scheme</code> meta, the two font preconnects and the fonts link, then <code>sc.css</code> pinned to a tag via jsDelivr; <code>sc-theme.js</code> in the head; favicon links point at the hosted assets.</li>
+        <li>Skip link first, then masthead: the chick + project name left, theme toggle right, <code>--sc-ink</code> in both modes; <code>.sc-nav</code> has an <code>aria-label</code>.</li>
+        <li>Title block is <code>.sc-title</code>: eyebrow, one-plain-sentence h1, one-sentence dek.</li>
+        <li>Exactly one spice action per view (primary button or next-action callout). At most one core callout per section.</li>
+        <li>Page CSS references semantic tokens only — no hex, no primitives, no raw rgba.</li>
+        <li>Charts sit in <code>.sc-chart</code> hosts with <code>--sc-chart-*</code> marks; one y-axis; legend for ≥2 series; a table twin under each.</li>
+        <li>Text never wears a chart or accent color; deltas carry ▲▼; chips carry words; codes take <code>--case</code>.</li>
+        <li>Tables: sortable headers hold a button and set <code>aria-sort</code>; the sticky header only inside <code>--tall</code>; links in rows are quiet.</li>
+        <li>Screenshotted at 1280 and 390 in dark and light; nothing scrolls sideways; every control is at least 24px tall.</li>
+        <li>Footer has the source line and the watermark; favicon is the chick. Page ends with one next action, not a list.</li>
       </ol>
     </section>
 
@@ -510,16 +763,16 @@
       <h2>Do / don't</h2>
       <div class="sg-dont">
         <div class="sc-card"><h3 class="sc-text-good">Do</h3><ul><li>Lead with a lowercase "//" eyebrow.</li><li>Keep the masthead and footer dark in both modes.</li><li>Put the chick in the masthead and the watermark; name the project in type.</li><li>Use Instrument Sans for numbers, proportional figures.</li><li>Separate with hairlines and color, not shadow.</li><li>Write the outcome and the reason.</li></ul></div>
-        <div class="sc-card"><h3 class="sc-text-danger">Don't</h3><ul><li>Add a hue or a gradient.</li><li>Use spice for text, headings, or large fills.</li><li>ALL-CAPS a tracked label — lowercase mono is the house style.</li><li>Use a display face or tabular figures for a big number.</li><li>Ship an icon set without noting the substitution.</li><li>End with a menu of next steps.</li></ul></div>
+        <div class="sc-card"><h3 class="sc-text-danger">Don't</h3><ul><li>Add a hue or a gradient.</li><li>Use spice for text, headings, or large fills — <code>.sc-text-accent</code> is on its way out.</li><li>ALL-CAPS a tracked label — lowercase mono is the house style.</li><li>Use a display face or tabular figures for a big number.</li><li>Ship an icon set without noting the substitution.</li><li>End with a menu of next steps.</li></ul></div>
       </div>
-      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Move <code>design-system/</code> into its own repository with Pages enabled, tag it v2.0, and link <code>sc.css</code> from projects instead of copying it.</p></div>
+      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Tag v2.1.0 and pin it from every project — SpicyCar first: <code>https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.1.0/sc.css</code>.</p></div>
     </section>
   </main>
 </div>
 
 <footer class="sc-foot">
-  <span>SpicyChicken Design System · v2.0.0 · sc.css · tokens.json · DESIGN_SYSTEM.md</span>
-  <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt="" style="height:20px"><span class="sc-watermark__name">SpicyChicken</span></a>
+  <span>SpicyChicken Design System · v2.1.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
+  <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a>
 </footer>
 
 <script>
@@ -531,7 +784,7 @@
   const el = (tag, attrs, ...kids) => {
     const n = document.createElement(tag);
     for (const k in attrs || {}) {
-      if (k === 'class') n.className = attrs[k];
+      if (k === 'class') { if (attrs[k]) n.className = attrs[k]; }
       else if (k === 'style') n.setAttribute('style', attrs[k]);
       else if (k.startsWith('on')) n.addEventListener(k.slice(2), attrs[k]);
       else n.setAttribute(k, attrs[k]);
@@ -542,7 +795,7 @@
   const svg = (tag, attrs, ...kids) => {
     const n = document.createElementNS('http://www.w3.org/2000/svg', tag);
     for (const k in attrs || {}) n.setAttribute(k, attrs[k]);
-    for (const kid of kids) if (kid) n.appendChild(kid);
+    for (const kid of kids) if (kid) n.appendChild(typeof kid === 'string' ? document.createTextNode(kid) : kid);
     return n;
   };
 
@@ -551,13 +804,22 @@
   const lin = (c) => c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
   const lum = (h) => { const [r, g, b] = toRgb(h).map(lin); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
   const contrast = (a, b) => { const l1 = lum(a), l2 = lum(b); const [hi, lo] = l1 > l2 ? [l1, l2] : [l2, l1]; return (hi + 0.05) / (lo + 0.05); };
-  const inkFor = (h) => lum(h) > 0.35 ? '#111F31' : '#F4F7FB';
   const isHex = (v) => /^#[0-9a-f]{6}$/i.test(v);
+  // Alpha tokens (on-ink-3, the ink hairlines) are composited over the surface they sit on before measuring.
+  const flatten = (v, over) => {
+    if (isHex(v)) return v;
+    const m = /^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+))?\s*\)$/i.exec(v);
+    if (!m || !isHex(over)) return null;
+    const a = m[4] === undefined ? 1 : +m[4], ov = toRgb(over).map((ch) => ch * 255);
+    return '#' + [m[1], m[2], m[3]].map((ch, i) => Math.round(+ch * a + ov[i] * (1 - a)).toString(16).padStart(2, '0')).join('');
+  };
+  // Swatch label ink: whichever of the two system inks contrasts more with the swatch.
+  const inkFor = (h) => { const ink = tok('ink'), on = tok('on-ink'); if (!isHex(h)) return on; return contrast(h, ink) >= contrast(h, on) ? ink : on; };
 
   // ---- cover bar ----
   function renderCover() {
     const host = $('cover-bar'); host.textContent = '';
-    const steps = ['cobalt-300', 'cobalt-400', 'cobalt-500', 'cobalt-600', 'cobalt-700', 'cobalt-800', 'cobalt-950', 'spice-400', 'spice-600'];
+    const steps = ['cobalt-300', 'cobalt-400', 'cobalt-500', 'cobalt-600', 'cobalt-700', 'cobalt-800', 'cobalt-950', 'spice-400', 'spice-700'];
     for (const s of steps) { const v = tok(s); host.appendChild(el('div', { style: `background:${v}` }, el('span', { style: `color:${inkFor(v)}` }, s.replace('cobalt-', 'C').replace('spice-', 'S')))); }
   }
 
@@ -580,32 +842,45 @@
   }
 
   // ---- semantic roles with live contrast ----
+  // kind: text (4.5:1 vs page and card) · text-on (4.5:1 vs the named token) · ui (3:1 vs page and card)
+  //       ui-on (3:1 vs the named token) · line (ratio only) · surface (no check)
   const ROLES = [
     ['bg', 'Page background', 'surface'], ['surface', 'Cards, tables, inputs', 'surface'], ['raised', 'Code, chips, nested surfaces', 'surface'], ['hover', 'Row and control hover', 'surface'],
-    ['border', 'Hairlines', 'line'], ['border-strong', 'Input borders, strong rules', 'line'],
-    ['ink', 'Masthead, footer, tooltips, covers (both modes)', 'surface'], ['on-ink', 'Text on ink', 'text-on-ink'], ['on-ink-2', 'Labels on ink', 'text-on-ink'],
-    ['heading', 'Headings', 'text'], ['text', 'Body', 'text'], ['text-2', 'Muted', 'text'], ['text-3', 'Faint — labels only', 'text'],
+    ['border', 'Hairlines', 'line'], ['border-strong', 'Strong rules, kbd, tooltip edge', 'line'], ['border-control', 'Input and select edges', 'ui-on', 'surface'],
+    ['ink', 'Masthead, footer, tooltips, covers (both modes)', 'surface'], ['on-ink', 'Text on ink', 'text-on', 'ink'], ['on-ink-2', 'Labels on ink', 'text-on', 'ink'], ['on-ink-3', 'Footer text on ink', 'text-on', 'ink'],
+    ['heading', 'Headings', 'text'], ['text', 'Body', 'text'], ['text-2', 'Muted', 'text'], ['text-3', 'Faint — placeholders, codes', 'text'],
     ['brand', 'Eyebrows, labels, brand text', 'text'], ['brand-strong', 'Data emphasis, icons', 'text'], ['brand-fill', 'Tinted fills', 'surface'], ['brand-line', 'Left borders, table headers', 'line'],
-    ['accent', 'Links, primary button, focus', 'text'], ['accent-hover', 'Link hover', 'text'], ['accent-fill', 'Spice callout fill', 'surface'], ['on-accent', 'Text on a spice button', 'text-on-accent'],
-    ['good', 'Positive state', 'text'], ['warn', 'Caution state', 'text'], ['danger', 'Stop state', 'text'], ['info', 'Informational state', 'text'],
+    ['accent', 'Links, primary button', 'text'], ['accent', 'Spice chip and callout label', 'text-on', 'accent-fill'], ['accent-hover', 'Link hover', 'text'], ['accent-fill', 'Spice callout fill', 'surface'], ['on-accent', 'Text on a spice button', 'text-on', 'accent'],
+    ['focus', 'Focus ring', 'ui'],
+    ['good', 'Positive state', 'text'], ['good', 'Good chip text', 'text-on', 'good-fill'],
+    ['warn', 'Caution state', 'text'], ['warn', 'Warn chip text', 'text-on', 'warn-fill'],
+    ['danger', 'Stop state', 'text'], ['danger', 'Warning callout label', 'text-on', 'danger-fill'],
+    ['info', 'Informational state', 'text'], ['info', 'Info chip text', 'text-on', 'info-fill'],
+    ['chart-1', 'Series 1 (cobalt)', 'ui-on', 'surface'], ['chart-2', 'Series 2 (spice)', 'ui-on', 'surface'], ['chart-3', 'Series 3 (teal)', 'ui-on', 'surface'], ['chart-4', 'Series 4 (violet)', 'ui-on', 'surface'], ['chart-5', 'Series 5 (pink)', 'ui-on', 'surface'],
   ];
-  function badge(cr) {
-    const cls = cr >= 7 ? 'aaa' : cr >= 4.5 ? 'aa' : cr >= 3 ? 'lg' : 'na';
+  function badge(cr, ui) {
+    if (ui) {
+      const ok = cr >= 3;
+      return el('span', { class: 'sg-cr ' + (ok ? 'sg-cr--aa' : 'sg-cr--fail') }, `${cr.toFixed(1)}:1 ${ok ? 'AA ui' : 'below 3'}`);
+    }
+    const cls = cr >= 7 ? 'aaa' : cr >= 4.5 ? 'aa' : cr >= 3 ? 'lg' : 'fail';
     const txt = cr >= 7 ? 'AAA' : cr >= 4.5 ? 'AA' : cr >= 3 ? 'AA large' : 'below 3';
     return el('span', { class: 'sg-cr sg-cr--' + cls }, `${cr.toFixed(1)}:1 ${txt}`);
   }
   function renderRoles() {
     const t = $('roles'); t.textContent = '';
-    t.appendChild(el('thead', null, el('tr', null, el('th', null, 'Token'), el('th', null, 'Value'), el('th', null, 'Use'), el('th', null, 'vs page'), el('th', null, 'vs card'))));
+    t.appendChild(el('thead', null, el('tr', null, el('th', { scope: 'col' }, 'Token'), el('th', { scope: 'col' }, 'Value'), el('th', { scope: 'col' }, 'Use'), el('th', { scope: 'col' }, 'vs page'), el('th', { scope: 'col' }, 'vs card'))));
     const body = el('tbody');
-    const bg = tok('bg'), surface = tok('surface'), ink = tok('ink'), accent = tok('accent');
-    for (const [name, use, kind] of ROLES) {
+    const bg = tok('bg'), surface = tok('surface');
+    for (const [name, use, kind, against] of ROLES) {
       const v = tok(name);
       const cells = [el('td', null, '--sc-' + name), el('td', null, el('span', { class: 'sg-sw', style: `background:${v}` }), el('span', { class: 'sc-mono', style: 'font-size:12px' }, v.toUpperCase())), el('td', { class: 'sc-muted', style: 'font-size:13px' }, use)];
-      if (!isHex(v)) { cells.push(el('td', null, '—'), el('td', null, '—')); }
+      const other = against ? tok(against) : null;
+      const vv = against ? flatten(v, other) : v;
+      if (!isHex(vv) || (against && !isHex(other))) { cells.push(el('td', { colspan: 2, class: 'sc-muted', style: 'font-size:12px' }, 'alpha — not measured')); }
       else if (kind === 'text') { cells.push(el('td', null, badge(contrast(v, bg))), el('td', null, badge(contrast(v, surface)))); }
-      else if (kind === 'text-on-ink') { const c = contrast(v, ink); cells.push(el('td', { colspan: 2 }, badge(c), el('span', { class: 'sc-muted', style: 'font-size:11px;margin-left:8px' }, 'on --sc-ink'))); }
-      else if (kind === 'text-on-accent') { const c = contrast(v, accent); cells.push(el('td', { colspan: 2 }, badge(c), el('span', { class: 'sc-muted', style: 'font-size:11px;margin-left:8px' }, 'on --sc-accent'))); }
+      else if (kind === 'ui') { cells.push(el('td', null, badge(contrast(v, bg), true)), el('td', null, badge(contrast(v, surface), true))); }
+      else if (kind === 'text-on' || kind === 'ui-on') { cells.push(el('td', { colspan: 2 }, badge(contrast(vv, other), kind === 'ui-on'), el('span', { class: 'sc-note' }, 'on --sc-' + against + (vv !== v ? ' (composited)' : '')))); }
       else if (kind === 'line') { cells.push(el('td', null, el('span', { class: 'sg-cr sg-cr--na' }, contrast(v, bg).toFixed(1) + ':1')), el('td', null, el('span', { class: 'sg-cr sg-cr--na' }, contrast(v, surface).toFixed(1) + ':1'))); }
       else { cells.push(el('td', { colspan: 2, class: 'sc-muted', style: 'font-size:12px' }, 'surface')); }
       body.appendChild(el('tr', null, ...cells));
@@ -626,80 +901,122 @@
   function renderPalettes() {
     const host = $('chart-palettes'); host.textContent = '';
     host.appendChild(strip(['chart-1', 'chart-2', 'chart-3', 'chart-4', 'chart-5', 'chart-other'], 'Categorical — fixed order, never cycled', 'Bars and lines may use all five with a legend. Scatter, bubble and maps use 1–3 only. A sixth series folds into Other.'));
-    host.appendChild(strip(['chart-seq-1', 'chart-seq-2', 'chart-seq-3', 'chart-seq-4', 'chart-seq-5'], 'Sequential — one hue, light → dark', 'Magnitude. Heatmaps, choropleths, ordered tiers.'));
+    host.appendChild(strip(['chart-seq-1', 'chart-seq-2', 'chart-seq-3', 'chart-seq-4', 'chart-seq-5'], 'Sequential — one hue, light → dark', 'Magnitude. Heatmaps, choropleths, ordered tiers — filled cells with a 2px surface gap, never lines.'));
     host.appendChild(strip(['chart-emphasis', 'chart-context', 'chart-grid'], 'Emphasis pair + grid', 'The usual right answer: one series in cobalt, the rest in gray. Gridlines are solid hairlines in chart-grid.'));
+  }
+
+  // ---- shared chart pieces ----
+  const money = (n) => '$' + Math.round(n).toLocaleString('en-US');
+  // The table twin: built once from the same data the SVG draws from.
+  function twin(hostId, caption, head, rows) {
+    const host = $(hostId); host.textContent = '';
+    const table = el('table', { class: 'sc-table sc-table--compact' });
+    table.appendChild(el('caption', { class: 'sc-sr-only' }, caption));
+    table.appendChild(el('thead', null, el('tr', null, ...head.map((h, i) => el('th', { scope: 'col', class: i ? 'sc-num' : '' }, h)))));
+    table.appendChild(el('tbody', null, ...rows.map((r) => el('tr', null, ...r.map((c, i) => el('td', { class: i ? 'sc-num' : '' }, String(c)))))));
+    host.appendChild(el('details', { class: 'sc-details', style: 'margin-top:10px' }, el('summary', null, 'Table view'), el('div', { class: 'sc-table-scroll', style: 'margin-top:8px' }, table)));
+  }
+  // Tooltip placement inside a .sc-chart host: px is the anchor in host pixels; flips past 60% width.
+  function placeTip(host, tip, px, top) {
+    const flip = px > host.clientWidth * 0.6;
+    tip.style.left = flip ? 'auto' : (px + 12) + 'px'; tip.style.right = flip ? (host.clientWidth - px + 12) + 'px' : 'auto';
+    const maxTop = host.clientHeight - tip.offsetHeight - 4;   // never past the host's bottom edge
+    tip.style.top = Math.max(0, Math.min(top, maxTop)) + 'px';
   }
 
   // ---- demo line chart ----
   const DAYS = ['Aug 12', 'Aug 13', 'Aug 14', 'Aug 15', 'Aug 16', 'Aug 17', 'Aug 18', 'Aug 19', 'Aug 20', 'Aug 21', 'Aug 22', 'Aug 23'];
   const LOW = [38900, 38900, 38400, 38400, 37900, 37868, 37868, 37200, 37200, 36900, 36646, 36646];
   const MED = [46400, 46550, 46500, 46700, 46620, 46548, 46600, 46652, 46500, 46480, 46652, 46653];
-  const money = (n) => '$' + Math.round(n).toLocaleString('en-US');
   function renderLine() {
     const host = $('demo-line'); host.textContent = '';
     const W = Math.max(300, host.clientWidth || 480), H = 220, m = { t: 14, r: 70, b: 30, l: 48 };
     const iw = W - m.l - m.r, ih = H - m.t - m.b;
     const lo = 36000, hi = 48000, ticks = [36000, 40000, 44000, 48000];
     const x = (i) => m.l + i / (DAYS.length - 1) * iw, y = (v) => m.t + (hi - v) / (hi - lo) * ih;
-    const C = { e: tok('chart-emphasis'), c: tok('chart-context'), grid: tok('chart-grid'), muted: tok('text-2'), ink: tok('heading'), surface: tok('surface') };
-    const s = svg('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img' });
-    for (const t of ticks) { s.appendChild(svg('line', { x1: m.l, x2: W - m.r, y1: y(t), y2: y(t), stroke: C.grid })); s.appendChild(svg('text', { x: m.l - 8, y: y(t) + 4, 'text-anchor': 'end', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 10.5, fill: C.muted }, document.createTextNode('$' + t / 1000 + 'K'))); }
-    DAYS.forEach((d, i) => { if (i % 3 && i !== DAYS.length - 1) return; s.appendChild(svg('text', { x: x(i), y: H - m.b + 18, 'text-anchor': 'middle', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 10.5, fill: C.muted }, document.createTextNode(d))); });
-    const path = (arr, color) => s.appendChild(svg('path', { d: arr.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' '), fill: 'none', stroke: color, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
-    path(MED, C.c); path(LOW, C.e);
+    const s = svg('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, 'aria-hidden': 'true' });
+    for (const t of ticks) { s.appendChild(svg('line', { class: 'sc-chart__grid', x1: m.l, x2: W - m.r, y1: y(t), y2: y(t) })); s.appendChild(svg('text', { x: m.l - 8, y: y(t) + 4, 'text-anchor': 'end' }, '$' + t / 1000 + 'K')); }
+    const step = W < 480 ? 4 : 3;   // label every 3rd day, every 4th on phones, always the last
+    DAYS.forEach((d, i) => { if (i % step && i !== DAYS.length - 1) return; s.appendChild(svg('text', { x: x(i), y: H - m.b + 18, 'text-anchor': 'middle' }, d)); });
+    const path = (arr, mod) => s.appendChild(svg('path', { class: 'sc-chart__series sc-chart__series--' + mod, d: arr.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ') }));
+    path(MED, 'context'); path(LOW, 'emphasis');
     const dots = [];
-    [[MED, C.c], [LOW, C.e]].forEach(([arr, color]) => arr.forEach((v, i) => dots.push(s.appendChild(svg('circle', { cx: x(i), cy: y(v), r: 4, fill: color, stroke: C.surface, 'stroke-width': 2, 'data-i': i })))));
-    s.appendChild(svg('text', { x: x(DAYS.length - 1) + 10, y: y(LOW[LOW.length - 1]) + 4, 'font-family': 'Instrument Sans, sans-serif', 'font-size': 12, 'font-weight': 700, fill: C.ink }, document.createTextNode(money(LOW[LOW.length - 1]))));
-    s.appendChild(svg('text', { x: x(DAYS.length - 1) + 10, y: y(MED[MED.length - 1]) + 4, 'font-family': 'Instrument Sans, sans-serif', 'font-size': 12, 'font-weight': 500, fill: C.ink }, document.createTextNode(money(MED[MED.length - 1]))));
-    const cross = s.appendChild(svg('line', { x1: 0, x2: 0, y1: m.t, y2: H - m.b, stroke: C.c, 'stroke-width': 1, opacity: 0 }));
+    [[MED, 'context'], [LOW, 'emphasis']].forEach(([arr, tone]) => arr.forEach((v, i) => dots.push(s.appendChild(svg('circle', { class: 'sc-chart__marker', cx: x(i), cy: y(v), r: 4, style: `fill:var(--sc-chart-${tone})`, 'data-i': i })))));
+    s.appendChild(svg('text', { class: 'sc-chart__label', x: x(DAYS.length - 1) + 10, y: y(LOW[LOW.length - 1]) + 4 }, money(LOW[LOW.length - 1])));
+    s.appendChild(svg('text', { class: 'sc-chart__label', x: x(DAYS.length - 1) + 10, y: y(MED[MED.length - 1]) + 4, style: 'font-weight:500' }, money(MED[MED.length - 1])));
+    const cross = s.appendChild(svg('line', { class: 'sc-chart__crosshair', x1: 0, x2: 0, y1: m.t, y2: H - m.b, 'stroke-width': 1, opacity: 0 }));
     const hit = s.appendChild(svg('rect', { x: m.l - 10, y: 0, width: iw + 20, height: H, fill: 'transparent', style: 'cursor:crosshair' }));
     host.appendChild(s);
     const tip = host.appendChild(el('div', { class: 'sc-tooltip', role: 'status' }));
     let active = -1;
     const set = (i) => {
-      if (i < 0) { active = -1; cross.setAttribute('opacity', 0); tip.classList.remove('is-on'); dots.forEach((d) => d.setAttribute('r', 4)); return; }
+      if (i < 0) { active = -1; cross.setAttribute('opacity', 0); tip.classList.remove('is-on'); tip.textContent = ''; dots.forEach((d) => d.setAttribute('r', 4)); return; }
       active = i; cross.setAttribute('x1', x(i)); cross.setAttribute('x2', x(i)); cross.setAttribute('opacity', 1);
       dots.forEach((d) => d.setAttribute('r', +d.getAttribute('data-i') === i ? 5.5 : 4));
+      tip.classList.add('is-on');
       tip.textContent = '';
       tip.appendChild(el('div', { class: 'sc-tooltip__date' }, DAYS[i] + ', 2026'));
-      tip.appendChild(el('div', { class: 'sc-tooltip__row' }, el('i', { style: `background:${C.e}` }), el('b', null, money(LOW[i])), el('span', null, 'lowest landed')));
-      tip.appendChild(el('div', { class: 'sc-tooltip__row' }, el('i', { style: `background:${C.c}` }), el('b', null, money(MED[i])), el('span', null, 'median landed')));
-      tip.classList.add('is-on');
-      const scale = host.clientWidth / W, px = x(i) * scale, flip = px > host.clientWidth * 0.6;
-      tip.style.left = flip ? 'auto' : (px + 12) + 'px'; tip.style.right = flip ? (host.clientWidth - px + 12) + 'px' : 'auto'; tip.style.top = '4px';
+      tip.appendChild(el('div', { class: 'sc-tooltip__row' }, el('i', { style: 'background:var(--sc-chart-emphasis)' }), el('b', null, money(LOW[i])), el('span', null, 'lowest landed')));
+      tip.appendChild(el('div', { class: 'sc-tooltip__row' }, el('i', { style: 'background:var(--sc-chart-context)' }), el('b', null, money(MED[i])), el('span', null, 'median landed')));
+      placeTip(host, tip, x(i) * host.clientWidth / W, 4);
     };
     hit.addEventListener('pointermove', (e) => { const r = s.getBoundingClientRect(); const vx = (e.clientX - r.left) / r.width * W; let best = 0, bd = 1e9; DAYS.forEach((_, i) => { const d = Math.abs(x(i) - vx); if (d < bd) { bd = d; best = i; } }); set(best); });
     hit.addEventListener('pointerleave', () => set(-1));
-    host.onkeydown = (e) => { if (e.key === 'ArrowRight') { set(active < 0 ? DAYS.length - 1 : Math.min(DAYS.length - 1, active + 1)); e.preventDefault(); } else if (e.key === 'ArrowLeft') { set(active < 0 ? DAYS.length - 1 : Math.max(0, active - 1)); e.preventDefault(); } else if (e.key === 'Escape') set(-1); };
+    host.onkeydown = (e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { set(active < 0 ? DAYS.length - 1 : Math.min(DAYS.length - 1, active + 1)); e.preventDefault(); } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { set(active < 0 ? DAYS.length - 1 : Math.max(0, active - 1)); e.preventDefault(); } else if (e.key === 'Escape') set(-1); };
     host.onblur = () => set(-1);
   }
 
   // ---- demo stacked bars ----
   const MARKETS = ['California', 'Texas', 'Florida', 'Illinois', 'Other'];
   const WEEKS = [['Wk 31', [18, 9, 8, 6, 22]], ['Wk 32', [21, 10, 9, 7, 24]], ['Wk 33', [22, 11, 8, 8, 26]], ['Wk 34', [24, 10, 9, 8, 28]]];
+  const SLOTS = ['chart-1', 'chart-2', 'chart-3', 'chart-4', 'chart-other'];
   function renderBars() {
     const host = $('demo-bar'); host.textContent = '';
     const lg = $('demo-bar-legend'); lg.textContent = '';
-    const cols = [1, 2, 3, 4].map((i) => tok('chart-' + i)).concat([tok('chart-other')]);
-    MARKETS.forEach((mk, i) => lg.appendChild(el('span', null, el('i', { class: 'is-swatch', style: `background:${cols[i]}` }), mk)));
+    MARKETS.forEach((mk, i) => lg.appendChild(el('span', null, el('i', { class: 'is-swatch', style: `background:var(--sc-${SLOTS[i]})` }), mk)));
     const W = Math.max(300, host.clientWidth || 480), rowH = 38, H = WEEKS.length * rowH + 34, m = { l: 54, r: 44, t: 6 };
     const iw = W - m.l - m.r, max = 100, bar = 22, gap = 2;
-    const C = { grid: tok('chart-grid'), muted: tok('text-2'), ink: tok('heading'), surface: tok('surface') };
-    const s = svg('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img' });
-    [0, 25, 50, 75, 100].forEach((t) => { const gx = m.l + t / max * iw; s.appendChild(svg('line', { x1: gx, x2: gx, y1: m.t, y2: H - 28, stroke: C.grid })); s.appendChild(svg('text', { x: gx, y: H - 10, 'text-anchor': 'middle', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 10.5, fill: C.muted }, document.createTextNode(String(t)))); });
+    const s = svg('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, 'aria-hidden': 'true' });
+    [0, 25, 50, 75, 100].forEach((t) => { const gx = m.l + t / max * iw; s.appendChild(svg('line', { class: 'sc-chart__grid', x1: gx, x2: gx, y1: m.t, y2: H - 28 })); s.appendChild(svg('text', { x: gx, y: H - 10, 'text-anchor': 'middle' }, String(t))); });
+    const rows = [];
     WEEKS.forEach(([label, vals], r) => {
       const y = m.t + r * rowH + (rowH - bar) / 2;
-      s.appendChild(svg('text', { x: m.l - 10, y: y + bar / 2 + 4, 'text-anchor': 'end', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 11, fill: C.muted }, document.createTextNode(label)));
+      s.appendChild(svg('text', { x: m.l - 10, y: y + bar / 2 + 4, 'text-anchor': 'end', 'font-size': 11 }, label));
       let acc = 0; const total = vals.reduce((a, b) => a + b, 0);
       vals.forEach((v, i) => {
         const x0 = m.l + acc / max * iw, w = Math.max(0, v / max * iw - gap); const last = i === vals.length - 1;
         const d = last ? `M${x0},${y} h${Math.max(0, w - 4)} a4,4 0 0 1 4,4 v${bar - 8} a4,4 0 0 1 -4,4 h${-Math.max(0, w - 4)} z` : `M${x0},${y} h${w} v${bar} h${-w} z`;
-        const seg = svg('path', { d, fill: cols[i] }); seg.appendChild(svg('title', null, document.createTextNode(`${label} · ${MARKETS[i]}: ${v}`))); s.appendChild(seg);
+        s.appendChild(svg('path', { d, style: `fill:var(--sc-${SLOTS[i]})` }));
         acc += v;
       });
-      s.appendChild(svg('text', { x: m.l + total / max * iw + 8, y: y + bar / 2 + 4, 'font-family': 'Instrument Sans, sans-serif', 'font-size': 12, 'font-weight': 700, fill: C.ink }, document.createTextNode(String(total))));
+      s.appendChild(svg('text', { class: 'sc-chart__label', x: m.l + total / max * iw + 8, y: y + bar / 2 + 4 }, String(total)));
+      rows.push({ y, end: m.l + total / max * iw, total });
     });
+    // Row focus ring (drawn in the crosshair tone) and a transparent hit strip per row.
+    const ring = s.appendChild(svg('rect', { class: 'sc-chart__crosshair', x: m.l - 3, y: 0, width: iw + 6, height: bar + 6, rx: 4, fill: 'none', 'stroke-width': 1, opacity: 0 }));
     host.appendChild(s);
+    const tip = host.appendChild(el('div', { class: 'sc-tooltip', role: 'status' }));
+    let active = -1;
+    const set = (r) => {
+      if (r < 0) { active = -1; ring.setAttribute('opacity', 0); tip.classList.remove('is-on'); tip.textContent = ''; return; }
+      active = r; const row = rows[r]; const [label, vals] = WEEKS[r];
+      ring.setAttribute('y', row.y - 3); ring.setAttribute('opacity', 1);
+      tip.classList.add('is-on');
+      tip.textContent = '';
+      tip.appendChild(el('div', { class: 'sc-tooltip__date' }, label + ' · listings by state'));
+      vals.forEach((v, i) => tip.appendChild(el('div', { class: 'sc-tooltip__row' }, el('i', { style: `background:var(--sc-${SLOTS[i]})` }), el('b', null, String(v)), el('span', null, MARKETS[i].toLowerCase()))));
+      tip.appendChild(el('div', { class: 'sc-tooltip__meta' }, row.total + ' listings'));
+      const scale = host.clientWidth / W;
+      placeTip(host, tip, Math.min(row.end, W * 0.55) * scale, Math.max(0, row.y * scale - 8));
+    };
+    WEEKS.forEach((_, r) => { const hit = s.appendChild(svg('rect', { x: m.l - 10, y: m.t + r * rowH, width: iw + 20 + m.r, height: rowH, fill: 'transparent' })); hit.addEventListener('pointerenter', () => set(r)); });
+    s.addEventListener('pointerleave', () => set(-1));
+    host.onkeydown = (e) => { if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { set(active < 0 ? 0 : Math.min(WEEKS.length - 1, active + 1)); e.preventDefault(); } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { set(active < 0 ? WEEKS.length - 1 : Math.max(0, active - 1)); e.preventDefault(); } else if (e.key === 'Escape') set(-1); };
+    host.onblur = () => set(-1);
+  }
+  function renderTwins() {
+    twin('demo-line-twin', 'Lowest and median landed price by day', ['Day', 'Lowest landed', 'Median landed'], DAYS.map((d, i) => [d, money(LOW[i]), money(MED[i])]));
+    twin('demo-bar-twin', 'Listings by state per week', ['Week', ...MARKETS, 'Total'], WEEKS.map(([w, v]) => [w, ...v, v.reduce((a, b) => a + b, 0)]));
   }
 
   // ---- theme state line + nav ----
@@ -707,17 +1024,28 @@
     const t = root.getAttribute('data-theme'); const os = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     $('theme-state').textContent = t ? `Pinned to ${t}; the OS prefers ${os}.` : `Following the OS (${os}). Pick Dark or Light to pin it.`;
   }
+  // Active section = the last one whose top has passed the 20% line; at the very bottom, the last section.
   function nav() {
     const links = [...document.querySelectorAll('#sg-nav a')];
-    const secs = links.map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((en) => { if (en.isIntersecting) links.forEach((a) => a.classList.toggle('is-active', a.getAttribute('href') === '#' + en.target.id)); });
-    }, { rootMargin: '-10% 0px -80% 0px' });
-    secs.forEach((s) => io.observe(s));
+    const pairs = links.map((a) => [a, document.querySelector(a.getAttribute('href'))]).filter(([, s]) => s);
+    if (!pairs.length) return;
+    let raf = null;
+    const update = () => {
+      raf = null;
+      const line = innerHeight * 0.2;
+      let cur = pairs[0][0];
+      for (const [a, s] of pairs) if (s.getBoundingClientRect().top <= line) cur = a;
+      if (scrollY + innerHeight >= root.scrollHeight - 2) cur = pairs[pairs.length - 1][0];
+      links.forEach((a) => a.classList.toggle('is-active', a === cur));
+    };
+    const schedule = () => { if (!raf) raf = requestAnimationFrame(update); };
+    addEventListener('scroll', schedule, { passive: true });
+    addEventListener('resize', schedule);
+    update();
   }
 
   function renderAll() { renderCover(); renderRamps(); renderRoles(); renderPalettes(); renderLine(); renderBars(); renderThemeState(); }
-  renderAll(); nav();
+  renderAll(); renderTwins(); nav();
   new MutationObserver(() => setTimeout(renderAll, 0)).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
   matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => setTimeout(renderAll, 0));
   let raf = null; window.addEventListener('resize', () => { if (raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { renderLine(); renderBars(); }); });

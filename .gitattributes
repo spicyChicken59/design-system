@@ -1,0 +1,7 @@
+# One line ending everywhere: LF in the index and in the working tree, so the
+# bytes Pages/jsDelivr serve equal the bytes in any checkout and in react/dist.
+* text=auto eol=lf
+*.png binary
+*.ico binary
+*.jpg binary
+*.woff2 binary

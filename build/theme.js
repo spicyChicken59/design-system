@@ -18,4 +18,18 @@
   });
   document.addEventListener('DOMContentLoaded', sync);
   if (window.MutationObserver) new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  // Print: the stylesheet already prints "auto" pages light; a pinned-dark page
+  // is switched to light for the print job and restored after (not persisted).
+  var printPinned = false;
+  function onPrint(printing) {
+    if (printing) { printPinned = root.getAttribute('data-theme') === 'dark'; if (printPinned) root.setAttribute('data-theme', 'light'); }
+    else if (printPinned) { root.setAttribute('data-theme', 'dark'); printPinned = false; }
+  }
+  if (window.addEventListener) {
+    window.addEventListener('beforeprint', function () { onPrint(true); });
+    window.addEventListener('afterprint', function () { onPrint(false); });
+  } else if (window.matchMedia) {
+    var mq = window.matchMedia('print');
+    if (mq && mq.addListener) mq.addListener(function (m) { onPrint(m.matches); });
+  }
 })();

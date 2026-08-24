@@ -1,7 +1,8 @@
+<a class="sc-skip" href="#main-content">Skip to content</a>
 <header class="sc-masthead">
   <a class="sc-brand" href="#top">
     <img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt="">
-    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.0.0</span></span>
+    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.1.0</span></span>
   </a>
   <div class="sc-masthead__right">
     <span class="sc-hide-sm">Living reference</span>
@@ -14,17 +15,17 @@
   </div>
 </header>
 
-<section class="sg-cover" id="top">
+<section class="sg-cover sc-on-ink" id="top">
   <div class="sg-cover__inner">
     <div>
       <div class="sc-eyebrow">Mohammed Tahir Madni · SpicyChicken</div>
       <h1>Cobalt structure. One spice accent. Dark by default.</h1>
       <p class="sg-cover__dek">The standard every SpicyChicken project is built on — dashboards, documents, READMEs, decks. Every color below is validated, every component is rendered live in both modes, and the whole thing ships as one CSS file.</p>
-      <div class="sg-cover__meta"><span>sc.css · v2.0.0</span><span>160 tokens</span><span>18 components</span><span>the chick · everywhere</span></div>
+      <div class="sg-cover__meta"><span>sc.css · v2.1.0</span><span>123 named tokens</span><span>20 component blocks</span><span>the chick · everywhere</span></div>
     </div>
     <div>
       <div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and the spice accent"></div>
-      <div class="sg-bar__caption">Cobalt 300 → 950, then spice 400 and 600. Lightness carried over exactly from the template greens; hue rotated to 255°.</div>
+      <div class="sg-bar__caption">Cobalt 300 → 950, then spice 400 and 700. Lightness held on the text steps (300, 700); 900/950 moved and chroma raised. Hue rotated to 255°.</div>
     </div>
   </div>
 </section>
@@ -46,7 +47,7 @@
     <a href="#dont">Do / don't</a>
   </nav>
 
-  <main class="sg-main">
+  <main class="sg-main" id="main-content">
 
     <section class="sg-section" id="hierarchy">
       <div class="sc-eyebrow">01 · Foundations</div>
@@ -57,7 +58,7 @@
         <div class="sc-card"><div class="sc-eyebrow sc-eyebrow--accent">One mark, everywhere</div><h4>The chick</h4><p class="sc-hint">Masthead, favicon, avatar, and the footer watermark on every site. One character across every project is what makes the profile feel uniform.</p></div>
         <div class="sc-card"><div class="sc-eyebrow sc-eyebrow--muted">The person authors</div><h4>Mohammed Tahir Madni</h4><p class="sc-hint">READMEs, document covers, <code>rel="author"</code>. Never in UI chrome.</p></div>
       </div>
-      <div class="sc-callout sc-callout--core" style="margin-top:20px">
+      <div class="sc-callout sc-callout--core">
         <div class="sc-callout__label">Voice</div>
         <p>Plain-spoken and specific. State the outcome and the reason, never the hype. Sentence case everywhere except mono eyebrows and short labels. Every page, document, and deck ends with <strong>exactly one</strong> next action.</p>
       </div>
@@ -76,7 +77,7 @@
 
       <div class="sg-block">
         <h3>Semantic roles — live in the current mode</h3>
-        <p class="sc-hint">What each token does, its resolved value right now, and its WCAG contrast against the page and card surfaces. Toggle the theme in the masthead to re-check.</p>
+        <p class="sc-hint">What each token does, its resolved value right now, and its WCAG contrast against the surfaces it actually sits on. Text pairs need 4.5:1; focus rings, control borders and chart marks need 3:1. Toggle the theme in the masthead to re-check.</p>
         <div class="sc-table-scroll"><table class="sc-table sc-table--compact sg-roles" id="roles"></table></div>
       </div>
 
@@ -100,10 +101,10 @@
         <div class="sg-spec"><div class="m">caption · 13 / 1.5 · Instrument 400 · muted</div><p class="s" style="font:400 13px/1.5 var(--sc-font-body);color:var(--sc-text-2)">Prices include $1,100 shipping for cars outside the region.</p></div>
         <div class="sg-spec"><div class="m">eyebrow · 12 / 1 · Plex Mono 600 · lowercase · "//"</div><p class="s sc-eyebrow" style="margin:0">Best value right now</p></div>
         <div class="sg-spec"><div class="m">stat value · 32 / 1.1 · Instrument 700 · −.5px</div><p class="s" style="font:700 32px/1.1 var(--sc-font-body);letter-spacing:-.5px">$36,646</p></div>
-        <div class="sg-spec"><div class="m">mono · 12 / 1.5 · Plex Mono 500</div><p class="s sc-mono" style="font-size:12px;color:var(--sc-text-2)">WBY33FK08RCS83536 · 2026-08-23 · 17,263 mi</p></div>
+        <div class="sg-spec"><div class="m">note · 10.5 / 1.4 · Plex Mono 500 · muted</div><p class="s sc-note">WBY33FK08RCS83536 · 2026-08-23 · 17,263 mi</p></div>
         <div class="sg-spec"><div class="m">code</div><p class="s"><code>--sc-accent</code> inline, and <kbd>⌘</kbd> <kbd>K</kbd> for keys.</p></div>
       </div>
-      <p class="sg-rule">Numbers in tiles and hero figures use Instrument Sans, proportional figures. <code>tabular-nums</code> only in columns that must align. Headings get <code>text-wrap: balance</code>. Labels are lowercase mono with modest tracking — never ALL-CAPS with wide tracking, which is the previous system's tell.</p>
+      <p class="sg-rule">Numbers in tiles and hero figures use Instrument Sans, proportional figures. <code>tabular-nums</code> only in columns that must align. Headings get <code>text-wrap: balance</code>. Labels are lowercase mono with modest tracking — never ALL-CAPS with wide tracking, which is the previous system's tell. The mono stack falls back to Consolas on Windows.</p>
     </section>
 
     <section class="sg-section" id="space">
@@ -112,7 +113,7 @@
       <p class="sc-dek">An 8px rhythm, three radii, one shadow, one easing.</p>
       <div class="sg-block">
         <h3>Spacing scale</h3>
-        <div class="sg-space" style="padding-bottom:18px">
+        <div class="sg-space">
           <div data-l="4" style="width:4px;height:4px"></div><div data-l="8" style="width:8px;height:8px"></div><div data-l="16" style="width:16px;height:16px"></div><div data-l="24" style="width:24px;height:24px"></div><div data-l="32" style="width:32px;height:32px"></div><div data-l="40" style="width:40px;height:40px"></div><div data-l="48" style="width:48px;height:48px"></div><div data-l="64" style="width:64px;height:64px"></div><div data-l="80" style="width:80px;height:80px"></div><div data-l="96" style="width:96px;height:96px"></div>
         </div>
       </div>
@@ -123,11 +124,11 @@
           <div style="border-radius:var(--sc-r-md)">10 · callouts</div>
           <div style="border-radius:var(--sc-r-lg)">14 · cards</div>
           <div style="border-radius:var(--sc-r-pill)">pill</div>
-          <div style="border-radius:var(--sc-r-lg);box-shadow:var(--sc-shadow);border-color:var(--sc-border)">shadow</div>
+          <div class="sg-shadow" style="border-radius:var(--sc-r-lg)">shadow</div>
         </div>
       </div>
-      <p class="sg-rule">Motion: fades and short slides, 240ms, <code>cubic-bezier(.2,.7,.3,1)</code>. Hover signals with color, never scale. Base state is the finished state. <code>prefers-reduced-motion</code> sets it to zero.</p>
-      <p class="sg-rule">Widths: prose 800 · content 1120 · wide 1280 (dashboards, tables).</p>
+      <p class="sg-rule">Motion: fades and short slides, 240ms, <code>cubic-bezier(.2,.7,.3,1)</code>. Hover signals with color, never scale. Base state is the finished state. <code>prefers-reduced-motion</code> sets it to zero. Pointer targets are at least 24px tall.</p>
+      <p class="sg-rule">Widths: prose 800 · content 1120 · wide 1280 (dashboards, tables). See <a href="#layout">Layout &amp; utilities</a>.</p>
     </section>
 
     <section class="sg-section" id="themes">
@@ -137,53 +138,105 @@
       <div class="sc-grid sc-grid--2">
         <div class="sc-card">
           <h4>How it resolves</h4>
-          <p class="sc-hint"><code>:root</code> carries the dark set. <code>@media (prefers-color-scheme: light)</code> and <code>[data-theme="light"]</code> carry the light set; <code>[data-theme="dark"]</code> pins dark. The toggle writes <code>data-theme</code> on <code>&lt;html&gt;</code> and remembers it per browser; the script runs before paint, so there is no flash.</p>
+          <p class="sc-hint"><code>:root</code> carries the dark set. <code>@media (prefers-color-scheme: light)</code> and <code>[data-theme="light"]</code> carry the light set; <code>[data-theme="dark"]</code> pins dark. The hosted <code>sc-theme.js</code> writes <code>data-theme</code> on <code>&lt;html&gt;</code> and remembers it per browser; it runs before paint, so there is no flash, and it prints a pinned-dark page light.</p>
         </div>
         <div class="sc-card">
           <h4>What stays dark in both modes</h4>
-          <p class="sc-hint">Masthead, footer, code blocks, tooltips, covers — on <code>--sc-ink</code>. That shared spine is what makes a light page recognisably the same product as its dark sibling.</p>
+          <p class="sc-hint">Masthead, footer, code blocks, tooltips, covers — on <code>--sc-ink</code>. Anything nested in them re-reads the text, brand and accent tokens as on-ink ones; add <code>.sc-on-ink</code> to any other ink-filled block for the same treatment. That shared spine is what makes a light page recognisably the same product as its dark sibling.</p>
         </div>
       </div>
-      <div class="sg-demo" style="margin-top:16px">
-        <div class="sg-row">
-          <span class="sc-field">Try it</span>
-          <div class="sc-theme-toggle" role="group" aria-label="Theme" style="border-color:var(--sc-border-strong)">
-            <button type="button" data-theme="dark" style="color:var(--sc-heading)">Dark</button>
-            <button type="button" data-theme="light" style="color:var(--sc-heading)">Light</button>
-            <button type="button" data-theme="auto" style="color:var(--sc-heading)">Auto</button>
+      <div class="sg-block">
+        <h3>Try it</h3>
+        <p class="sc-hint">The toggle is a masthead control — it is designed for ink, so the demo sits on one.</p>
+        <div class="sg-demo sg-demo--flush">
+          <div class="sc-masthead">
+            <span class="sc-masthead__right">Theme</span>
+            <div class="sc-theme-toggle" role="group" aria-label="Theme">
+              <button type="button" data-theme="dark">Dark</button>
+              <button type="button" data-theme="light">Light</button>
+              <button type="button" data-theme="auto">Auto</button>
+            </div>
           </div>
-          <span class="sc-hint" id="theme-state"></span>
         </div>
+        <p class="sg-rule" id="theme-state"></p>
       </div>
     </section>
 
     <section class="sg-section" id="components">
       <div class="sc-eyebrow">06 · Build</div>
       <h2>Components</h2>
-      <p class="sc-dek">Eighteen pieces, all prefixed <code>sc-</code>. Reproduce these; don't invent siblings.</p>
+      <p class="sc-dek">Twenty blocks, all prefixed <code>sc-</code>. Reproduce these; don't invent siblings. Blocks marked <span class="sc-chip sc-chip--spice">2.1</span> were promoted from the first production consumer, the SpicyCar tracker.</p>
 
       <div class="sg-block">
         <h3>Masthead</h3>
-        <p class="sc-hint">Project left (mark, name, sub-line); endorsement, nav and theme toggle right. Dark in both modes. Nav underline is spice.</p>
+        <p class="sc-hint">Project left (the chick, then the project's name and sub-line in type); endorsement, nav and theme toggle right. Dark in both modes. Nav underline is spice; the nav carries an <code>aria-label</code>.</p>
         <div class="sg-demo sg-demo--flush">
-          <div class="sc-masthead" style="border-bottom:0">
-            <span class="sc-brand"><span class="sc-brand__mark" aria-hidden="true">AM</span><span><span class="sc-brand__name">Auto Market Tracker</span><span class="sc-brand__sub">Daily used-car snapshot</span></span></span>
-            <div class="sc-masthead__right"><nav class="sc-nav" aria-label="Demo"><a href="#components" aria-current="page">Overview</a><a href="#components">Listings</a></nav><span class="sc-sep"></span><span>Snapshot · 2026-08-23</span></div>
+          <div class="sc-masthead">
+            <span class="sc-brand"><img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt=""><span><span class="sc-brand__name">Auto Market Tracker</span><span class="sc-brand__sub">Daily used-car snapshot</span></span></span>
+            <div class="sc-masthead__right"><nav class="sc-nav" aria-label="Demo"><a href="#components" aria-current="page">Overview</a><a href="#components">Listings</a></nav><span class="sc-sep" aria-hidden="true"></span><span>Snapshot · 2026-08-23</span></div>
           </div>
         </div>
-        <p class="sg-rule"><code>.sc-masthead</code> · <code>.sc-brand</code> <code>.sc-brand__mark</code> <code>.sc-brand__name</code> <code>.sc-brand__sub</code> · <code>.sc-masthead__right</code> · <code>.sc-nav</code> · <code>.sc-theme-toggle</code></p>
+        <p class="sg-rule"><code>.sc-masthead</code> · <code>.sc-brand</code> <code>img.sc-mark</code> <code>.sc-brand__name</code> <code>.sc-brand__sub</code> · <code>.sc-masthead__right</code> <code>.sc-sep</code> · <code>.sc-nav</code> · <code>.sc-theme-toggle</code></p>
+        <p class="sg-rule">Fallback: <code>.sc-brand__mark</code> is a 26px letter tile on <code>--sc-brand-line</code> for a project with no SVG mark yet — <span class="sc-brand__mark" aria-hidden="true">AM</span> — never the chick's replacement.</p>
       </div>
 
-      <div class="sg-block">
-        <h3>Title block</h3>
-        <p class="sc-hint">Lowercase "//" eyebrow, h1, one-sentence dek, mono meta row.</p>
+      <div class="sg-block" id="title-block">
+        <h3>Title block <span class="sc-chip sc-chip--spice">2.1</span></h3>
+        <p class="sc-hint">One container for the opening of every page: lowercase "//" eyebrow, h1, one-sentence dek, mono meta row, and an optional segmented control that switches the subject. 40px above, 8px below; 24px above on phones.</p>
         <div class="sg-demo">
-          <div class="sc-eyebrow">2024–2025 · Cincinnati · Chicago · Indianapolis</div>
-          <h1 style="font-size:32px;margin-bottom:6px">BMW i5 eDrive40</h1>
-          <p class="sc-dek" style="margin-bottom:10px">Landed price = asking price + $1,100 shipping for out-of-region cars, adjusted $0.30/mi against a 20,000-mile baseline.</p>
-          <div class="sc-meta"><span>Updated Sun, August 23, 2026</span><span class="sc-sep">·</span><span>1 snapshot day</span><span class="sc-sep">·</span><span>Listings under $20,000 ignored</span></div>
+          <div class="sc-title">
+            <div class="sc-eyebrow">2024–2025 · Cincinnati · Chicago · Indianapolis</div>
+            <h1>What it costs to put it in your driveway</h1>
+            <p class="sc-dek">Landed price = asking price + $1,100 shipping for out-of-region cars, adjusted $0.30/mi against a 20,000-mile baseline.</p>
+            <div class="sc-meta"><span>Updated Sun, August 23, 2026</span><span class="sc-sep">·</span><span>1 snapshot day</span><span class="sc-sep">·</span><span>Listings under $20,000 ignored</span></div>
+            <div class="sc-tabs" role="group" aria-label="Model"><button class="sc-tab sc-tab--case" aria-pressed="true" type="button">BMW i5</button><button class="sc-tab" aria-pressed="false" type="button">Second target</button></div>
+          </div>
         </div>
-        <p class="sg-rule"><code>.sc-eyebrow</code> (<code>--accent</code> <code>--muted</code>) · <code>h1</code> · <code>.sc-dek</code> · <code>.sc-meta</code> <code>.sc-sep</code></p>
+        <p class="sg-rule"><code>.sc-title</code> · <code>.sc-eyebrow</code> (<code>--accent</code> <code>--muted</code>) · <code>h1</code> · <code>.sc-dek</code> · <code>.sc-meta</code> <code>.sc-sep</code> · <code>.sc-title .sc-tabs</code></p>
+      </div>
+
+      <div class="sg-block" id="layout">
+        <h3>Layout &amp; utilities</h3>
+        <p class="sc-hint">The page frame and the small helpers. Widths are the three measures; sections are 48px apart; a stack puts 16px between siblings; a row is a flex line with <code>.sc-right</code> pushing the tail to the edge.</p>
+        <div class="sg-demo">
+          <div class="sc-eyebrow">.sc-wrap widths</div>
+          <div class="sg-widths">
+            <div style="width:62.5%">.sc-wrap--prose · 800</div>
+            <div style="width:87.5%">.sc-wrap · 1120</div>
+            <div style="width:100%">.sc-wrap--wide · 1280</div>
+          </div>
+          <div class="sc-eyebrow" style="margin-top:24px">.sc-section rhythm</div>
+          <div class="sg-rhythm">
+            <div>a block</div>
+            <div class="sc-section">.sc-section — 48px above</div>
+          </div>
+          <div class="sc-eyebrow" style="margin-top:24px">.sc-grid--4 kpi row</div>
+          <div class="sc-grid sc-grid--4">
+            <div class="sc-tile"><div class="sc-tile__label">Tracked</div><div class="sc-tile__value sc-tile__value--sm">74</div></div>
+            <div class="sc-tile"><div class="sc-tile__label">Local</div><div class="sc-tile__value sc-tile__value--sm">2</div></div>
+            <div class="sc-tile"><div class="sc-tile__label">Price cuts</div><div class="sc-tile__value sc-tile__value--sm">2</div></div>
+            <div class="sc-tile"><div class="sc-tile__label">Gone</div><div class="sc-tile__value sc-tile__value--sm">3</div></div>
+          </div>
+          <div class="sc-eyebrow" style="margin-top:24px">.sc-row + .sc-right toolbar</div>
+          <div class="sc-row"><strong>Listings</strong><span class="sc-chip sc-chip--neutral">74 rows</span><span class="sc-right sc-row"><button class="sc-btn sc-btn--ghost sc-btn--sm" type="button">Reset</button><button class="sc-btn sc-btn--secondary sc-btn--sm" type="button">Export CSV</button></span></div>
+          <div class="sc-eyebrow" style="margin-top:24px">.sc-stack</div>
+          <div class="sc-stack">
+            <div class="sg-stack-item">first</div>
+            <div class="sg-stack-item">second — 16px above</div>
+            <div class="sg-stack-item">third</div>
+          </div>
+          <div class="sc-eyebrow" style="margin-top:24px">text tone utilities</div>
+          <div class="sg-row"><span class="sg-tone">default</span><span class="sg-tone sc-muted">.sc-muted</span><span class="sg-tone sc-faint">.sc-faint</span><span class="sg-tone sc-text-brand">.sc-text-brand</span><span class="sg-tone sc-text-good">.sc-text-good</span><span class="sg-tone sc-text-warn">.sc-text-warn</span><span class="sg-tone sc-text-danger">.sc-text-danger</span><span class="sg-tone sc-text-info">.sc-text-info</span><span class="sg-tone sc-mono">.sc-mono</span><span class="sg-tone sc-num">.sc-num 1,234</span></div>
+          <div class="sc-eyebrow" style="margin-top:24px">nowrap · truncate · case</div>
+          <div class="sg-row sg-row--top">
+            <div class="sg-narrow">wraps: BMW of Naperville, Naperville, IL</div>
+            <div class="sg-narrow"><span class="sc-truncate">.sc-truncate: BMW of Naperville, Naperville, IL</span></div>
+            <div class="sg-narrow">landed <span class="sc-nowrap">$46,653 · local</span> — .sc-nowrap keeps the figure whole</div>
+            <div class="sg-narrow"><span class="sc-chip sc-chip--brand">chip <span class="sc-case">IL</span></span> .sc-case</div>
+          </div>
+        </div>
+        <p class="sg-rule"><code>.sc-wrap</code> (<code>--prose</code> <code>--wide</code>) · <code>.sc-section</code> · <code>.sc-grid</code> (<code>--2</code> <code>--3</code> <code>--4</code>) · <code>.sc-row</code> <code>.sc-right</code> · <code>.sc-stack</code> · <code>.sc-muted</code> <code>.sc-faint</code> <code>.sc-text-brand</code> <code>.sc-text-good</code> <code>.sc-text-warn</code> <code>.sc-text-danger</code> <code>.sc-text-info</code> · <code>.sc-mono</code> <code>.sc-num</code> · <code>.sc-nowrap</code> <code>.sc-truncate</code> <code>.sc-case</code></p>
+        <p class="sg-rule"><code>.sc-sr-only</code> hides text visually and keeps it for assistive tech — the caption on every chart's table twin uses it. <code>.sc-hide-sm</code> drops an element under 720px (the masthead's "Living reference" above uses it). <code>hidden</code> works on every component. <code>.sc-text-accent</code> is deprecated in 2.1 — use <code>.sc-chip--spice</code>; it goes in 3.0.</p>
       </div>
 
       <div class="sg-block">
@@ -195,144 +248,279 @@
             <div class="sc-tile"><div class="sc-tile__label">Median landed price</div><div class="sc-tile__value">$46,653</div><div class="sc-tile__sub">70 priced vehicles</div><div class="sc-delta sc-delta--bad">▲ $104 vs Aug 23</div></div>
             <div class="sc-tile"><div class="sc-tile__label">Since the previous snapshot</div><div class="sc-tile__value sc-tile__value--sm">2 price cuts</div><div class="sc-tile__sub">1 new · 3 gone</div><div class="sc-delta sc-delta--flat">= inventory</div></div>
           </div>
-          <div style="margin-top:18px"><div class="sc-eyebrow">Hero figure</div><div class="sc-hero">74</div><div class="sc-tile__sub">vehicles tracked today</div></div>
+          <div class="sc-section"><div class="sc-eyebrow">Hero figure</div><div class="sc-hero">74</div><div class="sc-tile__sub">vehicles tracked today</div></div>
         </div>
         <p class="sg-rule"><code>.sc-tile</code> <code>.sc-tile__label</code> <code>.sc-tile__value</code> (<code>--sm</code>) <code>.sc-tile__sub</code> · <code>.sc-delta</code> (<code>--good</code> <code>--bad</code> <code>--flat</code>) · <code>.sc-hero</code></p>
       </div>
 
       <div class="sg-block">
         <h3>Cards</h3>
-        <p class="sc-hint">One discrete idea each. Heading plus hint, optional action on the right.</p>
+        <p class="sc-hint">One discrete idea each. Heading plus hint, optional action on the right. A card head's h2/h3 sits at 20px; the last child loses its bottom margin, so no inline resets.</p>
         <div class="sg-demo">
           <div class="sc-grid sc-grid--2">
-            <div class="sc-card"><div class="sc-card__head"><div><h3 style="font-size:18px">Listings</h3><p class="sc-hint">One row per VIN, local listing preferred.</p></div><a class="sc-btn sc-btn--primary sc-btn--sm" href="#components">Export CSV →</a></div><p style="margin:0">Card body. Hairline border, 14px radius, soft shadow.</p></div>
-            <div class="sc-card sc-card--raised"><div class="sc-eyebrow">Raised variant</div><h4>For nested or secondary surfaces</h4><p class="sc-hint" style="margin:0">Sits one step above the page without a heavier shadow.</p></div>
+            <div class="sc-card"><div class="sc-card__head"><div><h3>Listings</h3><p class="sc-hint">One row per VIN, local listing preferred.</p></div><a class="sc-btn sc-btn--primary sc-btn--sm" href="#components">Export CSV →</a></div><p>Card body. Hairline border, 14px radius, soft shadow.</p></div>
+            <div class="sc-card sc-card--raised"><div class="sc-eyebrow">Raised variant</div><h4>For nested or secondary surfaces</h4><p class="sc-hint">Sits one step above the page without a heavier shadow.</p></div>
           </div>
         </div>
-        <p class="sg-rule"><code>.sc-card</code> (<code>--raised</code>) · <code>.sc-card__head</code> · <code>.sc-hint</code></p>
+        <p class="sg-rule"><code>.sc-card</code> (<code>--raised</code>) · <code>.sc-card__head</code> · <code>.sc-hint</code> · <code>a.sc-card</code> is the linked-card form</p>
       </div>
 
       <div class="sg-block">
         <h3>Callouts</h3>
-        <p class="sc-hint">Tinted fill with the file-fold corner from the mark. <em>Core</em> is the single takeaway — max one per section. <em>Ink</em> is must-remember. <em>Spice</em> is the one next action. <em>Warning</em> adds the 2px danger border.</p>
+        <p class="sc-hint">Tinted fill with the file-fold corner from the mark. <em>Core</em> is the single takeaway — max one per section — and may lead with a figure. <em>Ink</em> is must-remember. <em>Spice</em> is the one next action. <em>Warning</em> adds the 2px danger border.</p>
         <div class="sg-demo">
-          <div class="sc-callout sc-callout--core"><div class="sc-callout__label">Core takeaway</div><p>The cheapest landed car is a 17k-mile 2024 in San Diego at $36,646 — $1,500 under yesterday.</p></div>
-          <div class="sc-callout sc-callout--ink"><div class="sc-callout__label">Remember</div><p>Prices in the CSV are the lowest seen that day per vehicle; the dashboard always shows the local listing over the national copy.</p></div>
+          <div class="sc-callout sc-callout--core"><div class="sc-callout__label">Core takeaway</div><div class="sc-callout__figure">$36,646 landed for $36,368 asking</div><p>The cheapest landed car is a 17k-mile 2024 in San Diego — $1,500 under yesterday.</p></div>
+          <div class="sc-callout sc-callout--ink"><div class="sc-callout__label">Remember</div><p>Prices in the CSV are the <strong>lowest seen that day</strong> per vehicle; the dashboard always shows the local listing over the national copy. <a href="#components">Read the method →</a></p></div>
           <div class="sc-callout sc-callout--spice"><div class="sc-callout__label">Next action</div><p>Open the San Diego listing and ask for the out-the-door number before Friday. <a href="#components">Open the listing →</a></p></div>
           <div class="sc-callout sc-callout--warning"><div class="sc-callout__label">Check before you act</div><p>Two listings under $1,000 were monthly payments, not prices. They are filtered now; confirm any price that looks too good.</p></div>
         </div>
-        <p class="sg-rule"><code>.sc-callout</code> (<code>--core</code> <code>--ink</code> <code>--spice</code> <code>--warning</code>) · <code>.sc-callout__label</code></p>
+        <p class="sg-rule"><code>.sc-callout</code> (<code>--core</code> <code>--ink</code> <code>--spice</code> <code>--warning</code>) · <code>.sc-callout__label</code> · <code>.sc-callout__figure</code> <span class="sc-chip sc-chip--spice">2.1</span></p>
       </div>
 
       <div class="sg-block">
         <h3>Chips</h3>
-        <p class="sc-hint">Squared lowercase mono chips. The word carries the meaning; the tone reinforces it. Danger is the outline form — stop and check.</p>
+        <p class="sc-hint">Squared lowercase mono chips. The word carries the meaning; the tone reinforces it. Danger is the outline form — stop and check. Codes and proper nouns keep their casing with <code>--case</code>.</p>
         <div class="sg-demo"><div class="sg-row">
-          <span class="sc-chip sc-chip--brand">Chicago</span><span class="sc-chip sc-chip--neutral">National</span><span class="sc-chip sc-chip--spice">New</span><span class="sc-chip sc-chip--good">CPO</span><span class="sc-chip sc-chip--warn">2 owners</span><span class="sc-chip sc-chip--danger">1 accident</span><span class="sc-chip sc-chip--solid">Best value</span>
+          <span class="sc-chip sc-chip--brand">Chicago</span><span class="sc-chip sc-chip--neutral">National</span><span class="sc-chip sc-chip--spice">New</span><span class="sc-chip sc-chip--good">CPO</span><span class="sc-chip sc-chip--warn">2 owners</span><span class="sc-chip sc-chip--danger">1 accident</span><span class="sc-chip sc-chip--info">Ex-lease</span><span class="sc-chip sc-chip--solid">Best value</span><span class="sc-chip sc-chip--brand sc-chip--case">IL</span><span class="sc-chip sc-chip--neutral sc-chip--case">BMW i5</span>
         </div></div>
-        <p class="sg-rule"><code>.sc-chip</code> (<code>--brand</code> <code>--neutral</code> <code>--spice</code> <code>--good</code> <code>--warn</code> <code>--danger</code> <code>--solid</code>). In documents the provenance letters <code>K B A Q W</code> can ride on these tones.</p>
+        <p class="sg-rule"><code>.sc-chip</code> (<code>--brand</code> <code>--neutral</code> <code>--spice</code> <code>--good</code> <code>--warn</code> <code>--danger</code> <code>--info</code> <code>--solid</code> · <code>--case</code>) <span class="sc-chip sc-chip--spice">2.1</span> for <code>--info</code> and <code>--case</code>. In documents the provenance letters <code>K B A Q W</code> can ride on these tones.</p>
       </div>
 
       <div class="sg-block">
         <h3>Buttons</h3>
-        <p class="sc-hint">Primary is spice — one per view. Secondary is a cobalt-leaning outline. Ghost for the quiet third option.</p>
+        <p class="sc-hint">Primary is spice — one per view (this demo shows two only to compare sizes). Secondary is a cobalt-leaning outline. Ghost for the quiet third option. Pressed states shift the fill toward <code>--sc-hover</code>; nothing scales or filters.</p>
         <div class="sg-demo"><div class="sg-row">
           <button class="sc-btn sc-btn--primary" type="button">Open the listing →</button>
           <button class="sc-btn sc-btn--secondary" type="button">Download CSV</button>
           <button class="sc-btn sc-btn--ghost" type="button">Reset filters</button>
           <button class="sc-btn sc-btn--primary sc-btn--sm" type="button">Small primary</button>
           <button class="sc-btn sc-btn--secondary sc-btn--sm" type="button" disabled>Disabled</button>
+          <a class="sc-btn sc-btn--secondary sc-btn--sm" aria-disabled="true" role="link">Disabled link</a>
+          <button class="sc-btn sc-btn--secondary is-focus" type="button">Focus ring</button>
         </div></div>
-        <p class="sg-rule"><code>.sc-btn</code> (<code>--primary</code> <code>--secondary</code> <code>--ghost</code> <code>--sm</code>) · <code>[disabled]</code></p>
+        <p class="sg-rule"><code>.sc-btn</code> (<code>--primary</code> <code>--secondary</code> <code>--ghost</code> <code>--sm</code>) · <code>[disabled]</code> · <code>a.sc-btn[aria-disabled="true"]</code> drops its <code>href</code> · the ring is <code>:focus-visible</code> on every control — 2px <code>--sc-focus</code>, 2px offset (held still here with a page class).</p>
       </div>
 
       <div class="sg-block">
         <h3>Filters &amp; inputs</h3>
-        <p class="sc-hint">One row, above everything it scopes. Labels are mono eyebrows; controls are 14px Archivo on the card surface.</p>
+        <p class="sc-hint">One row, above everything it scopes. Labels are mono eyebrows; controls are 14px Instrument Sans on the card surface with a 3:1 control border. A bare <code>label.sc-check</code> carries the same label type as <code>.sc-field</code>.</p>
         <div class="sg-demo">
-          <div class="sc-filters" style="padding:0">
+          <div class="sc-filters">
             <label class="sc-field">Market <select class="sc-select"><option>All markets</option><option>Local only</option><option>Chicago (200 mi)</option></select></label>
             <label class="sc-field">Year <select class="sc-select"><option>All years</option><option>2024</option><option>2025</option></select></label>
             <label class="sc-field">Search <input class="sc-input" type="search" placeholder="VIN or city"></label>
-            <label class="sc-field sc-check"><input type="checkbox" checked> Hide reported accidents</label>
+            <label class="sc-check"><input type="checkbox" checked> Hide reported accidents</label>
+          </div>
+          <div class="sc-filters" style="margin-top:14px">
+            <label class="sc-field">Disabled <input class="sc-input" type="text" value="Cincinnati" disabled></label>
+            <label class="sc-field">Invalid <input class="sc-input" type="text" value="WBY33FK0" aria-invalid="true" aria-describedby="vin-err"></label>
+            <span class="sc-note sc-text-danger" id="vin-err">17 characters expected</span>
+            <label class="sc-field">Read-only <input class="sc-input" type="text" value="2026-08-23" readonly></label>
           </div>
         </div>
-        <p class="sg-rule"><code>.sc-filters</code> · <code>.sc-field</code> · <code>.sc-select</code> · <code>.sc-input</code> · <code>.sc-check</code></p>
+        <p class="sg-rule"><code>.sc-filters</code> · <code>.sc-field</code> · <code>.sc-select</code> · <code>.sc-input</code> (<code>:disabled</code> <code>[aria-invalid="true"]</code> <code>:read-only</code>) · <code>.sc-check</code></p>
       </div>
 
       <div class="sg-block">
         <h3>Table</h3>
-        <p class="sc-hint">Open header — lowercase mono labels over a 2px cobalt rule, no filled bar — hairline rows, row hover, numbers right-aligned and tabular. Sortable headers get <code>is-sortable</code>; the active one <code>is-sorted</code>.</p>
+        <p class="sc-hint">Open header — lowercase mono labels over a 2px cobalt rule, no filled bar — hairline rows, row hover, numbers right-aligned, tabular and non-wrapping. Sortable columns hold a <code>button.sc-table__sort</code>; the arrow is drawn from <code>aria-sort</code>. Secondary lines are <code>.sc-note</code>; the lead value is <code>.sc-figure</code>; row links are quiet.</p>
         <div class="sg-demo sg-demo--flush">
           <div class="sc-table-scroll"><table class="sc-table">
-            <thead><tr><th>Vehicle</th><th class="sc-num is-sortable">Asking</th><th class="sc-num is-sortable">Miles</th><th class="sc-num is-sortable is-sorted">Landed</th><th>Location</th><th>History</th></tr></thead>
+            <thead><tr><th scope="col">Vehicle</th><th scope="col" class="sc-num is-sortable" aria-sort="ascending"><button type="button" class="sc-table__sort">Asking</button></th><th scope="col" class="sc-num is-sortable"><button type="button" class="sc-table__sort">Miles</button></th><th scope="col" class="sc-num is-sortable" aria-sort="descending"><button type="button" class="sc-table__sort">Landed</button></th><th scope="col">Location</th><th scope="col">History</th><th scope="col">Trend</th></tr></thead>
             <tbody>
-              <tr><td><strong>2024 eDrive40</strong><br><span class="sc-mono sc-muted" style="font-size:11px">WBY33FK08RCS83536</span></td><td class="sc-num"><strong>$36,368</strong><br><span class="sc-mono sc-text-good" style="font-size:10.5px">↓ $1,500 · 1 cut</span></td><td class="sc-num">17,263</td><td class="sc-num sc-text-brand"><strong>$36,646</strong></td><td>San Diego, CA <span class="sc-chip sc-chip--neutral">National</span></td><td class="sc-mono sc-muted" style="font-size:11.5px">1-owner · no accidents</td></tr>
-              <tr><td><strong>2025 eDrive40</strong><br><span class="sc-mono sc-muted" style="font-size:11px">WBY33FK0XRCNEW001</span></td><td class="sc-num"><strong>$41,000</strong><br><span class="sc-mono sc-text-accent" style="font-size:10.5px">NEW</span></td><td class="sc-num">9,000</td><td class="sc-num sc-text-brand"><strong>$37,700</strong></td><td>Naperville, IL <span class="sc-chip sc-chip--brand">Chicago</span></td><td class="sc-mono sc-muted" style="font-size:11.5px">CPO · 2 owners · <span class="sc-text-danger">1 accident</span></td></tr>
-              <tr><td><strong>2024 eDrive40</strong><br><span class="sc-mono sc-muted" style="font-size:11px">WBY33FK02RCS83564</span></td><td class="sc-num"><strong>$38,698</strong></td><td class="sc-num">20,224</td><td class="sc-num sc-text-brand"><strong>$39,865</strong></td><td>Torrance, CA <span class="sc-chip sc-chip--neutral">National</span></td><td class="sc-mono sc-muted" style="font-size:11.5px">1-owner · ex-lease</td></tr>
+              <tr><td><div class="sc-media"><img class="sc-frame" src="assets/sc-avatar-tile.svg" alt=""><div class="sc-media__body"><div class="sc-media__title">2024 eDrive40</div><div class="sc-media__sub">BMW of San Diego</div><div class="sc-media__code">WBY33FK08RCS83536</div><div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a><a class="sc-link--quiet" href="#components">carfax ↗</a></div></div></div></td><td class="sc-num"><span class="sc-figure">$36,368</span><span class="sc-note sc-text-good">▼ $1,500 · 1 cut</span></td><td class="sc-num">17,263</td><td class="sc-num"><span class="sc-figure sc-text-brand">$36,646</span><span class="sc-note">+ $1,100 ship</span></td><td>San Diego, CA <span class="sc-chip sc-chip--neutral">National</span></td><td><span class="sc-note">1-owner · no accidents</span></td><td><svg class="sc-spark sc-spark--emphasis" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,6 L15,6 L28,10 L41,10 L54,16 L67,19 L78,21"/><circle cx="78" cy="21" r="3"/></svg></td></tr>
+              <tr><td><div class="sc-media"><span class="sc-frame sc-frame--empty">no photo</span><div class="sc-media__body"><div class="sc-media__title">2025 eDrive40</div><div class="sc-media__sub">BMW of Naperville</div><div class="sc-media__code">WBY33FK0XRCNEW001</div><div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a></div></div></div></td><td class="sc-num"><span class="sc-figure">$41,000</span><span class="sc-note"><span class="sc-chip sc-chip--spice">new</span></span></td><td class="sc-num">9,000</td><td class="sc-num"><span class="sc-figure sc-text-brand">$37,700</span><span class="sc-note">local</span></td><td>Naperville, IL <span class="sc-chip sc-chip--brand">Chicago</span></td><td><span class="sc-note">CPO · 2 owners · <span class="sc-text-danger">1 accident</span></span></td><td><svg class="sc-spark" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,14 L40,14 L78,14"/><circle cx="78" cy="14" r="3"/></svg></td></tr>
+              <tr><td><div class="sc-media"><span class="sc-frame sc-frame--empty">no photo</span><div class="sc-media__body"><div class="sc-media__title">2024 eDrive40</div><div class="sc-media__sub">Torrance Auto Plaza</div><div class="sc-media__code">WBY33FK02RCS83564</div><div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a><a class="sc-link--quiet" href="#components">carfax ↗</a></div></div></div></td><td class="sc-num"><span class="sc-figure">$38,698</span></td><td class="sc-num">20,224</td><td class="sc-num"><span class="sc-figure sc-text-brand">$39,865</span><span class="sc-note">+ $1,100 ship · + $67 mi</span></td><td>Torrance, CA <span class="sc-chip sc-chip--neutral">National</span></td><td><span class="sc-note">1-owner · <span class="sc-faint">history n/a</span></span></td><td><svg class="sc-spark" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,8 L27,8 L52,12 L78,12"/><circle cx="78" cy="12" r="3"/></svg></td></tr>
             </tbody>
           </table></div>
         </div>
-        <p class="sg-rule"><code>.sc-table</code> (<code>--compact</code>) · <code>.sc-table-scroll</code> · <code>th.is-sortable</code> <code>.is-sorted</code> · <code>.sc-num</code></p>
+        <p class="sg-rule"><code>.sc-table</code> (<code>--compact</code>) · <code>.sc-table-scroll</code> · <code>th.is-sortable</code> <code>th[aria-sort]</code> <code>.sc-table__sort</code> <span class="sc-chip sc-chip--spice">2.1</span> · <code>.sc-num</code> · <code>.sc-figure</code> <code>.sc-note</code> · <code>.sc-link--quiet</code> · <code>th.is-sorted</code> is deprecated (removed in 3.0)</p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Tall table — sticky header <span class="sc-chip sc-chip--spice">2.1</span></h3>
+        <p class="sc-hint">The header sticks only inside a bounded, vertically scrolling wrapper. Plain <code>.sc-table-scroll</code> scrolls sideways and never pins anything. Scroll the demo.</p>
+        <div class="sg-demo sg-demo--flush">
+          <div class="sc-table-scroll sc-table-scroll--tall"><table class="sc-table sc-table--compact">
+            <thead><tr><th scope="col">Day</th><th scope="col" class="sc-num">Lowest landed</th><th scope="col" class="sc-num">Median landed</th><th scope="col" class="sc-num">Vehicles</th></tr></thead>
+            <tbody>
+              <tr><td>Aug 17</td><td class="sc-num">$37,868</td><td class="sc-num">$46,548</td><td class="sc-num">68</td></tr>
+              <tr><td>Aug 18</td><td class="sc-num">$37,868</td><td class="sc-num">$46,600</td><td class="sc-num">69</td></tr>
+              <tr><td>Aug 19</td><td class="sc-num">$37,200</td><td class="sc-num">$46,652</td><td class="sc-num">71</td></tr>
+              <tr><td>Aug 20</td><td class="sc-num">$37,200</td><td class="sc-num">$46,500</td><td class="sc-num">72</td></tr>
+              <tr><td>Aug 21</td><td class="sc-num">$36,900</td><td class="sc-num">$46,480</td><td class="sc-num">73</td></tr>
+              <tr><td>Aug 22</td><td class="sc-num">$36,646</td><td class="sc-num">$46,652</td><td class="sc-num">74</td></tr>
+              <tr><td>Aug 23</td><td class="sc-num">$36,646</td><td class="sc-num">$46,653</td><td class="sc-num">74</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <p class="sg-rule"><code>.sc-table-scroll--tall</code> (70vh max; the demo caps it lower) · inside <code>.sc-card--raised</code> the header takes the raised fill</p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Empty state <span class="sc-chip sc-chip--spice">2.1</span></h3>
+        <p class="sc-hint">Nothing to show yet — one sentence, no apology, no graphic. The table form spans the row.</p>
+        <div class="sg-demo">
+          <p class="sc-empty">No price changes since the previous snapshot.</p>
+          <div class="sc-table-scroll" style="margin-top:14px"><table class="sc-table sc-table--compact">
+            <thead><tr><th scope="col">Vehicle</th><th scope="col" class="sc-num">Last seen</th><th scope="col" class="sc-num">Last price</th></tr></thead>
+            <tbody><tr class="sc-empty"><td colspan="3">Nothing has left the market yet.</td></tr></tbody>
+          </table></div>
+        </div>
+        <p class="sg-rule"><code>.sc-empty</code> · <code>tr.sc-empty</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Frame &amp; media row <span class="sc-chip sc-chip--spice">2.1</span></h3>
+        <p class="sc-hint">Photos are content: a hairline-bordered 6px frame, 56×40 by default, 120×80 with <code>--lg</code>; <code>object-fit: cover</code> crops any aspect (the avatar tile stands in for a photo here). The empty twin says so in words. A media row puts the frame beside title, sub-line, code and quiet links; on narrow screens a table row becomes the card twin — frame, title, aside first (the grid places them), then sub-line, code and the foot.</p>
+        <div class="sg-demo">
+          <div class="sg-row sg-row--top">
+            <img class="sc-frame" src="assets/sc-avatar-tile.svg" alt="">
+            <span class="sc-frame sc-frame--empty">no photo</span>
+            <img class="sc-frame sc-frame--lg" src="assets/sc-avatar-tile.svg" alt="">
+            <span class="sc-frame sc-frame--empty sc-frame--lg">no photo</span>
+          </div>
+          <div class="sc-media" style="margin-top:18px">
+            <img class="sc-frame" src="assets/sc-avatar-tile.svg" alt="">
+            <div class="sc-media__body"><div class="sc-media__title">2024 eDrive40</div><div class="sc-media__sub">BMW of San Diego · San Diego, CA</div><div class="sc-media__code">WBY33FK08RCS83536</div><div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a><a class="sc-link--quiet" href="#components">carfax ↗</a></div></div>
+          </div>
+          <div class="sc-media sc-media--card" style="margin-top:18px;max-width:420px">
+            <span class="sc-frame sc-frame--empty">no photo</span>
+            <div class="sc-media__title">2025 eDrive40</div>
+            <div class="sc-media__aside"><span class="sc-figure">$41,000</span><span class="sc-note">$37,700 landed</span><span class="sc-chip sc-chip--spice">new</span></div>
+            <div class="sc-media__sub">BMW of Naperville · Naperville, IL</div>
+            <div class="sc-media__code">WBY33FK0XRCNEW001</div>
+            <div class="sc-media__foot"><span class="sc-chip sc-chip--brand">Chicago</span><span>CPO · 2 owners</span><span class="sc-right sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a><a class="sc-link--quiet" href="#components">carfax ↗</a></span></div>
+          </div>
+        </div>
+        <p class="sg-rule"><code>.sc-frame</code> (<code>--empty</code> <code>--lg</code>) · <code>.sc-media</code> <code>.sc-media__body</code> <code>.sc-media__title</code> <code>.sc-media__sub</code> <code>.sc-media__code</code> <code>.sc-media__links</code> · <code>.sc-media--card</code> <code>.sc-media__aside</code> <code>.sc-media__foot</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Figure, note &amp; quiet link <span class="sc-chip sc-chip--spice">2.1</span></h3>
+        <p class="sc-hint">Inside a cell or a row: the lead value is bold heading-colored and never wraps; the footnote under it is mono muted. Links in dense tables and media rows are quiet — spice is reserved for the one action and prose links.</p>
+        <div class="sg-demo"><div class="sg-row sg-row--top">
+          <div><span class="sc-figure">$36,646</span><span class="sc-note">landed · + $1,100 ship</span></div>
+          <div><span class="sc-figure sc-text-brand">$37,700</span><span class="sc-note">local · no shipping</span></div>
+          <div><span class="sc-figure">17,263 mi</span><span class="sc-note sc-text-good">▼ 2,737 under baseline</span></div>
+          <div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a><a class="sc-link--quiet" href="#components">carfax ↗</a></div>
+          <div><a href="#components">a prose link →</a></div>
+        </div></div>
+        <p class="sg-rule"><code>.sc-figure</code> · <code>.sc-note</code> · <code>.sc-link--quiet</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Chart container &amp; sparkline <span class="sc-chip sc-chip--spice">2.1</span></h3>
+        <p class="sc-hint">Every chart lives in a focusable host with a name, an <code>aria-hidden</code> SVG, and a table twin below it. Marks wear the <code>.sc-chart__*</code> classes so they follow the tokens; text inside wears text tokens. A sparkline is the same idea at 80×26 — chart tokens for the line, never text tokens. The live charts in <a href="#charts">Data visualization</a> use exactly this contract. On phones this fixed-width specimen scrolls sideways inside its host.</p>
+        <div class="sg-demo">
+          <div class="sc-chart sg-static-chart" role="group" tabindex="0" aria-label="Lowest and median landed price, Aug 17 to 23">
+            <svg viewBox="0 0 540 150" aria-hidden="true">
+              <line class="sc-chart__grid" x1="44" x2="470" y1="16" y2="16"/><line class="sc-chart__grid" x1="44" x2="470" y1="66" y2="66"/><line class="sc-chart__grid" x1="44" x2="470" y1="116" y2="116"/>
+              <text x="36" y="20" text-anchor="end">$48K</text><text x="36" y="70" text-anchor="end">$42K</text><text x="36" y="120" text-anchor="end">$36K</text>
+              <text x="44" y="140" text-anchor="middle">Aug 17</text><text x="257" y="140" text-anchor="middle">Aug 20</text><text x="470" y="140" text-anchor="middle">Aug 23</text>
+              <line class="sc-chart__crosshair" x1="399" x2="399" y1="16" y2="116"/>
+              <path class="sc-chart__series sc-chart__series--context" d="M44,28 L115,27 L186,26 L257,27 L328,28 L399,26 L470,26"/>
+              <path class="sc-chart__series sc-chart__series--emphasis" d="M44,100 L115,100 L186,106 L257,106 L328,108 L399,111 L470,111"/>
+              <circle class="sc-chart__marker" cx="399" cy="26" r="4" style="fill:var(--sc-chart-context)"/><circle class="sc-chart__marker" cx="399" cy="111" r="5.5" style="fill:var(--sc-chart-emphasis)"/><circle class="sc-chart__marker" cx="470" cy="111" r="4" style="fill:var(--sc-chart-emphasis)"/>
+              <text class="sc-chart__label" x="480" y="115">$36,646</text><text class="sc-chart__label" x="480" y="30">$46,653</text>
+            </svg>
+          </div>
+          <details class="sc-details" open>
+            <summary>Table view</summary>
+            <div class="sc-table-scroll" style="margin-top:8px"><table class="sc-table sc-table--compact">
+              <caption class="sc-sr-only">Lowest and median landed price by day</caption>
+              <thead><tr><th scope="col">Day</th><th scope="col" class="sc-num">Lowest landed</th><th scope="col" class="sc-num">Median landed</th></tr></thead>
+              <tbody><tr><td>Aug 22</td><td class="sc-num">$36,646</td><td class="sc-num">$46,652</td></tr><tr><td>Aug 23</td><td class="sc-num">$36,646</td><td class="sc-num">$46,653</td></tr></tbody>
+            </table></div>
+          </details>
+          <div class="sc-grid sc-grid--2" style="margin-top:18px">
+            <div class="sc-tile sg-tile-spark"><div class="sc-tile__label">Vehicles tracked</div><div class="sc-tile__value">74</div><div class="sc-tile__sub">+ 6 this week</div><svg class="sc-spark sc-spark--emphasis sc-tile__spark" viewBox="0 0 120 26" width="120" height="26" aria-hidden="true"><path d="M2,22 L22,20 L42,19 L62,13 L82,12 L102,7 L118,4"/><circle cx="118" cy="4" r="3"/></svg></div>
+            <div class="sc-table-scroll"><table class="sc-table sc-table--compact">
+              <thead><tr><th scope="col">Vehicle</th><th scope="col" class="sc-num">Landed</th><th scope="col">Trend</th></tr></thead>
+              <tbody>
+                <tr><td>2024 eDrive40</td><td class="sc-num"><span class="sc-figure">$36,646</span></td><td><svg class="sc-spark sc-spark--emphasis" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,6 L28,10 L54,16 L78,21"/><circle cx="78" cy="21" r="3"/></svg><span class="sc-sr-only">Aug 17 $38,900; Aug 23 $36,646</span></td></tr>
+                <tr><td>2025 eDrive40</td><td class="sc-num"><span class="sc-figure">$37,700</span></td><td><svg class="sc-spark" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,14 L40,14 L78,14"/><circle cx="78" cy="14" r="3"/></svg><span class="sc-sr-only">Aug 17 $37,700; Aug 23 $37,700</span></td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </div>
+        <p class="sg-rule"><code>.sc-chart</code> (<code>role="group" tabindex="0" aria-label</code>) · <code>.sc-chart__grid</code> <code>.sc-chart__crosshair</code> <code>.sc-chart__series</code> (<code>--emphasis</code> <code>--context</code>) <code>.sc-chart__marker</code> <code>.sc-chart__label</code> · <code>.sc-spark</code> (<code>--emphasis</code>) <code>.sc-tile__spark</code> · a sparkline's values ride along in <code>.sc-sr-only</code> or the row's details twin</p>
       </div>
 
       <div class="sg-block">
         <h3>Tooltip, legend, tabs, details</h3>
-        <p class="sc-hint">Tooltips sit on ink with values leading. Legends use line keys for lines and swatches for bars. Tabs switch the subject, not the site. Details hide a chart's table twin.</p>
-        <div class="sg-demo"><div class="sg-row" style="align-items:flex-start;gap:28px">
-          <div class="sc-tooltip is-on"><div class="sc-tooltip__date">Mon, August 24, 2026</div><div class="sc-tooltip__row"><i style="background:var(--sc-chart-emphasis)"></i><b>$36,646</b><span>lowest landed</span></div><div class="sc-tooltip__row"><i style="background:var(--sc-chart-context)"></i><b>$46,652</b><span>median landed</span></div><div class="sc-tooltip__meta">70 vehicles · 1 local</div></div>
-          <div>
+        <p class="sc-hint">Tooltips sit on ink with values leading and are hidden from assistive tech while off. Legends use line keys for lines and swatches for bars. Tabs are a segmented control — <code>role="group"</code> with <code>aria-pressed</code> — that switches the subject, not the site. Details hide a chart's table twin; the arrow turns when open.</p>
+        <div class="sg-demo"><div class="sg-row sg-row--top">
+          <div class="sc-tooltip sg-tip is-on"><div class="sc-tooltip__date">Mon, August 24, 2026</div><div class="sc-tooltip__row"><i style="background:var(--sc-chart-emphasis)"></i><b>$36,646</b><span>lowest landed</span></div><div class="sc-tooltip__row"><i style="background:var(--sc-chart-context)"></i><b>$46,652</b><span>median landed</span></div><div class="sc-tooltip__meta">70 vehicles · 1 local</div></div>
+          <div class="sc-stack">
             <div class="sc-legend" style="margin-top:0"><span><i style="background:var(--sc-chart-emphasis)"></i>Lowest landed</span><span><i style="background:var(--sc-chart-context)"></i>Median landed</span><span><i class="is-swatch" style="background:var(--sc-chart-1)"></i>Local</span><span><i class="is-swatch" style="background:var(--sc-chart-2)"></i>National</span></div>
-            <div class="sc-tabs" style="margin-top:14px"><button class="sc-tab" aria-selected="true" type="button">BMW i5 eDrive40</button><button class="sc-tab" type="button">Second target</button></div>
-            <details class="sc-details" style="margin-top:14px"><summary>Table view</summary><p class="sc-hint" style="margin-top:8px">The chart's values as a table — every chart has one.</p></details>
+            <div class="sc-tabs" role="group" aria-label="Model"><button class="sc-tab sc-tab--case" aria-pressed="true" type="button">BMW i5</button><button class="sc-tab" aria-pressed="false" type="button">Second target</button><button class="sc-tab" aria-pressed="false" type="button">All models</button></div>
+            <details class="sc-details"><summary>Table view</summary><p class="sc-hint" style="margin-top:8px">The chart's values as a table — every chart has one.</p></details>
+            <details class="sc-details" open><summary>Table view, open</summary><p class="sc-hint" style="margin-top:8px">The same twin, expanded: the glyph points down.</p></details>
           </div>
         </div></div>
-        <p class="sg-rule"><code>.sc-tooltip</code> (<code>__date</code> <code>__row</code> <code>__meta</code>, <code>is-on</code>) · <code>.sc-legend</code> (<code>i.is-swatch</code>) · <code>.sc-tabs</code> <code>.sc-tab[aria-selected]</code> (<code>--case</code> keeps proper-noun casing) · <code>.sc-details</code></p>
+        <p class="sg-rule"><code>.sc-tooltip</code> (<code>__date</code> <code>__row</code> <code>__meta</code>, <code>is-on</code>) · <code>.sc-legend</code> (<code>i.is-swatch</code>) · <code>.sc-tabs[role="group"]</code> <code>.sc-tab[aria-pressed]</code> (<code>--case</code> keeps proper-noun casing; <code>aria-selected</code> is still styled for old markup) · <code>.sc-details</code> (<code>[open]</code>)</p>
       </div>
 
       <div class="sg-block">
         <h3>Notice</h3>
         <p class="sc-hint">The stop-and-read block: what failed and what to do. No apology, no vagueness.</p>
-        <div class="sg-demo"><div class="sc-notice" style="margin:0"><div class="sc-eyebrow">Could not load data.json</div><p style="margin:0">This page reads <code>data.json</code> from the same folder, so it needs to be served over HTTP — GitHub Pages, or <code>python -m http.server</code> from the docs folder.</p></div></div>
+        <div class="sg-demo"><div class="sc-notice"><div class="sc-eyebrow">Could not load data.json</div><p>This page reads <code>data.json</code> from the same folder, so it needs to be served over HTTP — GitHub Pages, or a local static server from the docs folder.</p></div></div>
         <p class="sg-rule"><code>.sc-notice</code></p>
       </div>
 
       <div class="sg-block">
         <h3>Footer &amp; watermark</h3>
-        <p class="sc-hint">Source line left; the SpicyChicken watermark right — mark, wordmark, 70% opacity, links to the profile. On every page, the same size.</p>
-        <div class="sg-demo sg-demo--flush"><div class="sc-foot" style="margin:0;border-top:0"><span>Source: auto.dev listings API · snapshot 2026-08-23</span><a class="sc-watermark" href="https://github.com/spicyChicken59"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt="" style="height:20px"><span class="sc-watermark__name">SpicyChicken</span></a></div></div>
-        <p class="sg-rule"><code>.sc-foot</code> · <code>.sc-watermark</code> <code>.sc-watermark__name</code></p>
+        <p class="sc-hint">Source line left; the SpicyChicken watermark right — mono mark, wordmark, 70% opacity, links to the profile. On every page, the same size; the class sets it, so no inline height.</p>
+        <div class="sg-demo sg-demo--flush"><div class="sc-foot"><span>Source: auto.dev listings API · snapshot 2026-08-23 · <a href="#components">method</a></span><a class="sc-watermark" href="https://github.com/spicyChicken59"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a></div></div>
+        <p class="sg-rule"><code>.sc-foot</code> · <code>.sc-watermark</code> <code>img.sc-mark</code> <code>.sc-watermark__name</code></p>
       </div>
 
       <div class="sg-block">
         <h3>Document surface</h3>
-        <p class="sc-hint">On-screen prose at 800px with section rules in the brand line. The print-bound deliverable template is on the roadmap.</p>
-        <div class="sg-demo sg-demo--flush"><div class="sc-doc" style="margin:0;max-width:none;border:0;border-radius:0"><div class="sc-eyebrow">Deliverable 01 · Method</div><h2 style="border:0;padding:0;margin:0 0 8px">How landed price is computed</h2><p class="sc-dek" style="font-size:16px">Asking price, plus shipping when the car is outside the region, adjusted for mileage against a baseline.</p><p style="margin:0;max-width:62ch">Each day the tracker keeps the lowest price it saw per VIN. The adjustment is thirty cents a mile either side of twenty thousand miles — a used-EV rule of thumb, not an appraisal.</p></div></div>
-        <p class="sg-rule"><code>.sc-doc</code></p>
+        <p class="sc-hint">On-screen prose at 800px with section rules in the brand line. The flat form drops the card for prose straight on the page, with h3 rhythm, a 68ch measure and a table of contents.</p>
+        <div class="sg-demo sg-demo--flush"><div class="sc-doc"><div class="sc-eyebrow">Deliverable 01 · Method</div><h2 style="border:0;padding:0;margin:0 0 8px">How landed price is computed</h2><p class="sc-dek" style="font-size:16px">Asking price, plus shipping when the car is outside the region, adjusted for mileage against a baseline.</p><p>Each day the tracker keeps the lowest price it saw per VIN. The adjustment is thirty cents a mile either side of twenty thousand miles — a used-EV rule of thumb, not an appraisal.</p></div></div>
+        <div class="sg-demo"><div class="sc-doc sc-doc--flat">
+          <div class="sc-eyebrow">How it works</div>
+          <nav class="sc-toc" aria-label="On this page"><a href="#components">Landed price</a><a href="#components">Mileage adjustment</a><a href="#components">Snapshots</a><a href="#components">Sources</a></nav>
+          <h3>Mileage adjustment</h3>
+          <p>Thirty cents a mile either side of a 20,000-mile baseline, so a 10,000-mile car is landed $3,000 higher and a 30,000-mile car $3,000 lower than its asking price suggests.</p>
+          <ul><li>Shipping applies outside a 200-mile radius.</li><li>Listings under $20,000 are ignored as payment-not-price errors.</li></ul>
+        </div></div>
+        <p class="sg-rule"><code>.sc-doc</code> (<code>--flat</code>) · <code>.sc-toc</code> <span class="sc-chip sc-chip--spice">2.1</span></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Skip link</h3>
+        <p class="sc-hint">The first focusable thing on a page: off-screen until focused, then a small card at the top-left. This guide has one — press <kbd>Tab</kbd> from the address bar. Shown here in its focused form.</p>
+        <div class="sg-demo"><a class="sc-skip" href="#main-content">Skip to content</a></div>
+        <p class="sg-rule"><code>.sc-skip</code> before the masthead, pointing at <code>main#main-content</code></p>
       </div>
     </section>
 
     <section class="sg-section" id="charts">
       <div class="sc-eyebrow">07 · Build</div>
       <h2>Data visualization</h2>
-      <p class="sc-dek">Five categorical slots in fixed order, a cobalt sequential ramp, an emphasis pair. Every slot passes the colorblind and normal-vision separation checks against the card surface in both modes.</p>
+      <p class="sc-dek">Five categorical slots in fixed order, a cobalt sequential ramp, an emphasis pair. Adjacent slots pass the colorblind and normal-vision separation checks against the card surface in both modes; all-pairs separation is verified for slots 1–3.</p>
       <div class="sg-block">
         <h3>Palettes — live in the current mode</h3>
         <div id="chart-palettes"></div>
       </div>
       <div class="sc-grid sc-grid--2">
         <div class="sc-card">
-          <div class="sc-card__head"><div><h3 style="font-size:18px">Emphasis line</h3><p class="sc-hint">The series that matters in cobalt, context in gray. Crosshair finds the day; arrow keys step.</p></div></div>
+          <div class="sc-card__head"><div><h3>Emphasis line</h3><p class="sc-hint">The series that matters in cobalt, context in gray. Crosshair finds the day; arrow keys step; the table twin carries the values.</p></div></div>
           <div class="sc-legend"><span><i style="background:var(--sc-chart-emphasis)"></i>Lowest landed</span><span><i style="background:var(--sc-chart-context)"></i>Median landed</span></div>
-          <div class="sg-chart" id="demo-line" tabindex="0" aria-label="Demo line chart"></div>
+          <div class="sc-chart" id="demo-line" role="group" tabindex="0" aria-label="Lowest and median landed price by day, Aug 12 to 23. Use the arrow keys to step through days."></div>
+          <div id="demo-line-twin"></div>
         </div>
         <div class="sc-card">
-          <div class="sc-card__head"><div><h3 style="font-size:18px">Categorical bars</h3><p class="sc-hint">Listings by state, per week. Slots 1–5 in order, ≤24px thick, 4px rounded data-ends, 2px surface gap.</p></div></div>
+          <div class="sc-card__head"><div><h3>Categorical bars</h3><p class="sc-hint">Listings by state, per week. Slots 1–5 in order, ≤24px thick, 4px rounded data-ends, 2px surface gap. Hover or arrow through the weeks.</p></div></div>
           <div class="sc-legend" id="demo-bar-legend"></div>
-          <div class="sg-chart" id="demo-bar"></div>
+          <div class="sc-chart" id="demo-bar" role="group" tabindex="0" aria-label="Listings by state per week, weeks 31 to 34. Use the arrow keys to step through weeks."></div>
+          <div id="demo-bar-twin"></div>
         </div>
       </div>
-      <div class="sc-callout sc-callout--core" style="margin-top:16px"><div class="sc-callout__label">Rules</div><p>One y-axis, always. Color follows the entity, never its rank. Status colors are never a series. Legend for two or more series; direct-label selectively. Text wears text tokens, never the series color. Every chart has a table twin. All-pairs forms (scatter, bubble, maps) use slots 1–3 only.</p></div>
+      <div class="sc-callout sc-callout--core"><div class="sc-callout__label">Rules</div><p>One y-axis, always. Color follows the entity, never its rank. Status colors are never a series. Legend for two or more series; direct-label selectively. Text wears text tokens, never the series color. Every chart has a table twin. All-pairs forms (scatter, bubble, maps) use slots 1–3 only; lines on slots 4–5 add end-labels or markers.</p></div>
     </section>
 
     <section class="sg-section" id="marks">
@@ -342,28 +530,28 @@
       <div class="sg-block">
         <h3>The four forms</h3>
         <div class="sg-marks">
-          <figure><span style="display:inline-block;background:#FFFFFF;border-radius:10px;padding:14px"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-color-light.svg" alt="Color on light"></span><figcaption>color · light</figcaption></figure>
-          <figure><span style="display:inline-block;background:var(--sc-night-950);border-radius:10px;padding:14px"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-color-dark.svg" alt="Color on dark"></span><figcaption>color · dark</figcaption></figure>
-          <figure><span style="display:inline-block;background:var(--sc-night-950);border-radius:10px;padding:14px"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-mono-cream.svg" alt="Mono cream"></span><figcaption>mono · cream</figcaption></figure>
-          <figure><span style="display:inline-block;background:#FFFFFF;border-radius:10px;padding:14px"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-mono-ink.svg" alt="Mono ink"></span><figcaption>mono · ink</figcaption></figure>
-          <figure><img src="assets/sc-avatar-tile.svg" alt="Avatar tile" style="width:76px;height:76px;display:block"><figcaption>avatar tile · favicon</figcaption></figure>
-          <figure><span style="display:inline-block;background:var(--sc-night-950);border-radius:10px;padding:14px 18px"><img src="assets/sc-lockup-cream.svg" alt="SpicyChicken lockup" style="height:34px;width:auto;display:block"></span><figcaption>lockup · wordmark in Bricolage 700</figcaption></figure>
+          <figure><span class="sg-tile sg-tile--light"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-color-light.svg" alt="Color on light"></span><figcaption>color · light</figcaption></figure>
+          <figure><span class="sg-tile sg-tile--ink"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-color-dark.svg" alt="Color on dark"></span><figcaption>color · dark</figcaption></figure>
+          <figure><span class="sg-tile sg-tile--ink"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-mono-cream.svg" alt="Mono cream"></span><figcaption>mono · cream</figcaption></figure>
+          <figure><span class="sg-tile sg-tile--light"><img class="sc-mark sc-mark--lg" src="assets/sc-mark-mono-ink.svg" alt="Mono ink"></span><figcaption>mono · ink</figcaption></figure>
+          <figure><img class="sg-mark-76" src="assets/sc-avatar-tile.svg" alt="Avatar tile"><figcaption>avatar tile · favicon</figcaption></figure>
+          <figure><span class="sg-tile sg-tile--ink sg-tile--wide"><img class="sg-lockup" src="assets/sc-lockup-cream.svg" alt="SpicyChicken lockup"></span><figcaption>lockup · wordmark in the display face, Bricolage Grotesque 700</figcaption></figure>
         </div>
       </div>
       <div class="sg-block">
         <h3>Sizes</h3>
-        <div class="sg-marks" style="align-items:center">
-          <figure><img src="assets/sc-avatar-tile.svg" style="width:16px;height:16px;display:block" alt=""><figcaption>16 · favicon</figcaption></figure>
+        <div class="sg-marks sg-marks--center">
+          <figure><img class="sg-mark-16" src="assets/sc-avatar-tile.svg" alt=""><figcaption>16 · favicon</figcaption></figure>
           <figure><img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt=""><figcaption>26 · masthead</figcaption></figure>
           <figure><img class="sc-mark sc-mark--lg" src="assets/sc-mark-color-dark.svg" alt=""><figcaption>48</figcaption></figure>
-          <figure><img src="assets/sc-mark-color-dark.svg" style="height:96px;width:auto;display:block" alt=""><figcaption>96 · cover</figcaption></figure>
-          <figure><span style="display:inline-flex;background:var(--sc-ink);border-radius:10px;padding:12px 16px"><a class="sc-watermark" href="#marks" style="color:#F4F7FB"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt="" style="height:20px"><span class="sc-watermark__name">SpicyChicken</span></a></span><figcaption>watermark lockup (mono, on ink)</figcaption></figure>
-          <figure><span style="display:inline-flex;align-items:center;gap:10px;background:var(--sc-ink);border-radius:10px;padding:12px 16px"><img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt=""><span style="font:700 16px/1 var(--sc-font-display);letter-spacing:-.3px;color:#F4F7FB">Auto Market Tracker</span></span><figcaption>a project masthead — the chick + the name in type</figcaption></figure>
+          <figure><img class="sg-mark-96" src="assets/sc-mark-color-dark.svg" alt=""><figcaption>96 · cover</figcaption></figure>
+          <figure><span class="sg-tile sg-tile--ink sg-tile--row sc-on-ink"><a class="sc-watermark" href="#marks"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a></span><figcaption>watermark lockup (mono, on ink)</figcaption></figure>
+          <figure><span class="sg-tile sg-tile--ink sg-tile--row"><img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt=""><span class="sc-brand__name">Auto Market Tracker</span></span><figcaption>a project masthead — the chick + the name in type</figcaption></figure>
         </div>
       </div>
       <div class="sc-grid sc-grid--2">
-        <div class="sc-card"><div class="sc-eyebrow">Usage</div><p class="sc-hint" style="margin:0">Color-dark on ink and dark surfaces, color-light on white and cream, mono for the watermark and one-color uses. Files in <code>assets/</code>: four mark SVGs, the avatar tile, lockups (SVG + PNG), favicon set. Clear space ≥ the flame's height on all sides. Never recolor, outline, rotate, or add effects.</p></div>
-        <div class="sc-card"><div class="sc-eyebrow sc-eyebrow--accent">Watermark spec</div><p class="sc-hint" style="margin:0">Mono mark 20px tall + wordmark in the display face at 12px, footer-right, 70% opacity, links to the profile. The masthead shows the color form; the watermark shows the mono form. One chick per surface, always the same sizes.</p></div>
+        <div class="sc-card"><div class="sc-eyebrow">Usage</div><p class="sc-hint">Color-dark on ink and dark surfaces, color-light on white and cream, mono for the watermark and one-color uses. Files in <code>assets/</code>: four mark SVGs, the avatar tile, lockups (SVG + PNG), favicon set — hosted at <code>spicychicken59.github.io/design-system/assets/</code>. Clear space ≥ the flame's height on all sides. Never recolor, outline, rotate, or add effects.</p></div>
+        <div class="sc-card"><div class="sc-eyebrow sc-eyebrow--accent">Watermark spec</div><p class="sc-hint">Mono mark 20px tall + wordmark in the display face at 12px, footer-right, 70% opacity, links to the profile. The masthead shows the color form; the watermark shows the mono form. One chick per surface, always the same sizes.</p></div>
       </div>
     </section>
 
@@ -372,16 +560,16 @@
       <h2>Pre-ship checklist</h2>
       <p class="sc-dek">Open the style guide beside the page. If something on the page has no equivalent here, it's a new component — fold it in or take it out.</p>
       <ol class="sg-check">
-        <li>Masthead: project mark + name left, theme toggle right, <code>--sc-ink</code> in both modes.</li>
-        <li>Title block opens with an eyebrow; h1 is one plain sentence; dek is one sentence.</li>
-        <li>Exactly one spice action per view (primary button or next-action callout).</li>
-        <li>At most one core callout per section.</li>
-        <li>Page CSS references semantic tokens only — no hex, no primitives.</li>
-        <li>Charts use <code>--sc-chart-*</code>; one y-axis; legend for ≥2 series; a table twin under each.</li>
-        <li>Text never wears a chart or accent color; deltas carry ▲▼; chips carry words.</li>
-        <li>Screenshotted at 1280 and 390 in dark and light; nothing scrolls sideways.</li>
-        <li>Footer has the source line and the watermark; favicon is the project mark.</li>
-        <li>Page ends with one next action, not a list.</li>
+        <li>Head: <code>color-scheme</code> meta, the two font preconnects and the fonts link, then <code>sc.css</code> pinned to a tag via jsDelivr; <code>sc-theme.js</code> in the head; favicon links point at the hosted assets.</li>
+        <li>Skip link first, then masthead: the chick + project name left, theme toggle right, <code>--sc-ink</code> in both modes; <code>.sc-nav</code> has an <code>aria-label</code>.</li>
+        <li>Title block is <code>.sc-title</code>: eyebrow, one-plain-sentence h1, one-sentence dek.</li>
+        <li>Exactly one spice action per view (primary button or next-action callout). At most one core callout per section.</li>
+        <li>Page CSS references semantic tokens only — no hex, no primitives, no raw rgba.</li>
+        <li>Charts sit in <code>.sc-chart</code> hosts with <code>--sc-chart-*</code> marks; one y-axis; legend for ≥2 series; a table twin under each.</li>
+        <li>Text never wears a chart or accent color; deltas carry ▲▼; chips carry words; codes take <code>--case</code>.</li>
+        <li>Tables: sortable headers hold a button and set <code>aria-sort</code>; the sticky header only inside <code>--tall</code>; links in rows are quiet.</li>
+        <li>Screenshotted at 1280 and 390 in dark and light; nothing scrolls sideways; every control is at least 24px tall.</li>
+        <li>Footer has the source line and the watermark; favicon is the chick. Page ends with one next action, not a list.</li>
       </ol>
     </section>
 
@@ -390,14 +578,14 @@
       <h2>Do / don't</h2>
       <div class="sg-dont">
         <div class="sc-card"><h3 class="sc-text-good">Do</h3><ul><li>Lead with a lowercase "//" eyebrow.</li><li>Keep the masthead and footer dark in both modes.</li><li>Put the chick in the masthead and the watermark; name the project in type.</li><li>Use Instrument Sans for numbers, proportional figures.</li><li>Separate with hairlines and color, not shadow.</li><li>Write the outcome and the reason.</li></ul></div>
-        <div class="sc-card"><h3 class="sc-text-danger">Don't</h3><ul><li>Add a hue or a gradient.</li><li>Use spice for text, headings, or large fills.</li><li>ALL-CAPS a tracked label — lowercase mono is the house style.</li><li>Use a display face or tabular figures for a big number.</li><li>Ship an icon set without noting the substitution.</li><li>End with a menu of next steps.</li></ul></div>
+        <div class="sc-card"><h3 class="sc-text-danger">Don't</h3><ul><li>Add a hue or a gradient.</li><li>Use spice for text, headings, or large fills — <code>.sc-text-accent</code> is on its way out.</li><li>ALL-CAPS a tracked label — lowercase mono is the house style.</li><li>Use a display face or tabular figures for a big number.</li><li>Ship an icon set without noting the substitution.</li><li>End with a menu of next steps.</li></ul></div>
       </div>
-      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Move <code>design-system/</code> into its own repository with Pages enabled, tag it v2.0, and link <code>sc.css</code> from projects instead of copying it.</p></div>
+      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Tag v2.1.0 and pin it from every project — SpicyCar first: <code>https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.1.0/sc.css</code>.</p></div>
     </section>
   </main>
 </div>
 
 <footer class="sc-foot">
-  <span>SpicyChicken Design System · v2.0.0 · sc.css · tokens.json · DESIGN_SYSTEM.md</span>
-  <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt="" style="height:20px"><span class="sc-watermark__name">SpicyChicken</span></a>
+  <span>SpicyChicken Design System · v2.1.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
+  <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a>
 </footer>

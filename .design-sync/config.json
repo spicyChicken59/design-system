@@ -1,0 +1,45 @@
+{
+  "projectId": "c6bd1cee-e0b2-49ce-8997-05fdd570e218",
+  "shape": "package",
+  "pkg": "@spicychicken/react",
+  "globalName": "SC",
+  "buildCmd": "npm --prefix react run build",
+  "cssEntry": "dist/sc.css",
+  "guidelinesGlob": [
+    "../DESIGN_SYSTEM.md",
+    "../CHECKLIST.md"
+  ],
+  "overrides": {
+    "Table": {
+      "cardMode": "column"
+    },
+    "Masthead": {
+      "cardMode": "column"
+    },
+    "Footer": {
+      "cardMode": "column"
+    },
+    "Doc": {
+      "cardMode": "column"
+    },
+    "Wrap": {
+      "cardMode": "column"
+    },
+    "Brand": {
+      "cardMode": "column"
+    },
+    "Filters": {
+      "cardMode": "column"
+    },
+    "Title": {
+      "cardMode": "column"
+    },
+    "Chart": {
+      "cardMode": "column"
+    },
+    "Media": {
+      "cardMode": "column"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}
