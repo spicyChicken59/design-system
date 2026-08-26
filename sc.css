@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SpicyChicken Design System — sc.css  v2.1.0
+   SpicyChicken Design System — sc.css  v2.2.0
    Mohammed Tahir Madni · github.com/spicyChicken59
 
    One file, no build step. Drop it in (or link it) and every page shares the
@@ -334,11 +334,10 @@ table { border-collapse: collapse; }
 
 /* Eyebrow — the signature tell: lowercase mono opened by a spice-less "//" */
 .sc-eyebrow { font: 600 12px/1 var(--sc-font-mono); letter-spacing: .4px; text-transform: lowercase; color: var(--sc-brand); margin: 0 0 10px; }
-.sc-eyebrow::before { content: "// "; content: "// " / ""; opacity: .65; }   /* .65 is the lowest step that keeps the prefix ≥ 3:1 in light mode (3.15:1 on brand-fill, 3.26 on bg, 3.41 on white); dark 4.4–5.0 */
 .sc-eyebrow--accent { color: var(--sc-accent); }
 .sc-eyebrow--muted  { color: var(--sc-text-2); }
 .sc-dek { font: 400 var(--sc-text-lg)/1.5 var(--sc-font-body); color: var(--sc-text-2); margin: 0 0 var(--sc-s3); max-width: 760px; }
-.sc-meta { display: flex; flex-wrap: wrap; gap: var(--sc-s1) var(--sc-s2); font: 500 11px/1.4 var(--sc-font-mono); color: var(--sc-text-2); letter-spacing: .3px; }
+.sc-meta { display: flex; flex-wrap: wrap; gap: var(--sc-s1) var(--sc-s2); font: 500 12.5px/1.4 var(--sc-font-mono); color: var(--sc-text-2); letter-spacing: .3px; }
 .sc-meta .sc-sep { opacity: .4; }
 
 /* Masthead — project leads (left), brand endorses (right). Dark in both modes. */
@@ -372,7 +371,7 @@ table { border-collapse: collapse; }
 .sc-tile__label { font-size: var(--sc-text-sm); color: var(--sc-text-2); margin: 0 0 6px; }
 .sc-tile__value { font: 700 32px/1.1 var(--sc-font-body); color: var(--sc-heading); letter-spacing: -.5px; }   /* proportional figures, same sans as body */
 .sc-tile__value--sm { font-size: 24px; }
-.sc-tile__sub   { font: 500 11px/1.5 var(--sc-font-mono); color: var(--sc-text-2); margin-top: 6px; letter-spacing: .2px; }
+.sc-tile__sub   { font: 500 12.5px/1.5 var(--sc-font-mono); color: var(--sc-text-2); margin-top: 6px; letter-spacing: .2px; }
 .sc-delta { font: 700 12px/1.4 var(--sc-font-mono); margin-top: 4px; }
 .sc-delta--good { color: var(--sc-good); }
 .sc-delta--bad  { color: var(--sc-warn); }
@@ -385,7 +384,6 @@ table { border-collapse: collapse; }
 .sc-callout::after { content: ""; position: absolute; top: 0; right: 0; width: 14px; height: 14px; background: var(--sc-fold); clip-path: polygon(0 0, 100% 0, 100% 100%); }
 .sc-callout > :last-child { margin-bottom: 0; }
 .sc-callout__label { font: 600 11px/1 var(--sc-font-mono); letter-spacing: .4px; text-transform: lowercase; color: var(--sc-brand); margin-bottom: 7px; }
-.sc-callout__label::before { content: "// "; content: "// " / ""; opacity: .65; }   /* same step as .sc-eyebrow::before */
 .sc-callout__figure { font: 700 22px/1.2 var(--sc-font-body); color: var(--sc-heading); letter-spacing: -.3px; }   /* the lead figure; on-ink context handles the ink variant */
 .sc-callout--core    { background: var(--sc-brand-fill); --sc-fold: var(--sc-brand-line); }
 .sc-callout--ink     { background: var(--sc-ink); color: var(--sc-on-ink); --sc-fold: var(--sc-cobalt-500); }   /* label and strong come from the on-ink context (2c) */
@@ -395,7 +393,7 @@ table { border-collapse: collapse; }
 .sc-callout--warning .sc-callout__label { color: var(--sc-danger); }
 
 /* Chips — mono pills. Tone = meaning; the text always says it too. */
-.sc-chip { display: inline-flex; align-items: center; gap: 5px; font: 600 10.5px/1 var(--sc-font-mono); letter-spacing: .2px; text-transform: lowercase; padding: 4px 8px; border-radius: var(--sc-r-sm); border: 1px solid transparent; white-space: nowrap; vertical-align: middle; }
+.sc-chip { display: inline-flex; align-items: center; gap: 5px; font: 600 11px/1 var(--sc-font-mono); letter-spacing: .2px; text-transform: lowercase; padding: 4px 8px; border-radius: var(--sc-r-sm); border: 1px solid transparent; white-space: nowrap; vertical-align: middle; }
 .sc-chip--brand   { background: var(--sc-brand-fill);  color: var(--sc-brand);  border-color: color-mix(in srgb, var(--sc-brand) 35%, transparent); }
 .sc-chip--neutral { background: var(--sc-raised);      color: var(--sc-text-2); border-color: var(--sc-border); }
 .sc-chip--spice   { background: var(--sc-accent-fill); color: var(--sc-accent); border-color: color-mix(in srgb, var(--sc-accent) 35%, transparent); }
@@ -420,7 +418,7 @@ table { border-collapse: collapse; }
 a.sc-btn[aria-disabled="true"] { pointer-events: none; }   /* stops the click, not the keyboard — also drop href, or use <button disabled> */
 
 /* Inputs & selects */
-.sc-field { display: flex; align-items: center; gap: 8px; min-height: 24px; font: 600 10.5px/1 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; color: var(--sc-text-2); }
+.sc-field { display: flex; align-items: center; gap: 8px; min-height: 24px; font: 600 11.5px/1 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; color: var(--sc-text-2); }
 .sc-input, .sc-select { font: 500 14px var(--sc-font-body); color: var(--sc-heading); background: var(--sc-surface); border: 1px solid var(--sc-border-control); border-radius: var(--sc-r-sm); padding: 8px 10px; transition: border-color var(--sc-motion) var(--sc-ease); min-width: 0; }
 .sc-input::placeholder { color: var(--sc-text-3); }
 .sc-input:hover, .sc-select:hover { border-color: var(--sc-brand-strong); }
@@ -430,7 +428,7 @@ a.sc-btn[aria-disabled="true"] { pointer-events: none; }   /* stops the click, n
 .sc-select { appearance: none; -webkit-appearance: none; padding-right: 30px; cursor: pointer;
   background-image: linear-gradient(45deg, transparent 50%, var(--sc-text-2) 50%), linear-gradient(135deg, var(--sc-text-2) 50%, transparent 50%);
   background-position: calc(100% - 15px) 55%, calc(100% - 10px) 55%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; }
-.sc-check { display: inline-flex; align-items: center; gap: 8px; min-height: 24px; cursor: pointer; font: 600 10.5px/1 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; color: var(--sc-text-2); }   /* same label type as .sc-field, so label.sc-check alone matches */
+.sc-check { display: inline-flex; align-items: center; gap: 8px; min-height: 24px; cursor: pointer; font: 600 11.5px/1 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; color: var(--sc-text-2); }   /* same label type as .sc-field, so label.sc-check alone matches */
 .sc-check input { accent-color: var(--sc-accent); width: 15px; height: 15px; margin: 0; }
 .sc-filters { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center; padding: var(--sc-s2) 0 var(--sc-s0); }   /* one row, above everything it scopes */
 
@@ -466,7 +464,7 @@ a.sc-btn[aria-disabled="true"] { pointer-events: none; }   /* stops the click, n
 .sc-tooltip__meta { color: var(--sc-cobalt-200); font-size: 12px; margin-top: 4px; }
 
 /* Legend — line keys for lines, swatches for bars */
-.sc-legend { display: flex; gap: 18px; flex-wrap: wrap; font: 500 12px/1 var(--sc-font-mono); color: var(--sc-text-2); margin: 10px 0 4px; }
+.sc-legend { display: flex; gap: 18px; flex-wrap: wrap; font: 500 12.5px/1 var(--sc-font-mono); color: var(--sc-text-2); margin: 10px 0 4px; }
 .sc-legend span { display: inline-flex; align-items: center; gap: 7px; }
 .sc-legend i { display: inline-block; width: 18px; height: 2px; border-radius: 1px; }
 .sc-legend i.is-swatch { width: 10px; height: 10px; border-radius: 2px; }
@@ -543,15 +541,15 @@ img.sc-mark--lg { height: 48px; }
 
 /* Frame — the photo slot (img.sc-frame) and its empty twin */
 .sc-frame { --sc-frame-w: 56px; --sc-frame-h: 40px; display: block; width: var(--sc-frame-w); height: var(--sc-frame-h); flex: none; object-fit: cover; border-radius: var(--sc-r-sm); border: 1px solid var(--sc-border); background: var(--sc-raised); }
-.sc-frame--empty { display: flex; align-items: center; justify-content: center; font: 600 10.5px/1 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; color: var(--sc-text-2); }
+.sc-frame--empty { display: flex; align-items: center; justify-content: center; font: 600 11px/1 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; color: var(--sc-text-2); }
 .sc-frame--lg { --sc-frame-w: 120px; --sc-frame-h: 80px; }
 
 /* Media row — frame + title/sub/code + links; .sc-media--card is the narrow-screen twin */
 .sc-media { display: flex; align-items: center; gap: 12px; min-width: 0; }
 .sc-media__body { min-width: 0; }
 .sc-media__title { font-weight: 700; color: var(--sc-heading); line-height: 1.3; }
-.sc-media__sub { font-size: 12px; color: var(--sc-text-2); line-height: 1.3; }
-.sc-media__code { font: 500 10.5px/1.4 var(--sc-font-mono); color: var(--sc-text-3); letter-spacing: .3px; }
+.sc-media__sub { font-size: 12.5px; color: var(--sc-text-2); line-height: 1.3; }
+.sc-media__code { font: 500 11px/1.4 var(--sc-font-mono); color: var(--sc-text-3); letter-spacing: .3px; }
 .sc-media__links { font: 500 11px/1.6 var(--sc-font-mono); white-space: nowrap; }
 .sc-media__links a + a { margin-left: 8px; }
 .sc-media--card { border: 1px solid var(--sc-border); border-radius: var(--sc-r-md); padding: 10px; background: var(--sc-surface); display: grid; grid-template-columns: auto 1fr auto; gap: 3px 10px; align-items: start; }
@@ -565,7 +563,7 @@ img.sc-mark--lg { height: 48px; }
 
 /* Figure + note — the lead value and its mono footnote inside a cell or row */
 .sc-figure { font-weight: 700; color: var(--sc-heading); white-space: nowrap; }
-.sc-note { display: block; font: 500 10.5px/1.4 var(--sc-font-mono); color: var(--sc-text-2); letter-spacing: .2px; }
+.sc-note { display: block; font: 400 12px/1.45 var(--sc-font-body); color: var(--sc-text-2); }
 
 /* Quiet link — for dense tables and media rows, where a spice link per cell is noise */
 .sc-link--quiet { color: var(--sc-text-2); border-bottom-color: var(--sc-border-strong); }

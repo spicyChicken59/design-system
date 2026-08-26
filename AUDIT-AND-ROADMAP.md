@@ -92,6 +92,15 @@ and `DESIGN_SYSTEM.md` §10.
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
 
+- **2.2.0 (2026-08-26)** — The readability release, folded back from SpicyCar's dashboard pass.
+  *Consumer-visible:* the `// ` prefix that `.sc-eyebrow::before` and `.sc-callout__label::before`
+  injected is gone — the label is the label, and a page that wants slashes writes them in its
+  content. The smallest mono roles move up to legible sizes: meta rows and tile subtitles
+  11 → 12.5px, chips 10.5 → 11px, field and checkbox labels 10.5 → 11.5px, chart legend
+  12 → 12.5px, media codes and the empty-frame label 10.5 → 11px, media subtitles 12 → 12.5px.
+  `.sc-note` — the workhorse line under prices, media rows and table cells — moves from 10.5px
+  mono to 12px body face. The mono stays where it is a signature: eyebrows, masthead, footer,
+  tooltips, codes. No tokens added, renamed or removed.
 - **2.1.0 (2026-08-24)** — The first production pass: everything the SpicyCar tracker and a
   132-finding audit turned up. First git tag; consumers pin it through jsDelivr.
   *Consumer-visible fixes:* `[hidden]` now works on every component; light-mode links, focus ring
