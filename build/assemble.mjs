@@ -67,6 +67,12 @@ writeFileSync(join(OUT, 'styleguide.html'), repo);
 const version = /sc\.css\s+v(\d+\.\d+\.\d+)/.exec(cssSys)?.[1] ?? '0.0.0';
 writeFileSync(join(OUT, 'sc-theme.js'), `/* SpicyChicken Design System — sc-theme.js v${version} · source: build/theme.js · link it from <head> (before paint) or inline it */\n${theme}`);
 
+// sc-charts.js: the chart primitives, same deal — one source, one version
+// stream, no build step for consumers. Loads after sc.css; order-independent
+// of sc-theme.js (both only merge into window.SC / read the sheet at call time).
+const charts = read(join(B, 'charts.js'));
+writeFileSync(join(OUT, 'sc-charts.js'), `/* SpicyChicken Design System — sc-charts.js v${version} · source: build/charts.js · needs sc.css; defer it or load at the end of <body> */\n${charts}`);
+
 // Artifact: no doctype/html/head/body — the publisher adds the skeleton.
 const cssInline = cssSys.replaceAll("@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');", '');
 // The artifact can't reach assets/, so every <img src="assets/…"> becomes a data URI.

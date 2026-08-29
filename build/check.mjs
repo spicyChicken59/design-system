@@ -10,10 +10,12 @@
 //      no current-state doc carries a two-part "vX.Y" (always a stale title);
 //      and origin actually has the vX.Y.Z tag the docs tell readers to pin
 //      (an error on main, a reminder on a branch, since the tag is cut last);
-//   2. generated files are fresh — tokens.json, styleguide.html and sc-theme.js
+//   2. generated files are fresh — tokens.json, styleguide.html, sc-theme.js
+//      and sc-charts.js
 //      equal a regeneration into a temp dir (line endings ignored);
 //   3. the theme script has one source — starter.html inlines build/theme.js
-//      verbatim and sc-theme.js carries it;
+//      verbatim and sc-theme.js carries it, and sc-charts.js carries
+//      build/charts.js;
 //   4. the two light-mode token blocks in sc.css are identical;
 //   5. vocabulary — every sc-* / is-* class used by build/styleguide-body.html,
 //      build/styleguide.js, starter.html and react/src/*.tsx exists as a
@@ -25,7 +27,9 @@
 //   8. the contrast pairs the system renders pass (text >= 4.5:1, UI >= 3:1),
 //      via build/contrast.mjs;
 //   9. the counts the style guide's cover prints ("N named tokens",
-//      "M component blocks") match tokens.json and sc.css section 4.
+//      "M component blocks") match tokens.json and sc.css section 4;
+//  10. every static sparkline in the guide is exactly what build/charts.js
+//      would draw for the values it carries.
 import { readFileSync, readdirSync, existsSync, mkdtempSync, rmSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -53,7 +57,7 @@ for (const p of ['package.json', 'react/package.json', 'react/package-lock.json'
   if (v !== V) fail(`${p}: version ${v} != sc.css ${V}`);
 }
 const versionsIn = (text) => [...text.matchAll(/\bv(\d+\.\d+\.\d+)\b/g)].map(m => m[1]);
-for (const p of ['build/styleguide-body.html', 'index.html', 'sc-theme.js']) {
+for (const p of ['build/styleguide-body.html', 'index.html', 'sc-theme.js', 'sc-charts.js']) {
   if (!existsSync(join(ROOT, p))) { fail(`${p}: missing`); continue; }
   const stale = versionsIn(read(p)).filter(v => v !== V);
   if (stale.length) fail(`${p}: mentions v${[...new Set(stale)].join(', v')} (current is v${V})`);
@@ -102,7 +106,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
   try {
     execFileSync(process.execPath, [join(HERE, 'gen-tokens.mjs'), join(ROOT, 'sc.css'), join(tmp, 'tokens.json')], { stdio: 'pipe' });
     execFileSync(process.execPath, [join(HERE, 'assemble.mjs'), '--out', tmp], { stdio: 'pipe' });
-    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js']) {
+    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js', 'sc-charts.js']) {
       const fresh = norm(readFileSync(join(tmp, f), 'utf8'));
       if (!existsSync(join(ROOT, f))) fail(`${f}: missing — run npm run build`);
       else if (read(f) !== fresh) fail(`${f}: stale — differs from a fresh generation; run npm run build`);
@@ -112,7 +116,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
   } finally {
     rmSync(tmp, { recursive: true, force: true });
   }
-  if (problems.length === before) ok('tokens.json, styleguide.html, sc-theme.js are fresh');
+  if (problems.length === before) ok('tokens.json, styleguide.html, sc-theme.js, sc-charts.js are fresh');
 }
 
 // --- 3. one theme script -----------------------------------------------------
@@ -121,7 +125,9 @@ if (!problems.length) ok(`version v${V} everywhere`);
   const theme = read('build/theme.js').trim();
   if (!read('starter.html').includes(theme)) fail('starter.html: inline theme script differs from build/theme.js');
   if (existsSync(join(ROOT, 'sc-theme.js')) && !read('sc-theme.js').includes(theme)) fail('sc-theme.js: body differs from build/theme.js');
-  if (problems.length === before) ok('starter.html and sc-theme.js carry build/theme.js verbatim');
+  const charts = read('build/charts.js');
+  if (existsSync(join(ROOT, 'sc-charts.js')) && !read('sc-charts.js').includes(charts)) fail('sc-charts.js: body differs from build/charts.js');
+  if (problems.length === before) ok('the hosted scripts carry build/theme.js and build/charts.js verbatim');
 }
 
 // --- 4. the two light blocks agree ------------------------------------------
@@ -181,7 +187,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
 // --- 6. line endings ----------------------------------------------------------
 {
   const CR = String.fromCharCode(13);
-  const bad = ['sc.css', 'starter.html', 'index.html', 'tokens.json', 'sc-theme.js', 'styleguide.html', 'build/theme.js']
+  const bad = ['sc.css', 'starter.html', 'index.html', 'tokens.json', 'sc-theme.js', 'sc-charts.js', 'styleguide.html', 'build/theme.js', 'build/charts.js']
     .filter(f => existsSync(join(ROOT, f)) && readFileSync(join(ROOT, f), 'utf8').includes(CR));
   if (bad.length) fail('CRLF line endings in: ' + bad.join(', ') + ' (see .gitattributes)');
   else ok('source and generated files are LF');
@@ -220,6 +226,33 @@ if (!problems.length) ok(`version v${V} everywhere`);
   if (cb === null) fail('build/styleguide-body.html: no "M component blocks" on the cover');
   else if (cb !== roots.size) fail(`build/styleguide-body.html: claims ${cb} component blocks, sc.css section 4 defines ${roots.size}`);
   if (problems.length === before) ok(`the guide's cover numbers are real (${tokens} tokens, ${roots.size} component blocks)`);
+}
+
+// --- 10. the guide's static sparklines match the library --------------------
+// The guide has to show copyable static markup, so its sparklines cannot be
+// JS-generated — which is exactly how they became a THIRD set of magic numbers
+// disagreeing with both live implementations (pad 2 against a needed 4, so the
+// end dot painted 2px outside its own box). Each one now carries the values it
+// draws, and this runs build/charts.js's own geometry against it.
+{
+  const before = problems.length;
+  const guide = read('build/styleguide-body.html');
+  const w = {};
+  try { new Function('window', read('build/charts.js'))(w); } catch (e) { fail('build/charts.js: will not evaluate — ' + e.message); }
+  const SC = w.SC;
+  const found = [...guide.matchAll(/<svg class="sc-spark[^"]*"[^>]*?viewBox="0 0 (\d+) (\d+)"[^>]*?data-values="([^"]+)"[^>]*>(.*?)<\/svg>/g)];
+  if (!found.length) fail('build/styleguide-body.html: no sparkline carries data-values');
+  for (const [, wid, hgt, vals, inner] of found) {
+    if (!SC) break;
+    const pts = SC.sparkPoints(vals.split(',').map(Number), { width: +wid, height: +hgt });
+    const wantD = SC.sparkPath(pts), last = pts[pts.length - 1];
+    const gotD = (/ d="([^"]*)"/.exec(inner) || [])[1];
+    const gotC = (/<circle cx="([^"]*)" cy="([^"]*)"/.exec(inner) || []).slice(1, 3);
+    if (gotD !== wantD) fail(`styleguide sparkline [${vals}]: path is "${gotD}", build/charts.js draws "${wantD}"`);
+    else if (String(last[0]) !== gotC[0] || String(last[1]) !== gotC[1])
+      fail(`styleguide sparkline [${vals}]: end dot at ${gotC.join(',')}, path ends at ${last.join(',')}`);
+  }
+  if (problems.length === before) ok(`${found.length} static sparklines match build/charts.js exactly`);
 }
 
 // --- 8. contrast ---------------------------------------------------------------

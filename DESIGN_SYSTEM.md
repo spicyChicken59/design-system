@@ -11,6 +11,7 @@ Files in this folder:
 | File | What it is |
 |---|---|
 | `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.3.0`. |
+| `sc-charts.js` | The chart primitives the sheet's `.sc-chart` / `.sc-spark` / `.sc-tooltip` contracts were always describing. Optional; load it after `sc.css`. |
 | `sc-theme.js` | The theme script (source: `build/theme.js`). Reads the saved choice before paint, wires the toggle, and swaps a pinned-dark page to light for printing. Link it or inline it. |
 | `tokens.json` | The same tokens in W3C Design Tokens format, resolved per mode — for Figma variables / Tokens Studio. Generated from the CSS; edit the CSS. |
 | `starter.html` | The page skeleton every project starts from: head snippet, masthead, theme toggle, title block, footer with watermark. |

@@ -1,5 +1,5 @@
 # The pre-ship gate, on every push and pull request:
-#   - generated files (tokens.json, styleguide.html, sc-theme.js) are fresh
+#   - generated files (tokens.json, styleguide.html, sc-theme.js, sc-charts.js) are fresh
 #   - one version stream, identical light blocks, no CRLF, page CSS hygiene
 #   - every sc-* class used by the guide, starter and wrappers exists in sc.css
 #   - the documented contrast pairs still pass
@@ -20,7 +20,7 @@ jobs:
         run: |
           node build/gen-tokens.mjs
           node build/assemble.mjs
-          git diff --exit-code -- tokens.json styleguide.html sc-theme.js
+          git diff --exit-code -- tokens.json styleguide.html sc-theme.js sc-charts.js
       - name: Gate
         run: node build/check.mjs
       - name: React wrappers

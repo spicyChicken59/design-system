@@ -555,17 +555,31 @@ img.sc-mark--lg { height: 48px; }
 .sc-chart .sc-chart__label { font: 700 12px var(--sc-font-body); fill: var(--sc-heading); }
 .sc-chart__grid { stroke: var(--sc-chart-grid); }
 .sc-chart__crosshair { stroke: var(--sc-chart-context); }
-.sc-chart__series { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
-.sc-chart__series--emphasis { stroke: var(--sc-chart-emphasis); }
-.sc-chart__series--context { stroke: var(--sc-chart-context); }
+/* A mark's colour and weight arrive through two INHERITED channels rather than
+   through the mark's own stroke/fill:
+
+     <path class="sc-chart__series" style="--sc-tone: var(--sc-chart-3)">
+
+   The sheet keeps the declaration — so it can still restyle every chart at once
+   — and the consumer only supplies a value. Two things this buys that neither
+   alternative does. A presentation attribute (stroke="…") is outranked by these
+   very rules, so it cannot carry a per-series colour at all. And an inline
+   `stroke:` would outrank them, taking the property away from the sheet for
+   good. Passing a var() REFERENCE through the channel also keeps the value
+   live: it re-resolves on a theme flip with no JavaScript, where a resolved hex
+   is frozen at the moment it was read.
+   Marks the sheet does not colour — .sc-chart__marker's fill, .sc-dot — take a
+   plain attribute, which works there precisely because nothing competes. */
+.sc-chart__series { fill: none; stroke: var(--sc-tone, var(--sc-chart-context)); stroke-width: var(--sc-weight, 2); stroke-linejoin: round; stroke-linecap: round; }
+.sc-chart__series--emphasis { --sc-tone: var(--sc-chart-emphasis); }
+.sc-chart__series--context { --sc-tone: var(--sc-chart-context); }
 .sc-chart__marker { stroke: var(--sc-surface); stroke-width: 2; }
 
 /* Sparkline — an inline SVG; marks wear chart tokens, never text tokens */
 .sc-spark { display: block; overflow: visible; }
-.sc-spark path { fill: none; stroke: var(--sc-chart-context); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
-.sc-spark circle { fill: var(--sc-chart-context); stroke: var(--sc-surface); stroke-width: 2; }
-.sc-spark--emphasis path { stroke: var(--sc-chart-emphasis); }
-.sc-spark--emphasis circle { fill: var(--sc-chart-emphasis); }
+.sc-spark path { fill: none; stroke: var(--sc-tone, var(--sc-chart-context)); stroke-width: var(--sc-weight, 1.5); stroke-linejoin: round; stroke-linecap: round; }
+.sc-spark circle { fill: var(--sc-tone, var(--sc-chart-context)); stroke: var(--sc-surface); stroke-width: 2; }
+.sc-spark--emphasis { --sc-tone: var(--sc-chart-emphasis); }   /* one channel on the host beats two rules on its children */
 .sc-tile__spark { display: block; margin-top: 8px; }
 
 /* Frame — the photo slot (img.sc-frame) and its empty twin */

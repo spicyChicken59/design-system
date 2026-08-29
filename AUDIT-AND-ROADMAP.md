@@ -122,7 +122,34 @@ guide's version strings and this list say the same number. Repo-only changes bum
   companion drifted a whole minor behind), the release tag must actually exist on
   origin, and the counts the style guide's cover prints are checked against
   tokens.json and section 4 — they read 123 tokens and 20 component blocks against
-  a real 183 and 54.
+  a real 183 and 54; and every static sparkline in the guide must be exactly what
+  `build/charts.js` draws for the values it carries, which is how the guide came
+  to hold a third set of geometry constants disagreeing with both live copies.
+  *The system starts shipping behaviour.* `sc-charts.js` — the first file here
+  that does something rather than describes something. It carries only the
+  primitives that were provably duplicated and provably divergent: `SC.ticks`,
+  `SC.spreadLabels`, `SC.spark` (+ the pure `sparkPoints`/`sparkPath` the React
+  twin shares), `SC.tooltip`, `SC.tableTwin`, `SC.tone`/`toneRef`, `SC.el`/`svg`.
+  Generated from `build/charts.js` under the same version header as
+  `sc-theme.js`, and optional: the sheet still styles a chart you draw yourself.
+  Comparing the three existing copies found four real bugs, all fixed here.
+  `ticks` on a flat domain divided by a zero step and looped forever. The
+  sparkline filtered only null/undefined, so one `NaN` or one stringified price
+  emptied the path and put the end dot at `cx="NaN"`. The end-label solver
+  clamped only the bottom edge, so a crowded chart pushed labels off the top and
+  then piled them at the floor. And the end dot was placed from unrounded
+  coordinates against a path rounded to 1dp, so it sat up to 0.05px off the line.
+
+  *The tone channel.* `.sc-chart__series` and `.sc-spark` now take their colour
+  and weight through two inherited custom properties, `--sc-tone` and
+  `--sc-weight`, instead of their own `stroke`/`fill`. This is the mechanism that
+  makes "a series carries a tone slot, never a colour" actually work. A
+  presentation attribute cannot carry a per-series colour — these very rules
+  outrank it, silently — and an inline `stroke:` would take the property away
+  from the sheet for good. A channel does neither, and because the value stays a
+  `var()` reference it re-resolves on a theme flip with no JavaScript at all.
+  Purely additive: an inline `stroke:` still wins, so nothing downstream breaks.
+
   *Behaviour change:* a `.sc-table-scroll` that previously scrolled its first
   column away now pins it. Consumers wanting the old behaviour override
   `position: static` on the first-child cells.
