@@ -1,0 +1,34 @@
+<!-- Negative control for build/consumer-lint.mjs. Every rule below is a
+     deliberate mistake of a known kind; the linter must find exactly these
+     and nothing else. Kept in the repo so the linter's own accuracy is
+     something the gate can check rather than something I remember. -->
+<link rel="stylesheet" href="../sc.css">
+<style>
+  /* SQUAT x2 — names in the system's namespace the system does not own */
+  .sc-widget { padding: 4px; }
+  .sc-card__banner { display: block; }
+
+  /* OVERRIDE x2 — redefining what the sheet already decided */
+  .sc-card { padding: 2px; }
+  .sc-chip { border-radius: 0; background: var(--sc-surface); }
+
+  /* NOT an override: the sheet sets no max-width on .sc-hint */
+  .sc-hint { max-width: 58ch; }
+
+  /* NOT an override: .sc-media__foot is only context here; .flags is the target */
+  .sc-media__foot .flags { min-width: 0; }
+
+  /* HYGIENE x2 — raw colour, and reaching past the semantic layer */
+  .thing { color: #ff0000; }
+  .other { background: var(--sc-cobalt-400); }
+
+  /* CANDIDATE — portable: no id, no sc- name, tokens only */
+  .quiet-note { color: var(--sc-text-2); font: 500 12px var(--sc-font-mono); }
+
+  /* NOT a candidate: anchored to one page by an id */
+  #only-here { color: var(--sc-text-3); }
+</style>
+<body>
+  <div class="sc-card sc-typo-mistake">ok</div>
+  <span class="sc-chip sc-chip--good">fine</span>
+</body>

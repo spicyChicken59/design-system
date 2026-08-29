@@ -3,6 +3,8 @@
 #   - one version stream, identical light blocks, no CRLF, page CSS hygiene
 #   - every sc-* class used by the guide, starter and wrappers exists in sc.css
 #   - the documented contrast pairs still pass
+#   - the guide names every class the sheet defines, and its cover numbers are real
+#   - the consumer linter still finds exactly the mistakes planted in build/fixtures/
 #   - the React wrappers build
 name: check
 on:

@@ -150,6 +150,24 @@ guide's version strings and this list say the same number. Repo-only changes bum
   `var()` reference it re-resolves on a theme flip with no JavaScript at all.
   Purely additive: an inline `stroke:` still wins, so nothing downstream breaks.
 
+  *The loop gets tools.* `build/consumer-lint.mjs` reads a consumer's page and
+  reports what the system should know about: names squatted in the `sc-`
+  namespace, `sc-` classes the markup uses that the sheet does not define,
+  rules that redefine what the sheet already decided, raw colour where a token
+  belongs, and page-local rules portable enough to be worth *asking* whether
+  they are generic. It warns rather than blocks — a consumer is a conversation,
+  not a build step — and `--strict` is there for anyone who wants it to be one.
+  Its accuracy is itself gated: `build/fixtures/` plants one of every finding
+  plus three near-misses that must NOT be reported (a rule setting a property
+  the sheet leaves alone, a descendant selector whose `sc-` class is only
+  context, and a rule anchored to an id), and rule 11 asserts the exact counts.
+
+  *And nothing accretes.* Rule 12 is rule 5 backwards: every class `sc.css`
+  defines must be shown or at least named by the guide. A class the sheet has
+  and the guide does not is a component nobody can find, which means nobody
+  uses it, which means it rots. It found 15 on the first run — all of them
+  things this release had just added.
+
   *Behaviour change:* a `.sc-table-scroll` that previously scrolled its first
   column away now pins it. Consumers wanting the old behaviour override
   `position: static` on the first-child cells.

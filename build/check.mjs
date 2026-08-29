@@ -29,7 +29,11 @@
 //   9. the counts the style guide's cover prints ("N named tokens",
 //      "M component blocks") match tokens.json and sc.css section 4;
 //  10. every static sparkline in the guide is exactly what build/charts.js
-//      would draw for the values it carries.
+//      would draw for the values it carries;
+//  11. build/consumer-lint.mjs reports exactly the mistakes planted in
+//      build/fixtures/, and none of the near-misses beside them;
+//  12. nothing accretes — every class sc.css defines is shown or named by the
+//      guide, so the sheet cannot grow a component nobody can find.
 import { readFileSync, readdirSync, existsSync, mkdtempSync, rmSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -41,6 +45,12 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
 const norm = s => s.replace(/\r\n?/g, '\n');
 const read = p => norm(readFileSync(join(ROOT, p), 'utf8'));
+const stripComments = (c) => c.replace(/\/\*[\s\S]*?\*\//g, '');
+// innermost braces match first, so an @media wrapper falls out as a selector
+// with no class and is skipped without any at-rule bookkeeping
+const cssRules = (c) => [...stripComments(c).matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+  .map((m) => ({ sel: m[1].trim().replace(/\s+/g, ' '), body: m[2] }))
+  .filter((r) => r.sel && !r.sel.startsWith('@'));
 const problems = [];
 const warnings = [];
 const fail = (m) => problems.push(m);
@@ -253,6 +263,45 @@ if (!problems.length) ok(`version v${V} everywhere`);
       fail(`styleguide sparkline [${vals}]: end dot at ${gotC.join(',')}, path ends at ${last.join(',')}`);
   }
   if (problems.length === before) ok(`${found.length} static sparklines match build/charts.js exactly`);
+}
+
+// --- 11. the consumer linter still finds exactly what it should ------------
+// A linter nobody has tried to fool is a linter nobody should trust. The
+// fixture plants one of every finding, plus three near-misses that must NOT
+// be reported: a .sc-hint rule setting a property the sheet leaves alone, a
+// descendant selector whose sc- class is only context, and a rule anchored to
+// an id. If the linter's accuracy drifts, this is where it shows.
+{
+  const before = problems.length;
+  const want = { squat: 2, unknown: 1, override: 2, hygiene: 2, promote: 1 };
+  try {
+    const { analyse } = await import('./consumer-lint.mjs');
+    const got = analyse(read('build/fixtures/consumer-lint-cases.html'));
+    for (const k of Object.keys(want)) {
+      const n = new Set(got[k]).size;
+      if (n !== want[k]) fail(`consumer-lint: fixture expects ${want[k]} ${k} finding(s), got ${n}` +
+        (n ? ' — ' + [...new Set(got[k])].join(' | ') : ''));
+    }
+  } catch (e) { fail('consumer-lint: ' + e.message); }
+  if (problems.length === before) ok('consumer-lint finds exactly the planted mistakes, and no near-miss');
+}
+
+// --- 12. nothing accretes -------------------------------------------------
+// Rule 5 checks that every class the guide USES exists in the sheet. This is
+// the other direction, and it is the one that keeps a design system honest: a
+// class the sheet defines but the guide never shows is a component nobody can
+// find, which means nobody uses it, which means it rots. Being named in a
+// rule line counts — some things (an invisible hit rect, a touch-only tooltip
+// modifier) cannot be demonstrated, but they can always be told.
+{
+  const before = problems.length;
+  const defined = new Set();
+  for (const { sel } of cssRules(css)) for (const m of sel.matchAll(/\.(sc-[A-Za-z0-9_-]+)/g)) defined.add(m[1]);
+  let hay = read('build/styleguide-body.html') + read('starter.html');
+  for (const f of readdirSync(join(ROOT, 'react/src'))) hay += read(join('react/src', f));
+  const missing = [...defined].filter((c) => !hay.includes(c)).sort();
+  if (missing.length) fail(`sc.css defines ${missing.length} class(es) the guide never shows or names: ${missing.join(', ')}`);
+  if (problems.length === before) ok(`all ${defined.size} classes sc.css defines are findable in the guide`);
 }
 
 // --- 8. contrast ---------------------------------------------------------------
