@@ -69,7 +69,7 @@ for (const p of ['package.json', 'react/package.json', 'react/package-lock.json'
   if (v !== V) fail(`${p}: version ${v} != sc.css ${V}`);
 }
 const versionsIn = (text) => [...text.matchAll(/\bv(\d+\.\d+\.\d+)\b/g)].map(m => m[1]);
-for (const p of ['build/styleguide-body.html', 'index.html', 'sc-theme.js', 'sc-charts.js']) {
+for (const p of ['build/styleguide-body.html', 'index.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js']) {
   if (!existsSync(join(ROOT, p))) { fail(`${p}: missing`); continue; }
   const stale = versionsIn(read(p)).filter(v => v !== V);
   if (stale.length) fail(`${p}: mentions v${[...new Set(stale)].join(', v')} (current is v${V})`);
@@ -118,7 +118,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
   try {
     execFileSync(process.execPath, [join(HERE, 'gen-tokens.mjs'), join(ROOT, 'sc.css'), join(tmp, 'tokens.json')], { stdio: 'pipe' });
     execFileSync(process.execPath, [join(HERE, 'assemble.mjs'), '--out', tmp], { stdio: 'pipe' });
-    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js', 'sc-charts.js']) {
+    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js']) {
       const fresh = norm(readFileSync(join(tmp, f), 'utf8'));
       if (!existsSync(join(ROOT, f))) fail(`${f}: missing — run npm run build`);
       else if (read(f) !== fresh) fail(`${f}: stale — differs from a fresh generation; run npm run build`);
@@ -128,7 +128,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
   } finally {
     rmSync(tmp, { recursive: true, force: true });
   }
-  if (problems.length === before) ok('tokens.json, styleguide.html, sc-theme.js, sc-charts.js are fresh');
+  if (problems.length === before) ok('tokens.json, styleguide.html, sc-theme.js, sc-charts.js, sc-map.js are fresh');
 }
 
 // --- 3. one theme script -----------------------------------------------------
@@ -139,6 +139,8 @@ if (!problems.length) ok(`version v${V} everywhere`);
   if (existsSync(join(ROOT, 'sc-theme.js')) && !read('sc-theme.js').includes(theme)) fail('sc-theme.js: body differs from build/theme.js');
   const charts = read('build/charts.js');
   if (existsSync(join(ROOT, 'sc-charts.js')) && !read('sc-charts.js').includes(charts)) fail('sc-charts.js: body differs from build/charts.js');
+  const mapSrc = read('build/map.js');
+  if (existsSync(join(ROOT, 'sc-map.js')) && !read('sc-map.js').includes(mapSrc)) fail('sc-map.js: body differs from build/map.js');
   if (problems.length === before) ok('the hosted scripts carry build/theme.js and build/charts.js verbatim');
 }
 
@@ -199,7 +201,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
 // --- 6. line endings ----------------------------------------------------------
 {
   const CR = String.fromCharCode(13);
-  const bad = ['sc.css', 'starter.html', 'index.html', 'tokens.json', 'sc-theme.js', 'sc-charts.js', 'styleguide.html', 'build/theme.js', 'build/charts.js']
+  const bad = ['sc.css', 'starter.html', 'index.html', 'tokens.json', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'styleguide.html', 'build/theme.js', 'build/charts.js', 'build/map.js']
     .filter(f => existsSync(join(ROOT, f)) && readFileSync(join(ROOT, f), 'utf8').includes(CR));
   if (bad.length) fail('CRLF line endings in: ' + bad.join(', ') + ' (see .gitattributes)');
   else ok('source and generated files are LF');
@@ -318,7 +320,8 @@ if (!problems.length) ok(`version v${V} everywhere`);
   if (!existsSync(join(ROOT, SKILL, 'SKILL.md'))) fail(`${SKILL}/SKILL.md: missing`);
   else {
     for (const [rel, src] of [['assets/sc.css', 'sc.css'], ['assets/sc-theme.js', 'sc-theme.js'],
-                              ['assets/sc-charts.js', 'sc-charts.js'], ['assets/starter.html', 'starter.html'],
+                              ['assets/sc-charts.js', 'sc-charts.js'], ['assets/sc-map.js', 'sc-map.js'],
+                              ['assets/starter.html', 'starter.html'],
                               ['references/DESIGN_SYSTEM.md', 'DESIGN_SYSTEM.md'],
                               ['references/PLAIN-HTML.md', 'PLAIN-HTML.md'],
                               ['references/CHECKLIST.md', 'CHECKLIST.md']]) {

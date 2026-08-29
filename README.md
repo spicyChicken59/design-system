@@ -9,6 +9,7 @@ dashboards, documents, READMEs, decks. Cobalt structure, one spice accent, dark 
 | File | Purpose |
 |---|---|
 | `sc.css` | The system — tokens, base styles, components. One file; consumers need no build step. Header carries the version (`v2.3.0`). |
+| `sc-map.js` | The map layer: an Albers projection for the lower 48, a quantized-topojson reader, a geodesic ring, box fitting, and a pan/zoom view engine. The geo half is pure — it runs in Node. |
 | `sc-charts.js` | Chart primitives: nice ticks, the end-label solver, the sparkline, one tooltip controller, the accessible table twin. Generated from `build/charts.js`, same version stream. Optional — `sc.css` styles charts you draw yourself just as well. |
 | `sc-theme.js` | The theme script: saved choice before paint, toggle wiring, print swap. Link it or inline it. Source: `build/theme.js`. |
 | `starter.html` | Page skeleton: head snippet, masthead with theme toggle, title block, footer with watermark. |

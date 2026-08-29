@@ -22,7 +22,7 @@ jobs:
         run: |
           node build/gen-tokens.mjs
           node build/assemble.mjs
-          git diff --exit-code -- tokens.json styleguide.html sc-theme.js sc-charts.js
+          git diff --exit-code -- tokens.json styleguide.html sc-theme.js sc-charts.js sc-map.js
       - name: Gate
         run: node build/check.mjs
       - name: React wrappers

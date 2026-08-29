@@ -186,6 +186,10 @@ Read these when the summary above isn't enough:
 - `assets/sc.css` — the sheet itself (v2.3.0). Read it to confirm a class or token exists before
   using it. Never invent an `sc-*` name.
 - `assets/sc-charts.js` — the chart primitives, if the page draws charts.
+- `assets/sc-map.js` — the map layer, if the page draws a map. `SC.geo.albersUsa48`,
+  `SC.geo.decodeTopology`, `SC.geo.ring`, `SC.geo.fitBoxes`, `SC.geo.STATE_ABBR` are pure;
+  `SC.mapView(svg, opts)` owns pan, zoom, and the `data-br` / `data-bf` / `data-di` marks that
+  must keep a constant size on screen as the view tightens.
 - `assets/sc-theme.js` — theme script: saved choice before paint, toggle wiring, print swap.
 - `assets/starter.html` — the page skeleton to start from.
 

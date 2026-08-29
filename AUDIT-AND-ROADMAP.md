@@ -150,6 +150,26 @@ guide's version strings and this list say the same number. Repo-only changes bum
   `var()` reference it re-resolves on a theme flip with no JavaScript at all.
   Purely additive: an inline `stroke:` still wins, so nothing downstream breaks.
 
+  *And the map layer.* `sc-map.js` carries the half of a map that never needed
+  to be a component: `SC.geo.albersUsa48` (Albers equal-area for the lower 48,
+  tuned to the same 975×610 frame us-atlas is already projected into),
+  `SC.geo.decodeTopology` (a quantized-topojson reader whose label anchor is the
+  largest ring's centroid, so Michigan labels its lower peninsula rather than
+  the lake), `SC.geo.ring` / `ringPath` (a real geodesic circle, in miles or km),
+  `SC.geo.fitBoxes` and `SC.geo.STATE_ABBR` — all pure, all runnable in Node.
+  Above them `SC.mapView(svg, opts)` owns clamping, eased transitions,
+  wheel-with-modifier, mouse drag, two-finger pan and pinch, and the `data-br` /
+  `data-bf` / `data-di` contract for marks that must keep a constant size on
+  screen as the view tightens. Verified against the copy it replaces: the
+  projection and the ring are bit-identical for six cities and 73 ring points,
+  and the consumer's fitted viewBoxes match to fourteen significant figures.
+
+  Not extracted: `SC.map()`, the facade that would draw a whole map from a list
+  of points. Five rebuild attempts found real gaps in it — a fit seam with no
+  specified return type, an undocumented feature object, race protection that
+  breaks when moved onto an instance. The layer beneath it had none of those,
+  so the layer beneath it is what shipped.
+
   *The loop gets tools.* `build/consumer-lint.mjs` reads a consumer's page and
   reports what the system should know about: names squatted in the `sc-`
   namespace, `sc-` classes the markup uses that the sheet does not define,

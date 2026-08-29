@@ -72,6 +72,8 @@ writeFileSync(join(OUT, 'sc-theme.js'), `/* SpicyChicken Design System — sc-th
 // of sc-theme.js (both only merge into window.SC / read the sheet at call time).
 const charts = read(join(B, 'charts.js'));
 writeFileSync(join(OUT, 'sc-charts.js'), `/* SpicyChicken Design System — sc-charts.js v${version} · source: build/charts.js · needs sc.css; defer it or load at the end of <body> */\n${charts}`);
+const map = read(join(B, 'map.js'));
+writeFileSync(join(OUT, 'sc-map.js'), `/* SpicyChicken Design System — sc-map.js v${version} · source: build/map.js · projection, topojson and the pan/zoom view engine */\n${map}`);
 
 // The skill bundle. The skill is what reaches every OTHER project, so its copy
 // of the sheet is the one most likely to drift and the one that matters most
@@ -83,7 +85,7 @@ writeFileSync(join(OUT, 'sc-charts.js'), `/* SpicyChicken Design System — sc-c
   // sc.css and starter.html are sources; the two scripts were just generated
   writeFileSync(join(SKILL, 'assets', 'sc.css'), cssSys);
   writeFileSync(join(SKILL, 'assets', 'starter.html'), read(join(DS, 'starter.html')));
-  for (const f of ['sc-theme.js', 'sc-charts.js']) writeFileSync(join(SKILL, 'assets', f), read(join(OUT, f)));
+  for (const f of ['sc-theme.js', 'sc-charts.js', 'sc-map.js']) writeFileSync(join(SKILL, 'assets', f), read(join(OUT, f)));
   for (const f of ['DESIGN_SYSTEM.md', 'PLAIN-HTML.md', 'CHECKLIST.md'])
     writeFileSync(join(SKILL, 'references', f), read(join(DS, f)));
 }
