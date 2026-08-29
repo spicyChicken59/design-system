@@ -153,7 +153,12 @@
     opts = opts || {};
     var flipAt = opts.flip === undefined ? 0.6 : opts.flip;
     var dx = opts.offsetX === undefined ? 12 : opts.offsetX;
-    var dy = opts.offsetY === undefined ? 0 : opts.offsetY;
+    /* the anchor is the datum; the tooltip sits above it so the cursor does
+       not cover what it is describing */
+    var dy = opts.offsetY === undefined ? -40 : opts.offsetY;
+    /* a chart with a crosshair parks its tooltip at a fixed height instead of
+       tracking the pointer vertically — the values move, the box should not */
+    var fixedTop = opts.top;
     var pad = opts.pad === undefined ? 4 : opts.pad;
     var attrs = { 'class': 'sc-tooltip' };
     /* aria-live only where a keyboard cursor moves the tooltip. On a
@@ -168,7 +173,13 @@
       var maxTop = rect.height - node.offsetHeight - pad;
       node.style.top = Math.max(pad, maxTop < pad ? pad : Math.min(top, maxTop)) + 'px';
     }
-    function place(anchor) {
+    /* `over` carries per-call offsets for the rare anchor that sits differently
+       from the rest — a map's home marker beside its car dots, say. */
+    function place(anchor, over) {
+      over = over || {};
+      var ox = over.offsetX === undefined ? dx : over.offsetX;
+      var oy = over.offsetY === undefined ? dy : over.offsetY;
+      var oTop = over.top === undefined ? fixedTop : over.top;
       var rect = host.getBoundingClientRect(), px, py;
       if (anchor && anchor.nodeType === 1) {
         var r = anchor.getBoundingClientRect();
@@ -176,9 +187,9 @@
       } else if (anchor && anchor.px !== undefined) { px = anchor.px; py = anchor.py; }
       else { px = anchor.clientX - rect.left; py = anchor.clientY - rect.top; }
       var flip = px > rect.width * flipAt;
-      node.style.left = flip ? 'auto' : (px + dx) + 'px';
-      node.style.right = flip ? (rect.width - px + dx) + 'px' : 'auto';
-      node.style.top = Math.max(pad, py + dy - 40) + 'px';
+      node.style.left = flip ? 'auto' : (px + ox) + 'px';
+      node.style.right = flip ? (rect.width - px + ox) + 'px' : 'auto';
+      node.style.top = Math.max(pad, oTop === undefined ? py + oy : oTop) + 'px';
       clamp();
     }
     function show(spec, anchor) {

@@ -573,7 +573,7 @@ img.sc-mark--lg { height: 48px; }
 .sc-chart__series { fill: none; stroke: var(--sc-tone, var(--sc-chart-context)); stroke-width: var(--sc-weight, 2); stroke-linejoin: round; stroke-linecap: round; }
 .sc-chart__series--emphasis { --sc-tone: var(--sc-chart-emphasis); }
 .sc-chart__series--context { --sc-tone: var(--sc-chart-context); }
-.sc-chart__marker { stroke: var(--sc-surface); stroke-width: 2; }
+.sc-chart__marker { fill: var(--sc-tone, var(--sc-chart-context)); stroke: var(--sc-surface); stroke-width: 2; }
 
 /* Sparkline — an inline SVG; marks wear chart tokens, never text tokens */
 .sc-spark { display: block; overflow: visible; }
@@ -720,6 +720,7 @@ img.sc-mark--lg { height: 48px; }
    A .sc-card is text-first; this one leads with the image, so it sheds the padding. */
 .sc-photo-card { display: flex; flex-direction: column; border: 1px solid var(--sc-border); border-radius: var(--sc-r-md); overflow: hidden; background: var(--sc-surface); }
 .sc-photo-card__media { position: relative; aspect-ratio: 16 / 10; max-height: 300px; overflow: hidden; }
+@media (min-width: 721px) and (max-width: 1000px) { .sc-photo-card__media { max-height: 240px; } }   /* the picture gives way first when the grid narrows */
 .sc-photo-card__media .sc-frame { --sc-frame-w: 100%; --sc-frame-h: 100%; border-radius: 0; }
 .sc-photo-card__price { position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 14px 10px; pointer-events: none;
   font: 700 21px/1.1 var(--sc-font-body); letter-spacing: -.3px; color: var(--sc-on-scrim); background: var(--sc-scrim); }
