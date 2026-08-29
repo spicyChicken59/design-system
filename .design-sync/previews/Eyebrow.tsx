@@ -3,7 +3,7 @@ import { Eyebrow, Dek } from '@spicychicken/react';
 
 const page = { background: 'var(--sc-bg)', padding: 24 } as const;
 
-/** The default brand-cobalt eyebrow opening a title block. CSS draws the `//`. */
+/** The default brand-cobalt eyebrow opening a title block. */
 export const Default = () => (
   <div style={page}>
     <Eyebrow>fleet · q3 review</Eyebrow>

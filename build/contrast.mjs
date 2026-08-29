@@ -42,7 +42,6 @@ export function checkContrast(css) {
   const dark = block(css, /2\. SEMANTIC — DARK[\s\S]*?:root \{([\s\S]*?)\n\}/);
   const light = block(css, /@media \(prefers-color-scheme: light\)(?:, print)? \{\s*:root:not\(\[data-theme="dark"\]\) \{([\s\S]*?)\n  \}/);
   const onInk = block(css, /ON-INK CONTEXT[\s\S]*?\.sc-on-ink \{([\s\S]*?)\n\}/);
-  const op = parseFloat((css.match(/\.sc-eyebrow::before \{[^}]*opacity: (\.\d+|\d(?:\.\d+)?)/) || [0, '1'])[1]);
   const modes = { dark: { ...prim, ...dark }, light: { ...prim, ...dark, ...light } };
   const rows = [];
   let fails = 0;
@@ -61,7 +60,6 @@ export function checkContrast(css) {
     }
     for (const s of ['surface', 'bg']) check(mode, `border-control vs ${s}`, t('border-control'), t(s), 3);
     for (const s of ['bg', 'surface']) check(mode, `focus vs ${s}`, t('focus'), t(s), 3);
-    for (const s of ['bg', 'surface', 'brand-fill']) check(mode, `"//" prefix @${op} on ${s}`, comp(t('brand'), op, t(s)), t(s), 3);
     const ink = t('ink');
     for (const n of ['on-ink', 'on-ink-2', 'on-ink-3']) check(mode, `${n} on ink`, toRgb(resolve('--sc-' + n, vars), ink), ink, 4.5);
     const ctx = { ...vars, ...onInk };

@@ -4,9 +4,9 @@ For email, exported HTML and anywhere `sc.css` cannot load. Values are the resol
 `sc.css` v2.2.0 — copy the block for the mode you are rendering in. Fonts fall back to system faces
 where the webfonts are not available; keep the stacks anyway.
 
-Two things cannot be inlined and are handled by hand here: the eyebrow's `//` is typed literally
-(inside `sc.css` it is drawn by CSS — never type it there), and the callout's file-fold corner is
-omitted.
+One thing cannot be inlined and is handled by hand here: the callout's file-fold corner is
+omitted. Eyebrows need no special handling — since 2.2.0 the sheet draws no `//` prefix, so an
+inlined eyebrow and a `sc.css` one carry exactly the same text.
 
 Stacks used below:
 

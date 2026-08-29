@@ -7,6 +7,9 @@
 //      == react/package-lock.json == every vX.Y.Z in the style guide body,
 //      index.html and sc-theme.js, and every jsDelivr @vX.Y.Z pin in the docs;
 //      the newest changelog entry in AUDIT-AND-ROADMAP.md §5 is that version;
+//      no current-state doc carries a two-part "vX.Y" (always a stale title);
+//      and origin actually has the vX.Y.Z tag the docs tell readers to pin
+//      (an error on main, a reminder on a branch, since the tag is cut last);
 //   2. generated files are fresh — tokens.json, styleguide.html and sc-theme.js
 //      equal a regeneration into a temp dir (line endings ignored);
 //   3. the theme script has one source — starter.html inlines build/theme.js
@@ -33,7 +36,9 @@ const ROOT = join(HERE, '..');
 const norm = s => s.replace(/\r\n?/g, '\n');
 const read = p => norm(readFileSync(join(ROOT, p), 'utf8'));
 const problems = [];
+const warnings = [];
 const fail = (m) => problems.push(m);
+const warn = (m) => warnings.push(m);
 const ok = (m) => console.log('  ok  ' + m);
 
 // --- 1. version -------------------------------------------------------------
@@ -60,6 +65,31 @@ for (const p of ['README.md', 'DESIGN_SYSTEM.md', 'CHECKLIST.md', 'PLAIN-HTML.md
   const log = read('AUDIT-AND-ROADMAP.md');
   const top = /^- \*\*(\d+\.\d+\.\d+) \(/m.exec(log)?.[1];
   if (top !== V) fail(`AUDIT-AND-ROADMAP.md §5: newest changelog entry is ${top}, sc.css is ${V}`);
+}
+// A release is always three-part, so a bare two-part "v2.1" in a current-state
+// doc is a stale title by construction — the pin check above cannot see it,
+// which is exactly how DESIGN_SYSTEM.md's own title drifted a whole minor behind.
+for (const p of ['README.md', 'DESIGN_SYSTEM.md', 'CHECKLIST.md', 'PLAIN-HTML.md']) {
+  if (!existsSync(join(ROOT, p))) continue;
+  const two = [...read(p).matchAll(/\bv(\d+\.\d+)(?![.\d])/g)].map(m => m[1]);
+  if (two.length) fail(`${p}: two-part version v${[...new Set(two)].join(', v')} — releases are three-part (current is v${V})`);
+}
+// The docs tell readers to pin @vX.Y.Z. If that tag was never pushed, every
+// install snippet 404s while the repo itself looks perfectly healthy — which
+// is exactly the state v2.2.0 shipped in. The tag is always cut *after* the
+// version-bump commit lands, so this is only an error once that commit is on
+// the release branch; on a feature branch it is a reminder, not a failure.
+{
+  const branch = process.env.GITHUB_REF_NAME
+    || (() => { try { return execFileSync('git', ['rev-parse', '--abbrev-ref', 'HEAD'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { return ''; } })();
+  const released = branch === 'main' || branch === 'master';
+  let refs = null;
+  try { refs = execFileSync('git', ['ls-remote', '--tags', 'origin'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], timeout: 20000 }); }
+  catch { warn(`could not reach origin to confirm the v${V} tag is pushed — the documented jsDelivr pins were not verified`); }
+  if (refs !== null && !new RegExp(`refs/tags/v${V.replace(/\./g, '\\.')}(\\^\\{\\})?$`, 'm').test(refs)) {
+    const m = `origin has no v${V} tag — every documented pin (design-system@v${V}/...) is a 404 until \`git push origin v${V}\` runs`;
+    released ? fail(m) : warn(m);
+  }
 }
 if (!problems.length) ok(`version v${V} everywhere`);
 
@@ -178,6 +208,9 @@ if (!problems.length) ok(`version v${V} everywhere`);
   } catch (e) { fail('contrast: ' + e.message); }
 }
 
+if (warnings.length) {
+  for (const w of warnings) console.log('  --  ' + w);
+}
 if (problems.length) {
   console.error(`\ncheck: ${problems.length} problem${problems.length > 1 ? 's' : ''}`);
   for (const p of problems) console.error('  -  ' + p);

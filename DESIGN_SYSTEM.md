@@ -1,4 +1,4 @@
-# SpicyChicken Design System — v2.1
+# SpicyChicken Design System — v2.2.0
 
 **The visual standard for everything Mohammed Tahir Madni ships under SpicyChicken.**
 
@@ -131,11 +131,10 @@ Stacks, as declared:
   and hero figures are Instrument too** — never the display face, never tabular figures at display sizes.
 - **IBM Plex Mono 400–600** — eyebrows, labels, chips, table headers, code, VINs, dates.
 
-**The signature tell:** a **lowercase** mono eyebrow opened by a dimmed `//`, modest tracking
-(≤.5px). Use it on every title block, section opener, and callout label. The `//` is drawn by CSS
-at 65% opacity (3.2:1 on the light brand fill, 3.3 on the light page, 4.4–5.0 in dark) and is
-hidden from screen readers; in inline/email contexts type it literally (`PLAIN-HTML.md`). Never
-ALL-CAPS with wide tracking — that is the previous system's signature, deliberately retired.
+**The signature tell:** a **lowercase** mono eyebrow in brand cobalt, modest tracking (≤.5px).
+Use it on every title block, section opener, and callout label. The label is the label — since
+2.2.0 the sheet injects no `//` prefix; a page that wants slashes types them in its own content.
+Never ALL-CAPS with wide tracking — that is the previous system's signature, deliberately retired.
 
 Scale, by token: `--sc-text-xs` 11 (meta, callout labels) · legend 12 · eyebrow 12 · `--sc-text-sm` 13
 · `--sc-text-md` 15 (body) · h4 16 · `--sc-text-lg` 18 (dek) · `--sc-h3` 20 · `--sc-h2` 28 ·
@@ -208,7 +207,7 @@ attribute now beats every component's `display`, so hide with `hidden`, never wi
 | Brand mark | `img.sc-mark` (`--lg`) · `.sc-brand__mark` | `img.sc-mark` is the standard: `sc-mark-color-dark.svg` on ink, `-light` on light surfaces, mono forms in the watermark. `.sc-brand__mark` is the letter-tile fallback when no SVG mark is available (brand-line fill, white letter). |
 | Theme toggle | `.sc-theme-toggle` | Three buttons with `data-theme="dark|light|auto"`, `aria-pressed` on the active one, 24px tall. Lives in the masthead. |
 | Title block | `.sc-title` | Eyebrow, h1, dek, meta and an optional segmented control (`.sc-title .sc-tabs` gets its own 16px). 40px above, 8px below; 24px above on phones. |
-| Eyebrow | `.sc-eyebrow` (`--accent`, `--muted`) | Always above a heading. Lowercase mono, `//` prefix drawn by CSS and hidden from AT, brand cobalt by default. |
+| Eyebrow | `.sc-eyebrow` (`--accent`, `--muted`) | Always above a heading. Lowercase mono, brand cobalt by default. The sheet adds no prefix — type any `//` in your own content. |
 | Dek / meta | `.sc-dek` · `.sc-meta` | One sentence; mono meta row with `.sc-sep` dots. |
 | Card | `.sc-card` (`--raised`) · `.sc-card__head` · `.sc-hint` | One discrete idea per card. Heading + hint, optional action right. An h2 or h3 in `__head` renders at the h3 scale (20px) — no inline sizes. The last child loses its bottom margin. `a.sc-card` is the supported linked-card form (text-coloured, no underline). |
 | Stat tile | `.sc-tile` · `__label` `__value` (`--sm`) `__sub` `__spark` · `.sc-delta` (`--good` `--bad` `--flat`) | Label · value · context · signed delta vs a named period. `--bad` is amber (`--sc-warn`); red is danger only. Sparkline goes in the `__spark` slot as an `svg.sc-spark`. |
@@ -422,7 +421,7 @@ version strings and the changelog entry in `AUDIT-AND-ROADMAP.md` all say the sa
 minor for new tokens/components, the major for renamed or removed ones (deprecations are announced
 one minor ahead, with "removed in X.0" in the sheet), and the patch for repo-only changes (docs,
 tooling, `react/`) — the header line still moves so tag, header, packages and changelog never
-disagree. `v2.2.0` is the first tag.
+disagree. `v2.1.0` is the first tag.
 
 ---
 
