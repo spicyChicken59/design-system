@@ -23,7 +23,9 @@
 //   7. page hygiene — the guide's page CSS/body use semantic tokens only (no hex,
 //      rgba(), primitives) and starter.html has no inline styles;
 //   8. the contrast pairs the system renders pass (text >= 4.5:1, UI >= 3:1),
-//      via build/contrast.mjs.
+//      via build/contrast.mjs;
+//   9. the counts the style guide's cover prints ("N named tokens",
+//      "M component blocks") match tokens.json and sc.css section 4.
 import { readFileSync, readdirSync, existsSync, mkdtempSync, rmSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -197,6 +199,27 @@ if (!problems.length) ok(`version v${V} everywhere`);
   const styles = read('starter.html').match(/ style=/g);
   if (styles) fail('starter.html: ' + styles.length + ' inline style attribute(s) — use the system classes');
   if (problems.length === before) ok('page CSS and the starter use semantic tokens only, no inline styles');
+}
+
+// --- 9. the style guide's own numbers -------------------------------------
+// The cover prints "N named tokens" and "M component blocks". Both were prose
+// nobody could check, and both had drifted; a claim in the shop window is worth
+// gating exactly as much as a token value.
+{
+  const before = problems.length;
+  const guide = read('build/styleguide-body.html');
+  let tokens = 0;
+  const walk = (o) => { if (o && typeof o === 'object') { if ('$value' in o) tokens++; else for (const k of Object.keys(o)) if (!k.startsWith('$')) walk(o[k]); } };
+  try { const t = JSON.parse(read('tokens.json')); walk(t.primitive); walk(t.semantic); } catch { fail('tokens.json: unreadable'); }
+  const band = css.slice(css.indexOf('4. COMPONENTS'), css.indexOf('5. UTILITIES'));
+  const roots = new Set([...band.matchAll(/^\.(sc-[a-z0-9]+(?:-[a-z0-9]+)*)/gm)].map(m => m[1].split('__')[0].split('--')[0]));
+  const claimed = (re) => { const m = re.exec(guide); return m ? Number(m[1]) : null; };
+  const ct = claimed(/(\d+) named tokens/), cb = claimed(/(\d+) component blocks/);
+  if (ct === null) fail('build/styleguide-body.html: no "N named tokens" on the cover');
+  else if (ct !== tokens) fail(`build/styleguide-body.html: claims ${ct} named tokens, tokens.json has ${tokens}`);
+  if (cb === null) fail('build/styleguide-body.html: no "M component blocks" on the cover');
+  else if (cb !== roots.size) fail(`build/styleguide-body.html: claims ${cb} component blocks, sc.css section 4 defines ${roots.size}`);
+  if (problems.length === before) ok(`the guide's cover numbers are real (${tokens} tokens, ${roots.size} component blocks)`);
 }
 
 // --- 8. contrast ---------------------------------------------------------------

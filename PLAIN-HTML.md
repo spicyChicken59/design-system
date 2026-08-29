@@ -1,7 +1,7 @@
 # Plain-HTML equivalents
 
 For email, exported HTML and anywhere `sc.css` cannot load. Values are the resolved hex from
-`sc.css` v2.2.0 — copy the block for the mode you are rendering in. Fonts fall back to system faces
+`sc.css` v2.3.0 — copy the block for the mode you are rendering in. Fonts fall back to system faces
 where the webfonts are not available; keep the stacks anyway.
 
 One thing cannot be inlined and is handled by hand here: the callout's file-fold corner is

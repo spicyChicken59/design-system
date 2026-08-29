@@ -143,6 +143,17 @@
   .sg-layout { padding: 0 20px; }
   .sg-spec { grid-template-columns: 1fr; gap: 2px; }
 }
+
+/* A mono mark has to flip with the surface it sits on. The frame's empty state
+   uses --sc-raised, which flips, so the guide ships both files and lets CSS
+   choose — the pattern a consumer without JS needs. */
+.sg-on-dark { display: none; }
+:root[data-theme="dark"] .sg-on-light { display: none; }
+:root[data-theme="dark"] .sg-on-dark { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sg-on-light { display: none; }
+  :root:not([data-theme="light"]) .sg-on-dark { display: block; }
+}
 </style>
 <script>
 (function () {
@@ -187,7 +198,7 @@
 <header class="sc-masthead">
   <a class="sc-brand" href="#top">
     <img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt="">
-    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.2.0</span></span>
+    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.3.0</span></span>
   </a>
   <div class="sc-masthead__right">
     <span class="sc-hide-sm">Living reference</span>
@@ -206,7 +217,7 @@
       <div class="sc-eyebrow">Mohammed Tahir Madni · SpicyChicken</div>
       <h1>Cobalt structure. One spice accent. Dark by default.</h1>
       <p class="sg-cover__dek">The standard every SpicyChicken project is built on — dashboards, documents, READMEs, decks. Every color below is validated, every component is rendered live in both modes, and the whole thing ships as one CSS file.</p>
-      <div class="sg-cover__meta"><span>sc.css · v2.2.0</span><span>123 named tokens</span><span>20 component blocks</span><span>the chick · everywhere</span></div>
+      <div class="sg-cover__meta"><span>sc.css · v2.3.0</span><span>183 named tokens</span><span>54 component blocks</span><span>the chick · everywhere</span></div>
     </div>
     <div>
       <div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and the spice accent"></div>
@@ -226,6 +237,7 @@
     <div class="sc-eyebrow">Build</div>
     <a href="#components">Components</a>
     <a href="#charts">Data visualization</a>
+    <a href="#points">Points, maps &amp; photo cards</a>
     <a href="#marks">Marks &amp; watermark</a>
     <div class="sc-eyebrow">Ship</div>
     <a href="#checklist">Pre-ship checklist</a>
@@ -708,6 +720,76 @@
       <div class="sc-callout sc-callout--core"><div class="sc-callout__label">Rules</div><p>One y-axis, always. Color follows the entity, never its rank. Status colors are never a series. Legend for two or more series; direct-label selectively. Text wears text tokens, never the series color. Every chart has a table twin. All-pairs forms (scatter, bubble, maps) use slots 1–3 only; lines on slots 4–5 add end-labels or markers.</p></div>
     </section>
 
+    <section class="sg-section" id="points">
+      <div class="sc-eyebrow">07b · Build</div>
+      <h2>Points, maps and photo cards</h2>
+      <p class="sc-dek">The second fold-back from a production consumer. A datum drawn as a point rather than a line, the map it sits on, the legend key that is also a control, and the card that leads with a picture.</p>
+      <div class="sc-grid sc-grid--2">
+        <div class="sc-card">
+          <div class="sc-card__head"><div><h3>The data dot</h3><p class="sc-hint">One mark, used by both the map and the scatter. Filled and hollow are a second channel beside hue, so a category never rides on colour alone — which is what lets an all-pairs form carry more than three slots honestly.</p></div></div>
+          <svg viewBox="0 0 260 64" width="100%" height="64" aria-hidden="true">
+            <circle class="sc-dot is-filled" cx="30" cy="32" r="7" style="fill:var(--sc-chart-1)"></circle>
+            <circle class="sc-dot is-hollow" cx="70" cy="32" r="7" style="stroke:var(--sc-chart-1)"></circle>
+            <circle class="sc-dot is-filled" cx="110" cy="32" r="7" style="fill:var(--sc-chart-3)"></circle>
+            <circle class="sc-dot is-hollow" cx="150" cy="32" r="7" style="stroke:var(--sc-chart-3)"></circle>
+            <circle class="sc-dot-ring" cx="190" cy="32" r="10.5"></circle>
+            <circle class="sc-dot is-filled" cx="190" cy="32" r="7" style="fill:var(--sc-chart-2)"></circle>
+            <line class="sc-scatter__line" x1="14" y1="52" x2="246" y2="52"></line>
+          </svg>
+          <p class="sc-hint">filled · hollow · called out with <code>.sc-dot-ring</code> · a dashed <code>.sc-scatter__line</code> reference</p>
+          <p class="sg-rule"><code>.sc-dot</code> (<code>.is-filled</code> <code>.is-hollow</code> <code>--link</code>) · <code>.sc-dot-ring</code> · <code>.sc-scatter__line</code> <code>__line-hit</code> <code>__series-label</code></p>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card__head"><div><h3>Legend chips</h3><p class="sc-hint">A legend key that is also a control, in two behaviours. The default <strong>hides</strong> its series, so pressed-off reads as struck out. <code>--select</code> <strong>selects</strong> one, so pressed-off must stay fully legible — nothing is hidden, and dimming it would fail contrast for no reason.</p></div></div>
+          <div class="sc-legend">
+            <button class="sc-legend__chip" type="button" aria-pressed="true"><svg width="24" height="10" viewBox="0 0 24 10" aria-hidden="true"><line x1="2" y1="5" x2="22" y2="5" stroke-width="2" stroke-linecap="round" style="stroke:var(--sc-chart-1)"></line></svg><span>shown</span></button>
+            <button class="sc-legend__chip" type="button" aria-pressed="false"><svg width="24" height="10" viewBox="0 0 24 10" aria-hidden="true"><line x1="2" y1="5" x2="22" y2="5" stroke-width="2" stroke-linecap="round" style="stroke:var(--sc-chart-3)"></line></svg><span>hidden</span></button>
+          </div>
+          <div class="sc-legend">
+            <button class="sc-legend__chip sc-legend__chip--select" type="button" aria-pressed="true"><span>2024</span></button>
+            <button class="sc-legend__chip sc-legend__chip--select" type="button" aria-pressed="false"><span>2025</span></button>
+            <button class="sc-legend__chip sc-legend__chip--select" type="button" aria-pressed="false"><span>2026</span></button>
+          </div>
+          <p class="sg-rule"><code>.sc-legend__chip</code> (<code>--select</code>) · <code>aria-pressed</code> carries the state, never a class</p>
+        </div>
+      </div>
+      <div class="sc-grid sc-grid--2">
+        <div class="sc-card">
+          <div class="sc-card__head"><div><h3>Map</h3><p class="sc-hint">A projected SVG that pans and zooms. Plain scroll keeps scrolling the page — the embedded-map convention — so the hint teaches the modifier the first time a scroll passes through. Buttons take 44px under a coarse pointer.</p></div></div>
+          <div class="sc-map sc-map--labels">
+            <svg viewBox="0 0 320 150" width="100%" height="150" aria-hidden="true">
+              <rect class="sc-map__state" x="12" y="12" width="140" height="126" rx="4"></rect>
+              <rect class="sc-map__state" x="164" y="12" width="144" height="126" rx="4"></rect>
+              <text class="sc-map__state-label" x="82" y="80" font-size="12">IL</text>
+              <text class="sc-map__state-label" x="236" y="80" font-size="12">OH</text>
+              <circle class="sc-map__radius" cx="120" cy="86" r="46"></circle>
+              <circle class="sc-dot sc-dot--link is-filled" cx="96" cy="70" r="6" style="fill:var(--sc-chart-1)"></circle>
+              <circle class="sc-dot sc-dot--link is-hollow" cx="212" cy="54" r="6" style="stroke:var(--sc-chart-2)"></circle>
+              <circle class="sc-map__anchor" cx="120" cy="86" r="5"></circle>
+            </svg>
+            <div class="sc-map__btns"><button class="sc-map__btn" type="button" aria-label="Zoom in">+</button><button class="sc-map__btn" type="button" aria-label="Zoom out">−</button><button class="sc-map__btn" type="button" aria-label="Reset the view">⤢</button></div>
+            <div class="sc-map__scrollhint"><span>ctrl + scroll to zoom</span></div>
+          </div>
+          <p class="sg-rule"><code>.sc-map</code> (<code>--labels</code>) · <code>__btns</code> <code>__btn</code> <code>__scrollhint</code> <code>__state</code> <code>__state-label</code> <code>__radius</code> <code>__anchor</code></p>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card__head"><div><h3>Photo card</h3><p class="sc-hint">A <code>.sc-card</code> is text-first; this one leads with the picture, so it sheds the padding and puts its headline figure on a scrim. The scrim tokens are the one place the system paints over an arbitrary photograph, so they are identical in both modes.</p></div></div>
+          <div class="sc-photo-card">
+            <div class="sc-photo-card__media">
+              <div class="sc-frame sc-frame--empty"><img class="sc-frame__mark sg-on-light" src="assets/sc-mark-mono-ink.svg" alt=""><img class="sc-frame__mark sg-on-dark" src="assets/sc-mark-mono-cream.svg" alt=""></div>
+              <span class="sc-chip sc-chip--good sc-photo-card__chip">12% under typical</span>
+              <div class="sc-photo-card__price">$54,900<span class="sc-photo-card__price-sub">+ $1,100 shipping = $56,000</span></div>
+            </div>
+            <div class="sc-photo-card__body">
+              <div class="sc-media__title">2024 · Long range</div>
+              <div class="sc-media__sub">Cincinnati, OH · 18,400 mi</div>
+            </div>
+          </div>
+          <p class="sg-rule"><code>.sc-photo-card</code> · <code>__media</code> <code>__price</code> <code>__price-sub</code> <code>__chip</code> <code>__body</code> · <code>--sc-scrim</code> <code>--sc-on-scrim</code></p>
+        </div>
+      </div>
+      <div class="sc-callout sc-callout--core"><div class="sc-callout__label">Rules</div><p>A point mark carries a tone slot and a shape, never a tone alone — <code>.is-filled</code> and <code>.is-hollow</code> are what let a map exceed three categories without leaning on hue. Hollow circles need <code>pointer-events</code> to hit-test on the whole disc; <code>fill="none"</code> alone makes the interior untouchable. A legend that hides strikes out; a legend that selects stays legible. The scrim is the only surface in the system where text sits on an unknown background, so it is the only one whose contrast cannot be pre-verified — keep it to a short figure, never body copy.</p></div>
+    </section>
     <section class="sg-section" id="marks">
       <div class="sc-eyebrow">08 · Build</div>
       <h2>The mark</h2>
@@ -765,13 +847,13 @@
         <div class="sc-card"><h3 class="sc-text-good">Do</h3><ul><li>Lead with a lowercase mono eyebrow.</li><li>Keep the masthead and footer dark in both modes.</li><li>Put the chick in the masthead and the watermark; name the project in type.</li><li>Use Instrument Sans for numbers, proportional figures.</li><li>Separate with hairlines and color, not shadow.</li><li>Write the outcome and the reason.</li></ul></div>
         <div class="sc-card"><h3 class="sc-text-danger">Don't</h3><ul><li>Add a hue or a gradient.</li><li>Use spice for text, headings, or large fills — <code>.sc-text-accent</code> is on its way out.</li><li>ALL-CAPS a tracked label — lowercase mono is the house style.</li><li>Use a display face or tabular figures for a big number.</li><li>Ship an icon set without noting the substitution.</li><li>End with a menu of next steps.</li></ul></div>
       </div>
-      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Tag v2.2.0 and pin it from every project — SpicyCar first: <code>https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.2.0/sc.css</code>.</p></div>
+      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Tag v2.3.0 and pin it from every project — SpicyCar first: <code>https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.3.0/sc.css</code>.</p></div>
     </section>
   </main>
 </div>
 
 <footer class="sc-foot">
-  <span>SpicyChicken Design System · v2.2.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
+  <span>SpicyChicken Design System · v2.3.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
   <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a>
 </footer>
 

@@ -92,6 +92,41 @@ and `DESIGN_SYSTEM.md` §10.
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
 
+- **2.3.0 (2026-08-29)** — The second fold-back from SpicyCar: the visualisations.
+  *New components (section 4c):* `.sc-map` — a pan/zoom point map with its button
+  stack, scroll-modifier hint, geography paint, radius ring and anchor; `.sc-dot`
+  — one datum as a point, shared by the map and the scatter, with `.is-filled` /
+  `.is-hollow` as a second channel beside hue and the `pointer-events` fix that
+  makes a hollow circle hit-test on its whole disc; `.sc-dot-ring` for calling one
+  out; `.sc-scatter__line` / `__line-hit` / `__series-label`; `.sc-legend__chip`,
+  a legend key that is also a control, in two behaviours — the default hides its
+  series, `--select` selects it and stays legible when pressed off; `.sc-photo-card`
+  and the `.sc-frame--photo` blur-in loader with `.sc-frame__img` / `.sc-frame__mark`;
+  `.sc-filter-bar`; `.sc-section--support` / `--chapter` for two levels of heading
+  weight; `.sc-show-more`, `.sc-with-mark`, `.sc-lockup`, `.sc-chart__hit`.
+  *Added to existing components:* `.sc-eyebrow--case` (joins `.sc-chip--case` and
+  `.sc-tab--case`); `.sc-tooltip--tap`, `__img`, `__link`, `__dash` — four names the
+  consumer had already squatted in this sheet's namespace; and `.sc-table-scroll`
+  gains a sticky first column with a faded clipped edge, so a sideways-scrolling
+  table stops hiding the column that names each row.
+  *New tokens:* `--sc-scrim`, `--sc-on-scrim`, `--sc-on-scrim-2` — the one context
+  where the system paints over an arbitrary photograph. Deliberately identical in
+  both modes: a photograph is the same picture either way.
+  *Fixes:* the masthead controls were 24-27px against the 44px touch guideline —
+  a defect in this sheet that every consumer inherited, now fixed here rather than
+  patched downstream. Map buttons take 44px under a coarse pointer. The contrast
+  gate stops scoring `.sc-eyebrow::before`, deleted back in 2.2.0, whose absent
+  opacity it had been silently reading as 1 — six of the 154 "passing" pairs were
+  measuring nothing, so the real count is 148. The gate also gained: two-part
+  version strings in the current-state docs are rejected (that is how this file's
+  companion drifted a whole minor behind), the release tag must actually exist on
+  origin, and the counts the style guide's cover prints are checked against
+  tokens.json and section 4 — they read 123 tokens and 20 component blocks against
+  a real 183 and 54.
+  *Behaviour change:* a `.sc-table-scroll` that previously scrolled its first
+  column away now pins it. Consumers wanting the old behaviour override
+  `position: static` on the first-child cells.
+
 - **2.2.0 (2026-08-26)** — The readability release, folded back from SpicyCar's dashboard pass.
   *Consumer-visible:* the `// ` prefix that `.sc-eyebrow::before` and `.sc-callout__label::before`
   injected is gone — the label is the label, and a page that wants slashes writes them in its

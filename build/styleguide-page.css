@@ -121,3 +121,14 @@
   .sg-layout { padding: 0 20px; }
   .sg-spec { grid-template-columns: 1fr; gap: 2px; }
 }
+
+/* A mono mark has to flip with the surface it sits on. The frame's empty state
+   uses --sc-raised, which flips, so the guide ships both files and lets CSS
+   choose — the pattern a consumer without JS needs. */
+.sg-on-dark { display: none; }
+:root[data-theme="dark"] .sg-on-light { display: none; }
+:root[data-theme="dark"] .sg-on-dark { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sg-on-light { display: none; }
+  :root:not([data-theme="light"]) .sg-on-dark { display: block; }
+}
