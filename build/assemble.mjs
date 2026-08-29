@@ -73,6 +73,21 @@ writeFileSync(join(OUT, 'sc-theme.js'), `/* SpicyChicken Design System — sc-th
 const charts = read(join(B, 'charts.js'));
 writeFileSync(join(OUT, 'sc-charts.js'), `/* SpicyChicken Design System — sc-charts.js v${version} · source: build/charts.js · needs sc.css; defer it or load at the end of <body> */\n${charts}`);
 
+// The skill bundle. The skill is what reaches every OTHER project, so its copy
+// of the sheet is the one most likely to drift and the one that matters most
+// when it does. Copy, never hand-maintain; check.mjs rule 13 enforces it.
+{
+  const SKILL = join(OUT, '.claude', 'skills', 'spicychicken-design-system');
+  mkdirSync(join(SKILL, 'assets'), { recursive: true });
+  mkdirSync(join(SKILL, 'references'), { recursive: true });
+  // sc.css and starter.html are sources; the two scripts were just generated
+  writeFileSync(join(SKILL, 'assets', 'sc.css'), cssSys);
+  writeFileSync(join(SKILL, 'assets', 'starter.html'), read(join(DS, 'starter.html')));
+  for (const f of ['sc-theme.js', 'sc-charts.js']) writeFileSync(join(SKILL, 'assets', f), read(join(OUT, f)));
+  for (const f of ['DESIGN_SYSTEM.md', 'PLAIN-HTML.md', 'CHECKLIST.md'])
+    writeFileSync(join(SKILL, 'references', f), read(join(DS, f)));
+}
+
 // Artifact: no doctype/html/head/body — the publisher adds the skeleton.
 const cssInline = cssSys.replaceAll("@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');", '');
 // The artifact can't reach assets/, so every <img src="assets/…"> becomes a data URI.
