@@ -92,6 +92,17 @@ and `DESIGN_SYSTEM.md` §10.
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
 
+- **2.4.0 (2026-08-30)** — Touch targets follow the pointer, not the viewport.
+  The 44px touch-target rules (theme toggle, masthead nav, brand lockup, footer links)
+  move out of `@media (max-width: 720px)` into `@media (pointer: coarse)`: a landscape
+  phone is 844px wide and a tablet wider still, but the finger is the same size, so both
+  were getting 13–27px targets; a narrow mouse window, meanwhile, was getting padding it
+  never needed. Same key `.sc-map__btn` has used since 2.3.0 — `pointer`, not
+  `any-pointer`, because these rules move layout and so follow the primary input; a
+  touch-screen laptop driven by its trackpad keeps the desktop masthead. The filter
+  bar's folded head and toggle keep the width gate, since the fold itself only exists
+  below 721px. No class or token added, renamed or removed.
+
 - **2.3.0 (2026-08-29)** — The second fold-back from SpicyCar: the visualisations.
   *New components (section 4c):* `.sc-map` — a pan/zoom point map with its button
   stack, scroll-modifier hint, geography paint, radius ring and anchor; `.sc-dot`
