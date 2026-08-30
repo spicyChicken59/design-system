@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SpicyChicken Design System — sc.css  v2.3.0
+   SpicyChicken Design System — sc.css  v2.4.0
    Mohammed Tahir Madni · github.com/spicyChicken59
 
    One file, no build step. Drop it in (or link it) and every page shares the
@@ -768,6 +768,24 @@ img.sc-mark--lg { height: 48px; }
 .sc-truncate { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sc-case, .sc-table thead th.sc-case, .sc-details summary.sc-case { text-transform: none; letter-spacing: 0; }   /* keep casing inside a lowercased component (VIN, TX). Last, so it wins by order. */
 
+/* Touch targets. The masthead controls sat at 24-27px against the 44px
+   guideline — a defect in this sheet, inherited by every consumer, not a
+   preference of any one of them. Keyed to the pointer, not the viewport (the
+   .sc-map__btn rule above) — a landscape phone is 844px wide and a tablet
+   wider still, but the finger is the same size; and a narrow mouse window
+   needs none of this. `pointer`, not `any-pointer`: these rules move layout,
+   so they follow the PRIMARY input — a touch-screen laptop driven by its
+   trackpad keeps the desktop masthead. The filter bar's folded head and
+   toggle keep their 44px inside the width gate below: the fold itself only
+   exists there. .sc-brand is split out from the nav rule because it needs
+   display:inline-flex to beat the base's display:flex. */
+@media (pointer: coarse) {
+  .sc-theme-toggle button { min-height: 44px; padding-inline: 14px; }
+  .sc-masthead .sc-nav a { display: inline-flex; align-items: center; min-height: 44px; }
+  .sc-brand { display: inline-flex; align-items: center; min-height: 44px; }
+  .sc-foot a { display: inline-block; padding: 10px 2px; }
+}
+
 @media (max-width: 720px) {
   .sc-wrap, .sc-wrap--wide { padding: 0 20px; }
   .sc-masthead, .sc-foot { padding-left: 20px; padding-right: 20px; }
@@ -781,14 +799,6 @@ img.sc-mark--lg { height: 48px; }
   .sc-doc--flat { padding: 0; }
   .sc-table-scroll { margin: 0 -14px; padding: 0 14px; }          /* bleeds to the card/doc edge */
   .sc-wrap > .sc-table-scroll { margin: 0 -20px; padding: 0 20px; } /* …or to the wrap edge */
-  /* Touch targets. The masthead controls sat at 24-27px against the 44px
-     guideline — a defect in this sheet, inherited by every consumer, not a
-     preference of any one of them. .sc-brand is split out from the nav rule
-     because it needs display:inline-flex to beat the base's display:flex. */
-  .sc-theme-toggle button { min-height: 44px; padding-inline: 14px; }
-  .sc-masthead .sc-nav a { display: inline-flex; align-items: center; min-height: 44px; }
-  .sc-brand { display: inline-flex; align-items: center; min-height: 44px; }
-  .sc-foot a { display: inline-block; padding: 10px 2px; }
   .sc-foot { row-gap: 10px; }
   .sc-foot .sc-theme-toggle { order: 3; flex: none; }   /* the toggle drops below the footer's own links */
   /* A wide-aspect map would otherwise collapse to a sliver on a phone */

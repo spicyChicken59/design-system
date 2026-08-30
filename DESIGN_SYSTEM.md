@@ -1,4 +1,4 @@
-# SpicyChicken Design System — v2.3.0
+# SpicyChicken Design System — v2.4.0
 
 **The visual standard for everything Mohammed Tahir Madni ships under SpicyChicken.**
 
@@ -10,7 +10,7 @@ Files in this folder:
 
 | File | What it is |
 |---|---|
-| `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.3.0`. |
+| `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.4.0`. |
 | `sc-map.js` | `SC.geo` (projection, topojson, geodesic ring, box fitting — all pure) and `SC.mapView` (pan, zoom, and the marks that must not scale with it). Optional; needed only by a page that draws a map. |
 | `sc-charts.js` | The chart primitives the sheet's `.sc-chart` / `.sc-spark` / `.sc-tooltip` contracts were always describing. Optional; load it after `sc.css`. |
 | `sc-theme.js` | The theme script (source: `build/theme.js`). Reads the saved choice before paint, wires the toggle, and swaps a pinned-dark page to light for printing. Link it or inline it. |
@@ -158,8 +158,11 @@ in columns that must align.
   `--sc-brand-strong`), never scale; pressed secondary/ghost buttons shift to `--sc-hover`.
   `prefers-reduced-motion` zeroes it.
 - **Widths:** prose 800 · content 1120 · wide (dashboards, tables) 1280.
-- **Targets: 24px minimum.** Every interactive thing — toggle buttons, tabs, `summary`, checkbox
-  labels, field labels — is at least 24px tall (WCAG 2.5.8).
+- **Targets: 24px minimum; 44px under a coarse pointer.** Every interactive thing — toggle
+  buttons, tabs, `summary`, checkbox labels, field labels — is at least 24px tall (WCAG 2.5.8).
+  Under `pointer: coarse` the masthead controls, brand lockup and footer links grow to 44px —
+  keyed to the pointer, not the viewport, because a landscape phone is 844px wide and a tablet
+  wider still, but the finger is the same size (the `.sc-map__btn` rule set the pattern).
 - **Responsive.** One breakpoint: 720px. Below it the wrap, masthead and footer tighten to 20px
   gutters, the masthead wraps, h1 drops to 30px, the title block's top padding drops to 24px, cards
   and docs pad 14px, and `.sc-hide-sm` hides. Tables do not reflow: they scroll sideways **inside**
@@ -346,10 +349,10 @@ Measured, not assumed — the numbers are WCAG 2 contrast ratios from the curren
 **Link a pinned version.** Tags are served by jsDelivr; pin the exact release and upgrade on purpose:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.3.0/sc.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.4.0/sc.css">
 ```
 
-`@2` in place of `@v2.3.0` follows the newest 2.x tag (non-breaking upgrades, re-resolved by the CDN
+`@2` in place of `@v2.4.0` follows the newest 2.x tag (non-breaking upgrades, re-resolved by the CDN
 within hours). The GitHub Pages URL `https://spicychicken59.github.io/design-system/sc.css` is
 **latest** — it is what the style guide runs on and it may change on a major, so it is for
 prototypes, not production. Vendoring (copy `sc.css` next to the page) is the third option; note the
@@ -368,8 +371,8 @@ version from its header when you refresh it.
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.3.0/sc.css">
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.3.0/sc-theme.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.4.0/sc.css">
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.4.0/sc-theme.js"></script>
 ```
 
 Order matters: `color-scheme` first so the browser paints the right default before CSS arrives, the
@@ -383,7 +386,7 @@ code changes the attribute), and swaps a pinned-dark page to light for printing.
 nothing else.
 
 **Assets** — every file in `assets/`, at `https://spicychicken59.github.io/design-system/assets/<file>`
-or `https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.3.0/assets/<file>`:
+or `https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.4.0/assets/<file>`:
 
 | File | Where it goes |
 |---|---|
