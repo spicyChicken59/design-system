@@ -10,6 +10,11 @@ name: check
 on:
   push:
   pull_request:
+  # The gate can be re-run on demand — rule 1's tag check depends on state that
+  # lives OUTSIDE the commit (whether origin has the tag yet), so a run that
+  # failed only for a missing tag becomes correct the moment the tag is pushed,
+  # with nothing to re-commit.
+  workflow_dispatch:
 jobs:
   check:
     runs-on: ubuntu-latest
