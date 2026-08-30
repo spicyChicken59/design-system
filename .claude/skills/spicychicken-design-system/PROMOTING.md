@@ -26,6 +26,23 @@ Five kinds of finding, in the order that matters:
 Read the page's CSS yourself too. The linter finds names; it cannot tell you
 that two components in two files are the same component.
 
+**The consumer keeps the verdicts, not the system.** A CANDIDATE the consumer
+has already thought about is recorded on the consumer side — SpicyCar keeps
+`tools/promotion-verdicts.json`, mapping each settled selector to a verdict, the
+reasoning, and the condition that should REOPEN it. The linter then reports
+decided and open candidates separately, so a question is asked once rather than
+every release, and a rule can be un-settled by deleting its entry. Keeping the
+ledger in the consumer is deliberate: the system should not carry a list of one
+project's local class names.
+
+**Nobody has to remember to look.** SpicyCar runs the policy weekly
+(`.github/workflows/loop.yml`) and keeps ONE issue up to date whenever something
+is open — an unrecorded candidate, or a pin behind the newest release. Nothing
+open means no issue. The linter also compares the pinned tag against the newest
+release tag and says so; that check is a warning and never a build failure,
+because a stale pin is not a correctness bug and failing on it would block pull
+requests that have nothing to do with the design system.
+
 ## 2. Decide, and be willing to delete
 
 Not everything generic should be promoted, and not everything found should be
