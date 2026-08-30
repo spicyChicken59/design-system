@@ -92,6 +92,106 @@ and `DESIGN_SYSTEM.md` §10.
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
 
+- **2.3.0 (2026-08-29)** — The second fold-back from SpicyCar: the visualisations.
+  *New components (section 4c):* `.sc-map` — a pan/zoom point map with its button
+  stack, scroll-modifier hint, geography paint, radius ring and anchor; `.sc-dot`
+  — one datum as a point, shared by the map and the scatter, with `.is-filled` /
+  `.is-hollow` as a second channel beside hue and the `pointer-events` fix that
+  makes a hollow circle hit-test on its whole disc; `.sc-dot-ring` for calling one
+  out; `.sc-scatter__line` / `__line-hit` / `__series-label`; `.sc-legend__chip`,
+  a legend key that is also a control, in two behaviours — the default hides its
+  series, `--select` selects it and stays legible when pressed off; `.sc-photo-card`
+  and the `.sc-frame--photo` blur-in loader with `.sc-frame__img` / `.sc-frame__mark`;
+  `.sc-filter-bar`; `.sc-section--support` / `--chapter` for two levels of heading
+  weight; `.sc-show-more`, `.sc-with-mark`, `.sc-lockup`, `.sc-chart__hit`.
+  *Added to existing components:* `.sc-eyebrow--case` (joins `.sc-chip--case` and
+  `.sc-tab--case`); `.sc-tooltip--tap`, `__img`, `__link`, `__dash` — four names the
+  consumer had already squatted in this sheet's namespace; and `.sc-table-scroll`
+  gains a sticky first column with a faded clipped edge, so a sideways-scrolling
+  table stops hiding the column that names each row.
+  *New tokens:* `--sc-scrim`, `--sc-on-scrim`, `--sc-on-scrim-2` — the one context
+  where the system paints over an arbitrary photograph. Deliberately identical in
+  both modes: a photograph is the same picture either way.
+  *Fixes:* the masthead controls were 24-27px against the 44px touch guideline —
+  a defect in this sheet that every consumer inherited, now fixed here rather than
+  patched downstream. Map buttons take 44px under a coarse pointer. The contrast
+  gate stops scoring `.sc-eyebrow::before`, deleted back in 2.2.0, whose absent
+  opacity it had been silently reading as 1 — six of the 154 "passing" pairs were
+  measuring nothing, so the real count is 148. The gate also gained: two-part
+  version strings in the current-state docs are rejected (that is how this file's
+  companion drifted a whole minor behind), the release tag must actually exist on
+  origin, and the counts the style guide's cover prints are checked against
+  tokens.json and section 4 — they read 123 tokens and 20 component blocks against
+  a real 183 and 54; and every static sparkline in the guide must be exactly what
+  `build/charts.js` draws for the values it carries, which is how the guide came
+  to hold a third set of geometry constants disagreeing with both live copies.
+  *The system starts shipping behaviour.* `sc-charts.js` — the first file here
+  that does something rather than describes something. It carries only the
+  primitives that were provably duplicated and provably divergent: `SC.ticks`,
+  `SC.spreadLabels`, `SC.spark` (+ the pure `sparkPoints`/`sparkPath` the React
+  twin shares), `SC.tooltip`, `SC.tableTwin`, `SC.tone`/`toneRef`, `SC.el`/`svg`.
+  Generated from `build/charts.js` under the same version header as
+  `sc-theme.js`, and optional: the sheet still styles a chart you draw yourself.
+  Comparing the three existing copies found four real bugs, all fixed here.
+  `ticks` on a flat domain divided by a zero step and looped forever. The
+  sparkline filtered only null/undefined, so one `NaN` or one stringified price
+  emptied the path and put the end dot at `cx="NaN"`. The end-label solver
+  clamped only the bottom edge, so a crowded chart pushed labels off the top and
+  then piled them at the floor. And the end dot was placed from unrounded
+  coordinates against a path rounded to 1dp, so it sat up to 0.05px off the line.
+
+  *The tone channel.* `.sc-chart__series` and `.sc-spark` now take their colour
+  and weight through two inherited custom properties, `--sc-tone` and
+  `--sc-weight`, instead of their own `stroke`/`fill`. This is the mechanism that
+  makes "a series carries a tone slot, never a colour" actually work. A
+  presentation attribute cannot carry a per-series colour — these very rules
+  outrank it, silently — and an inline `stroke:` would take the property away
+  from the sheet for good. A channel does neither, and because the value stays a
+  `var()` reference it re-resolves on a theme flip with no JavaScript at all.
+  Purely additive: an inline `stroke:` still wins, so nothing downstream breaks.
+
+  *And the map layer.* `sc-map.js` carries the half of a map that never needed
+  to be a component: `SC.geo.albersUsa48` (Albers equal-area for the lower 48,
+  tuned to the same 975×610 frame us-atlas is already projected into),
+  `SC.geo.decodeTopology` (a quantized-topojson reader whose label anchor is the
+  largest ring's centroid, so Michigan labels its lower peninsula rather than
+  the lake), `SC.geo.ring` / `ringPath` (a real geodesic circle, in miles or km),
+  `SC.geo.fitBoxes` and `SC.geo.STATE_ABBR` — all pure, all runnable in Node.
+  Above them `SC.mapView(svg, opts)` owns clamping, eased transitions,
+  wheel-with-modifier, mouse drag, two-finger pan and pinch, and the `data-br` /
+  `data-bf` / `data-di` contract for marks that must keep a constant size on
+  screen as the view tightens. Verified against the copy it replaces: the
+  projection and the ring are bit-identical for six cities and 73 ring points,
+  and the consumer's fitted viewBoxes match to fourteen significant figures.
+
+  Not extracted: `SC.map()`, the facade that would draw a whole map from a list
+  of points. Five rebuild attempts found real gaps in it — a fit seam with no
+  specified return type, an undocumented feature object, race protection that
+  breaks when moved onto an instance. The layer beneath it had none of those,
+  so the layer beneath it is what shipped.
+
+  *The loop gets tools.* `build/consumer-lint.mjs` reads a consumer's page and
+  reports what the system should know about: names squatted in the `sc-`
+  namespace, `sc-` classes the markup uses that the sheet does not define,
+  rules that redefine what the sheet already decided, raw colour where a token
+  belongs, and page-local rules portable enough to be worth *asking* whether
+  they are generic. It warns rather than blocks — a consumer is a conversation,
+  not a build step — and `--strict` is there for anyone who wants it to be one.
+  Its accuracy is itself gated: `build/fixtures/` plants one of every finding
+  plus three near-misses that must NOT be reported (a rule setting a property
+  the sheet leaves alone, a descendant selector whose `sc-` class is only
+  context, and a rule anchored to an id), and rule 11 asserts the exact counts.
+
+  *And nothing accretes.* Rule 12 is rule 5 backwards: every class `sc.css`
+  defines must be shown or at least named by the guide. A class the sheet has
+  and the guide does not is a component nobody can find, which means nobody
+  uses it, which means it rots. It found 15 on the first run — all of them
+  things this release had just added.
+
+  *Behaviour change:* a `.sc-table-scroll` that previously scrolled its first
+  column away now pins it. Consumers wanting the old behaviour override
+  `position: static` on the first-child cells.
+
 - **2.2.0 (2026-08-26)** — The readability release, folded back from SpicyCar's dashboard pass.
   *Consumer-visible:* the `// ` prefix that `.sc-eyebrow::before` and `.sc-callout__label::before`
   injected is gone — the label is the label, and a page that wants slashes writes them in its

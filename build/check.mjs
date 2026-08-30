@@ -7,10 +7,15 @@
 //      == react/package-lock.json == every vX.Y.Z in the style guide body,
 //      index.html and sc-theme.js, and every jsDelivr @vX.Y.Z pin in the docs;
 //      the newest changelog entry in AUDIT-AND-ROADMAP.md §5 is that version;
-//   2. generated files are fresh — tokens.json, styleguide.html and sc-theme.js
+//      no current-state doc carries a two-part "vX.Y" (always a stale title);
+//      and origin actually has the vX.Y.Z tag the docs tell readers to pin
+//      (an error on main, a reminder on a branch, since the tag is cut last);
+//   2. generated files are fresh — tokens.json, styleguide.html, sc-theme.js
+//      and sc-charts.js
 //      equal a regeneration into a temp dir (line endings ignored);
 //   3. the theme script has one source — starter.html inlines build/theme.js
-//      verbatim and sc-theme.js carries it;
+//      verbatim and sc-theme.js carries it, and sc-charts.js carries
+//      build/charts.js;
 //   4. the two light-mode token blocks in sc.css are identical;
 //   5. vocabulary — every sc-* / is-* class used by build/styleguide-body.html,
 //      build/styleguide.js, starter.html and react/src/*.tsx exists as a
@@ -20,7 +25,17 @@
 //   7. page hygiene — the guide's page CSS/body use semantic tokens only (no hex,
 //      rgba(), primitives) and starter.html has no inline styles;
 //   8. the contrast pairs the system renders pass (text >= 4.5:1, UI >= 3:1),
-//      via build/contrast.mjs.
+//      via build/contrast.mjs;
+//   9. the counts the style guide's cover prints ("N named tokens",
+//      "M component blocks") match tokens.json and sc.css section 4;
+//  10. every static sparkline in the guide is exactly what build/charts.js
+//      would draw for the values it carries;
+//  11. build/consumer-lint.mjs reports exactly the mistakes planted in
+//      build/fixtures/, and none of the near-misses beside them;
+//  12. nothing accretes — every class sc.css defines is shown or named by the
+//      guide, so the sheet cannot grow a component nobody can find;
+//  13. the bundled skill (.claude/skills/) matches the repo file for file,
+//      advertises the current version, and teaches no class sc.css lacks.
 import { readFileSync, readdirSync, existsSync, mkdtempSync, rmSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -32,8 +47,16 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
 const norm = s => s.replace(/\r\n?/g, '\n');
 const read = p => norm(readFileSync(join(ROOT, p), 'utf8'));
+const stripComments = (c) => c.replace(/\/\*[\s\S]*?\*\//g, '');
+// innermost braces match first, so an @media wrapper falls out as a selector
+// with no class and is skipped without any at-rule bookkeeping
+const cssRules = (c) => [...stripComments(c).matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+  .map((m) => ({ sel: m[1].trim().replace(/\s+/g, ' '), body: m[2] }))
+  .filter((r) => r.sel && !r.sel.startsWith('@'));
 const problems = [];
+const warnings = [];
 const fail = (m) => problems.push(m);
+const warn = (m) => warnings.push(m);
 const ok = (m) => console.log('  ok  ' + m);
 
 // --- 1. version -------------------------------------------------------------
@@ -46,7 +69,7 @@ for (const p of ['package.json', 'react/package.json', 'react/package-lock.json'
   if (v !== V) fail(`${p}: version ${v} != sc.css ${V}`);
 }
 const versionsIn = (text) => [...text.matchAll(/\bv(\d+\.\d+\.\d+)\b/g)].map(m => m[1]);
-for (const p of ['build/styleguide-body.html', 'index.html', 'sc-theme.js']) {
+for (const p of ['build/styleguide-body.html', 'index.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js']) {
   if (!existsSync(join(ROOT, p))) { fail(`${p}: missing`); continue; }
   const stale = versionsIn(read(p)).filter(v => v !== V);
   if (stale.length) fail(`${p}: mentions v${[...new Set(stale)].join(', v')} (current is v${V})`);
@@ -61,6 +84,31 @@ for (const p of ['README.md', 'DESIGN_SYSTEM.md', 'CHECKLIST.md', 'PLAIN-HTML.md
   const top = /^- \*\*(\d+\.\d+\.\d+) \(/m.exec(log)?.[1];
   if (top !== V) fail(`AUDIT-AND-ROADMAP.md §5: newest changelog entry is ${top}, sc.css is ${V}`);
 }
+// A release is always three-part, so a bare two-part "v2.1" in a current-state
+// doc is a stale title by construction — the pin check above cannot see it,
+// which is exactly how DESIGN_SYSTEM.md's own title drifted a whole minor behind.
+for (const p of ['README.md', 'DESIGN_SYSTEM.md', 'CHECKLIST.md', 'PLAIN-HTML.md']) {
+  if (!existsSync(join(ROOT, p))) continue;
+  const two = [...read(p).matchAll(/\bv(\d+\.\d+)(?![.\d])/g)].map(m => m[1]);
+  if (two.length) fail(`${p}: two-part version v${[...new Set(two)].join(', v')} — releases are three-part (current is v${V})`);
+}
+// The docs tell readers to pin @vX.Y.Z. If that tag was never pushed, every
+// install snippet 404s while the repo itself looks perfectly healthy — which
+// is exactly the state v2.2.0 shipped in. The tag is always cut *after* the
+// version-bump commit lands, so this is only an error once that commit is on
+// the release branch; on a feature branch it is a reminder, not a failure.
+{
+  const branch = process.env.GITHUB_REF_NAME
+    || (() => { try { return execFileSync('git', ['rev-parse', '--abbrev-ref', 'HEAD'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { return ''; } })();
+  const released = branch === 'main' || branch === 'master';
+  let refs = null;
+  try { refs = execFileSync('git', ['ls-remote', '--tags', 'origin'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], timeout: 20000 }); }
+  catch { warn(`could not reach origin to confirm the v${V} tag is pushed — the documented jsDelivr pins were not verified`); }
+  if (refs !== null && !new RegExp(`refs/tags/v${V.replace(/\./g, '\\.')}(\\^\\{\\})?$`, 'm').test(refs)) {
+    const m = `origin has no v${V} tag — every documented pin (design-system@v${V}/...) is a 404 until \`git push origin v${V}\` runs`;
+    released ? fail(m) : warn(m);
+  }
+}
 if (!problems.length) ok(`version v${V} everywhere`);
 
 // --- 2. generated files are fresh ------------------------------------------
@@ -70,7 +118,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
   try {
     execFileSync(process.execPath, [join(HERE, 'gen-tokens.mjs'), join(ROOT, 'sc.css'), join(tmp, 'tokens.json')], { stdio: 'pipe' });
     execFileSync(process.execPath, [join(HERE, 'assemble.mjs'), '--out', tmp], { stdio: 'pipe' });
-    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js']) {
+    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js']) {
       const fresh = norm(readFileSync(join(tmp, f), 'utf8'));
       if (!existsSync(join(ROOT, f))) fail(`${f}: missing — run npm run build`);
       else if (read(f) !== fresh) fail(`${f}: stale — differs from a fresh generation; run npm run build`);
@@ -80,7 +128,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
   } finally {
     rmSync(tmp, { recursive: true, force: true });
   }
-  if (problems.length === before) ok('tokens.json, styleguide.html, sc-theme.js are fresh');
+  if (problems.length === before) ok('tokens.json, styleguide.html, sc-theme.js, sc-charts.js, sc-map.js are fresh');
 }
 
 // --- 3. one theme script -----------------------------------------------------
@@ -89,7 +137,11 @@ if (!problems.length) ok(`version v${V} everywhere`);
   const theme = read('build/theme.js').trim();
   if (!read('starter.html').includes(theme)) fail('starter.html: inline theme script differs from build/theme.js');
   if (existsSync(join(ROOT, 'sc-theme.js')) && !read('sc-theme.js').includes(theme)) fail('sc-theme.js: body differs from build/theme.js');
-  if (problems.length === before) ok('starter.html and sc-theme.js carry build/theme.js verbatim');
+  const charts = read('build/charts.js');
+  if (existsSync(join(ROOT, 'sc-charts.js')) && !read('sc-charts.js').includes(charts)) fail('sc-charts.js: body differs from build/charts.js');
+  const mapSrc = read('build/map.js');
+  if (existsSync(join(ROOT, 'sc-map.js')) && !read('sc-map.js').includes(mapSrc)) fail('sc-map.js: body differs from build/map.js');
+  if (problems.length === before) ok('the hosted scripts carry build/theme.js and build/charts.js verbatim');
 }
 
 // --- 4. the two light blocks agree ------------------------------------------
@@ -149,7 +201,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
 // --- 6. line endings ----------------------------------------------------------
 {
   const CR = String.fromCharCode(13);
-  const bad = ['sc.css', 'starter.html', 'index.html', 'tokens.json', 'sc-theme.js', 'styleguide.html', 'build/theme.js']
+  const bad = ['sc.css', 'starter.html', 'index.html', 'tokens.json', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'styleguide.html', 'build/theme.js', 'build/charts.js', 'build/map.js']
     .filter(f => existsSync(join(ROOT, f)) && readFileSync(join(ROOT, f), 'utf8').includes(CR));
   if (bad.length) fail('CRLF line endings in: ' + bad.join(', ') + ' (see .gitattributes)');
   else ok('source and generated files are LF');
@@ -169,6 +221,127 @@ if (!problems.length) ok(`version v${V} everywhere`);
   if (problems.length === before) ok('page CSS and the starter use semantic tokens only, no inline styles');
 }
 
+// --- 9. the style guide's own numbers -------------------------------------
+// The cover prints "N named tokens" and "M component blocks". Both were prose
+// nobody could check, and both had drifted; a claim in the shop window is worth
+// gating exactly as much as a token value.
+{
+  const before = problems.length;
+  const guide = read('build/styleguide-body.html');
+  let tokens = 0;
+  const walk = (o) => { if (o && typeof o === 'object') { if ('$value' in o) tokens++; else for (const k of Object.keys(o)) if (!k.startsWith('$')) walk(o[k]); } };
+  try { const t = JSON.parse(read('tokens.json')); walk(t.primitive); walk(t.semantic); } catch { fail('tokens.json: unreadable'); }
+  const band = css.slice(css.indexOf('4. COMPONENTS'), css.indexOf('5. UTILITIES'));
+  const roots = new Set([...band.matchAll(/^\.(sc-[a-z0-9]+(?:-[a-z0-9]+)*)/gm)].map(m => m[1].split('__')[0].split('--')[0]));
+  const claimed = (re) => { const m = re.exec(guide); return m ? Number(m[1]) : null; };
+  const ct = claimed(/(\d+) named tokens/), cb = claimed(/(\d+) component blocks/);
+  if (ct === null) fail('build/styleguide-body.html: no "N named tokens" on the cover');
+  else if (ct !== tokens) fail(`build/styleguide-body.html: claims ${ct} named tokens, tokens.json has ${tokens}`);
+  if (cb === null) fail('build/styleguide-body.html: no "M component blocks" on the cover');
+  else if (cb !== roots.size) fail(`build/styleguide-body.html: claims ${cb} component blocks, sc.css section 4 defines ${roots.size}`);
+  if (problems.length === before) ok(`the guide's cover numbers are real (${tokens} tokens, ${roots.size} component blocks)`);
+}
+
+// --- 10. the guide's static sparklines match the library --------------------
+// The guide has to show copyable static markup, so its sparklines cannot be
+// JS-generated — which is exactly how they became a THIRD set of magic numbers
+// disagreeing with both live implementations (pad 2 against a needed 4, so the
+// end dot painted 2px outside its own box). Each one now carries the values it
+// draws, and this runs build/charts.js's own geometry against it.
+{
+  const before = problems.length;
+  const guide = read('build/styleguide-body.html');
+  const w = {};
+  try { new Function('window', read('build/charts.js'))(w); } catch (e) { fail('build/charts.js: will not evaluate — ' + e.message); }
+  const SC = w.SC;
+  const found = [...guide.matchAll(/<svg class="sc-spark[^"]*"[^>]*?viewBox="0 0 (\d+) (\d+)"[^>]*?data-values="([^"]+)"[^>]*>(.*?)<\/svg>/g)];
+  if (!found.length) fail('build/styleguide-body.html: no sparkline carries data-values');
+  for (const [, wid, hgt, vals, inner] of found) {
+    if (!SC) break;
+    const pts = SC.sparkPoints(vals.split(',').map(Number), { width: +wid, height: +hgt });
+    const wantD = SC.sparkPath(pts), last = pts[pts.length - 1];
+    const gotD = (/ d="([^"]*)"/.exec(inner) || [])[1];
+    const gotC = (/<circle cx="([^"]*)" cy="([^"]*)"/.exec(inner) || []).slice(1, 3);
+    if (gotD !== wantD) fail(`styleguide sparkline [${vals}]: path is "${gotD}", build/charts.js draws "${wantD}"`);
+    else if (String(last[0]) !== gotC[0] || String(last[1]) !== gotC[1])
+      fail(`styleguide sparkline [${vals}]: end dot at ${gotC.join(',')}, path ends at ${last.join(',')}`);
+  }
+  if (problems.length === before) ok(`${found.length} static sparklines match build/charts.js exactly`);
+}
+
+// --- 11. the consumer linter still finds exactly what it should ------------
+// A linter nobody has tried to fool is a linter nobody should trust. The
+// fixture plants one of every finding, plus three near-misses that must NOT
+// be reported: a .sc-hint rule setting a property the sheet leaves alone, a
+// descendant selector whose sc- class is only context, and a rule anchored to
+// an id. If the linter's accuracy drifts, this is where it shows.
+{
+  const before = problems.length;
+  const want = { squat: 2, unknown: 1, override: 2, hygiene: 2, promote: 1 };
+  try {
+    const { analyse } = await import('./consumer-lint.mjs');
+    const got = analyse(read('build/fixtures/consumer-lint-cases.html'));
+    for (const k of Object.keys(want)) {
+      const n = new Set(got[k]).size;
+      if (n !== want[k]) fail(`consumer-lint: fixture expects ${want[k]} ${k} finding(s), got ${n}` +
+        (n ? ' — ' + [...new Set(got[k])].join(' | ') : ''));
+    }
+  } catch (e) { fail('consumer-lint: ' + e.message); }
+  if (problems.length === before) ok('consumer-lint finds exactly the planted mistakes, and no near-miss');
+}
+
+// --- 12. nothing accretes -------------------------------------------------
+// Rule 5 checks that every class the guide USES exists in the sheet. This is
+// the other direction, and it is the one that keeps a design system honest: a
+// class the sheet defines but the guide never shows is a component nobody can
+// find, which means nobody uses it, which means it rots. Being named in a
+// rule line counts — some things (an invisible hit rect, a touch-only tooltip
+// modifier) cannot be demonstrated, but they can always be told.
+{
+  const before = problems.length;
+  const defined = new Set();
+  for (const { sel } of cssRules(css)) for (const m of sel.matchAll(/\.(sc-[A-Za-z0-9_-]+)/g)) defined.add(m[1]);
+  let hay = read('build/styleguide-body.html') + read('starter.html');
+  for (const f of readdirSync(join(ROOT, 'react/src'))) hay += read(join('react/src', f));
+  const missing = [...defined].filter((c) => !hay.includes(c)).sort();
+  if (missing.length) fail(`sc.css defines ${missing.length} class(es) the guide never shows or names: ${missing.join(', ')}`);
+  if (problems.length === before) ok(`all ${defined.size} classes sc.css defines are findable in the guide`);
+}
+
+// --- 13. the skill cannot drift from the sheet ------------------------------
+// The skill is what reaches every OTHER project, so its bundled copy of the
+// sheet is the one most likely to go stale and the most expensive when it
+// does — a stale skill teaches the wrong vocabulary to every new page. The
+// bundle is generated by assemble.mjs; this asserts it, and that the version
+// the skill advertises is the version the sheet actually is.
+{
+  const before = problems.length;
+  const SKILL = '.claude/skills/spicychicken-design-system';
+  if (!existsSync(join(ROOT, SKILL, 'SKILL.md'))) fail(`${SKILL}/SKILL.md: missing`);
+  else {
+    for (const [rel, src] of [['assets/sc.css', 'sc.css'], ['assets/sc-theme.js', 'sc-theme.js'],
+                              ['assets/sc-charts.js', 'sc-charts.js'], ['assets/sc-map.js', 'sc-map.js'],
+                              ['assets/starter.html', 'starter.html'],
+                              ['references/DESIGN_SYSTEM.md', 'DESIGN_SYSTEM.md'],
+                              ['references/PLAIN-HTML.md', 'PLAIN-HTML.md'],
+                              ['references/CHECKLIST.md', 'CHECKLIST.md']]) {
+      const p = join(SKILL, rel);
+      if (!existsSync(join(ROOT, p))) fail(`${p}: missing — run node build/assemble.mjs`);
+      else if (read(p) !== read(src)) fail(`${p}: differs from ${src} — run node build/assemble.mjs`);
+    }
+    const skill = read(join(SKILL, 'SKILL.md'));
+    const stale = [...skill.matchAll(/\bv(\d+\.\d+\.\d+)\b/g)].map(m => m[1]).filter(v => v !== V);
+    if (stale.length) fail(`${SKILL}/SKILL.md: says v${[...new Set(stale)].join(', v')} (sc.css is v${V})`);
+    // the skill teaches a vocabulary; every name it teaches must be real
+    const taught = new Set([...skill.matchAll(/`\.(sc-[A-Za-z0-9_-]+)`/g)].map(m => m[1]));
+    const defined = new Set();
+    for (const { sel } of cssRules(css)) for (const m of sel.matchAll(/\.(sc-[A-Za-z0-9_-]+)/g)) defined.add(m[1]);
+    const invented = [...taught].filter(c => !defined.has(c)).sort();
+    if (invented.length) fail(`${SKILL}/SKILL.md teaches ${invented.length} class(es) sc.css does not define: ${invented.join(', ')}`);
+  }
+  if (problems.length === before) ok('the skill bundle matches the repo and teaches only real names');
+}
+
 // --- 8. contrast ---------------------------------------------------------------
 {
   try {
@@ -178,6 +351,9 @@ if (!problems.length) ok(`version v${V} everywhere`);
   } catch (e) { fail('contrast: ' + e.message); }
 }
 
+if (warnings.length) {
+  for (const w of warnings) console.log('  --  ' + w);
+}
 if (problems.length) {
   console.error(`\ncheck: ${problems.length} problem${problems.length > 1 ? 's' : ''}`);
   for (const p of problems) console.error('  -  ' + p);

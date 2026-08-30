@@ -143,6 +143,17 @@
   .sg-layout { padding: 0 20px; }
   .sg-spec { grid-template-columns: 1fr; gap: 2px; }
 }
+
+/* A mono mark has to flip with the surface it sits on. The frame's empty state
+   uses --sc-raised, which flips, so the guide ships both files and lets CSS
+   choose — the pattern a consumer without JS needs. */
+.sg-on-dark { display: none; }
+:root[data-theme="dark"] .sg-on-light { display: none; }
+:root[data-theme="dark"] .sg-on-dark { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sg-on-light { display: none; }
+  :root:not([data-theme="light"]) .sg-on-dark { display: block; }
+}
 </style>
 <script>
 (function () {
@@ -187,7 +198,7 @@
 <header class="sc-masthead">
   <a class="sc-brand" href="#top">
     <img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt="">
-    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.2.0</span></span>
+    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.3.0</span></span>
   </a>
   <div class="sc-masthead__right">
     <span class="sc-hide-sm">Living reference</span>
@@ -206,7 +217,7 @@
       <div class="sc-eyebrow">Mohammed Tahir Madni · SpicyChicken</div>
       <h1>Cobalt structure. One spice accent. Dark by default.</h1>
       <p class="sg-cover__dek">The standard every SpicyChicken project is built on — dashboards, documents, READMEs, decks. Every color below is validated, every component is rendered live in both modes, and the whole thing ships as one CSS file.</p>
-      <div class="sg-cover__meta"><span>sc.css · v2.2.0</span><span>123 named tokens</span><span>20 component blocks</span><span>the chick · everywhere</span></div>
+      <div class="sg-cover__meta"><span>sc.css · v2.3.0</span><span>183 named tokens</span><span>54 component blocks</span><span>the chick · everywhere</span></div>
     </div>
     <div>
       <div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and the spice accent"></div>
@@ -226,6 +237,7 @@
     <div class="sc-eyebrow">Build</div>
     <a href="#components">Components</a>
     <a href="#charts">Data visualization</a>
+    <a href="#points">Points, maps &amp; photo cards</a>
     <a href="#marks">Marks &amp; watermark</a>
     <div class="sc-eyebrow">Ship</div>
     <a href="#checklist">Pre-ship checklist</a>
@@ -275,7 +287,7 @@
     <section class="sg-section" id="type">
       <div class="sc-eyebrow">03 · Foundations</div>
       <h2>Typography</h2>
-      <p class="sc-dek">Bricolage Grotesque for display, Instrument Sans for body and numbers, IBM Plex Mono for labels. The signature is a lowercase mono eyebrow opened by "//".</p>
+      <p class="sc-dek">Bricolage Grotesque for display, Instrument Sans for body and numbers, IBM Plex Mono for labels. The signature is a lowercase mono eyebrow in brand cobalt.</p>
       <div class="sg-block">
         <div class="sg-spec"><div class="m">display · 56 / 1.0 · Bricolage 700 · −1px</div><p class="s" style="font:700 56px/1 var(--sc-font-display);letter-spacing:-1px">Landed price.</p></div>
         <div class="sg-spec"><div class="m">h1 · 40 / 1.1 · Bricolage 700 · −.6px</div><p class="s" style="font:700 40px/1.1 var(--sc-font-display);letter-spacing:-.6px">What it costs to put it in your driveway.</p></div>
@@ -284,7 +296,7 @@
         <div class="sg-spec"><div class="m">lead · 18 / 1.5 · Instrument 400 · muted</div><p class="s" style="font:400 18px/1.5 var(--sc-font-body);color:var(--sc-text-2)">Seventy-four vehicles, two of them within two hundred miles.</p></div>
         <div class="sg-spec"><div class="m">body · 15 / 1.6 · Instrument 400</div><p class="s" style="font:400 15px/1.6 var(--sc-font-body);color:var(--sc-text);max-width:62ch">The tracker pulls every listing once a day, keeps the cheapest price it saw per vehicle, and flags the ones that moved. Body copy stays near 65 characters wide.</p></div>
         <div class="sg-spec"><div class="m">caption · 13 / 1.5 · Instrument 400 · muted</div><p class="s" style="font:400 13px/1.5 var(--sc-font-body);color:var(--sc-text-2)">Prices include $1,100 shipping for cars outside the region.</p></div>
-        <div class="sg-spec"><div class="m">eyebrow · 12 / 1 · Plex Mono 600 · lowercase · "//"</div><p class="s sc-eyebrow" style="margin:0">Best value right now</p></div>
+        <div class="sg-spec"><div class="m">eyebrow · 12 / 1 · Plex Mono 600 · lowercase</div><p class="s sc-eyebrow" style="margin:0">Best value right now</p></div>
         <div class="sg-spec"><div class="m">stat value · 32 / 1.1 · Instrument 700 · −.5px</div><p class="s" style="font:700 32px/1.1 var(--sc-font-body);letter-spacing:-.5px">$36,646</p></div>
         <div class="sg-spec"><div class="m">note · 10.5 / 1.4 · Plex Mono 500 · muted</div><p class="s sc-note">WBY33FK08RCS83536 · 2026-08-23 · 17,263 mi</p></div>
         <div class="sg-spec"><div class="m">code</div><p class="s"><code>--sc-accent</code> inline, and <kbd>⌘</kbd> <kbd>K</kbd> for keys.</p></div>
@@ -367,7 +379,7 @@
 
       <div class="sg-block" id="title-block">
         <h3>Title block <span class="sc-chip sc-chip--spice">2.1</span></h3>
-        <p class="sc-hint">One container for the opening of every page: lowercase "//" eyebrow, h1, one-sentence dek, mono meta row, and an optional segmented control that switches the subject. 40px above, 8px below; 24px above on phones.</p>
+        <p class="sc-hint">One container for the opening of every page: lowercase mono eyebrow, h1, one-sentence dek, mono meta row, and an optional segmented control that switches the subject. 40px above, 8px below; 24px above on phones.</p>
         <div class="sg-demo">
           <div class="sc-title">
             <div class="sc-eyebrow">2024–2025 · Cincinnati · Chicago · Indianapolis</div>
@@ -513,9 +525,9 @@
           <div class="sc-table-scroll"><table class="sc-table">
             <thead><tr><th scope="col">Vehicle</th><th scope="col" class="sc-num is-sortable" aria-sort="ascending"><button type="button" class="sc-table__sort">Asking</button></th><th scope="col" class="sc-num is-sortable"><button type="button" class="sc-table__sort">Miles</button></th><th scope="col" class="sc-num is-sortable" aria-sort="descending"><button type="button" class="sc-table__sort">Landed</button></th><th scope="col">Location</th><th scope="col">History</th><th scope="col">Trend</th></tr></thead>
             <tbody>
-              <tr><td><div class="sc-media"><img class="sc-frame" src="assets/sc-avatar-tile.svg" alt=""><div class="sc-media__body"><div class="sc-media__title">2024 eDrive40</div><div class="sc-media__sub">BMW of San Diego</div><div class="sc-media__code">WBY33FK08RCS83536</div><div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a><a class="sc-link--quiet" href="#components">carfax ↗</a></div></div></div></td><td class="sc-num"><span class="sc-figure">$36,368</span><span class="sc-note sc-text-good">▼ $1,500 · 1 cut</span></td><td class="sc-num">17,263</td><td class="sc-num"><span class="sc-figure sc-text-brand">$36,646</span><span class="sc-note">+ $1,100 ship</span></td><td>San Diego, CA <span class="sc-chip sc-chip--neutral">National</span></td><td><span class="sc-note">1-owner · no accidents</span></td><td><svg class="sc-spark sc-spark--emphasis" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,6 L15,6 L28,10 L41,10 L54,16 L67,19 L78,21"/><circle cx="78" cy="21" r="3"/></svg></td></tr>
-              <tr><td><div class="sc-media"><span class="sc-frame sc-frame--empty">no photo</span><div class="sc-media__body"><div class="sc-media__title">2025 eDrive40</div><div class="sc-media__sub">BMW of Naperville</div><div class="sc-media__code">WBY33FK0XRCNEW001</div><div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a></div></div></div></td><td class="sc-num"><span class="sc-figure">$41,000</span><span class="sc-note"><span class="sc-chip sc-chip--spice">new</span></span></td><td class="sc-num">9,000</td><td class="sc-num"><span class="sc-figure sc-text-brand">$37,700</span><span class="sc-note">local</span></td><td>Naperville, IL <span class="sc-chip sc-chip--brand">Chicago</span></td><td><span class="sc-note">CPO · 2 owners · <span class="sc-text-danger">1 accident</span></span></td><td><svg class="sc-spark" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,14 L40,14 L78,14"/><circle cx="78" cy="14" r="3"/></svg></td></tr>
-              <tr><td><div class="sc-media"><span class="sc-frame sc-frame--empty">no photo</span><div class="sc-media__body"><div class="sc-media__title">2024 eDrive40</div><div class="sc-media__sub">Torrance Auto Plaza</div><div class="sc-media__code">WBY33FK02RCS83564</div><div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a><a class="sc-link--quiet" href="#components">carfax ↗</a></div></div></div></td><td class="sc-num"><span class="sc-figure">$38,698</span></td><td class="sc-num">20,224</td><td class="sc-num"><span class="sc-figure sc-text-brand">$39,865</span><span class="sc-note">+ $1,100 ship · + $67 mi</span></td><td>Torrance, CA <span class="sc-chip sc-chip--neutral">National</span></td><td><span class="sc-note">1-owner · <span class="sc-faint">history n/a</span></span></td><td><svg class="sc-spark" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,8 L27,8 L52,12 L78,12"/><circle cx="78" cy="12" r="3"/></svg></td></tr>
+              <tr><td><div class="sc-media"><img class="sc-frame" src="assets/sc-avatar-tile.svg" alt=""><div class="sc-media__body"><div class="sc-media__title">2024 eDrive40</div><div class="sc-media__sub">BMW of San Diego</div><div class="sc-media__code">WBY33FK08RCS83536</div><div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a><a class="sc-link--quiet" href="#components">carfax ↗</a></div></div></div></td><td class="sc-num"><span class="sc-figure">$36,368</span><span class="sc-note sc-text-good">▼ $1,500 · 1 cut</span></td><td class="sc-num">17,263</td><td class="sc-num"><span class="sc-figure sc-text-brand">$36,646</span><span class="sc-note">+ $1,100 ship</span></td><td>San Diego, CA <span class="sc-chip sc-chip--neutral">National</span></td><td><span class="sc-note">1-owner · no accidents</span></td><td><svg class="sc-spark sc-spark--emphasis" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true" focusable="false" data-values="38900,38800,38200,38100,37400,36900,36646"><path d="M4,4L16,4.8L28,9.6L40,10.4L52,16L64,20L76,22"/><circle cx="76" cy="22" r="3"/></svg></td></tr>
+              <tr><td><div class="sc-media"><span class="sc-frame sc-frame--empty">no photo</span><div class="sc-media__body"><div class="sc-media__title">2025 eDrive40</div><div class="sc-media__sub">BMW of Naperville</div><div class="sc-media__code">WBY33FK0XRCNEW001</div><div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a></div></div></div></td><td class="sc-num"><span class="sc-figure">$41,000</span><span class="sc-note"><span class="sc-chip sc-chip--spice">new</span></span></td><td class="sc-num">9,000</td><td class="sc-num"><span class="sc-figure sc-text-brand">$37,700</span><span class="sc-note">local</span></td><td>Naperville, IL <span class="sc-chip sc-chip--brand">Chicago</span></td><td><span class="sc-note">CPO · 2 owners · <span class="sc-text-danger">1 accident</span></span></td><td><svg class="sc-spark" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true" focusable="false" data-values="37700,37700,37700"><path d="M4,13L40,13L76,13"/><circle cx="76" cy="13" r="3"/></svg></td></tr>
+              <tr><td><div class="sc-media"><span class="sc-frame sc-frame--empty">no photo</span><div class="sc-media__body"><div class="sc-media__title">2024 eDrive40</div><div class="sc-media__sub">Torrance Auto Plaza</div><div class="sc-media__code">WBY33FK02RCS83564</div><div class="sc-media__links"><a class="sc-link--quiet" href="#components">listing ↗</a><a class="sc-link--quiet" href="#components">carfax ↗</a></div></div></div></td><td class="sc-num"><span class="sc-figure">$38,698</span></td><td class="sc-num">20,224</td><td class="sc-num"><span class="sc-figure sc-text-brand">$39,865</span><span class="sc-note">+ $1,100 ship · + $67 mi</span></td><td>Torrance, CA <span class="sc-chip sc-chip--neutral">National</span></td><td><span class="sc-note">1-owner · <span class="sc-faint">history n/a</span></span></td><td><svg class="sc-spark" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true" focusable="false" data-values="38698,38698,38300,38300"><path d="M4,4L28,4L52,22L76,22"/><circle cx="76" cy="22" r="3"/></svg></td></tr>
             </tbody>
           </table></div>
         </div>
@@ -619,12 +631,12 @@
             </table></div>
           </details>
           <div class="sc-grid sc-grid--2" style="margin-top:18px">
-            <div class="sc-tile sg-tile-spark"><div class="sc-tile__label">Vehicles tracked</div><div class="sc-tile__value">74</div><div class="sc-tile__sub">+ 6 this week</div><svg class="sc-spark sc-spark--emphasis sc-tile__spark" viewBox="0 0 120 26" width="120" height="26" aria-hidden="true"><path d="M2,22 L22,20 L42,19 L62,13 L82,12 L102,7 L118,4"/><circle cx="118" cy="4" r="3"/></svg></div>
+            <div class="sc-tile sg-tile-spark"><div class="sc-tile__label">Vehicles tracked</div><div class="sc-tile__value">74</div><div class="sc-tile__sub">+ 6 this week</div><svg class="sc-spark sc-spark--emphasis sc-tile__spark" viewBox="0 0 120 26" width="120" height="26" aria-hidden="true" focusable="false" data-values="68,69,70,71,72,73,74"><path d="M4,22L22.7,19L41.3,16L60,13L78.7,10L97.3,7L116,4"/><circle cx="116" cy="4" r="3"/></svg></div>
             <div class="sc-table-scroll"><table class="sc-table sc-table--compact">
               <thead><tr><th scope="col">Vehicle</th><th scope="col" class="sc-num">Landed</th><th scope="col">Trend</th></tr></thead>
               <tbody>
-                <tr><td>2024 eDrive40</td><td class="sc-num"><span class="sc-figure">$36,646</span></td><td><svg class="sc-spark sc-spark--emphasis" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,6 L28,10 L54,16 L78,21"/><circle cx="78" cy="21" r="3"/></svg><span class="sc-sr-only">Aug 17 $38,900; Aug 23 $36,646</span></td></tr>
-                <tr><td>2025 eDrive40</td><td class="sc-num"><span class="sc-figure">$37,700</span></td><td><svg class="sc-spark" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true"><path d="M2,14 L40,14 L78,14"/><circle cx="78" cy="14" r="3"/></svg><span class="sc-sr-only">Aug 17 $37,700; Aug 23 $37,700</span></td></tr>
+                <tr><td>2024 eDrive40</td><td class="sc-num"><span class="sc-figure">$36,646</span></td><td><svg class="sc-spark sc-spark--emphasis" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true" focusable="false" data-values="38900,38200,37200,36646"><path d="M4,4L28,9.6L52,17.6L76,22"/><circle cx="76" cy="22" r="3"/></svg><span class="sc-sr-only">Aug 17 $38,900; Aug 23 $36,646</span></td></tr>
+                <tr><td>2025 eDrive40</td><td class="sc-num"><span class="sc-figure">$37,700</span></td><td><svg class="sc-spark" viewBox="0 0 80 26" width="80" height="26" aria-hidden="true" focusable="false" data-values="37700,37700,37700"><path d="M4,13L40,13L76,13"/><circle cx="76" cy="13" r="3"/></svg><span class="sc-sr-only">Aug 17 $37,700; Aug 23 $37,700</span></td></tr>
               </tbody>
             </table></div>
           </div>
@@ -708,6 +720,90 @@
       <div class="sc-callout sc-callout--core"><div class="sc-callout__label">Rules</div><p>One y-axis, always. Color follows the entity, never its rank. Status colors are never a series. Legend for two or more series; direct-label selectively. Text wears text tokens, never the series color. Every chart has a table twin. All-pairs forms (scatter, bubble, maps) use slots 1–3 only; lines on slots 4–5 add end-labels or markers.</p></div>
     </section>
 
+    <section class="sg-section" id="points">
+      <div class="sc-eyebrow">07b · Build</div>
+      <h2>Points, maps and photo cards</h2>
+      <p class="sc-dek">The second fold-back from a production consumer. A datum drawn as a point rather than a line, the map it sits on, the legend key that is also a control, and the card that leads with a picture.</p>
+      <div class="sc-grid sc-grid--2">
+        <div class="sc-card">
+          <div class="sc-card__head"><div><h3>The data dot</h3><p class="sc-hint">One mark, used by both the map and the scatter. Filled and hollow are a second channel beside hue, so a category never rides on colour alone — which is what lets an all-pairs form carry more than three slots honestly.</p></div></div>
+          <svg viewBox="0 0 260 64" width="100%" height="64" aria-hidden="true">
+            <circle class="sc-dot is-filled" cx="30" cy="32" r="7" style="fill:var(--sc-chart-1)"></circle>
+            <circle class="sc-dot is-hollow" cx="70" cy="32" r="7" style="stroke:var(--sc-chart-1)"></circle>
+            <circle class="sc-dot is-filled" cx="110" cy="32" r="7" style="fill:var(--sc-chart-3)"></circle>
+            <circle class="sc-dot is-hollow" cx="150" cy="32" r="7" style="stroke:var(--sc-chart-3)"></circle>
+            <circle class="sc-dot-ring" cx="190" cy="32" r="10.5"></circle>
+            <circle class="sc-dot is-filled" cx="190" cy="32" r="7" style="fill:var(--sc-chart-2)"></circle>
+            <line class="sc-scatter__line" x1="14" y1="52" x2="246" y2="52"></line>
+          </svg>
+          <p class="sc-hint">filled · hollow · called out with <code>.sc-dot-ring</code> · a dashed <code>.sc-scatter__line</code> reference</p>
+          <p class="sg-rule"><code>.sc-dot</code> (<code>.is-filled</code> <code>.is-hollow</code> <code>--link</code>) · <code>.sc-dot-ring</code> · <code>.sc-scatter__line</code> <code>__line-hit</code> <code>__series-label</code></p>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card__head"><div><h3>Legend chips</h3><p class="sc-hint">A legend key that is also a control, in two behaviours. The default <strong>hides</strong> its series, so pressed-off reads as struck out. <code>--select</code> <strong>selects</strong> one, so pressed-off must stay fully legible — nothing is hidden, and dimming it would fail contrast for no reason.</p></div></div>
+          <div class="sc-legend">
+            <button class="sc-legend__chip" type="button" aria-pressed="true"><svg width="24" height="10" viewBox="0 0 24 10" aria-hidden="true"><line x1="2" y1="5" x2="22" y2="5" stroke-width="2" stroke-linecap="round" style="stroke:var(--sc-chart-1)"></line></svg><span>shown</span></button>
+            <button class="sc-legend__chip" type="button" aria-pressed="false"><svg width="24" height="10" viewBox="0 0 24 10" aria-hidden="true"><line x1="2" y1="5" x2="22" y2="5" stroke-width="2" stroke-linecap="round" style="stroke:var(--sc-chart-3)"></line></svg><span>hidden</span></button>
+          </div>
+          <div class="sc-legend">
+            <button class="sc-legend__chip sc-legend__chip--select" type="button" aria-pressed="true"><span>2024</span></button>
+            <button class="sc-legend__chip sc-legend__chip--select" type="button" aria-pressed="false"><span>2025</span></button>
+            <button class="sc-legend__chip sc-legend__chip--select" type="button" aria-pressed="false"><span>2026</span></button>
+          </div>
+          <p class="sg-rule"><code>.sc-legend__chip</code> (<code>--select</code>) · <code>aria-pressed</code> carries the state, never a class</p>
+        </div>
+      </div>
+      <div class="sc-grid sc-grid--2">
+        <div class="sc-card">
+          <div class="sc-card__head"><div><h3>Map</h3><p class="sc-hint">A projected SVG that pans and zooms. Plain scroll keeps scrolling the page — the embedded-map convention — so the hint teaches the modifier the first time a scroll passes through. Buttons take 44px under a coarse pointer.</p></div></div>
+          <div class="sc-map sc-map--labels">
+            <svg viewBox="0 0 320 150" width="100%" height="150" aria-hidden="true">
+              <rect class="sc-map__state" x="12" y="12" width="140" height="126" rx="4"></rect>
+              <rect class="sc-map__state" x="164" y="12" width="144" height="126" rx="4"></rect>
+              <text class="sc-map__state-label" x="82" y="80" font-size="12">IL</text>
+              <text class="sc-map__state-label" x="236" y="80" font-size="12">OH</text>
+              <circle class="sc-map__radius" cx="120" cy="86" r="46"></circle>
+              <circle class="sc-dot sc-dot--link is-filled" cx="96" cy="70" r="6" style="fill:var(--sc-chart-1)"></circle>
+              <circle class="sc-dot sc-dot--link is-hollow" cx="212" cy="54" r="6" style="stroke:var(--sc-chart-2)"></circle>
+              <circle class="sc-map__anchor" cx="120" cy="86" r="5"></circle>
+            </svg>
+            <div class="sc-map__btns"><button class="sc-map__btn" type="button" aria-label="Zoom in">+</button><button class="sc-map__btn" type="button" aria-label="Zoom out">−</button><button class="sc-map__btn" type="button" aria-label="Reset the view">⤢</button></div>
+            <div class="sc-map__scrollhint"><span>ctrl + scroll to zoom</span></div>
+          </div>
+          <p class="sg-rule"><code>.sc-map</code> (<code>--labels</code>) · <code>__btns</code> <code>__btn</code> <code>__scrollhint</code> <code>__state</code> <code>__state-label</code> <code>__radius</code> <code>__anchor</code></p>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card__head"><div><h3>Photo card</h3><p class="sc-hint">A <code>.sc-card</code> is text-first; this one leads with the picture, so it sheds the padding and puts its headline figure on a scrim. The scrim tokens are the one place the system paints over an arbitrary photograph, so they are identical in both modes.</p></div></div>
+          <div class="sc-photo-card">
+            <div class="sc-photo-card__media">
+              <div class="sc-frame sc-frame--empty"><img class="sc-frame__mark sg-on-light" src="assets/sc-mark-mono-ink.svg" alt=""><img class="sc-frame__mark sg-on-dark" src="assets/sc-mark-mono-cream.svg" alt=""></div>
+              <span class="sc-chip sc-chip--good sc-photo-card__chip">12% under typical</span>
+              <div class="sc-photo-card__price">$54,900<span class="sc-photo-card__price-sub">+ $1,100 shipping = $56,000</span></div>
+            </div>
+            <div class="sc-photo-card__body">
+              <div class="sc-media__title">2024 · Long range</div>
+              <div class="sc-media__sub">Cincinnati, OH · 18,400 mi</div>
+            </div>
+          </div>
+          <p class="sg-rule"><code>.sc-photo-card</code> · <code>__media</code> <code>__price</code> <code>__price-sub</code> <code>__chip</code> <code>__body</code> · <code>--sc-scrim</code> <code>--sc-on-scrim</code></p>
+        </div>
+      </div>
+      <div class="sg-block">
+        <h3>The rest of the vocabulary</h3>
+        <p class="sc-hint">Everything else 2.3 added, in one place, so no class in the sheet is a class you cannot find.</p>
+        <div class="sc-grid sc-grid--2">
+          <div class="sc-card">
+            <div class="sc-eyebrow">Page furniture</div>
+            <p class="sc-hint"><code>.sc-filter-bar</code> (<code>.sc-filter-bar__head</code> <code>.sc-filter-bar__toggle</code> <code>.is-open</code>) — the sticky scope controls; wrap a <code>.sc-filters</code> in it and it folds to one tappable row on a phone. <code>.sc-section--support</code> steps a section's card-head h2 down to the dek scale; <code>.sc-section--chapter</code> gives a subject change more air than the stack's own rhythm. <code>.sc-show-more</code> centres a "show all" button under a truncated list. <code>.sc-with-mark</code> sets a heading beside the chick. <code>.sc-lockup</code> is the drawn wordmark, as drawn.</p>
+          </div>
+          <div class="sc-card">
+            <div class="sc-eyebrow">Chart and tooltip parts</div>
+            <p class="sc-hint"><code>.sc-chart__hit</code> is the invisible full-height rect that gives a hover chart one clean target; <code>.sc-scatter__line-hit</code> does the same for a 1.2px reference line, and <code>.sc-scatter__series-label</code> makes a direct label clickable. In a tooltip: <code>.sc-tooltip__img</code> (a 150&times;94 thumbnail), <code>.sc-tooltip__link</code> (an on-ink action), <code>.sc-tooltip__dash</code> (the SVG key for a dashed series) and <code>.sc-tooltip--tap</code>, which gives the pointer back so those links work on touch. <code>.sc-frame--photo</code> turns a frame into a loader and <code>.sc-frame__img</code> is the picture inside it. <code>.sc-eyebrow--case</code> keeps codes like IL&nbsp;&middot;&nbsp;OH readable. <code>.sc-text-accent</code> tints one run of text.</p>
+          </div>
+        </div>
+      </div>
+      <div class="sc-callout sc-callout--core"><div class="sc-callout__label">Rules</div><p>A point mark carries a tone slot and a shape, never a tone alone — <code>.is-filled</code> and <code>.is-hollow</code> are what let a map exceed three categories without leaning on hue. Hollow circles need <code>pointer-events</code> to hit-test on the whole disc; <code>fill="none"</code> alone makes the interior untouchable. A legend that hides strikes out; a legend that selects stays legible. The scrim is the only surface in the system where text sits on an unknown background, so it is the only one whose contrast cannot be pre-verified — keep it to a short figure, never body copy.</p></div>
+    </section>
     <section class="sg-section" id="marks">
       <div class="sc-eyebrow">08 · Build</div>
       <h2>The mark</h2>
@@ -762,16 +858,16 @@
       <div class="sc-eyebrow">10 · Ship</div>
       <h2>Do / don't</h2>
       <div class="sg-dont">
-        <div class="sc-card"><h3 class="sc-text-good">Do</h3><ul><li>Lead with a lowercase "//" eyebrow.</li><li>Keep the masthead and footer dark in both modes.</li><li>Put the chick in the masthead and the watermark; name the project in type.</li><li>Use Instrument Sans for numbers, proportional figures.</li><li>Separate with hairlines and color, not shadow.</li><li>Write the outcome and the reason.</li></ul></div>
+        <div class="sc-card"><h3 class="sc-text-good">Do</h3><ul><li>Lead with a lowercase mono eyebrow.</li><li>Keep the masthead and footer dark in both modes.</li><li>Put the chick in the masthead and the watermark; name the project in type.</li><li>Use Instrument Sans for numbers, proportional figures.</li><li>Separate with hairlines and color, not shadow.</li><li>Write the outcome and the reason.</li></ul></div>
         <div class="sc-card"><h3 class="sc-text-danger">Don't</h3><ul><li>Add a hue or a gradient.</li><li>Use spice for text, headings, or large fills — <code>.sc-text-accent</code> is on its way out.</li><li>ALL-CAPS a tracked label — lowercase mono is the house style.</li><li>Use a display face or tabular figures for a big number.</li><li>Ship an icon set without noting the substitution.</li><li>End with a menu of next steps.</li></ul></div>
       </div>
-      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Tag v2.2.0 and pin it from every project — SpicyCar first: <code>https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.2.0/sc.css</code>.</p></div>
+      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Tag v2.3.0 and pin it from every project — SpicyCar first: <code>https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.3.0/sc.css</code>.</p></div>
     </section>
   </main>
 </div>
 
 <footer class="sc-foot">
-  <span>SpicyChicken Design System · v2.2.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
+  <span>SpicyChicken Design System · v2.3.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
   <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a>
 </footer>
 
