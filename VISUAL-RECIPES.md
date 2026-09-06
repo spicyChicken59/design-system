@@ -1,5 +1,17 @@
 # SpicyChicken visual recipes
 
+## Signal matrix
+
+Use `.sc-signal-matrix` on a native `.sc-table` when several candidates must be scanned against
+the same criteria. Wrap it in a keyboard-focusable `.sc-table-scroll` region with a useful label.
+The first column remains sticky on narrow screens. Use `.sc-signal-matrix--values` when the cells
+contain ordinary figures rather than signal tiles.
+
+Inside a matrix cell, `.sc-signal` pairs `.sc-signal__glyph` with `.sc-signal__label`. The written
+label carries the meaning; the glyph is `aria-hidden`, and the tone only reinforces it. Available
+tones are `--good`, `--caution`, `--blocked`, and `--info`; omit a tone for neutral. Never derive a
+tone in CSS—apply it only from a decision or status the product already knows.
+
 ## Printable decision brief
 
 Choose **Printable deliverable** in `composition-studio.html` for a complete three-sheet US Letter

@@ -93,3 +93,12 @@ folio, source line, and page break, while collapsing to a normal responsive surf
 The composition studio exports it, the visual library demonstrates it, and React exposes the same
 sheet structure. SpicyCar and SpicyStock use compact print-only SpicyChicken furniture around their
 existing pages; screen layout and application behavior are unchanged.
+
+## Signal matrix pass · v2.9.0
+
+The missing candidate × criteria view is now a native table with sticky row identity and compact
+semantic cells that never depend on color alone. A values-only mode lets existing comparisons gain
+the same spatial rhythm without inventing a qualitative judgment. Typed React primitives, a Design
+Sync preview, and a complete copyable recipe ship with it. SpicyCar applies the values mode to the
+comparison it already calculates; SpicyStock applies signal tiles to recorded 2LYNCH pass/fail
+detail. No ranking, score, price, screen, trading, or data behavior changes.
