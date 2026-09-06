@@ -16,6 +16,7 @@ composition; [motion](MOTION.md) explains safe, purposeful animation.
 | `composition-studio.html` | Configure and export a complete website, dashboard, screener, report or printable deliverable. |
 | `templates/deliverable.html` | Three print-ready US Letter sheets for a decision brief or polished PDF handoff. |
 | `templates/decision-brief.html` | A first-screen candidate comparison: visible signal matrix, photo dossiers, map/evidence links, and source footer. |
+| `sc-matrix-nav.js` | Optional native buttons that reveal matrix criteria on narrow screens; swipe and keyboard table scrolling still work. |
 | `sc-reading.js` | Optional native-anchor chapter navigation with location highlighting. |
 | `visual-library.html` | Searchable, copyable live recipes across identity, layout, data, motion, and states. |
 | `sc-motion.js` | Optional, dependency-free reveals, sequencing and pause controls. Content stays visible without it. |

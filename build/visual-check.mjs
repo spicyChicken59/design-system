@@ -8,6 +8,7 @@ import { readFile, mkdir } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { dirname, join, resolve, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { checkMatrixCriteria, checkMatrixLifecycle, checkMatrixWithoutJS } from './matrix-nav-check.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const files = ['brand-studio.html', 'visual-library.html', 'composition-studio.html', ...['landing','dashboard','screener','report','deliverable','decision-brief'].map(p => `templates/${p}.html`)];
 for (const name of files) {
@@ -115,6 +116,8 @@ async function checkRenderedDecisionBrief() {
         else assert(Math.abs(geometry.cards[0].y - geometry.cards[1].y) < 1, `${label}: wide dossiers share a row`);
         if (shots) await page.screenshot({ path: join(shots, `decision-brief-${width}-${theme}.png`), fullPage: true });
 
+        await checkMatrixCriteria(page, label);
+
         const scroller = page.locator('.sc-table-scroll');
         await scroller.focus();
         await page.keyboard.press('ArrowRight');
@@ -139,6 +142,8 @@ async function checkRenderedDecisionBrief() {
         console.log(`  ok rendered ${label}: matrix, layout, original marks, focus, anchors and reduced motion`);
       } finally { await context.close(); }
     }
+    await checkMatrixLifecycle(browser, root);
+    await checkMatrixWithoutJS(browser, base);
     console.log(`visual-check: ${scenarios}/6 rendered decision-brief scenarios passed in Chromium (offline fallback fonts)${shots ? `; screenshots: ${shots}` : ''}`);
   } finally {
     await browser.close();
