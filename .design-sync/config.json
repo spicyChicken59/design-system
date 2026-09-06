@@ -99,6 +99,9 @@
     },
     "Sheet": {
       "cardMode": "column"
+    },
+    "SignalMatrix": {
+      "cardMode": "column"
     }
   },
   "readmeHeader": ".design-sync/conventions.md"

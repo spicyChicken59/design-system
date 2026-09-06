@@ -82,6 +82,8 @@ and `DESIGN_SYSTEM.md` §10.
 8. **Document template.** ✅ Done (v2.8.0): a three-sheet printable deliverable on SpicyChicken
    tokens — US Letter, repeated document furniture, explicit folios, controlled page breaks, and
    screen-responsive sheets — in `templates/deliverable.html` and the composition studio.
+8b. **Signal matrix.** ✅ Done (v2.9.0): a native-table candidate × criteria composition with
+   sticky identity, semantic tiles, written labels, keyboard-scrolling, and a values-only mode.
 9. **Slide template.** Six-slide arc (cover on `--sc-ink`, problem, summary, architecture, roadmap,
    ask) as standalone 1280×720 HTML pages.
 10. **License.** ✅ Done (v2.1.0): MIT for the CSS, tooling and wrappers; the chick and everything in `assets/` stay all rights reserved (`LICENSE`).
@@ -92,6 +94,10 @@ and `DESIGN_SYSTEM.md` §10.
 
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
+
+- **2.9.0 (2026-09-06, source snapshot)** — The Signal Matrix: a sticky, accessible candidate ×
+  criteria visual with semantic glyph-and-label tiles, a values mode, copyable recipe, and typed
+  React components. SpicyCar and SpicyStock apply it only to decisions they already display.
 
 - **2.8.0 (2026-09-06, source snapshot)** — A print-ready Letter-sheet system, three-page
   decision-brief template, composition-studio export, 33rd live recipe, typed React wrappers,
