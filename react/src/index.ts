@@ -1,5 +1,5 @@
 /**
- * SpicyChicken — React bindings for sc.css (v2.7.0).
+ * SpicyChicken — React bindings for sc.css (v2.8.0).
  *
  * Thin wrappers over the design system's own classes: every component emits the
  * markup the style guide already documents, forwards its ref to the element it
@@ -66,6 +66,7 @@ export { Tooltip, type TooltipProps, type TooltipRow } from './Tooltip.js';
 export { Details, type DetailsProps } from './Details.js';
 export { ChapterNav, type ChapterNavProps, type ChapterNavItem, Reading, type ReadingProps,
   Evidence, type EvidenceProps, Insight } from './Reading.js';
+export { SheetStack, Sheet, type SheetProps, SheetHead, SheetBody, SheetFoot, type SheetFootProps } from './Print.js';
 export { Figure, type FigureProps, type NoteProps, Note } from './Figure.js';
 export { Frame, type FrameProps } from './Frame.js';
 export { Media, type MediaProps } from './Media.js';

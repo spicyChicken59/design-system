@@ -1,6 +1,6 @@
 ---
 name: spicychicken-design-system
-description: "The SpicyChicken visual standard (sc.css v2.7.0) — cobalt structure, one spice accent, dark by default. Use this skill for ANY visual or written artifact the user asks for — HTML pages, dashboards, reports, one-pagers, READMEs, decks, docs, email, charts, React components, prototypes, mockups, landing pages, or anything with a UI. Trigger it even when the user says nothing about design, branding, or styling; this is their house style and it applies by default to everything they ship. Also trigger on mentions of SpicyChicken, sc.css, sc- classes, the chick mark, or 'my design system'."
+description: "The SpicyChicken visual standard (sc.css v2.8.0) — cobalt structure, one spice accent, dark by default. Use this skill for ANY visual or written artifact the user asks for — HTML pages, dashboards, reports, one-pagers, READMEs, decks, docs, email, charts, React components, prototypes, mockups, landing pages, or anything with a UI. Trigger it even when the user says nothing about design, branding, or styling; this is their house style and it applies by default to everything they ship. Also trigger on mentions of SpicyChicken, sc.css, sc- classes, the chick mark, or 'my design system'."
 license: "MIT for the code; the SpicyChicken mark and assets/ are all rights reserved."
 ---
 
@@ -54,16 +54,16 @@ that the matching tag exists before using the CDN example below.
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.7.0/sc.css">
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.7.0/sc-theme.js"></script>
+<link rel="stylesheet" href="design-system/sc.css">
+<script src="design-system/sc-theme.js"></script>
 <!-- optional; only if the page draws charts -->
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.7.0/sc-charts.js"></script>
+<script src="design-system/sc-charts.js"></script>
 ```
 
 Order matters: `color-scheme` first, preconnects and fonts before `sc.css`, theme script in
 `<head>` so a saved choice applies before paint. The favicon is the chick, always.
-`@2` follows the newest 2.x tag. The GitHub Pages URL is **latest** — prototypes only, never
-production.
+For production, vendor an immutable checked-in snapshot of these files and keep its
+provenance manifest. A GitHub Pages URL is **latest** — prototypes only, never production.
 
 **Page skeleton:** `assets/starter.html` is the canonical shell — masthead with the chick and
 theme toggle, title block, footer with the watermark. Start from it rather than writing a page
@@ -90,7 +90,7 @@ Use `.sc-evidence` with `.sc-insight` for a finding and its records, `.sc-table-
 ### Complete visual compositions
 
 Read `references/VISUAL-RECIPES.md` when designing an entire website, dashboard,
-screener, report, or brand cover. The visual studio and four templates demonstrate
+screener, report, printable deliverable, or brand cover. The visual studio and five templates demonstrate
 how to vary hierarchy while preserving the SpicyChicken identity.
 
 New vocabulary: `.sc-cover` (ink + `.sc-on-ink`, `--wine`, `--paper`, `--compact`),
@@ -99,13 +99,20 @@ New vocabulary: `.sc-cover` (ink + `.sc-on-ink`, `--wine`, `--paper`, `--compact
 and `.sc-report`. These are opt-in compositions. Use the existing primitives for
 ordinary controls and data.
 
+For documents meant to leave the browser, compose explicit pages with
+`.sc-sheet-stack`, `.sc-sheet`, `.sc-sheet__head`, `.sc-sheet__body`, and
+`.sc-sheet__foot`; use `.sc-sheet--cover` for one opening page and
+`.sc-sheet--dense` for evidence-heavy pages. Existing web
+reports can add `.sc-print-report`, `.sc-print-head`, and `.sc-print-foot` without
+changing their screen layout. Keep screen-only navigation in `.sc-screen-only`.
+
 Use the original logo at a generous size in one cover art column, mono repeats
 in dedicated brand panels, and subtle ghosts in reserved blank space. Never
 overlap body text, controls, chart plots, or tables with a watermark. The original
 paths and proportions stay intact. Wine is for brand moments; warm paper is an
 editorial cover surface. Neither becomes a status colour or chart series.
 
-The bundle includes `assets/templates/{landing,dashboard,screener,report}.html`.
+The bundle includes `assets/templates/{landing,dashboard,screener,report,deliverable}.html`.
 Their relative image paths resolve to `assets/assets/`; CSS and theme scripts
 remain in `assets/`. Copy the subtree together or inline its local dependencies.
 Replace all illustrative content and specimen navigation before shipping a product.
@@ -230,7 +237,7 @@ Read these when the summary above isn't enough:
 - `references/MOTION.md` — motion recipes, loading rules, reduced-motion behavior.
 - `assets/sc-reading.js` — optional chapter location highlighting; native links remain usable without it.
 - `assets/sc-motion.js` — optional motion runtime; use with the matching stylesheet.
-- `assets/sc.css` — the sheet itself (v2.7.0). Read it to confirm a class or token exists before
+- `assets/sc.css` — the sheet itself (v2.8.0). Read it to confirm a class or token exists before
   using it. Never invent an `sc-*` name.
 - `assets/sc-charts.js` — the chart primitives, if the page draws charts.
 - `assets/sc-map.js` — the map layer, if the page draws a map. `SC.geo.albersUsa48`,

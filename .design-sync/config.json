@@ -96,6 +96,9 @@
     },
     "Insight": {
       "cardMode": "column"
+    },
+    "Sheet": {
+      "cardMode": "column"
     }
   },
   "readmeHeader": ".design-sync/conventions.md"

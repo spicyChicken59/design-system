@@ -12,7 +12,7 @@
     layout, surface, art, motion, title, width].every(Boolean)) return;
 
   const root = new URL('.', document.baseURI);
-  const layouts = new Set(['landing', 'dashboard', 'screener', 'report']);
+  const layouts = new Set(['landing', 'dashboard', 'screener', 'report', 'deliverable']);
   const surfaces = new Set(['ink', 'wine', 'paper']);
   const arts = new Set(['none', 'orbit', 'ledger']);
   const widths = new Set(['320', '390', '768', '1120']);

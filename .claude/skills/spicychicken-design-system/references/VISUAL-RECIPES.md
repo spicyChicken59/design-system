@@ -1,5 +1,19 @@
 # SpicyChicken visual recipes
 
+## Printable decision brief
+
+Choose **Printable deliverable** in `composition-studio.html` for a complete three-sheet US Letter
+document. `.sc-sheet-stack` holds explicit `.sc-sheet` pages; each sheet has a `.sc-sheet__head`,
+`.sc-sheet__body`, and `.sc-sheet__foot`, with `.sc-sheet__folio` for the page label. Use
+`.sc-sheet--cover` once, `.sc-sheet--dense` for evidence-heavy pages,
+`.sc-print-keep` for a unit that must stay together, and
+`.sc-print-section` only where a deliberate new printed page is required. On phones the sheets
+become ordinary responsive reading surfaces. In print they resolve to exact 8.5 × 11 inch pages.
+
+For an existing web report, add `.sc-print-report` to its main region and include compact
+`.sc-print-head` and `.sc-print-foot` elements. They are invisible on screen and repeat in print.
+Use the original mark asset; never rebuild or recolor it for a document.
+
 Start in [the brand studio](brand-studio.html): complete compositions, downloadable
 SVG patterns, and the actual templates at 320, 390, 768, and 1120px.
 
