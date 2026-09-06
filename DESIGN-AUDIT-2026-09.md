@@ -146,3 +146,22 @@ and horizontal scrolling, candidate/source/map anchor navigation, and reduced-mo
 visibility. These deterministic offline screenshots use fallback fonts and the original
 local SVGs. The browser gate is opt-in and reports missing Chromium as SKIP/nonzero;
 the static offline gate does not claim browser coverage.
+
+## Phone matrix discoverability
+
+The opening matrix made comparison visible, but phone users still had to discover its
+later columns by panning. An optional criterion navigator now exposes their real names
+as native command buttons. It keeps the sticky identity, complete table, supplied values,
+and native scroll behavior. It appears only when the table overflows; wide layouts and
+printed pages need no extra controls. Short labels can come from authored header metadata.
+
+`sc-matrix-nav.js` is a small, dependency-free addition with scoped token-based styling.
+The Decision Brief template, recipe 36, setup snippet, snapshot vendor and guidance bundle
+include it. No logo path, palette token, core stylesheet, version or product decision
+changes. Reduced motion makes criterion jumps immediate. Refresh/destroy methods support
+rerendered tables and clean up observers/listeners; closed disclosures update on opening.
+
+The rendered gate exercises every named criterion, sticky-column alignment with borders
+and padding, native focus and activation, reduced-motion landing, resize focus handoff,
+header replacement/removal, disclosure opening, idempotent attachment and cleanup.
+The full table and candidate links also work with JavaScript disabled.

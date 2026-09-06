@@ -87,6 +87,7 @@ writeFileSync(join(OUT, 'sc-map.js'), `/* SpicyChicken Design System — sc-map.
   writeFileSync(join(SKILL, 'assets', 'starter.html'), read(join(DS, 'starter.html')));
   writeFileSync(join(SKILL, 'assets', 'sc-motion.js'), read(join(DS, 'sc-motion.js')));
   writeFileSync(join(SKILL, 'assets', 'sc-reading.js'), read(join(DS, 'sc-reading.js')));
+  writeFileSync(join(SKILL, 'assets', 'sc-matrix-nav.js'), read(join(DS, 'sc-matrix-nav.js')));
   for (const f of ['sc-theme.js', 'sc-charts.js', 'sc-map.js']) writeFileSync(join(SKILL, 'assets', f), read(join(OUT, f)));
   for (const f of ['DESIGN_SYSTEM.md', 'PLAIN-HTML.md', 'CHECKLIST.md', 'VISUAL-RECIPES.md', 'MOTION.md'])
     writeFileSync(join(SKILL, 'references', f), read(join(DS, f)));

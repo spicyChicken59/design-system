@@ -336,7 +336,8 @@ if (!problems.length) ok(`version v${V} everywhere`);
                               ['assets/templates/decision-brief.html', 'templates/decision-brief.html'],
                               ['references/MOTION.md', 'MOTION.md'],
                               ['assets/sc-motion.js', 'sc-motion.js'],
-                              ['assets/sc-reading.js', 'sc-reading.js']]) {
+                              ['assets/sc-reading.js', 'sc-reading.js'],
+                              ['assets/sc-matrix-nav.js', 'sc-matrix-nav.js']]) {
       const p = join(SKILL, rel);
       if (!existsSync(join(ROOT, p))) fail(`${p}: missing — run node build/assemble.mjs`);
       else if (read(p) !== read(src)) fail(`${p}: differs from ${src} — run node build/assemble.mjs`);

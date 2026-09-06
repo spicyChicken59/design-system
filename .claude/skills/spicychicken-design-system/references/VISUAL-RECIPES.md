@@ -5,8 +5,9 @@
 Open [the complete decision brief](templates/decision-brief.html), or copy recipe 36 in
 [the visual library](visual-library.html#recipe-decision-brief). It combines existing
 `.sc-cover`, `.sc-signal-matrix`, `.sc-photo-card.sc-dossier`, and `.sc-evidence__source`
-patterns. It needs only the v2.10 stylesheet and original assets, not a new component,
-dependency, or product feature. The catalog snippet and full page share the authored
+patterns. Its static layout needs only the v2.10 stylesheet and original assets.
+The optional `sc-matrix-nav.js` adds phone criterion buttons without a dependency or
+product decision. The catalog snippet and full page share the authored
 source in `build/decision-brief.mjs`; `npm run build` refreshes both.
 
 The first screen should establish the product identity and begin answering the user's
@@ -34,6 +35,8 @@ The matrix remains a native table with a caption and row/column headers. The lab
 `.sc-table-scroll` region takes `tabindex="0"`, a visible horizontal-scroll hint and
 `aria-describedby` pointing to that hint. Phone users can pan across criteria while
 row identity stays sticky; keyboard users can focus the scroller and use arrow keys.
+The example also opts into the criterion navigator described below. When the matrix
+overflows, native buttons reveal the selected column without hiding any other data.
 Keep the page itself within the viewport. Copying more than one brief requires unique
 IDs and corresponding anchor/ARIA references. The full page uses an h1; the catalog
 snippet starts at h3, so adjust heading levels to fit its destination.
@@ -47,7 +50,8 @@ reduced-motion and print modes, and never delay interaction. Review 320/390px ph
 The rendered regression gate is `node build/visual-check.mjs --browser --shots /tmp/sc-brief`.
 It needs Playwright 1.56.1 and its Chromium installed separately. It renders the real
 template at 390, 820 and 1280px in both themes, checks table/mark bounds, phone stacking,
-keyboard scrolling, native anchors and reduced-motion visibility, and saves screenshots.
+keyboard scrolling, criterion commands, native anchors, reduced motion and a no-JavaScript
+fallback, and saves screenshots.
 External requests are stubbed for reproducibility, so these captures exercise the font
 fallbacks; original local SVG assets are real. A missing browser is an explicit **SKIP**
 with a nonzero exit, never a rendered pass. The ordinary offline gate remains static.
@@ -92,6 +96,55 @@ Inside a matrix cell, `.sc-signal` pairs `.sc-signal__glyph` with `.sc-signal__l
 label carries the meaning; the glyph is `aria-hidden`, and the tone only reinforces it. Available
 tones are `--good`, `--caution`, `--blocked`, and `--info`; omit a tone for neutral. Never derive a
 tone in CSS—apply it only from a decision or status the product already knows.
+
+### Optional criterion navigator
+
+On a phone, a sticky identity column can hide the existence of later criteria. Load
+the optional helper and opt in on the existing scroller. Buttons take their names from
+the native column headers, excluding the first identity column. `data-sc-label` on a
+header supplies a shorter visible name; the full header remains available as its title.
+
+```html
+<script src="sc-matrix-nav.js" defer></script>
+<p class="sc-hint" id="matrix-help">Jump to a criterion or swipe across. Keyboard: focus the table and use arrow keys.</p>
+<div class="sc-table-scroll" data-sc-matrix-nav tabindex="0" role="region"
+     aria-label="Candidate comparison" aria-describedby="matrix-help">
+  <table class="sc-table sc-signal-matrix">
+    <caption class="sc-sr-only">Candidates compared using supplied evidence.</caption>
+    <thead><tr><th scope="col">Candidate</th><th scope="col">Value</th>
+      <th scope="col" data-sc-label="History">Accident record</th></tr></thead>
+    <tbody><!-- Your existing records and row headers --></tbody>
+  </table>
+</div>
+```
+
+The helper enhances single-row, unmerged column headers and the system's left-sticky
+identity column. It inserts ordinary 44px command buttons immediately before the region,
+visible only when the table overflows. A command brings a column beside the identity,
+or as far as the table's natural scroll limit allows. Buttons are not tabs or toggles:
+there is no selected state to become misleading after swiping. Native table semantics,
+links, arrow-key scrolling, touch panning and printed content remain intact. The buttons
+use existing theme/focus tokens, disappear in print and scroll instantly with reduced
+motion. Without JavaScript the complete, labeled scrollable table remains available.
+
+For a dynamically rendered table, attach after inserting its scroller. The returned
+controller is idempotent; refresh after replacing headers in that same scroller, and
+destroy before removing it. A `ResizeObserver` updates controls when the width changes,
+fonts load or a closed disclosure opens. Set `data-sc-matrix-nav-label` on the scroller
+only when the default “Jump to criterion in [region label]” needs different wording.
+
+```js
+const navigator = SCMatrixNav.attach(scroller);
+// After replacing this scroller's table or column headers:
+navigator.refresh();
+// Before removing the scroller (for example, replacing a card list):
+navigator.destroy();
+```
+
+Copy `sc-matrix-nav.js` from the same immutable source commit recorded in your design
+provenance. `build/vendor.mjs` includes it in new checked-in snapshots; no release tag
+is required. Its injected stylesheet is scoped to `[data-sc-matrix-controls]` and does
+not modify `sc.css`, tokens, brand geometry or product values.
 
 ## Printable decision brief
 
