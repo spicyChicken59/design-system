@@ -5,6 +5,7 @@ guide, it's a new component — fold it into the system or take it out.
 
 - [ ] Printable deliverables use explicit `.sc-sheet` pages, retain sources and folios, and are reviewed as Letter pages with backgrounds enabled.
 - [ ] Signal matrices remain native tables, label their scroll region, keep row/column headers, and repeat every colored signal as readable text.
+- [ ] Benchmark rails print the exact value and authored scale in words; bands and references come from real definitions, never decorative targets.
 
 - [ ] Head: pinned `sc.css` + `sc-theme.js`, `color-scheme` meta, font preconnects, favicon = the chick (`assets/favicon.ico`).
 - [ ] Masthead: chick + project name left, theme toggle right, `--sc-ink` in both modes; nav has an `aria-label`.

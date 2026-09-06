@@ -1,4 +1,4 @@
-# SpicyChicken Design System — v2.9.0
+# SpicyChicken Design System — v2.10.0
 
 **The visual standard for everything Mohammed Tahir Madni ships under SpicyChicken.**
 
@@ -10,7 +10,7 @@ Files in this folder:
 
 | File | What it is |
 |---|---|
-| `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.9.0`. |
+| `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.10.0`. |
 | `sc-map.js` | `SC.geo` (projection, topojson, geodesic ring, box fitting — all pure) and `SC.mapView` (pan, zoom, and the marks that must not scale with it). Optional; needed only by a page that draws a map. |
 | `sc-charts.js` | The chart primitives the sheet's `.sc-chart` / `.sc-spark` / `.sc-tooltip` contracts were always describing. Optional; load it after `sc.css`. |
 | `sc-theme.js` | The theme script (source: `build/theme.js`). Reads the saved choice before paint, wires the toggle, and swaps a pinned-dark page to light for printing. Link it or inline it. |
@@ -217,6 +217,7 @@ attribute now beats every component's `display`, so hide with `hidden`, never wi
 | Timeline / ranking | `.sc-timeline` / `.sc-rank-list` | Use ordered lists and real dates/values. Context stays beside its figure. |
 | Quote / comparison | `.sc-quote`; `.sc-comparison` | Use actual attribution; comparison values get equal visual weight and explicit labels. |
 | Metric / bars | `.sc-metric-spotlight`; `.sc-bars` | One lead figure; exact labeled bars with a stated scale and a table twin. No fabricated progress. |
+| Benchmark rail | `.sc-benchmark` | Locate one exact value on an authored scale. Keep the label, value, endpoint labels, and a written note naming any band or reference; the track remains decorative. |
 | Steps / checkpoint | `.sc-stepper`; `.sc-checkpoint` | Words carry the state. The stepper is a status overview, not interactive navigation. |
 | Image / skeleton | `.sc-captioned`; `.sc-skeleton` | Keep captions outside the art. Skeletons are static and only stand in for pending content. |
 | Motion | `.sc-reveal`, `.sc-stagger`, `.sc-hover-lift`, `.sc-press` | Optional runtime; content always visible. `MOTION.md` documents variants, pause/replay, focus and reduced motion. |
@@ -304,7 +305,7 @@ Validated with the `dataviz` method; re-run the checks if a slot ever changes. C
 ## 9. Marks & watermark
 
 **Expanded compositions:** [VISUAL-RECIPES.md](VISUAL-RECIPES.md) and
-[the brand studio](brand-studio.html) demonstrate the v2.9.0 additions. `.sc-cover`
+[the brand studio](brand-studio.html) demonstrate the v2.10.0 additions. `.sc-cover`
 uses ink, wine, or warm paper; `.sc-brand-panel` provides a dedicated mark texture;
 `.sc-ghost` reserves blank space for a mono mark; `.sc-signature` credits the maker
 outside chart plots. `.sc-chapter`, `.sc-stat-strip`, `.sc-facts`,
@@ -376,10 +377,10 @@ Measured, not assumed — the numbers are WCAG 2 contrast ratios from the curren
 **Link a pinned version.** Tags are served by jsDelivr; pin the exact release and upgrade on purpose:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.9.0/sc.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.10.0/sc.css">
 ```
 
-`@2` in place of `@v2.9.0` follows the newest 2.x tag (non-breaking upgrades, re-resolved by the CDN
+`@2` in place of `@v2.10.0` follows the newest 2.x tag (non-breaking upgrades, re-resolved by the CDN
 within hours). The GitHub Pages URL `https://spicychicken59.github.io/design-system/sc.css` is
 **latest** — it is what the style guide runs on and it may change on a major, so it is for
 prototypes, not production. Vendoring (copy `sc.css` next to the page) is the third option; note the
@@ -398,8 +399,8 @@ version from its header when you refresh it.
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.9.0/sc.css">
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.9.0/sc-theme.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.10.0/sc.css">
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.10.0/sc-theme.js"></script>
 ```
 
 Order matters: `color-scheme` first so the browser paints the right default before CSS arrives, the
@@ -413,7 +414,7 @@ code changes the attribute), and swaps a pinned-dark page to light for printing.
 nothing else.
 
 **Assets** — every file in `assets/`, at `https://spicychicken59.github.io/design-system/assets/<file>`
-or `https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.9.0/assets/<file>`:
+or `https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.10.0/assets/<file>`:
 
 | File | Where it goes |
 |---|---|

@@ -102,3 +102,17 @@ the same spatial rhythm without inventing a qualitative judgment. Typed React pr
 Sync preview, and a complete copyable recipe ship with it. SpicyCar applies the values mode to the
 comparison it already calculates; SpicyStock applies signal tiles to recorded 2LYNCH pass/fail
 detail. No ranking, score, price, screen, trading, or data behavior changes.
+
+## Benchmark rail pass · v2.10.0
+
+The map answers where, charts answer when, and the signal matrix answers which criteria. The
+remaining visual gap was the smallest decision question: where does this exact number sit against
+its own scale or reference? The Benchmark Rail adds that spatial reading without making the track
+the only answer. Exact value, endpoints, expected band, reference, and interpretation remain
+visible text; the geometry is decorative and fluid.
+
+SpicyCar applies the centered form only to its existing value-versus-typical percentage, on a
+clearly labeled ±20% context scale. SpicyStock applies the zero-to-ten form only to the score it
+already prints. Values outside a displayed context clamp visually while their exact written values
+remain unchanged. No ranking, threshold, screening, purchase, price, data, or trading behavior is
+introduced or changed.

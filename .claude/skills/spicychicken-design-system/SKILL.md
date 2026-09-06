@@ -1,6 +1,6 @@
 ---
 name: spicychicken-design-system
-description: "The SpicyChicken visual standard (sc.css v2.9.0) — cobalt structure, one spice accent, dark by default. Use this skill for ANY visual or written artifact the user asks for — HTML pages, dashboards, reports, one-pagers, READMEs, decks, docs, email, charts, React components, prototypes, mockups, landing pages, or anything with a UI. Trigger it even when the user says nothing about design, branding, or styling; this is their house style and it applies by default to everything they ship. Also trigger on mentions of SpicyChicken, sc.css, sc- classes, the chick mark, or 'my design system'."
+description: "The SpicyChicken visual standard (sc.css v2.10.0) — cobalt structure, one spice accent, dark by default. Use this skill for ANY visual or written artifact the user asks for — HTML pages, dashboards, reports, one-pagers, READMEs, decks, docs, email, charts, React components, prototypes, mockups, landing pages, or anything with a UI. Trigger it even when the user says nothing about design, branding, or styling; this is their house style and it applies by default to everything they ship. Also trigger on mentions of SpicyChicken, sc.css, sc- classes, the chick mark, or 'my design system'."
 license: "MIT for the code; the SpicyChicken mark and assets/ are all rights reserved."
 ---
 
@@ -242,7 +242,7 @@ Read these when the summary above isn't enough:
 - `references/MOTION.md` — motion recipes, loading rules, reduced-motion behavior.
 - `assets/sc-reading.js` — optional chapter location highlighting; native links remain usable without it.
 - `assets/sc-motion.js` — optional motion runtime; use with the matching stylesheet.
-- `assets/sc.css` — the sheet itself (v2.9.0). Read it to confirm a class or token exists before
+- `assets/sc.css` — the sheet itself (v2.10.0). Read it to confirm a class or token exists before
   using it. Never invent an `sc-*` name.
 - `assets/sc-charts.js` — the chart primitives, if the page draws charts.
 - `assets/sc-map.js` — the map layer, if the page draws a map. `SC.geo.albersUsa48`,
