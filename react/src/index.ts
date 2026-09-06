@@ -1,5 +1,5 @@
 /**
- * SpicyChicken — React bindings for sc.css (v2.5.0).
+ * SpicyChicken — React bindings for sc.css (v2.6.0).
  *
  * Thin wrappers over the design system's own classes: every component emits the
  * markup the style guide already documents, forwards its ref to the element it
@@ -81,3 +81,6 @@ export {
   type MarkForm,
 } from './marks.generated.js';
 export { THEME_BOOT_SCRIPT } from './theme.generated.js';
+
+// Reusable visual compositions and visible-by-default motion markers
+export { Bento, type BentoProps, Editorial, type EditorialProps, Timeline, type TimelineProps, type TimelineItem, Quote, type QuoteProps, RankList, type RankListProps, type RankListItem, Stepper, type StepperProps, type StepperItem, MetricSpotlight, type MetricSpotlightProps, Comparison, type ComparisonProps, type ComparisonItem, Reveal, type RevealProps } from './Compositions.js';

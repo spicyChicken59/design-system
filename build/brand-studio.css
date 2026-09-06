@@ -28,3 +28,13 @@
 .studio-last { max-width: 720px; padding-block: var(--sc-s4); }
 @media(max-width:720px){.studio-main{padding-top:var(--sc-s2)}.studio-hero{min-height:0}.studio-triptych{grid-template-columns:minmax(0,1fr)}.studio-swatch{min-height:260px}.studio-recipes{grid-template-columns:minmax(0,1fr)}.studio-section{margin-top:var(--sc-s6)}.studio-preview-well{padding:var(--sc-s1)}}
 @media print{.studio-controls,.studio-preview-well,#preview-status{display:none}.studio-section{break-inside:avoid}.studio-main{padding:0}}
+
+.studio-create { display:grid; grid-template-columns:1.4fr 1fr; gap:var(--sc-s2); }
+.studio-create__feature { display:flex; flex-direction:column; align-items:start; padding:var(--sc-s5); border-radius:var(--sc-r-lg); background:var(--sc-brand-wine); min-height:330px; color:var(--sc-on-ink); }
+.studio-create__feature h3 { font-size:clamp(32px,4vw,52px); letter-spacing:-.035em; margin:var(--sc-s3) 0 var(--sc-s2); }
+.studio-create__feature p { color:var(--sc-on-ink-2); max-width:45ch; }
+.studio-create__feature:hover { color:var(--sc-on-ink); }
+.studio-create__products { padding:var(--sc-s4); border:1px solid var(--sc-border); border-radius:var(--sc-r-lg); }
+.studio-create__products > a { display:flex; align-items:center; justify-content:space-between; gap:var(--sc-s2); padding:var(--sc-s3) 0; border-top:1px solid var(--sc-border); color:var(--sc-text); }
+.studio-create__products > a small { display:block; color:var(--sc-text-2); font-size:var(--sc-text-sm); margin-top:var(--sc-s0); }
+@media(max-width:720px){.studio-create{grid-template-columns:minmax(0,1fr)}.studio-create__feature,.studio-create__products{padding:var(--sc-s3)}}

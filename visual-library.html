@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>SpicyChicken · Visual library</title>
+  <meta name="description" content="24 copyable SpicyChicken visual recipes: brand moments, expressive layouts, readable data, considered states, and accessible motion.">
+  <link rel="icon" href="assets/sc-avatar-tile.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="sc.css">
+  <link rel="stylesheet" href="build/visual-library.css">
+  <script src="sc-theme.js"></script>
+</head>
+<body>
+<a class="sc-skip" href="#main">Skip to content</a>
+<header class="sc-masthead">
+  <a class="sc-brand" href="styleguide.html"><img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt=""><span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">the visual library</span></span></a>
+  <div class="sc-masthead__right"><nav class="sc-nav" aria-label="Design resources"><a href="brand-studio.html">Brand studio</a><a href="styleguide.html">Style guide</a></nav><div class="sc-theme-toggle" role="group" aria-label="Theme"><button type="button" data-theme="dark">Dark</button><button type="button" data-theme="light">Light</button><button type="button" data-theme="auto">Auto</button></div></div>
+</header>
+<main id="main" class="sc-wrap sc-wrap--wide library-main">
+  <section class="sc-cover sc-cover--wine sc-on-ink library-hero">
+    <div class="sc-cover__content"><p class="sc-eyebrow">the SpicyChicken visual library</p><h1 class="sc-cover__title">Every page.<br>A little more you.</h1><p class="sc-cover__dek">Distinctive starts. Thoughtful details. A little movement. Find the piece that makes your next page feel considered.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="#recipes">Find your next detail <span aria-hidden="true">↗</span></a></div><div class="sc-cover__meta"><span><span id="library-total">24</span> ready-to-use recipes</span><span>dark &amp; light</span><span>motion with restraint</span></div></div>
+    <div class="sc-cover__art" aria-hidden="true"><img class="sc-chick-arrive" src="assets/sc-mark-mono-cream.svg" alt="" width="342" height="405"><span class="sc-cover__caption">the same character.<br>more ways to make it yours.</span></div>
+  </section>
+  <div class="library-intro"><p>Build with more than a box and a button. Give the important things a stage, let the details breathe, and finish with the chick.</p><dl class="library-principles"><div><dt>01 / choose</dt><dd>Find a composition.</dd></div><div><dt>02 / feel</dt><dd>Try both themes.</dd></div><div><dt>03 / make</dt><dd>Copy it. Make it yours.</dd></div></dl></div>
+
+  <section id="recipes" class="library-index" aria-labelledby="recipes-title">
+    <div class="library-index-heading"><h2 id="recipes-title">Pick a starting point.</h2><span class="library-count" id="library-count" role="status">24 recipes</span></div>
+    <div class="library-tools" id="library-tools" hidden>
+      <div class="library-toolbar"><div class="library-search"><label for="library-search">Find</label><input class="sc-input" id="library-search" type="search" placeholder="Try “watermark”, “chart”, or “motion”" autocomplete="off" aria-controls="library-grid"></div><button class="sc-btn sc-btn--secondary library-motion-toggle" type="button" data-sc-motion-toggle aria-pressed="false">Pause motion</button></div>
+      <div class="library-filters" role="group" aria-label="Recipe category"><button class="sc-tab" type="button" data-library-category="all" aria-pressed="true">Everything</button><button class="sc-tab" type="button" data-library-category="identity" aria-pressed="false">Identity</button><button class="sc-tab" type="button" data-library-category="layout" aria-pressed="false">Layout</button><button class="sc-tab" type="button" data-library-category="data" aria-pressed="false">Data</button><button class="sc-tab" type="button" data-library-category="states" aria-pressed="false">States</button><button class="sc-tab" type="button" data-library-category="motion" aria-pressed="false">Motion</button></div>
+    </div>
+    <p class="library-help">Every preview is real HTML. Copy a recipe into a page with sc.css, then replace the illustrative content and links. <a class="sc-link--quiet" href="#setup">Get the page setup</a>.</p>
+    <p class="library-live-status" id="library-status" role="status" aria-live="polite"></p>
+    <noscript><p class="sc-hint">All recipes are visible below. Enable JavaScript for search, copying, and motion previews.</p></noscript>
+    <div class="library-grid" id="library-grid">
+      <article class="library-recipe library-recipe--wide" id="recipe-split-cover" data-recipe data-category="identity" data-search="hero cover logo header masthead ink" aria-labelledby="title-split-cover">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>01</span><span aria-hidden="true">/</span><span>identity</span></p><h3 id="title-split-cover">The signature opener</h3><p>A confident title and the original chick. Separate space for the story and the character.</p></header>
+        <div class="library-preview library-preview--flush" id="preview-split-cover">
+<section class="sc-cover sc-cover--compact sc-on-ink">
+  <div class="sc-cover__content">
+    <p class="sc-eyebrow">a SpicyChicken collection</p>
+    <h3 class="sc-cover__title">Good things.<br>Considered closely.</h3>
+    <p class="sc-cover__dek">A place for the ideas, objects, and details worth keeping.</p>
+    <div class="sc-cover__meta"><span>curated with care</span><span>made to explore</span></div>
+  </div>
+  <div class="sc-cover__art" aria-hidden="true">
+    <img src="assets/sc-mark-color-dark.svg" alt="" width="342" height="405">
+    <span class="sc-cover__caption">a little character.<br>a clear point of view.</span>
+  </div>
+</section>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy The signature opener HTML">Copy HTML</button></div><p class="library-snippet-note">Use a single page h1 when this is your main cover.</p><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;section class=&quot;sc-cover sc-cover--compact sc-on-ink&quot;&gt;
+  &lt;div class=&quot;sc-cover__content&quot;&gt;
+    &lt;p class=&quot;sc-eyebrow&quot;&gt;a SpicyChicken collection&lt;/p&gt;
+    &lt;h3 class=&quot;sc-cover__title&quot;&gt;Good things.&lt;br&gt;Considered closely.&lt;/h3&gt;
+    &lt;p class=&quot;sc-cover__dek&quot;&gt;A place for the ideas, objects, and details worth keeping.&lt;/p&gt;
+    &lt;div class=&quot;sc-cover__meta&quot;&gt;&lt;span&gt;curated with care&lt;/span&gt;&lt;span&gt;made to explore&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;sc-cover__art&quot; aria-hidden=&quot;true&quot;&gt;
+    &lt;img src=&quot;assets/sc-mark-color-dark.svg&quot; alt=&quot;&quot; width=&quot;342&quot; height=&quot;405&quot;&gt;
+    &lt;span class=&quot;sc-cover__caption&quot;&gt;a little character.&lt;br&gt;a clear point of view.&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-pattern-panel" data-recipe data-category="identity" data-search="texture wallpaper wine maroon brand tile" aria-labelledby="title-pattern-panel">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>02</span><span aria-hidden="true">/</span><span>identity</span></p><h3 id="title-pattern-panel">A pattern with personality</h3><p>A ready-made visual for chapter breaks, collection covers, and download tiles.</p></header>
+        <div class="library-preview library-preview--flush" id="preview-pattern-panel">
+<figure class="sc-captioned">
+  <div class="sc-brand-panel sc-brand-panel--wine">
+    <img class="sc-brand-panel__pattern" src="assets/sc-pattern-wine.svg" alt="" width="1600" height="900">
+    <span class="sc-brand-panel__label">SpicyChicken / the collection</span>
+  </div>
+  <figcaption class="sc-captioned__caption"><strong>One mark. A familiar rhythm.</strong><span>original mono artwork</span></figcaption>
+</figure>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy A pattern with personality HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;figure class=&quot;sc-captioned&quot;&gt;
+  &lt;div class=&quot;sc-brand-panel sc-brand-panel--wine&quot;&gt;
+    &lt;img class=&quot;sc-brand-panel__pattern&quot; src=&quot;assets/sc-pattern-wine.svg&quot; alt=&quot;&quot; width=&quot;1600&quot; height=&quot;900&quot;&gt;
+    &lt;span class=&quot;sc-brand-panel__label&quot;&gt;SpicyChicken / the collection&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;figcaption class=&quot;sc-captioned__caption&quot;&gt;&lt;strong&gt;One mark. A familiar rhythm.&lt;/strong&gt;&lt;span&gt;original mono artwork&lt;/span&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-quiet-watermark" data-recipe data-category="identity" data-search="ghost watermark negative space transparent logo" aria-labelledby="title-quiet-watermark">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>03</span><span aria-hidden="true">/</span><span>identity</span></p><h3 id="title-quiet-watermark">The quiet signature</h3><p>A faint mark in its own art column. Keep evidence, copy, and controls completely clear.</p></header>
+        <div class="library-preview" id="preview-quiet-watermark">
+<div class="sc-editorial">
+  <div class="sc-editorial__body"><p class="sc-eyebrow">a considered detail</p><h3>Leave a little room.</h3><p>The quietest part of a page can still feel unmistakably yours.</p></div>
+  <div class="sc-editorial__art" aria-hidden="true"><div class="sc-ghost"><img class="sc-ghost__dark" src="assets/sc-mark-mono-cream.svg" alt="" width="342" height="405"><img class="sc-ghost__light" src="assets/sc-mark-mono-ink.svg" alt="" width="342" height="405"></div></div>
+</div>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy The quiet signature HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;div class=&quot;sc-editorial&quot;&gt;
+  &lt;div class=&quot;sc-editorial__body&quot;&gt;&lt;p class=&quot;sc-eyebrow&quot;&gt;a considered detail&lt;/p&gt;&lt;h3&gt;Leave a little room.&lt;/h3&gt;&lt;p&gt;The quietest part of a page can still feel unmistakably yours.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class=&quot;sc-editorial__art&quot; aria-hidden=&quot;true&quot;&gt;&lt;div class=&quot;sc-ghost&quot;&gt;&lt;img class=&quot;sc-ghost__dark&quot; src=&quot;assets/sc-mark-mono-cream.svg&quot; alt=&quot;&quot; width=&quot;342&quot; height=&quot;405&quot;&gt;&lt;img class=&quot;sc-ghost__light&quot; src=&quot;assets/sc-mark-mono-ink.svg&quot; alt=&quot;&quot; width=&quot;342&quot; height=&quot;405&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-maker-signature" data-recipe data-category="identity" data-search="footer credit byline author endorsement" aria-labelledby="title-maker-signature">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>04</span><span aria-hidden="true">/</span><span>identity</span></p><h3 id="title-maker-signature">The maker’s note</h3><p>An understated ending for reports, charts, articles, and carefully made tools.</p></header>
+        <div class="library-preview" id="preview-maker-signature">
+<div class="sc-stack">
+  <p class="sc-eyebrow">the finishing touch</p>
+  <h3>Made with a point of view.</h3>
+  <p class="sc-muted">A small signature connects the work to the person who made it.</p>
+  <hr class="sc-sep">
+  <a class="sc-signature" href="https://github.com/spicyChicken59" rel="author"><span class="sc-adaptive-mark" aria-hidden="true"><img class="sc-adaptive-mark__dark" src="assets/sc-mark-color-dark.svg" alt="" width="342" height="405"><img class="sc-adaptive-mark__light" src="assets/sc-mark-color-light.svg" alt="" width="342" height="405"></span><span><span class="sc-signature__name">SpicyChicken</span><span class="sc-signature__sub">made with a little heat</span></span></a>
+</div>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy The maker’s note HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;div class=&quot;sc-stack&quot;&gt;
+  &lt;p class=&quot;sc-eyebrow&quot;&gt;the finishing touch&lt;/p&gt;
+  &lt;h3&gt;Made with a point of view.&lt;/h3&gt;
+  &lt;p class=&quot;sc-muted&quot;&gt;A small signature connects the work to the person who made it.&lt;/p&gt;
+  &lt;hr class=&quot;sc-sep&quot;&gt;
+  &lt;a class=&quot;sc-signature&quot; href=&quot;https://github.com/spicyChicken59&quot; rel=&quot;author&quot;&gt;&lt;span class=&quot;sc-adaptive-mark&quot; aria-hidden=&quot;true&quot;&gt;&lt;img class=&quot;sc-adaptive-mark__dark&quot; src=&quot;assets/sc-mark-color-dark.svg&quot; alt=&quot;&quot; width=&quot;342&quot; height=&quot;405&quot;&gt;&lt;img class=&quot;sc-adaptive-mark__light&quot; src=&quot;assets/sc-mark-color-light.svg&quot; alt=&quot;&quot; width=&quot;342&quot; height=&quot;405&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;span class=&quot;sc-signature__name&quot;&gt;SpicyChicken&lt;/span&gt;&lt;span class=&quot;sc-signature__sub&quot;&gt;made with a little heat&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe library-recipe--wide" id="recipe-bento" data-recipe data-category="layout" data-search="bento asymmetric dashboard card grid collection paper" aria-labelledby="title-bento">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>05</span><span aria-hidden="true">/</span><span>layout</span></p><h3 id="title-bento">One lead. A useful supporting cast.</h3><p>An asymmetric composition with a generous lead area and a compact supporting stack.</p></header>
+        <div class="library-preview library-preview--flush" id="preview-bento">
+<div class="sc-bento">
+  <section class="sc-bento__main sc-cover sc-cover--paper sc-cover--compact">
+    <div class="sc-cover__content"><p class="sc-eyebrow">the field notes</p><h3 class="sc-cover__title">Details make<br>the difference.</h3><p class="sc-cover__dek">A collection of observations, kept with context.</p></div>
+  </section>
+  <div class="sc-bento__aside">
+    <div class="sc-card"><p class="sc-eyebrow">illustrative collection</p><strong class="sc-tile__value">24</strong><p class="sc-hint">notes worth returning to</p></div>
+    <div class="sc-card"><p class="sc-eyebrow">the guiding principle</p><h3>Clarity first.</h3><p class="sc-hint">Make the important detail easy to find.</p></div>
+  </div>
+</div>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy One lead. A useful supporting cast. HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;div class=&quot;sc-bento&quot;&gt;
+  &lt;section class=&quot;sc-bento__main sc-cover sc-cover--paper sc-cover--compact&quot;&gt;
+    &lt;div class=&quot;sc-cover__content&quot;&gt;&lt;p class=&quot;sc-eyebrow&quot;&gt;the field notes&lt;/p&gt;&lt;h3 class=&quot;sc-cover__title&quot;&gt;Details make&lt;br&gt;the difference.&lt;/h3&gt;&lt;p class=&quot;sc-cover__dek&quot;&gt;A collection of observations, kept with context.&lt;/p&gt;&lt;/div&gt;
+  &lt;/section&gt;
+  &lt;div class=&quot;sc-bento__aside&quot;&gt;
+    &lt;div class=&quot;sc-card&quot;&gt;&lt;p class=&quot;sc-eyebrow&quot;&gt;illustrative collection&lt;/p&gt;&lt;strong class=&quot;sc-tile__value&quot;&gt;24&lt;/strong&gt;&lt;p class=&quot;sc-hint&quot;&gt;notes worth returning to&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&quot;sc-card&quot;&gt;&lt;p class=&quot;sc-eyebrow&quot;&gt;the guiding principle&lt;/p&gt;&lt;h3&gt;Clarity first.&lt;/h3&gt;&lt;p class=&quot;sc-hint&quot;&gt;Make the important detail easy to find.&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-editorial" data-recipe data-category="layout" data-search="article feature editorial story image split" aria-labelledby="title-editorial">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>06</span><span aria-hidden="true">/</span><span>layout</span></p><h3 id="title-editorial">An editorial feature</h3><p>Give a story space and an image a clear role. The layout wraps to its container.</p></header>
+        <div class="library-preview" id="preview-editorial">
+<article class="sc-editorial">
+  <div class="sc-editorial__body"><p class="sc-eyebrow">from the studio</p><h3>A familiar face.<br>A fresh perspective.</h3><p>A short introduction creates the pause a reader needs before the detail begins.</p><a class="sc-link--quiet" href="brand-studio.html">Explore the brand studio ↗</a></div>
+  <div class="sc-editorial__art"><figure class="sc-captioned"><div class="sc-captioned__art"><span class="sc-adaptive-mark" aria-hidden="true"><img class="sc-adaptive-mark__dark" src="assets/sc-mark-color-dark.svg" alt="" width="342" height="405"><img class="sc-adaptive-mark__light" src="assets/sc-mark-color-light.svg" alt="" width="342" height="405"></span></div><figcaption class="sc-captioned__caption"><strong>The original chick</strong></figcaption></figure></div>
+</article>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy An editorial feature HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;article class=&quot;sc-editorial&quot;&gt;
+  &lt;div class=&quot;sc-editorial__body&quot;&gt;&lt;p class=&quot;sc-eyebrow&quot;&gt;from the studio&lt;/p&gt;&lt;h3&gt;A familiar face.&lt;br&gt;A fresh perspective.&lt;/h3&gt;&lt;p&gt;A short introduction creates the pause a reader needs before the detail begins.&lt;/p&gt;&lt;a class=&quot;sc-link--quiet&quot; href=&quot;brand-studio.html&quot;&gt;Explore the brand studio ↗&lt;/a&gt;&lt;/div&gt;
+  &lt;div class=&quot;sc-editorial__art&quot;&gt;&lt;figure class=&quot;sc-captioned&quot;&gt;&lt;div class=&quot;sc-captioned__art&quot;&gt;&lt;span class=&quot;sc-adaptive-mark&quot; aria-hidden=&quot;true&quot;&gt;&lt;img class=&quot;sc-adaptive-mark__dark&quot; src=&quot;assets/sc-mark-color-dark.svg&quot; alt=&quot;&quot; width=&quot;342&quot; height=&quot;405&quot;&gt;&lt;img class=&quot;sc-adaptive-mark__light&quot; src=&quot;assets/sc-mark-color-light.svg&quot; alt=&quot;&quot; width=&quot;342&quot; height=&quot;405&quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;figcaption class=&quot;sc-captioned__caption&quot;&gt;&lt;strong&gt;The original chick&lt;/strong&gt;&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+&lt;/article&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe library-recipe--wide" id="recipe-comparison" data-recipe data-category="layout" data-search="comparison options pricing columns features plans" aria-labelledby="title-comparison">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>07</span><span aria-hidden="true">/</span><span>layout</span></p><h3 id="title-comparison">The comparison rail</h3><p>Parallel choices share a baseline. Let the words make the distinction.</p></header>
+        <div class="library-preview" id="preview-comparison">
+<dl class="sc-comparison">
+  <div class="sc-comparison__item"><dt class="sc-comparison__label">for quick decisions</dt><dd class="sc-comparison__value">Compact</dd><dd class="sc-comparison__note">A focused figure, a short explanation, and the next action.</dd></div>
+  <div class="sc-comparison__item"><dt class="sc-comparison__label">for deeper context</dt><dd class="sc-comparison__value">Balanced</dd><dd class="sc-comparison__note">A lead insight with evidence and useful supporting detail.</dd></div>
+  <div class="sc-comparison__item"><dt class="sc-comparison__label">for a longer read</dt><dd class="sc-comparison__value">Editorial</dd><dd class="sc-comparison__note">A generous opening, clear chapters, and a considered finish.</dd></div>
+</dl>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy The comparison rail HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;dl class=&quot;sc-comparison&quot;&gt;
+  &lt;div class=&quot;sc-comparison__item&quot;&gt;&lt;dt class=&quot;sc-comparison__label&quot;&gt;for quick decisions&lt;/dt&gt;&lt;dd class=&quot;sc-comparison__value&quot;&gt;Compact&lt;/dd&gt;&lt;dd class=&quot;sc-comparison__note&quot;&gt;A focused figure, a short explanation, and the next action.&lt;/dd&gt;&lt;/div&gt;
+  &lt;div class=&quot;sc-comparison__item&quot;&gt;&lt;dt class=&quot;sc-comparison__label&quot;&gt;for deeper context&lt;/dt&gt;&lt;dd class=&quot;sc-comparison__value&quot;&gt;Balanced&lt;/dd&gt;&lt;dd class=&quot;sc-comparison__note&quot;&gt;A lead insight with evidence and useful supporting detail.&lt;/dd&gt;&lt;/div&gt;
+  &lt;div class=&quot;sc-comparison__item&quot;&gt;&lt;dt class=&quot;sc-comparison__label&quot;&gt;for a longer read&lt;/dt&gt;&lt;dd class=&quot;sc-comparison__value&quot;&gt;Editorial&lt;/dd&gt;&lt;dd class=&quot;sc-comparison__note&quot;&gt;A generous opening, clear chapters, and a considered finish.&lt;/dd&gt;&lt;/div&gt;
+&lt;/dl&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-timeline" data-recipe data-category="layout" data-search="activity release history journal chronology milestones" aria-labelledby="title-timeline">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>08</span><span aria-hidden="true">/</span><span>layout</span></p><h3 id="title-timeline">A story in sequence</h3><p>Dates stay separate from the narrative. Use for releases, activity, or a project journal.</p></header>
+        <div class="library-preview" id="preview-timeline">
+<ol class="sc-timeline" aria-label="Illustrative project journal">
+  <li class="sc-timeline__item"><time class="sc-timeline__stamp" datetime="2026-09-01">01 Sep</time><div class="sc-timeline__body"><h3>Start with the question</h3><p>Define what the page should help someone understand.</p></div></li>
+  <li class="sc-timeline__item"><time class="sc-timeline__stamp" datetime="2026-09-03">03 Sep</time><div class="sc-timeline__body"><h3>Give the evidence room</h3><p>Choose the details that support the central point.</p></div></li>
+  <li class="sc-timeline__item"><time class="sc-timeline__stamp" datetime="2026-09-06">06 Sep</time><div class="sc-timeline__body"><h3>Refine the finish</h3><p>Check the spacing, the small screen, and the signature.</p></div></li>
+</ol>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy A story in sequence HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;ol class=&quot;sc-timeline&quot; aria-label=&quot;Illustrative project journal&quot;&gt;
+  &lt;li class=&quot;sc-timeline__item&quot;&gt;&lt;time class=&quot;sc-timeline__stamp&quot; datetime=&quot;2026-09-01&quot;&gt;01 Sep&lt;/time&gt;&lt;div class=&quot;sc-timeline__body&quot;&gt;&lt;h3&gt;Start with the question&lt;/h3&gt;&lt;p&gt;Define what the page should help someone understand.&lt;/p&gt;&lt;/div&gt;&lt;/li&gt;
+  &lt;li class=&quot;sc-timeline__item&quot;&gt;&lt;time class=&quot;sc-timeline__stamp&quot; datetime=&quot;2026-09-03&quot;&gt;03 Sep&lt;/time&gt;&lt;div class=&quot;sc-timeline__body&quot;&gt;&lt;h3&gt;Give the evidence room&lt;/h3&gt;&lt;p&gt;Choose the details that support the central point.&lt;/p&gt;&lt;/div&gt;&lt;/li&gt;
+  &lt;li class=&quot;sc-timeline__item&quot;&gt;&lt;time class=&quot;sc-timeline__stamp&quot; datetime=&quot;2026-09-06&quot;&gt;06 Sep&lt;/time&gt;&lt;div class=&quot;sc-timeline__body&quot;&gt;&lt;h3&gt;Refine the finish&lt;/h3&gt;&lt;p&gt;Check the spacing, the small screen, and the signature.&lt;/p&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-pull-quote" data-recipe data-category="layout" data-search="quote citation testimonial statement typography" aria-labelledby="title-pull-quote">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>09</span><span aria-hidden="true">/</span><span>layout</span></p><h3 id="title-pull-quote">A sentence worth pausing for</h3><p>Display typography and a real citation slot, without an extra card around the thought.</p></header>
+        <div class="library-preview" id="preview-pull-quote">
+<figure class="sc-quote">
+  <blockquote class="sc-quote__text">“Make the important thing easy to find. Make the whole thing feel considered.”</blockquote>
+  <figcaption class="sc-quote__source"><span>SpicyChicken</span><span aria-hidden="true">/</span><span>an illustrative studio principle</span></figcaption>
+</figure>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy A sentence worth pausing for HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;figure class=&quot;sc-quote&quot;&gt;
+  &lt;blockquote class=&quot;sc-quote__text&quot;&gt;“Make the important thing easy to find. Make the whole thing feel considered.”&lt;/blockquote&gt;
+  &lt;figcaption class=&quot;sc-quote__source&quot;&gt;&lt;span&gt;SpicyChicken&lt;/span&gt;&lt;span aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;&lt;span&gt;an illustrative studio principle&lt;/span&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-captioned-image" data-recipe data-category="layout" data-search="image photography figure caption gallery mark" aria-labelledby="title-captioned-image">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>10</span><span aria-hidden="true">/</span><span>layout</span></p><h3 id="title-captioned-image">The image and its context</h3><p>A distinct art area and a caption you can select. Swap in photography when the story needs it.</p></header>
+        <div class="library-preview" id="preview-captioned-image">
+<figure class="sc-captioned">
+  <div class="sc-captioned__art"><span class="sc-adaptive-mark" aria-hidden="true"><img class="sc-adaptive-mark__dark" src="assets/sc-mark-color-dark.svg" alt="" width="342" height="405"><img class="sc-adaptive-mark__light" src="assets/sc-mark-color-light.svg" alt="" width="342" height="405"></span></div>
+  <figcaption class="sc-captioned__caption"><strong>01 / The original SpicyChicken mark</strong><span>form and proportions preserved</span></figcaption>
+</figure>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy The image and its context HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;figure class=&quot;sc-captioned&quot;&gt;
+  &lt;div class=&quot;sc-captioned__art&quot;&gt;&lt;span class=&quot;sc-adaptive-mark&quot; aria-hidden=&quot;true&quot;&gt;&lt;img class=&quot;sc-adaptive-mark__dark&quot; src=&quot;assets/sc-mark-color-dark.svg&quot; alt=&quot;&quot; width=&quot;342&quot; height=&quot;405&quot;&gt;&lt;img class=&quot;sc-adaptive-mark__light&quot; src=&quot;assets/sc-mark-color-light.svg&quot; alt=&quot;&quot; width=&quot;342&quot; height=&quot;405&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+  &lt;figcaption class=&quot;sc-captioned__caption&quot;&gt;&lt;strong&gt;01 / The original SpicyChicken mark&lt;/strong&gt;&lt;span&gt;form and proportions preserved&lt;/span&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-metric-spotlight" data-recipe data-category="data" data-search="kpi big number stat metric spotlight hero value" aria-labelledby="title-metric-spotlight">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>11</span><span aria-hidden="true">/</span><span>data</span></p><h3 id="title-metric-spotlight">Make the lead figure count</h3><p>A generous figure, a visible unit, and immediate context. No animation between invented values.</p></header>
+        <div class="library-preview" id="preview-metric-spotlight">
+<section class="sc-metric-spotlight" aria-label="Illustrative reading collection">
+  <p class="sc-eyebrow">the reading collection · illustrative</p>
+  <strong class="sc-metric-spotlight__value">86<small>notes</small></strong>
+  <p class="sc-metric-spotlight__context">A sample collection of ideas, observations, and references, ready to revisit.</p>
+  <dl class="sc-facts"><div><dt>this chapter</dt><dd>12 notes</dd></div><div><dt>previous chapters</dt><dd>74 notes</dd></div></dl>
+</section>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy Make the lead figure count HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;section class=&quot;sc-metric-spotlight&quot; aria-label=&quot;Illustrative reading collection&quot;&gt;
+  &lt;p class=&quot;sc-eyebrow&quot;&gt;the reading collection · illustrative&lt;/p&gt;
+  &lt;strong class=&quot;sc-metric-spotlight__value&quot;&gt;86&lt;small&gt;notes&lt;/small&gt;&lt;/strong&gt;
+  &lt;p class=&quot;sc-metric-spotlight__context&quot;&gt;A sample collection of ideas, observations, and references, ready to revisit.&lt;/p&gt;
+  &lt;dl class=&quot;sc-facts&quot;&gt;&lt;div&gt;&lt;dt&gt;this chapter&lt;/dt&gt;&lt;dd&gt;12 notes&lt;/dd&gt;&lt;/div&gt;&lt;div&gt;&lt;dt&gt;previous chapters&lt;/dt&gt;&lt;dd&gt;74 notes&lt;/dd&gt;&lt;/div&gt;&lt;/dl&gt;
+&lt;/section&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-ranked-list" data-recipe data-category="data" data-search="ranking leaderboard top list summary count" aria-labelledby="title-ranked-list">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>12</span><span aria-hidden="true">/</span><span>data</span></p><h3 id="title-ranked-list">A clear ranking</h3><p>A position, a useful label, and an aligned value. Good for compact summaries.</p></header>
+        <div class="library-preview" id="preview-ranked-list">
+<div>
+  <p class="sc-eyebrow">illustrative reading activity · opens</p>
+  <ol class="sc-rank-list">
+    <li class="sc-rank-list__item"><span class="sc-rank-list__position" aria-hidden="true">01</span><div class="sc-rank-list__body"><strong>Field notes</strong><span>Observation and context</span></div><span class="sc-rank-list__value">128</span></li>
+    <li class="sc-rank-list__item"><span class="sc-rank-list__position" aria-hidden="true">02</span><div class="sc-rank-list__body"><strong>The collection</strong><span>Objects worth keeping</span></div><span class="sc-rank-list__value">96</span></li>
+    <li class="sc-rank-list__item"><span class="sc-rank-list__position" aria-hidden="true">03</span><div class="sc-rank-list__body"><strong>Studio journal</strong><span>Work in progress</span></div><span class="sc-rank-list__value">64</span></li>
+  </ol>
+</div>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy A clear ranking HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;div&gt;
+  &lt;p class=&quot;sc-eyebrow&quot;&gt;illustrative reading activity · opens&lt;/p&gt;
+  &lt;ol class=&quot;sc-rank-list&quot;&gt;
+    &lt;li class=&quot;sc-rank-list__item&quot;&gt;&lt;span class=&quot;sc-rank-list__position&quot; aria-hidden=&quot;true&quot;&gt;01&lt;/span&gt;&lt;div class=&quot;sc-rank-list__body&quot;&gt;&lt;strong&gt;Field notes&lt;/strong&gt;&lt;span&gt;Observation and context&lt;/span&gt;&lt;/div&gt;&lt;span class=&quot;sc-rank-list__value&quot;&gt;128&lt;/span&gt;&lt;/li&gt;
+    &lt;li class=&quot;sc-rank-list__item&quot;&gt;&lt;span class=&quot;sc-rank-list__position&quot; aria-hidden=&quot;true&quot;&gt;02&lt;/span&gt;&lt;div class=&quot;sc-rank-list__body&quot;&gt;&lt;strong&gt;The collection&lt;/strong&gt;&lt;span&gt;Objects worth keeping&lt;/span&gt;&lt;/div&gt;&lt;span class=&quot;sc-rank-list__value&quot;&gt;96&lt;/span&gt;&lt;/li&gt;
+    &lt;li class=&quot;sc-rank-list__item&quot;&gt;&lt;span class=&quot;sc-rank-list__position&quot; aria-hidden=&quot;true&quot;&gt;03&lt;/span&gt;&lt;div class=&quot;sc-rank-list__body&quot;&gt;&lt;strong&gt;Studio journal&lt;/strong&gt;&lt;span&gt;Work in progress&lt;/span&gt;&lt;/div&gt;&lt;span class=&quot;sc-rank-list__value&quot;&gt;64&lt;/span&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-facts" data-recipe data-category="data" data-search="facts metadata specification supporting metrics properties" aria-labelledby="title-facts">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>13</span><span aria-hidden="true">/</span><span>data</span></p><h3 id="title-facts">Context in one line</h3><p>Small facts belong together. This row wraps naturally without a card for every number.</p></header>
+        <div class="library-preview" id="preview-facts">
+<div>
+  <p class="sc-eyebrow">illustrative reading collection</p>
+  <h3>The details at a glance.</h3>
+  <p class="sc-muted">Keep the headline clear, and put the supporting facts just below it.</p>
+  <dl class="sc-facts"><div><dt>chapters</dt><dd>4</dd></div><div><dt>reading time</dt><dd>12 min</dd></div><div><dt>edition</dt><dd>September 2026</dd></div><div><dt>format</dt><dd>Digital report</dd></div></dl>
+</div>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy Context in one line HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;div&gt;
+  &lt;p class=&quot;sc-eyebrow&quot;&gt;illustrative reading collection&lt;/p&gt;
+  &lt;h3&gt;The details at a glance.&lt;/h3&gt;
+  &lt;p class=&quot;sc-muted&quot;&gt;Keep the headline clear, and put the supporting facts just below it.&lt;/p&gt;
+  &lt;dl class=&quot;sc-facts&quot;&gt;&lt;div&gt;&lt;dt&gt;chapters&lt;/dt&gt;&lt;dd&gt;4&lt;/dd&gt;&lt;/div&gt;&lt;div&gt;&lt;dt&gt;reading time&lt;/dt&gt;&lt;dd&gt;12 min&lt;/dd&gt;&lt;/div&gt;&lt;div&gt;&lt;dt&gt;edition&lt;/dt&gt;&lt;dd&gt;September 2026&lt;/dd&gt;&lt;/div&gt;&lt;div&gt;&lt;dt&gt;format&lt;/dt&gt;&lt;dd&gt;Digital report&lt;/dd&gt;&lt;/div&gt;&lt;/dl&gt;
+&lt;/div&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-evidence-chart" data-recipe data-category="data" data-search="chart bars data visualization plot comparison bar graph table" aria-labelledby="title-evidence-chart">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>14</span><span aria-hidden="true">/</span><span>data</span></p><h3 id="title-evidence-chart">Evidence you can read</h3><p>Exact values stay visible beside each bar. The same data is available as a table.</p></header>
+        <div class="library-preview" id="preview-evidence-chart">
+<figure class="sc-captioned">
+  <p class="sc-eyebrow">illustrative output · pages per month</p>
+  <dl class="sc-bars" aria-label="Monthly output, illustrative data. Scale zero to 24 pages.">
+    <div class="sc-bars__row"><dt class="sc-bars__label">April</dt><dd class="sc-bars__measure"><span class="sc-bars__track" aria-hidden="true"><span class="sc-bars__fill" style="--sc-bar-size: 50%"></span></span><span class="sc-bars__value">12</span></dd></div>
+    <div class="sc-bars__row"><dt class="sc-bars__label">May</dt><dd class="sc-bars__measure"><span class="sc-bars__track" aria-hidden="true"><span class="sc-bars__fill" style="--sc-bar-size: 75%"></span></span><span class="sc-bars__value">18</span></dd></div>
+    <div class="sc-bars__row"><dt class="sc-bars__label">June</dt><dd class="sc-bars__measure"><span class="sc-bars__track" aria-hidden="true"><span class="sc-bars__fill" style="--sc-bar-size: 66.666667%"></span></span><span class="sc-bars__value">16</span></dd></div>
+    <div class="sc-bars__row"><dt class="sc-bars__label">July</dt><dd class="sc-bars__measure"><span class="sc-bars__track" aria-hidden="true"><span class="sc-bars__fill" style="--sc-bar-size: 100%"></span></span><span class="sc-bars__value">24</span></dd></div>
+  </dl>
+  <figcaption class="sc-chart-caption"><span>Scale: 0–24 pages. Illustrative data.</span><span>SpicyChicken / studio notes</span></figcaption>
+  <details class="sc-details"><summary>View the data</summary><div class="sc-table-scroll"><table class="sc-table sc-table--compact"><caption class="sc-sr-only">Illustrative monthly page output</caption><thead><tr><th scope="col">month</th><th scope="col" class="sc-num">pages</th></tr></thead><tbody><tr><th scope="row">April</th><td class="sc-num">12</td></tr><tr><th scope="row">May</th><td class="sc-num">18</td></tr><tr><th scope="row">June</th><td class="sc-num">16</td></tr><tr><th scope="row">July</th><td class="sc-num">24</td></tr></tbody></table></div></details>
+</figure>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy Evidence you can read HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;figure class=&quot;sc-captioned&quot;&gt;
+  &lt;p class=&quot;sc-eyebrow&quot;&gt;illustrative output · pages per month&lt;/p&gt;
+  &lt;dl class=&quot;sc-bars&quot; aria-label=&quot;Monthly output, illustrative data. Scale zero to 24 pages.&quot;&gt;
+    &lt;div class=&quot;sc-bars__row&quot;&gt;&lt;dt class=&quot;sc-bars__label&quot;&gt;April&lt;/dt&gt;&lt;dd class=&quot;sc-bars__measure&quot;&gt;&lt;span class=&quot;sc-bars__track&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;sc-bars__fill&quot; style=&quot;--sc-bar-size: 50%&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;sc-bars__value&quot;&gt;12&lt;/span&gt;&lt;/dd&gt;&lt;/div&gt;
+    &lt;div class=&quot;sc-bars__row&quot;&gt;&lt;dt class=&quot;sc-bars__label&quot;&gt;May&lt;/dt&gt;&lt;dd class=&quot;sc-bars__measure&quot;&gt;&lt;span class=&quot;sc-bars__track&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;sc-bars__fill&quot; style=&quot;--sc-bar-size: 75%&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;sc-bars__value&quot;&gt;18&lt;/span&gt;&lt;/dd&gt;&lt;/div&gt;
+    &lt;div class=&quot;sc-bars__row&quot;&gt;&lt;dt class=&quot;sc-bars__label&quot;&gt;June&lt;/dt&gt;&lt;dd class=&quot;sc-bars__measure&quot;&gt;&lt;span class=&quot;sc-bars__track&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;sc-bars__fill&quot; style=&quot;--sc-bar-size: 66.666667%&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;sc-bars__value&quot;&gt;16&lt;/span&gt;&lt;/dd&gt;&lt;/div&gt;
+    &lt;div class=&quot;sc-bars__row&quot;&gt;&lt;dt class=&quot;sc-bars__label&quot;&gt;July&lt;/dt&gt;&lt;dd class=&quot;sc-bars__measure&quot;&gt;&lt;span class=&quot;sc-bars__track&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;sc-bars__fill&quot; style=&quot;--sc-bar-size: 100%&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;sc-bars__value&quot;&gt;24&lt;/span&gt;&lt;/dd&gt;&lt;/div&gt;
+  &lt;/dl&gt;
+  &lt;figcaption class=&quot;sc-chart-caption&quot;&gt;&lt;span&gt;Scale: 0–24 pages. Illustrative data.&lt;/span&gt;&lt;span&gt;SpicyChicken / studio notes&lt;/span&gt;&lt;/figcaption&gt;
+  &lt;details class=&quot;sc-details&quot;&gt;&lt;summary&gt;View the data&lt;/summary&gt;&lt;div class=&quot;sc-table-scroll&quot;&gt;&lt;table class=&quot;sc-table sc-table--compact&quot;&gt;&lt;caption class=&quot;sc-sr-only&quot;&gt;Illustrative monthly page output&lt;/caption&gt;&lt;thead&gt;&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;month&lt;/th&gt;&lt;th scope=&quot;col&quot; class=&quot;sc-num&quot;&gt;pages&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;April&lt;/th&gt;&lt;td class=&quot;sc-num&quot;&gt;12&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;May&lt;/th&gt;&lt;td class=&quot;sc-num&quot;&gt;18&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;June&lt;/th&gt;&lt;td class=&quot;sc-num&quot;&gt;16&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;July&lt;/th&gt;&lt;td class=&quot;sc-num&quot;&gt;24&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/details&gt;
+&lt;/figure&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe library-recipe--wide" id="recipe-stepper" data-recipe data-category="states" data-search="stepper steps process onboarding workflow current completed" aria-labelledby="title-stepper">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>15</span><span aria-hidden="true">/</span><span>states</span></p><h3 id="title-stepper">Progress with a place to stand</h3><p>Make completed, current, and upcoming steps explicit. This is a status view, not a set of tabs.</p></header>
+        <div class="library-preview" id="preview-stepper">
+<ol class="sc-stepper" aria-label="Illustrative report preparation">
+  <li class="sc-stepper__item is-complete"><span class="sc-stepper__index" aria-hidden="true">✓</span><div class="sc-stepper__body"><strong>Gather</strong><span>Complete</span></div></li>
+  <li class="sc-stepper__item is-current" aria-current="step"><span class="sc-stepper__index" aria-hidden="true">02</span><div class="sc-stepper__body"><strong>Compose</strong><span>Current step</span></div></li>
+  <li class="sc-stepper__item"><span class="sc-stepper__index" aria-hidden="true">03</span><div class="sc-stepper__body"><strong>Review</strong><span>Next</span></div></li>
+</ol>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy Progress with a place to stand HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;ol class=&quot;sc-stepper&quot; aria-label=&quot;Illustrative report preparation&quot;&gt;
+  &lt;li class=&quot;sc-stepper__item is-complete&quot;&gt;&lt;span class=&quot;sc-stepper__index&quot; aria-hidden=&quot;true&quot;&gt;✓&lt;/span&gt;&lt;div class=&quot;sc-stepper__body&quot;&gt;&lt;strong&gt;Gather&lt;/strong&gt;&lt;span&gt;Complete&lt;/span&gt;&lt;/div&gt;&lt;/li&gt;
+  &lt;li class=&quot;sc-stepper__item is-current&quot; aria-current=&quot;step&quot;&gt;&lt;span class=&quot;sc-stepper__index&quot; aria-hidden=&quot;true&quot;&gt;02&lt;/span&gt;&lt;div class=&quot;sc-stepper__body&quot;&gt;&lt;strong&gt;Compose&lt;/strong&gt;&lt;span&gt;Current step&lt;/span&gt;&lt;/div&gt;&lt;/li&gt;
+  &lt;li class=&quot;sc-stepper__item&quot;&gt;&lt;span class=&quot;sc-stepper__index&quot; aria-hidden=&quot;true&quot;&gt;03&lt;/span&gt;&lt;div class=&quot;sc-stepper__body&quot;&gt;&lt;strong&gt;Review&lt;/strong&gt;&lt;span&gt;Next&lt;/span&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-checkpoint" data-recipe data-category="states" data-search="success confirmation checkpoint feedback completed saved" aria-labelledby="title-checkpoint">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>16</span><span aria-hidden="true">/</span><span>states</span></p><h3 id="title-checkpoint">A reassuring checkpoint</h3><p>Confirmation should be calm, explicit, and easy to scan.</p></header>
+        <div class="library-preview library-preview--flush" id="preview-checkpoint">
+<div class="sc-checkpoint" role="status">
+  <span class="sc-checkpoint__mark" aria-hidden="true">✓</span>
+  <div class="sc-checkpoint__body"><h3>Ready for a closer look.</h3><p>Your layout is ready to review. This is an illustrative confirmation state.</p></div>
+</div>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy A reassuring checkpoint HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;div class=&quot;sc-checkpoint&quot; role=&quot;status&quot;&gt;
+  &lt;span class=&quot;sc-checkpoint__mark&quot; aria-hidden=&quot;true&quot;&gt;✓&lt;/span&gt;
+  &lt;div class=&quot;sc-checkpoint__body&quot;&gt;&lt;h3&gt;Ready for a closer look.&lt;/h3&gt;&lt;p&gt;Your layout is ready to review. This is an illustrative confirmation state.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-skeleton" data-recipe data-category="states" data-search="skeleton placeholder loading static layout" aria-labelledby="title-skeleton">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>17</span><span aria-hidden="true">/</span><span>states</span></p><h3 id="title-skeleton">A quiet loading layout</h3><p>Reserve the space before content arrives. These placeholders stay still.</p></header>
+        <div class="library-preview" id="preview-skeleton">
+<div class="sc-stack" aria-busy="true">
+  <p class="sc-hint" role="status">Loading the report preview…</p>
+  <div class="sc-stack" aria-hidden="true">
+    <span class="sc-skeleton sc-skeleton--title"></span>
+    <span class="sc-skeleton sc-skeleton--line"></span>
+    <span class="sc-skeleton sc-skeleton--line"></span>
+    <span class="sc-skeleton sc-skeleton--block"></span>
+  </div>
+</div>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy A quiet loading layout HTML">Copy HTML</button></div><p class="library-snippet-note">Replace the placeholder and clear aria-busy when the real content arrives.</p><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;div class=&quot;sc-stack&quot; aria-busy=&quot;true&quot;&gt;
+  &lt;p class=&quot;sc-hint&quot; role=&quot;status&quot;&gt;Loading the report preview…&lt;/p&gt;
+  &lt;div class=&quot;sc-stack&quot; aria-hidden=&quot;true&quot;&gt;
+    &lt;span class=&quot;sc-skeleton sc-skeleton--title&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;sc-skeleton sc-skeleton--line&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;sc-skeleton sc-skeleton--line&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;sc-skeleton sc-skeleton--block&quot;&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-loading-progress" data-recipe data-category="states" data-search="loading spinner dots progress bar waiting busy indeterminate" aria-labelledby="title-loading-progress">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>18</span><span aria-hidden="true">/</span><span>states</span></p><h3 id="title-loading-progress">Useful waiting states</h3><p>Native progress for a known amount of work. A small loader when the amount is unknown.</p></header>
+        <div class="library-preview" id="preview-loading-progress">
+<div class="sc-stack">
+  <div class="sc-stack"><label class="sc-field" for="example-progress">Illustrative layout progress · 18 of 25 pages</label><progress class="sc-progress" id="example-progress" value="18" max="25">72%</progress><p class="sc-hint">72% complete</p></div>
+  <hr class="sc-sep">
+  <div class="sc-row" role="status" aria-busy="true"><span class="sc-loader" aria-hidden="true"></span><span class="sc-hint">Loading preview — demonstration</span></div>
+  <div class="sc-row" role="status" aria-busy="true"><span class="sc-loading-dots" aria-hidden="true"><span></span><span></span><span></span></span><span class="sc-hint">Preparing the layout — demonstration</span></div>
+</div>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy Useful waiting states HTML">Copy HTML</button></div><p class="library-snippet-note">Use real progress values. Scope IDs when placing multiple instances on a page.</p><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;div class=&quot;sc-stack&quot;&gt;
+  &lt;div class=&quot;sc-stack&quot;&gt;&lt;label class=&quot;sc-field&quot; for=&quot;example-progress&quot;&gt;Illustrative layout progress · 18 of 25 pages&lt;/label&gt;&lt;progress class=&quot;sc-progress&quot; id=&quot;example-progress&quot; value=&quot;18&quot; max=&quot;25&quot;&gt;72%&lt;/progress&gt;&lt;p class=&quot;sc-hint&quot;&gt;72% complete&lt;/p&gt;&lt;/div&gt;
+  &lt;hr class=&quot;sc-sep&quot;&gt;
+  &lt;div class=&quot;sc-row&quot; role=&quot;status&quot; aria-busy=&quot;true&quot;&gt;&lt;span class=&quot;sc-loader&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sc-hint&quot;&gt;Loading preview — demonstration&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;sc-row&quot; role=&quot;status&quot; aria-busy=&quot;true&quot;&gt;&lt;span class=&quot;sc-loading-dots&quot; aria-hidden=&quot;true&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;sc-hint&quot;&gt;Preparing the layout — demonstration&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-branded-empty" data-recipe data-category="states" data-search="empty state zero collection onboarding no results" aria-labelledby="title-branded-empty">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>19</span><span aria-hidden="true">/</span><span>states</span></p><h3 id="title-branded-empty">An empty state with character</h3><p>A familiar mark and a useful sentence. The page still feels designed before there is data.</p></header>
+        <div class="library-preview library-preview--flush" id="preview-branded-empty">
+<section class="sc-empty sc-empty--brand">
+  <span class="sc-adaptive-mark" aria-hidden="true"><img class="sc-adaptive-mark__dark" src="assets/sc-mark-color-dark.svg" alt="" width="342" height="405"><img class="sc-adaptive-mark__light" src="assets/sc-mark-color-light.svg" alt="" width="342" height="405"></span>
+  <h3>A little room for what comes next.</h3>
+  <p>Your saved collection will appear here. This specimen shows the state before the first item is added.</p>
+</section>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy An empty state with character HTML">Copy HTML</button></div><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;section class=&quot;sc-empty sc-empty--brand&quot;&gt;
+  &lt;span class=&quot;sc-adaptive-mark&quot; aria-hidden=&quot;true&quot;&gt;&lt;img class=&quot;sc-adaptive-mark__dark&quot; src=&quot;assets/sc-mark-color-dark.svg&quot; alt=&quot;&quot; width=&quot;342&quot; height=&quot;405&quot;&gt;&lt;img class=&quot;sc-adaptive-mark__light&quot; src=&quot;assets/sc-mark-color-light.svg&quot; alt=&quot;&quot; width=&quot;342&quot; height=&quot;405&quot;&gt;&lt;/span&gt;
+  &lt;h3&gt;A little room for what comes next.&lt;/h3&gt;
+  &lt;p&gt;Your saved collection will appear here. This specimen shows the state before the first item is added.&lt;/p&gt;
+&lt;/section&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe library-recipe--wide" id="recipe-reveal-gallery" data-recipe data-category="motion" data-search="animation transition entrance rise fade scale slide reveal" aria-labelledby="title-reveal-gallery">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>20</span><span aria-hidden="true">/</span><span>motion</span></p><h3 id="title-reveal-gallery">Four ways to arrive</h3><p>Short reveals that introduce content once. Replay to compare the movement.</p></header>
+        <div class="library-preview" id="preview-reveal-gallery">
+<div class="sc-comparison">
+  <div class="sc-comparison__item sc-reveal" data-sc-motion="rise"><div class="sc-comparison__label">01 / rise</div><div class="sc-comparison__value">A little lift.</div><p>Useful for a new section.</p></div>
+  <div class="sc-comparison__item sc-reveal" data-sc-motion="fade"><div class="sc-comparison__label">02 / fade</div><div class="sc-comparison__value">A quiet arrival.</div><p>Useful for supporting detail.</p></div>
+  <div class="sc-comparison__item sc-reveal" data-sc-motion="scale"><div class="sc-comparison__label">03 / scale</div><div class="sc-comparison__value">A small emphasis.</div><p>Useful for a focal surface.</p></div>
+  <div class="sc-comparison__item sc-reveal" data-sc-motion="slide"><div class="sc-comparison__label">04 / slide</div><div class="sc-comparison__value">A sense of direction.</div><p>Useful for a short side note.</p></div>
+</div>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy Four ways to arrive HTML">Copy HTML</button><button class="sc-btn sc-btn--ghost" type="button" data-library-action data-sc-motion-replay="#preview-reveal-gallery" aria-label="Replay Four ways to arrive">Replay <span aria-hidden="true">↻</span></button></div><p class="library-snippet-note">Load sc-motion.js. Content remains visible without JavaScript and when motion is reduced.</p><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;div class=&quot;sc-comparison&quot;&gt;
+  &lt;div class=&quot;sc-comparison__item sc-reveal&quot; data-sc-motion=&quot;rise&quot;&gt;&lt;div class=&quot;sc-comparison__label&quot;&gt;01 / rise&lt;/div&gt;&lt;div class=&quot;sc-comparison__value&quot;&gt;A little lift.&lt;/div&gt;&lt;p&gt;Useful for a new section.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class=&quot;sc-comparison__item sc-reveal&quot; data-sc-motion=&quot;fade&quot;&gt;&lt;div class=&quot;sc-comparison__label&quot;&gt;02 / fade&lt;/div&gt;&lt;div class=&quot;sc-comparison__value&quot;&gt;A quiet arrival.&lt;/div&gt;&lt;p&gt;Useful for supporting detail.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class=&quot;sc-comparison__item sc-reveal&quot; data-sc-motion=&quot;scale&quot;&gt;&lt;div class=&quot;sc-comparison__label&quot;&gt;03 / scale&lt;/div&gt;&lt;div class=&quot;sc-comparison__value&quot;&gt;A small emphasis.&lt;/div&gt;&lt;p&gt;Useful for a focal surface.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class=&quot;sc-comparison__item sc-reveal&quot; data-sc-motion=&quot;slide&quot;&gt;&lt;div class=&quot;sc-comparison__label&quot;&gt;04 / slide&lt;/div&gt;&lt;div class=&quot;sc-comparison__value&quot;&gt;A sense of direction.&lt;/div&gt;&lt;p&gt;Useful for a short side note.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-stagger" data-recipe data-category="motion" data-search="stagger sequence animation list cascading" aria-labelledby="title-stagger">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>21</span><span aria-hidden="true">/</span><span>motion</span></p><h3 id="title-stagger">A little rhythm</h3><p>A supporting group arrives in a short sequence, preserving its reading order.</p></header>
+        <div class="library-preview" id="preview-stagger">
+<div class="sc-stagger sc-stack">
+  <div class="sc-checkpoint"><span class="sc-checkpoint__mark" aria-hidden="true">01</span><div class="sc-checkpoint__body"><h3>Start with the point.</h3><p>Give the reader one clear thing to understand.</p></div></div>
+  <div class="sc-checkpoint"><span class="sc-checkpoint__mark" aria-hidden="true">02</span><div class="sc-checkpoint__body"><h3>Make room for evidence.</h3><p>Bring the details into a clear reading order.</p></div></div>
+  <div class="sc-checkpoint"><span class="sc-checkpoint__mark" aria-hidden="true">03</span><div class="sc-checkpoint__body"><h3>Finish with character.</h3><p>Let the original mark connect the pieces.</p></div></div>
+</div>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy A little rhythm HTML">Copy HTML</button><button class="sc-btn sc-btn--ghost" type="button" data-library-action data-sc-motion-replay="#preview-stagger" aria-label="Replay A little rhythm">Replay <span aria-hidden="true">↻</span></button></div><p class="library-snippet-note">Load sc-motion.js. Each direct child gets a finite, short entrance.</p><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;div class=&quot;sc-stagger sc-stack&quot;&gt;
+  &lt;div class=&quot;sc-checkpoint&quot;&gt;&lt;span class=&quot;sc-checkpoint__mark&quot; aria-hidden=&quot;true&quot;&gt;01&lt;/span&gt;&lt;div class=&quot;sc-checkpoint__body&quot;&gt;&lt;h3&gt;Start with the point.&lt;/h3&gt;&lt;p&gt;Give the reader one clear thing to understand.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&quot;sc-checkpoint&quot;&gt;&lt;span class=&quot;sc-checkpoint__mark&quot; aria-hidden=&quot;true&quot;&gt;02&lt;/span&gt;&lt;div class=&quot;sc-checkpoint__body&quot;&gt;&lt;h3&gt;Make room for evidence.&lt;/h3&gt;&lt;p&gt;Bring the details into a clear reading order.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&quot;sc-checkpoint&quot;&gt;&lt;span class=&quot;sc-checkpoint__mark&quot; aria-hidden=&quot;true&quot;&gt;03&lt;/span&gt;&lt;div class=&quot;sc-checkpoint__body&quot;&gt;&lt;h3&gt;Finish with character.&lt;/h3&gt;&lt;p&gt;Let the original mark connect the pieces.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-hover" data-recipe data-category="motion" data-search="hover lift press tactile interaction card button feedback" aria-labelledby="title-hover">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>22</span><span aria-hidden="true">/</span><span>motion</span></p><h3 id="title-hover">Feedback you can feel</h3><p>A slight lift for a linked surface. A short press for an action. Both links work.</p></header>
+        <div class="library-preview" id="preview-hover">
+<div class="sc-stack">
+  <div class="sc-row"><a class="sc-card sc-hover-lift" href="templates/report.html"><p class="sc-eyebrow">the report composition</p><h3>A clearer point of view.</h3><p class="sc-hint">Open the complete report template ↗</p></a></div>
+  <a class="sc-btn sc-btn--secondary sc-press" href="styleguide.html">Explore the style guide ↗</a>
+</div>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy Feedback you can feel HTML">Copy HTML</button></div><p class="library-snippet-note">Hover is an extra cue. Keyboard focus and touch targets still carry the interaction.</p><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;div class=&quot;sc-stack&quot;&gt;
+  &lt;div class=&quot;sc-row&quot;&gt;&lt;a class=&quot;sc-card sc-hover-lift&quot; href=&quot;templates/report.html&quot;&gt;&lt;p class=&quot;sc-eyebrow&quot;&gt;the report composition&lt;/p&gt;&lt;h3&gt;A clearer point of view.&lt;/h3&gt;&lt;p class=&quot;sc-hint&quot;&gt;Open the complete report template ↗&lt;/p&gt;&lt;/a&gt;&lt;/div&gt;
+  &lt;a class=&quot;sc-btn sc-btn--secondary sc-press&quot; href=&quot;styleguide.html&quot;&gt;Explore the style guide ↗&lt;/a&gt;
+&lt;/div&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-chick-arrival" data-recipe data-category="motion" data-search="mascot logo chicken chick animation mark arrival branding" aria-labelledby="title-chick-arrival">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>23</span><span aria-hidden="true">/</span><span>motion</span></p><h3 id="title-chick-arrival">Character, with restraint</h3><p>The original chick gets one small entrance. It never floats over your content.</p></header>
+        <div class="library-preview library-preview--flush" id="preview-chick-arrival">
+<figure class="sc-captioned">
+  <div class="sc-brand-panel sc-brand-panel--wine sc-on-ink">
+    <div class="sc-cover__art" aria-hidden="true"><img class="sc-chick-arrive" src="assets/sc-mark-mono-cream.svg" alt="" width="342" height="405"></div>
+  </div>
+  <figcaption class="sc-captioned__caption"><strong>The mark stays intact.</strong><span>The composition gets a moment.</span></figcaption>
+</figure>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy Character, with restraint HTML">Copy HTML</button><button class="sc-btn sc-btn--ghost" type="button" data-library-action data-sc-motion-replay="#preview-chick-arrival" aria-label="Replay Character, with restraint">Replay <span aria-hidden="true">↻</span></button></div><p class="library-snippet-note">Load sc-motion.js. Keep the original image, proportions, and clear space.</p><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;figure class=&quot;sc-captioned&quot;&gt;
+  &lt;div class=&quot;sc-brand-panel sc-brand-panel--wine sc-on-ink&quot;&gt;
+    &lt;div class=&quot;sc-cover__art&quot; aria-hidden=&quot;true&quot;&gt;&lt;img class=&quot;sc-chick-arrive&quot; src=&quot;assets/sc-mark-mono-cream.svg&quot; alt=&quot;&quot; width=&quot;342&quot; height=&quot;405&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;figcaption class=&quot;sc-captioned__caption&quot;&gt;&lt;strong&gt;The mark stays intact.&lt;/strong&gt;&lt;span&gt;The composition gets a moment.&lt;/span&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre></details></div>
+      </article>
+      <article class="library-recipe" id="recipe-rule-reveal" data-recipe data-category="motion" data-search="rule line wipe divider chapter reveal animation" aria-labelledby="title-rule-reveal">
+        <header class="library-recipe-head"><p class="library-recipe-index"><span>24</span><span aria-hidden="true">/</span><span>motion</span></p><h3 id="title-rule-reveal">A chapter, quietly introduced</h3><p>A short rule opens the section. The title and copy are readable throughout.</p></header>
+        <div class="library-preview" id="preview-rule-reveal">
+<section class="sc-stack">
+  <p class="sc-eyebrow">chapter 02 / the details</p>
+  <hr class="sc-sep sc-rule-reveal" aria-hidden="true">
+  <h3>The details make it yours.</h3>
+  <p class="sc-muted">A little rhythm makes the transition feel considered without distracting from the reading.</p>
+</section>
+        </div>
+        <div class="library-recipe-foot"><div class="library-actions"><button class="sc-btn sc-btn--secondary" type="button" data-library-action data-library-copy aria-label="Copy A chapter, quietly introduced HTML">Copy HTML</button><button class="sc-btn sc-btn--ghost" type="button" data-library-action data-sc-motion-replay="#preview-rule-reveal" aria-label="Replay A chapter, quietly introduced">Replay <span aria-hidden="true">↻</span></button></div><p class="library-snippet-note">Load sc-motion.js. The line is decorative; the content never depends on its animation.</p><details class="sc-details library-code"><summary>View HTML</summary><pre tabindex="0"><code>&lt;section class=&quot;sc-stack&quot;&gt;
+  &lt;p class=&quot;sc-eyebrow&quot;&gt;chapter 02 / the details&lt;/p&gt;
+  &lt;hr class=&quot;sc-sep sc-rule-reveal&quot; aria-hidden=&quot;true&quot;&gt;
+  &lt;h3&gt;The details make it yours.&lt;/h3&gt;
+  &lt;p class=&quot;sc-muted&quot;&gt;A little rhythm makes the transition feel considered without distracting from the reading.&lt;/p&gt;
+&lt;/section&gt;</code></pre></details></div>
+      </article>
+    </div>
+    <div class="library-empty" id="library-empty" hidden><h3>No recipe matches just yet.</h3><p>Try a shorter term, or return to the full collection.</p><button class="sc-btn sc-btn--secondary" id="library-reset" type="button">Show every recipe</button></div>
+  </section>
+  <section class="library-setup" id="setup" aria-labelledby="setup-title"><div><p class="sc-eyebrow">from preview to page</p><h2 id="setup-title">Pick it.<br>Paste it.<br>Make it yours.</h2><p>The recipes share one stylesheet. Keep the original SVGs in <code>assets/</code>, and include the optional motion script when you use a reveal.</p><p>Use the full templates for a website, dashboard, screener, or report. Change sample headings to fit your document outline, and use your real content.</p></div><div class="library-setup-code"><pre tabindex="0"><code id="library-setup-source">&lt;meta name=&quot;color-scheme&quot; content=&quot;dark light&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;sc.css&quot;&gt;
+&lt;script src=&quot;sc-theme.js&quot;&gt;&lt;/script&gt;
+&lt;!-- Optional: finite reveals and motion controls --&gt;
+&lt;script src=&quot;sc-motion.js&quot; defer&gt;&lt;/script&gt;</code></pre><button class="sc-btn sc-btn--secondary" id="library-copy-setup" type="button" data-library-action>Copy page setup</button><p class="library-snippet-note">These paths are relative to your page. Copy the stylesheet, scripts, and original assets from one verified source snapshot. For reduced motion, content stays visible and decorative movement stops.</p></div></section>
+  <div class="library-end"><p>Now give the whole page the same attention.</p><a href="brand-studio.html#recipes">Choose a complete composition <span aria-hidden="true">↗</span></a></div>
+</main>
+<footer class="sc-foot"><span>SpicyChicken · Visual library · v2.6.0</span><a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a></footer>
+<script src="build/visual-library.js"></script>
+<script src="sc-motion.js"></script>
+</body>
+</html>

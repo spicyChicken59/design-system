@@ -2,7 +2,7 @@
 <header class="sc-masthead">
   <a class="sc-brand" href="#top">
     <img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt="">
-    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.5.0</span></span>
+    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.6.0</span></span>
   </a>
   <div class="sc-masthead__right">
     <span class="sc-hide-sm">Living reference</span>
@@ -18,7 +18,7 @@
 <section class="sg-cover sc-on-ink" id="top">
   <div class="sg-cover__inner sg-cover__inner--brand">
     <div class="sc-cover sc-on-ink sg-brand-cover">
-      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.5.0</span><span>198 named tokens</span><span>66 component blocks</span></div></div>
+      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.6.0</span><span>206 named tokens</span><span>87 component blocks</span></div></div>
       <div class="sc-cover__art" aria-hidden="true"><img src="assets/sc-mark-color-dark.svg" alt="" width="342" height="405"><span class="sc-cover__caption">one mark. every creation.</span></div>
     </div>
     <div class="sg-palette-footer"><div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and spice accent"></div><span class="sc-hint">The familiar palette. A richer set of compositions.</span></div>
@@ -30,6 +30,7 @@
     <div class="sc-eyebrow">Foundations</div>
     <a href="#brand-compositions">Brand compositions</a>
     <a href="brand-studio.html">Brand studio ↗</a>
+    <a href="visual-library.html">Visual &amp; motion library ↗</a>
     <a href="#hierarchy">Hierarchy &amp; voice</a>
     <a href="#color">Color</a>
     <a href="#type">Typography</a>
@@ -48,7 +49,7 @@
   <main class="sg-main" id="main-content">
 
     <section class="sg-section" id="brand-compositions">
-      <div class="sc-eyebrow">the visual language · new in v2.5.0</div>
+      <div class="sc-eyebrow">the visual language · new in v2.6.0</div>
       <h2>A brand that lives inside the page.</h2>
       <p class="sc-dek">Use a strong opener, quieter evidence, and a signature at the close. Every composition below is available in HTML and the visual React wrappers.</p>
       <div class="sc-cover sc-cover--paper sc-cover--compact">
@@ -75,6 +76,15 @@
       <div class="sc-chart-caption"><p>Source: illustrative values · your period goes here</p><a class="sc-signature sc-signature--small" href="https://github.com/spicyChicken59" rel="author"><span class="sc-adaptive-mark" aria-hidden="true"><img class="sc-mark sc-adaptive-mark__dark" src="assets/sc-mark-color-dark.svg" alt=""><img class="sc-mark sc-adaptive-mark__light" src="assets/sc-mark-color-light.svg" alt=""></span><span><span class="sc-signature__name">SpicyChicken</span><span class="sc-signature__sub">made with intent</span></span></a></div>
       <p class="sg-rule"><code>.sc-signature</code> is a contextual maker credit; <code>.sc-chart-caption</code> reserves room outside the plot. Reports use <code>.sc-report</code>, <code>.sc-report__body</code>, and <code>.sc-report__footer</code>. The original footer watermark stays the same.</p>
       <div class="sg-block"><h3>Choose the composition</h3><p><a href="templates/landing.html">Website</a> · <a href="templates/dashboard.html">Dashboard</a> · <a href="templates/screener.html">Screener</a> · <a href="templates/report.html">Report</a></p><p class="sg-rule">The <a href="brand-studio.html#preview">responsive preview</a> renders the actual files at phone, tablet, and desktop widths. These are presentation examples with illustrative content.</p></div>
+    </section>
+
+    <section class="sg-section" id="visual-library">
+      <div class="sc-eyebrow">visuals &amp; motion · ready to use</div>
+      <h2>From a good component to a complete idea.</h2>
+      <p class="sc-dek">Find the composition, see it live, then copy its HTML. The visual library combines the shared primitives into 24 useful recipes.</p>
+      <div class="sc-bento"><div class="sc-bento__main sc-card"><figure class="sc-quote"><blockquote class="sc-quote__text">Let the finding lead.<br>Give the evidence room.</blockquote><figcaption class="sc-quote__source">SpicyChicken · composition principle</figcaption></figure></div><div class="sc-bento__aside"><div class="sc-card"><div class="sc-eyebrow">choose a structure</div><h3>Editorial. Timeline. Comparison.</h3><p class="sc-hint">Open, readable layouts with a clear purpose.</p></div><div class="sc-card"><div class="sc-eyebrow">add a little movement</div><h3>Reveal. Sequence. Respond.</h3><p class="sc-hint">Optional motion that respects focus and reduced motion.</p></div></div></div>
+      <p><a class="sc-btn sc-btn--secondary" href="visual-library.html">Open the visual &amp; motion library <span aria-hidden="true">↗</span></a></p>
+      <p class="sg-rule">Every recipe uses shared <code>sc.css</code> classes; no catalog stylesheet is needed. Layouts and movement are opt-in. The library includes actual live markup, code details, copy actions, filters, replay and a pause control. The runtime adds <code>.sc-motion-in</code> only during an entrance; authored content stays visible.</p>
     </section>
 
     <section class="sg-section" id="hierarchy">
@@ -155,7 +165,7 @@
           <div class="sg-shadow" style="border-radius:var(--sc-r-lg)">shadow</div>
         </div>
       </div>
-      <p class="sg-rule">Motion: fades and short slides, 240ms, <code>cubic-bezier(.2,.7,.3,1)</code>. Hover signals with color, never scale. Base state is the finished state. <code>prefers-reduced-motion</code> sets it to zero. Pointer targets are at least 24px tall.</p>
+      <p class="sg-rule">Motion is opt-in: short reveals, staggered composition, gentle hover lift and pressed feedback. Content is visible without JavaScript. Reduced motion, focus and print cancel movement. <a href="visual-library.html#motion">Try the motion recipes</a> and read <a href="MOTION.md">the motion rules</a>.</p>
       <p class="sg-rule">Widths: prose 800 · content 1120 · wide 1280 (dashboards, tables). See <a href="#layout">Layout &amp; utilities</a>.</p>
     </section>
 
@@ -692,12 +702,12 @@
         <div class="sc-card"><h3 class="sc-text-good">Do</h3><ul><li>Lead with a lowercase mono eyebrow.</li><li>Keep the masthead and footer dark in both modes.</li><li>Put the chick in the masthead and the watermark; name the project in type.</li><li>Use Instrument Sans for numbers, proportional figures.</li><li>Separate with hairlines and color, not shadow.</li><li>Write the outcome and the reason.</li></ul></div>
         <div class="sc-card"><h3 class="sc-text-danger">Don't</h3><ul><li>Add a hue or a gradient.</li><li>Use spice for text, headings, or large fills — <code>.sc-text-accent</code> is on its way out.</li><li>ALL-CAPS a tracked label — lowercase mono is the house style.</li><li>Use a display face or tabular figures for a big number.</li><li>Ship an icon set without noting the substitution.</li><li>End with a menu of next steps.</li></ul></div>
       </div>
-      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Tag v2.5.0 and pin it from every project — SpicyCar first: <code>https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc.css</code>.</p></div>
+      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Tag v2.6.0 and pin it from every project — SpicyCar first: <code>https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.6.0/sc.css</code>.</p></div>
     </section>
   </main>
 </div>
 
 <footer class="sc-foot">
-  <span>SpicyChicken Design System · v2.5.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
+  <span>SpicyChicken Design System · v2.6.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
   <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a>
 </footer>
