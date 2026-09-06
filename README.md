@@ -23,7 +23,7 @@ composition; [motion](MOTION.md) explains safe, purposeful animation.
 | `build/vendor.mjs` | Copy a committed design snapshot, original assets and provenance into any static website. |
 | `sc.css` | The system — tokens, base styles, components. One file; consumers need no build step. Header carries the version (`v2.10.0`). |
 | `sc-map.js` | The map layer: an Albers projection for the lower 48, a quantized-topojson reader, a geodesic ring, box fitting, and a pan/zoom view engine. The geo half is pure — it runs in Node. |
-| `sc-charts.js` | Chart primitives: nice ticks, the end-label solver, the sparkline, one tooltip controller, the accessible table twin. Generated from `build/charts.js`, same version stream. Optional — `sc.css` styles charts you draw yourself just as well. |
+| `sc-charts.js` | Chart and native-table presentation bundle: unchanged chart primitives plus criterion navigation for eligible signal matrices. Composed from `build/charts.js`, `sc-matrix-nav.js`, and `build/matrix-auto.js`; see [automatic matrix behavior and opt-out](VISUAL-RECIPES.md#when-the-page-already-uses-charts). |
 | `sc-theme.js` | The theme script: saved choice before paint, toggle wiring, print swap. Link it or inline it. Source: `build/theme.js`. |
 | `starter.html` | Page skeleton: head snippet, masthead with theme toggle, title block, footer with watermark. |
 | `styleguide.html` | Living reference. Open it next to any page you're building. Generated — edit `build/`. |

@@ -71,7 +71,9 @@ writeFileSync(join(OUT, 'sc-theme.js'), `/* SpicyChicken Design System — sc-th
 // stream, no build step for consumers. Loads after sc.css; order-independent
 // of sc-theme.js (both only merge into window.SC / read the sheet at call time).
 const charts = read(join(B, 'charts.js'));
-writeFileSync(join(OUT, 'sc-charts.js'), `/* SpicyChicken Design System — sc-charts.js v${version} · source: build/charts.js · needs sc.css; defer it or load at the end of <body> */\n${charts}`);
+const matrixNav = read(join(DS, 'sc-matrix-nav.js'));
+const matrixAuto = read(join(B, 'matrix-auto.js'));
+writeFileSync(join(OUT, 'sc-charts.js'), `/* SpicyChicken Design System — sc-charts.js v${version} · chart and native-table presentation bundle · sources: build/charts.js, sc-matrix-nav.js, build/matrix-auto.js · needs sc.css */\n${charts}\n/* Optional signal-matrix criterion navigation */\n${matrixNav}\n${matrixAuto}`);
 const map = read(join(B, 'map.js'));
 writeFileSync(join(OUT, 'sc-map.js'), `/* SpicyChicken Design System — sc-map.js v${version} · source: build/map.js · projection, topojson and the pan/zoom view engine */\n${map}`);
 
