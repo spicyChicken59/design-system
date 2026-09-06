@@ -165,3 +165,18 @@ The rendered gate exercises every named criterion, sticky-column alignment with 
 and padding, native focus and activation, reduced-motion landing, resize focus handoff,
 header replacement/removal, disclosure opening, idempotent attachment and cleanup.
 The full table and candidate links also work with JavaScript disabled.
+
+## Shared chart and native-table presentation bundle
+
+Existing consumers already load `sc-charts.js` for chart primitives and accessible table
+twins. The generated asset now composes those original chart functions unchanged with
+the shared criterion helper and a generic native-table lifecycle adapter. This provides
+snapshot-only adoption without modifying application pages or copying their logic.
+
+Only native signal matrices with a single unmerged header row are automatically enhanced.
+Values matrices are excluded because their columns can be records rather than criteria;
+explicit opt-in and opt-out remain available. Labels come directly from authored headers.
+The adapter observes insertion, header changes and removal, keeps controls with moved
+regions, and rebinds disclosure ancestors. Body values and unrelated chart changes do not
+rebuild controls. Original chart source, palette, logos, core stylesheet and version stay
+unchanged. The standalone helper remains an independent, explicitly optional asset.

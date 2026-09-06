@@ -9,7 +9,9 @@ import { createServer } from 'node:http';
 import { dirname, join, resolve, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkMatrixCriteria, checkMatrixLifecycle, checkMatrixWithoutJS } from './matrix-nav-check.mjs';
+import { checkMatrixBundleSource, checkAutomaticMatrixBundle } from './matrix-bundle-check.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+checkMatrixBundleSource(root);
 const files = ['brand-studio.html', 'visual-library.html', 'composition-studio.html', ...['landing','dashboard','screener','report','deliverable','decision-brief'].map(p => `templates/${p}.html`)];
 for (const name of files) {
   const path = join(root, name), html = readFileSync(path, 'utf8');
@@ -144,6 +146,7 @@ async function checkRenderedDecisionBrief() {
     }
     await checkMatrixLifecycle(browser, root);
     await checkMatrixWithoutJS(browser, base);
+    await checkAutomaticMatrixBundle(browser, root, base);
     console.log(`visual-check: ${scenarios}/6 rendered decision-brief scenarios passed in Chromium (offline fallback fonts)${shots ? `; screenshots: ${shots}` : ''}`);
   } finally {
     await browser.close();

@@ -146,6 +146,39 @@ provenance. `build/vendor.mjs` includes it in new checked-in snapshots; no relea
 is required. Its injected stylesheet is scoped to `[data-sc-matrix-controls]` and does
 not modify `sc.css`, tokens, brand geometry or product values.
 
+#### When the page already uses charts
+
+`sc-charts.js` is a chart and native-table presentation bundle. It composes the original
+chart primitives unchanged, the same `sc-matrix-nav.js` helper, and the generic lifecycle
+adapter in `build/matrix-auto.js`. An existing page that loads this bundle can adopt
+criterion navigation by updating its verified design snapshot alone.
+
+The bundle discovers `.sc-table-scroll > table.sc-signal-matrix` and tables explicitly
+marked on their region with `data-sc-matrix-nav`. It requires one unmerged row of native
+column headers and excludes `.sc-signal-matrix--values` by default: those tables can be
+transposed comparisons whose column names are records, not criteria. An authored
+`data-sc-matrix-nav` attribute explicitly opts a values table in when its columns really
+are criteria. Set `data-sc-matrix-nav="off"` on the table or its immediate region to
+leave any particular matrix entirely native. The standalone helper remains opt-in.
+
+Automatic controls use the full existing column headers unless `data-sc-label` is supplied;
+there is no product-specific label mapping. A coalesced observer handles tables inserted
+after data arrives, header replacement, disclosure moves and removed cards. It does not
+inspect body values, reorder records, compute signals or register application handlers.
+Changes to body cells or unrelated charts do not rebuild the buttons or move focus.
+Loading both the bundle and the standalone helper does not create duplicate instances.
+
+For a page-level lifecycle, `SC.matrixTables.destroy()` releases every managed controller
+and disconnects the observer; `SC.matrixTables.init()` restarts it. `refresh()` reconciles
+the document on demand, which is also the fallback when MutationObserver is unavailable.
+Keep the native region label, `tabindex="0"` and written scroll instructions in the page.
+Review the actual labels on phones: full authored names may wrap to a second button row.
+
+Snapshot provenance records the complete composed `sc-charts.js`, so the original chart
+source and optional table behavior are reviewed together. The bundle regression gate
+checks chart exports in minimal-DOM environments and exercises asynchronous native-table
+lifecycle behavior in Chromium, alongside the existing matrix accessibility checks.
+
 ## Printable decision brief
 
 Choose **Printable deliverable** in `composition-studio.html` for a complete three-sheet US Letter

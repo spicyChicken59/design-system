@@ -5,7 +5,7 @@
  */
 (function (w, d) {
   'use strict';
-  if (!w || !d || w.SCMatrixNav) return;
+  if (!w || !d || typeof d.querySelectorAll !== 'function' || w.SCMatrixNav) return;
   const instances = new WeakMap();
   let serial = 0;
 
@@ -18,6 +18,11 @@
 [data-sc-matrix-controls][hidden] { display:none; }
 [data-sc-matrix-controls] > button { min-height:44px; min-width:44px; max-width:100%; padding:var(--sc-s1); font-size:var(--sc-text-sm); line-height:1.25; text-align:start; overflow-wrap:anywhere; }
 [data-sc-matrix-controls] > button:focus-visible { outline:2px solid var(--sc-focus); outline-offset:2px; }
+@media (max-width:600px) {
+  [data-sc-matrix-controls] { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+  [data-sc-matrix-controls] > button { justify-content:center; text-align:center; }
+  [data-sc-matrix-controls] > button:last-child:nth-child(odd) { grid-column:1 / -1; }
+}
 @media (prefers-reduced-motion:reduce) { [data-sc-matrix-controls] > button { transition:none; } }
 @media (forced-colors:active) { [data-sc-matrix-controls] > button { border-color:ButtonText; } }
 @media print { [data-sc-matrix-controls] { display:none; } }
@@ -27,6 +32,7 @@
 
   function attach(scroller) {
     if (!scroller || scroller.nodeType !== 1 || !scroller.querySelector('table')) return null;
+    if (scroller.getAttribute('data-sc-matrix-nav') === 'off' || scroller.querySelector('table').getAttribute('data-sc-matrix-nav') === 'off') return null;
     if (instances.has(scroller)) return instances.get(scroller);
     ensureStyle();
     const group = d.createElement('div');
