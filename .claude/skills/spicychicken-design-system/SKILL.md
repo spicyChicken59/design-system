@@ -1,6 +1,6 @@
 ---
 name: spicychicken-design-system
-description: "The SpicyChicken visual standard (sc.css v2.4.0) — cobalt structure, one spice accent, dark by default. Use this skill for ANY visual or written artifact the user asks for — HTML pages, dashboards, reports, one-pagers, READMEs, decks, docs, email, charts, React components, prototypes, mockups, landing pages, or anything with a UI. Trigger it even when the user says nothing about design, branding, or styling; this is their house style and it applies by default to everything they ship. Also trigger on mentions of SpicyChicken, sc.css, sc- classes, the chick mark, or 'my design system'."
+description: "The SpicyChicken visual standard (sc.css v2.5.0) — cobalt structure, one spice accent, dark by default. Use this skill for ANY visual or written artifact the user asks for — HTML pages, dashboards, reports, one-pagers, READMEs, decks, docs, email, charts, React components, prototypes, mockups, landing pages, or anything with a UI. Trigger it even when the user says nothing about design, branding, or styling; this is their house style and it applies by default to everything they ship. Also trigger on mentions of SpicyChicken, sc.css, sc- classes, the chick mark, or 'my design system'."
 license: "MIT for the code; the SpicyChicken mark and assets/ are all rights reserved."
 ---
 
@@ -49,10 +49,10 @@ lowercase mono. Codes that must keep their case (VIN, TX, BMW i5) take `.sc-case
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.4.0/sc.css">
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.4.0/sc-theme.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc.css">
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc-theme.js"></script>
 <!-- optional; only if the page draws charts -->
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.4.0/sc-charts.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc-charts.js"></script>
 ```
 
 Order matters: `color-scheme` first, preconnects and fonts before `sc.css`, theme script in
@@ -65,6 +65,29 @@ theme toggle, title block, footer with the watermark. Start from it rather than 
 from scratch.
 
 ## Component vocabulary
+
+### Complete visual compositions
+
+Read `references/VISUAL-RECIPES.md` when designing an entire website, dashboard,
+screener, report, or brand cover. The visual studio and four templates demonstrate
+how to vary hierarchy while preserving the SpicyChicken identity.
+
+New vocabulary: `.sc-cover` (ink + `.sc-on-ink`, `--wine`, `--paper`, `--compact`),
+`.sc-brand-panel`, `.sc-ghost`, `.sc-signature`, `.sc-adaptive-mark`, `.sc-chapter`,
+`.sc-stat-strip`, `.sc-stat`, `.sc-facts`, `.sc-chart-caption`, `.sc-empty--brand`,
+and `.sc-report`. These are opt-in compositions. Use the existing primitives for
+ordinary controls and data.
+
+Use the original logo at a generous size in one cover art column, mono repeats
+in dedicated brand panels, and subtle ghosts in reserved blank space. Never
+overlap body text, controls, chart plots, or tables with a watermark. The original
+paths and proportions stay intact. Wine is for brand moments; warm paper is an
+editorial cover surface. Neither becomes a status colour or chart series.
+
+The bundle includes `assets/templates/{landing,dashboard,screener,report}.html`.
+Their relative image paths resolve to `assets/assets/`; CSS and theme scripts
+remain in `assets/`. Copy the subtree together or inline its local dependencies.
+Replace all illustrative content and specimen navigation before shipping a product.
 
 Everything below exists in `sc.css`. Use these names exactly.
 
@@ -183,7 +206,7 @@ Read these when the summary above isn't enough:
   §11 project setup and asset URLs, §12 do/don't.
 - `references/PLAIN-HTML.md` — inline-style equivalents for email and exported HTML.
 - `references/CHECKLIST.md` — the pre-ship gate.
-- `assets/sc.css` — the sheet itself (v2.4.0). Read it to confirm a class or token exists before
+- `assets/sc.css` — the sheet itself (v2.5.0). Read it to confirm a class or token exists before
   using it. Never invent an `sc-*` name.
 - `assets/sc-charts.js` — the chart primitives, if the page draws charts.
 - `assets/sc-map.js` — the map layer, if the page draws a map. `SC.geo.albersUsa48`,

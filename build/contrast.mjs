@@ -70,6 +70,21 @@ export function checkContrast(css) {
     for (const [fg, bg] of [['brand', 'brand-fill'], ['accent', 'accent-fill'], ['info', 'info-fill'], ['good', 'good-fill'], ['warn', 'warn-fill'], ['danger', 'danger-fill'], ['heading', 'surface'], ['text', 'surface'], ['text-2', 'surface']]) check(mode, 'on-ink context ' + fg + ' on ' + bg, tc(fg), tc(bg), 4.5);
     for (const n of ['chart-1', 'chart-2', 'chart-3', 'chart-4', 'chart-5', 'chart-emphasis', 'chart-context']) check(mode, `${n} vs surface`, t(n), t('surface'), 3);
   }
+  // Brand covers have local colour scopes independent of the page theme.
+  const paper = block(css, /\.sc-cover--paper \{([\s\S]*?)\n\}/);
+  for (const [mode, vars] of Object.entries(modes)) {
+    for (const [surface, overrides, bgToken] of [['paper', paper, 'brand-paper'], ['wine', onInk, 'brand-wine']]) {
+      const ctx = { ...vars, ...overrides };
+      const bg = toRgb(resolve('--sc-' + bgToken, ctx));
+      const t = n => toRgb(resolve('--sc-' + n, ctx), bg);
+      for (const fg of ['heading', 'text', 'text-2', 'text-3', 'accent', 'accent-hover'])
+        check(mode, `${surface} cover ${fg}`, t(fg), bg, 4.5);
+      check(mode, `${surface} cover focus`, t('focus'), bg, 3);
+      check(mode, `${surface} button text`, t('on-accent'), t('accent'), 4.5);
+      for (const fill of ['surface', 'hover', 'raised', 'brand-fill'])
+        check(mode, `${surface} nested text on ${fill}`, t('text'), t(fill), 4.5);
+    }
+  }
   return { rows, fails };
 }
 

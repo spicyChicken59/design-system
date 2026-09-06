@@ -3,12 +3,14 @@
 The visual standard for everything Mohammed Tahir Madni ships under **SpicyChicken** —
 dashboards, documents, READMEs, decks. Cobalt structure, one spice accent, dark by default.
 
-**Start here:** open `styleguide.html` (every token and component, both modes), then read
+**Start here:** open [the brand studio](brand-studio.html) for compositions, logo
+treatments and responsive previews. Read [visual recipes](VISUAL-RECIPES.md) to use
+them. Then open `styleguide.html` (every token and component, both modes), and read
 `DESIGN_SYSTEM.md` (the rules). New project: copy `starter.html`, keep its head, and build.
 
 | File | Purpose |
 |---|---|
-| `sc.css` | The system — tokens, base styles, components. One file; consumers need no build step. Header carries the version (`v2.4.0`). |
+| `sc.css` | The system — tokens, base styles, components. One file; consumers need no build step. Header carries the version (`v2.5.0`). |
 | `sc-map.js` | The map layer: an Albers projection for the lower 48, a quantized-topojson reader, a geodesic ring, box fitting, and a pan/zoom view engine. The geo half is pure — it runs in Node. |
 | `sc-charts.js` | Chart primitives: nice ticks, the end-label solver, the sparkline, one tooltip controller, the accessible table twin. Generated from `build/charts.js`, same version stream. Optional — `sc.css` styles charts you draw yourself just as well. |
 | `sc-theme.js` | The theme script: saved choice before paint, toggle wiring, print swap. Link it or inline it. Source: `build/theme.js`. |
@@ -27,11 +29,15 @@ dashboards, documents, READMEs, decks. Cobalt structure, one spice accent, dark 
 
 ## Use it in a project
 
+**Release candidate:** v2.5.0 is the visual update on this branch. Use local files
+until the v2.5.0 tag is published; the versioned CDN examples below become available
+with that release. Existing consumers can keep their published release pins.
+
 Pin a release — tags are served by jsDelivr:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.4.0/sc.css">
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.4.0/sc-theme.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc.css">
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc-theme.js"></script>
 ```
 
 `@2` follows the newest 2.x tag. The Pages URL is **latest** and may change on a major — fine for

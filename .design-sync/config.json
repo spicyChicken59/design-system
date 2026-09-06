@@ -39,6 +39,24 @@
     },
     "Media": {
       "cardMode": "column"
+    },
+    "Cover": {
+      "cardMode": "column"
+    },
+    "Chapter": {
+      "cardMode": "column"
+    },
+    "StatStrip": {
+      "cardMode": "column"
+    },
+    "Stat": {
+      "cardMode": "column"
+    },
+    "Facts": {
+      "cardMode": "column"
+    },
+    "BrandedEmpty": {
+      "cardMode": "column"
     }
   },
   "readmeHeader": ".design-sync/conventions.md"
