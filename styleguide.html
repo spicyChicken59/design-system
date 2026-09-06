@@ -154,6 +154,15 @@
   :root:not([data-theme="light"]) .sg-on-light { display: none; }
   :root:not([data-theme="light"]) .sg-on-dark { display: block; }
 }
+
+/* Brand-led cover; the reusable component supplies the visual language. */
+.sg-cover__inner--brand{display:block;padding-top:var(--sc-s3)}
+.sg-brand-cover{border:0;padding-inline:0}
+.sg-brand-cover .sg-cover__meta{margin-top:var(--sc-s4)}
+.sg-palette-footer{display:flex;align-items:center;flex-wrap:wrap;gap:var(--sc-s3);padding-top:var(--sc-s3);border-top:1px solid var(--sc-ink-line-strong)}
+.sg-palette-footer .sg-bar{width:240px}
+.sg-palette-footer .sg-bar div{height:24px}
+.sg-palette-footer .sg-bar div span{display:none}
 </style>
 <script>
 (function () {
@@ -198,7 +207,7 @@
 <header class="sc-masthead">
   <a class="sc-brand" href="#top">
     <img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt="">
-    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.4.0</span></span>
+    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.5.0</span></span>
   </a>
   <div class="sc-masthead__right">
     <span class="sc-hide-sm">Living reference</span>
@@ -212,23 +221,20 @@
 </header>
 
 <section class="sg-cover sc-on-ink" id="top">
-  <div class="sg-cover__inner">
-    <div>
-      <div class="sc-eyebrow">Mohammed Tahir Madni · SpicyChicken</div>
-      <h1>Cobalt structure. One spice accent. Dark by default.</h1>
-      <p class="sg-cover__dek">The standard every SpicyChicken project is built on — dashboards, documents, READMEs, decks. Every color below is validated, every component is rendered live in both modes, and the whole thing ships as one CSS file.</p>
-      <div class="sg-cover__meta"><span>sc.css · v2.4.0</span><span>183 named tokens</span><span>54 component blocks</span><span>the chick · everywhere</span></div>
+  <div class="sg-cover__inner sg-cover__inner--brand">
+    <div class="sc-cover sc-on-ink sg-brand-cover">
+      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.5.0</span><span>198 named tokens</span><span>66 component blocks</span></div></div>
+      <div class="sc-cover__art" aria-hidden="true"><img src="assets/sc-mark-color-dark.svg" alt="" width="342" height="405"><span class="sc-cover__caption">one mark. every creation.</span></div>
     </div>
-    <div>
-      <div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and the spice accent"></div>
-      <div class="sg-bar__caption">Cobalt 300 → 950, then spice 400 and 700. Lightness held on the text steps (300, 700); 900/950 moved and chroma raised. Hue rotated to 255°.</div>
-    </div>
+    <div class="sg-palette-footer"><div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and spice accent"></div><span class="sc-hint">The familiar palette. A richer set of compositions.</span></div>
   </div>
 </section>
 
 <div class="sg-layout">
   <nav class="sg-nav" id="sg-nav" aria-label="Sections">
     <div class="sc-eyebrow">Foundations</div>
+    <a href="#brand-compositions">Brand compositions</a>
+    <a href="brand-studio.html">Brand studio ↗</a>
     <a href="#hierarchy">Hierarchy &amp; voice</a>
     <a href="#color">Color</a>
     <a href="#type">Typography</a>
@@ -245,6 +251,36 @@
   </nav>
 
   <main class="sg-main" id="main-content">
+
+    <section class="sg-section" id="brand-compositions">
+      <div class="sc-eyebrow">the visual language · new in v2.5.0</div>
+      <h2>A brand that lives inside the page.</h2>
+      <p class="sc-dek">Use a strong opener, quieter evidence, and a signature at the close. Every composition below is available in HTML and the visual React wrappers.</p>
+      <div class="sc-cover sc-cover--paper sc-cover--compact">
+        <div class="sc-cover__content"><div class="sc-eyebrow">field notes · report cover</div><h3 class="sc-cover__title">Clarity, by design.</h3><p class="sc-cover__dek">A warm editorial surface, the original mark, and room for the finding.</p><div class="sc-cover__meta"><span>SpicyChicken</span><span>report composition</span></div><div class="sc-cover__actions"><a class="sc-btn sc-btn--secondary" href="templates/report.html">Open the report specimen</a></div></div>
+        <div class="sc-cover__art" aria-hidden="true"><img src="assets/sc-mark-color-light.svg" alt=""><span class="sc-cover__caption">the original chick</span></div>
+      </div>
+      <p class="sg-rule"><code>.sc-cover</code> + <code>.sc-on-ink</code> is the default; add <code>.sc-cover--wine</code> for a brand opener. Use <code>.sc-cover--paper</code> without the ink scope for reports. <code>.sc-cover--compact</code> shortens product headers. The art column wraps when its container is narrow.</p>
+      <div class="sg-block"><h3>Signature textures</h3><div class="sc-grid sc-grid--3">
+        <div class="sc-brand-panel"><img class="sc-brand-panel__pattern" src="assets/sc-pattern-ink.svg" alt="" aria-hidden="true"><span class="sc-brand-panel__label">ink / focus</span></div>
+        <div class="sc-brand-panel sc-brand-panel--wine"><img class="sc-brand-panel__pattern" src="assets/sc-pattern-wine.svg" alt="" aria-hidden="true"><span class="sc-brand-panel__label">wine / character</span></div>
+        <div class="sc-brand-panel sc-brand-panel--paper"><img class="sc-brand-panel__pattern" src="assets/sc-pattern-paper.svg" alt="" aria-hidden="true"><span class="sc-brand-panel__label">paper / clarity</span></div>
+      </div><p class="sg-rule">These SVGs repeat the original mono asset without changing its paths. Keep them in dedicated <code>.sc-brand-panel</code> surfaces; labels have an opaque backing. Download the three assets from the <a href="brand-studio.html#patterns">brand studio</a>.</p></div>
+      <div class="sg-block"><h3>Related metrics, one surface</h3><dl class="sc-stat-strip">
+        <div class="sc-stat sc-stat--lead"><dt class="sc-stat__label">lowest asking</dt><dd class="sc-stat__value">$42,600</dd><dd class="sc-stat__note">Illustrative listing · before fees</dd></div>
+        <div class="sc-stat"><dt class="sc-stat__label">compared</dt><dd class="sc-stat__value">74</dd><dd class="sc-stat__note">Example watchlist</dd></div>
+        <div class="sc-stat"><dt class="sc-stat__label">movement</dt><dd class="sc-stat__value">−12.3%</dd><dd class="sc-stat__note">▼ Four illustrative weeks</dd></div>
+      </dl><p class="sg-rule"><code>.sc-stat-strip--2</code> and <code>.sc-stat-strip--4</code> change the column count. Use one <code>.sc-stat--lead</code>. Values stay in heading ink. A strip is a <code>dl</code>; each stat groups its <code>dt</code> and <code>dd</code>.</p></div>
+      <header class="sc-chapter"><span class="sc-chapter__index" aria-hidden="true">02</span><div class="sc-chapter__body"><h3>Open space is part of the system.</h3><p>Chapter headings separate ideas without another nested box.</p></div><span class="sc-chapter__meta">the editorial rhythm</span></header>
+      <dl class="sc-facts"><div><dt>format</dt><dd>Website / dashboard / report</dd></div><div><dt>identity</dt><dd>SpicyChicken</dd></div><div><dt>hierarchy</dt><dd>Finding → evidence → action</dd></div></dl>
+      <div class="sg-block"><h3>Quiet states and quieter marks</h3><div class="sc-grid sc-grid--2">
+        <div class="sc-empty sc-empty--brand"><span class="sc-adaptive-mark" aria-hidden="true"><img class="sc-mark sc-adaptive-mark__dark" src="assets/sc-mark-color-dark.svg" alt=""><img class="sc-mark sc-adaptive-mark__light" src="assets/sc-mark-color-light.svg" alt=""></span><h3>Nothing on the shortlist yet.</h3><p>A clear empty state with the same character as the rest of the product.</p></div>
+        <div class="sc-card"><div class="sc-ghost" aria-hidden="true"><img class="sc-ghost__dark" src="assets/sc-mark-mono-cream.svg" alt=""><img class="sc-ghost__light" src="assets/sc-mark-mono-ink.svg" alt=""></div><p class="sc-hint">A watermark in its own reserved space.</p></div>
+      </div><p class="sg-rule"><code>.sc-ghost--ink</code> and <code>.sc-ghost--paper</code> pin a fixed surface. Automatic ghosts and <code>.sc-adaptive-mark</code> pairs follow the theme. All decorative marks have empty alt text. Never put a watermark over a plot, a table, or body copy.</p></div>
+      <div class="sc-chart-caption"><p>Source: illustrative values · your period goes here</p><a class="sc-signature sc-signature--small" href="https://github.com/spicyChicken59" rel="author"><span class="sc-adaptive-mark" aria-hidden="true"><img class="sc-mark sc-adaptive-mark__dark" src="assets/sc-mark-color-dark.svg" alt=""><img class="sc-mark sc-adaptive-mark__light" src="assets/sc-mark-color-light.svg" alt=""></span><span><span class="sc-signature__name">SpicyChicken</span><span class="sc-signature__sub">made with intent</span></span></a></div>
+      <p class="sg-rule"><code>.sc-signature</code> is a contextual maker credit; <code>.sc-chart-caption</code> reserves room outside the plot. Reports use <code>.sc-report</code>, <code>.sc-report__body</code>, and <code>.sc-report__footer</code>. The original footer watermark stays the same.</p>
+      <div class="sg-block"><h3>Choose the composition</h3><p><a href="templates/landing.html">Website</a> · <a href="templates/dashboard.html">Dashboard</a> · <a href="templates/screener.html">Screener</a> · <a href="templates/report.html">Report</a></p><p class="sg-rule">The <a href="brand-studio.html#preview">responsive preview</a> renders the actual files at phone, tablet, and desktop widths. These are presentation examples with illustrative content.</p></div>
+    </section>
 
     <section class="sg-section" id="hierarchy">
       <div class="sc-eyebrow">01 · Foundations</div>
@@ -861,13 +897,13 @@
         <div class="sc-card"><h3 class="sc-text-good">Do</h3><ul><li>Lead with a lowercase mono eyebrow.</li><li>Keep the masthead and footer dark in both modes.</li><li>Put the chick in the masthead and the watermark; name the project in type.</li><li>Use Instrument Sans for numbers, proportional figures.</li><li>Separate with hairlines and color, not shadow.</li><li>Write the outcome and the reason.</li></ul></div>
         <div class="sc-card"><h3 class="sc-text-danger">Don't</h3><ul><li>Add a hue or a gradient.</li><li>Use spice for text, headings, or large fills — <code>.sc-text-accent</code> is on its way out.</li><li>ALL-CAPS a tracked label — lowercase mono is the house style.</li><li>Use a display face or tabular figures for a big number.</li><li>Ship an icon set without noting the substitution.</li><li>End with a menu of next steps.</li></ul></div>
       </div>
-      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Tag v2.4.0 and pin it from every project — SpicyCar first: <code>https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.4.0/sc.css</code>.</p></div>
+      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Tag v2.5.0 and pin it from every project — SpicyCar first: <code>https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc.css</code>.</p></div>
     </section>
   </main>
 </div>
 
 <footer class="sc-foot">
-  <span>SpicyChicken Design System · v2.4.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
+  <span>SpicyChicken Design System · v2.5.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
   <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a>
 </footer>
 

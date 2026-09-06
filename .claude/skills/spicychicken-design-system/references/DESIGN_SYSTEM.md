@@ -1,4 +1,4 @@
-# SpicyChicken Design System — v2.4.0
+# SpicyChicken Design System — v2.5.0
 
 **The visual standard for everything Mohammed Tahir Madni ships under SpicyChicken.**
 
@@ -10,7 +10,7 @@ Files in this folder:
 
 | File | What it is |
 |---|---|
-| `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.4.0`. |
+| `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.5.0`. |
 | `sc-map.js` | `SC.geo` (projection, topojson, geodesic ring, box fitting — all pure) and `SC.mapView` (pan, zoom, and the marks that must not scale with it). Optional; needed only by a page that draws a map. |
 | `sc-charts.js` | The chart primitives the sheet's `.sc-chart` / `.sc-spark` / `.sc-tooltip` contracts were always describing. Optional; load it after `sc.css`. |
 | `sc-theme.js` | The theme script (source: `build/theme.js`). Reads the saved choice before paint, wires the toggle, and swaps a pinned-dark page to light for printing. Link it or inline it. |
@@ -289,6 +289,19 @@ Validated with the `dataviz` method; re-run the checks if a slot ever changes. C
 
 ## 9. Marks & watermark
 
+**Expanded compositions:** [VISUAL-RECIPES.md](VISUAL-RECIPES.md) and
+[the brand studio](brand-studio.html) demonstrate the v2.5.0 additions. `.sc-cover`
+uses ink, wine, or warm paper; `.sc-brand-panel` provides a dedicated mark texture;
+`.sc-ghost` reserves blank space for a mono mark; `.sc-signature` credits the maker
+outside chart plots. `.sc-chapter`, `.sc-stat-strip`, `.sc-facts`,
+`.sc-empty--brand`, and `.sc-report` complete the page/report vocabulary.
+
+The mark may repeat or appear larger in dedicated brand compositions. Preserve
+geometry and clear space; opacity is allowed for decorative mono ghosts/patterns.
+No body copy, controls, chart series, or table cells may overlap a ghost. Wine and
+paper are brand/editorial surfaces, not new UI-state colours. The original footer
+watermark below remains the standard website endorsement.
+
 **The SpicyChicken mark — the chick — locked 2026-08-23.** Wine head with a file-fold corner,
 teardrop flame comb in spice, cream eyes and diamond beak, on a 24-unit grid. The head is 9 units
 tall; the date it carries is private.
@@ -349,10 +362,10 @@ Measured, not assumed — the numbers are WCAG 2 contrast ratios from the curren
 **Link a pinned version.** Tags are served by jsDelivr; pin the exact release and upgrade on purpose:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.4.0/sc.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc.css">
 ```
 
-`@2` in place of `@v2.4.0` follows the newest 2.x tag (non-breaking upgrades, re-resolved by the CDN
+`@2` in place of `@v2.5.0` follows the newest 2.x tag (non-breaking upgrades, re-resolved by the CDN
 within hours). The GitHub Pages URL `https://spicychicken59.github.io/design-system/sc.css` is
 **latest** — it is what the style guide runs on and it may change on a major, so it is for
 prototypes, not production. Vendoring (copy `sc.css` next to the page) is the third option; note the
@@ -371,8 +384,8 @@ version from its header when you refresh it.
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.4.0/sc.css">
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.4.0/sc-theme.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc.css">
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc-theme.js"></script>
 ```
 
 Order matters: `color-scheme` first so the browser paints the right default before CSS arrives, the
@@ -386,7 +399,7 @@ code changes the attribute), and swaps a pinned-dark page to light for printing.
 nothing else.
 
 **Assets** — every file in `assets/`, at `https://spicychicken59.github.io/design-system/assets/<file>`
-or `https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.4.0/assets/<file>`:
+or `https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/assets/<file>`:
 
 | File | Where it goes |
 |---|---|

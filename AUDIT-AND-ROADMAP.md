@@ -92,6 +92,12 @@ and `DESIGN_SYSTEM.md` §10.
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
 
+- **2.5.0 (2026-09-06, release candidate)** — A richer visual language around the
+  original chick: ink, wine and paper covers; original-mark pattern SVGs; reserved
+  ghosts; contextual signatures; chapters; metric strips; fact rows; branded empty
+  states; an editorial report. A brand studio and four complete compositions make
+  the system usable at page scale. Opt-in additions preserve consumer layouts.
+  See `DESIGN-AUDIT-2026-09.md` and `VISUAL-RECIPES.md`.
 - **2.4.0 (2026-08-30)** — Touch targets follow the pointer, not the viewport.
   The 44px touch-target rules (theme toggle, masthead nav, brand lockup, footer links)
   move out of `@media (max-width: 720px)` into `@media (pointer: coarse)`: a landscape

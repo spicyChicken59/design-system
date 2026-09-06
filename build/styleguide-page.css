@@ -132,3 +132,12 @@
   :root:not([data-theme="light"]) .sg-on-light { display: none; }
   :root:not([data-theme="light"]) .sg-on-dark { display: block; }
 }
+
+/* Brand-led cover; the reusable component supplies the visual language. */
+.sg-cover__inner--brand{display:block;padding-top:var(--sc-s3)}
+.sg-brand-cover{border:0;padding-inline:0}
+.sg-brand-cover .sg-cover__meta{margin-top:var(--sc-s4)}
+.sg-palette-footer{display:flex;align-items:center;flex-wrap:wrap;gap:var(--sc-s3);padding-top:var(--sc-s3);border-top:1px solid var(--sc-ink-line-strong)}
+.sg-palette-footer .sg-bar{width:240px}
+.sg-palette-footer .sg-bar div{height:24px}
+.sg-palette-footer .sg-bar div span{display:none}

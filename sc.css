@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SpicyChicken Design System — sc.css  v2.4.0
+   SpicyChicken Design System — sc.css  v2.5.0
    Mohammed Tahir Madni · github.com/spicyChicken59
 
    One file, no build step. Drop it in (or link it) and every page shares the
@@ -86,6 +86,9 @@
   --sc-text-xs: 11px;  --sc-text-sm: 13px;  --sc-text-md: 15px;  --sc-text-lg: 18px;
   --sc-h3: 20px;  --sc-h2: 28px;  --sc-h1: 40px;  --sc-display: 56px;
   --sc-lh-tight: 1.1;  --sc-lh-heading: 1.2;  --sc-lh-body: 1.6;
+  --sc-cover-title: clamp(36px, 5.5vw, 76px);
+  --sc-stat-value: clamp(28px, 3.5vw, 44px);
+  --sc-mark-display: clamp(112px, 18vw, 224px);
 
   /* Space — 8px rhythm */
   --sc-s0: 4px;  --sc-s1: 8px;  --sc-s2: 16px;  --sc-s3: 24px;  --sc-s4: 32px;
@@ -175,6 +178,14 @@
   --sc-scrim:     linear-gradient(transparent, rgba(9, 17, 27, .82));
   --sc-on-scrim:   var(--sc-white);
   --sc-on-scrim-2: rgba(255, 255, 255, .85);
+
+  /* Brand compositions: wine belongs to the maker, never a status or series. */
+  --sc-brand-wine: var(--sc-wine-900);
+  --sc-brand-paper: #F5F1E9;
+  --sc-on-paper: var(--sc-cobalt-900);
+  --sc-on-paper-2: var(--sc-gray-600);
+  --sc-paper-line: #D4D1CA;
+  --sc-motif-opacity: .055;
 }
 
 /* --------------------------------------------------------------------------
@@ -748,6 +759,192 @@ img.sc-mark--lg { height: 48px; }
 .sc-with-mark { display: flex; align-items: center; gap: 8px; }        /* a heading or label carrying the chick beside its text */
 .sc-with-mark img.sc-mark { height: 18px; }
 .sc-lockup { display: block; height: 20px; width: auto; opacity: .9; } /* the drawn SpicyChicken lockup, as drawn */
+
+/* --------------------------------------------------------------------------
+   4d. BRAND COMPOSITIONS — opt-in; existing consumer layouts stay stable.
+   The exact chick supplies the imagery. Covers reserve an art column; marks
+   never sit over body copy, controls or data. No new logo geometry or effects.
+   -------------------------------------------------------------------------- */
+.sc-cover {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-wrap: wrap;
+  gap: var(--sc-s6); align-items: center;
+  padding: clamp(28px, 5vw, 64px); border-radius: var(--sc-r-lg);
+  background: var(--sc-ink); color: var(--sc-on-ink);
+  border: 1px solid var(--sc-ink-line-strong);
+}
+.sc-cover--wine { background: var(--sc-brand-wine); }
+.sc-cover--paper {
+  color-scheme: light;
+  background: var(--sc-brand-paper); color: var(--sc-on-paper); border-color: var(--sc-paper-line);
+  --sc-heading: var(--sc-on-paper); --sc-text: var(--sc-on-paper);
+  --sc-text-2: var(--sc-on-paper-2); --sc-text-3: var(--sc-on-paper-2);
+  --sc-brand: var(--sc-on-paper); --sc-border: var(--sc-paper-line);
+  --sc-accent: var(--sc-spice-700); --sc-accent-hover: var(--sc-spice-800);
+  --sc-on-accent: var(--sc-white); --sc-focus: var(--sc-spice-700);
+  --sc-surface: var(--sc-white); --sc-hover: var(--sc-gray-100);
+  --sc-raised: var(--sc-cobalt-50); --sc-border-strong: var(--sc-gray-400);
+  --sc-border-control: var(--sc-gray-500); --sc-brand-strong: var(--sc-cobalt-600);
+  --sc-brand-fill: var(--sc-cobalt-100); --sc-brand-line: var(--sc-cobalt-700);
+  --sc-accent-fill: #FFE9E2; --sc-selection: var(--sc-cobalt-200);
+  --sc-good: #1B7E2A; --sc-good-fill: #E3F4E2;
+  --sc-warn: #906400; --sc-warn-fill: #F9EDD9;
+  --sc-danger: #BE2132; --sc-danger-fill: #FFE8E7;
+  --sc-info: var(--sc-cobalt-600); --sc-info-fill: #E4F0FF;
+  --sc-chart-1: #2766B1; --sc-chart-2: #D24100; --sc-chart-3: #00856E;
+  --sc-chart-4: #7541B8; --sc-chart-5: #BC3181; --sc-chart-context: #737B86;
+  --sc-chart-emphasis: var(--sc-cobalt-600); --sc-chart-grid: #E6EBF2;
+}
+.sc-cover__content { flex: 2 1 380px; min-width: 0; position: relative; z-index: 1; }
+.sc-cover__title {
+  font: 700 var(--sc-cover-title)/1.02 var(--sc-font-display);
+  letter-spacing: -.045em; max-width: 14ch; margin: var(--sc-s3) 0;
+  overflow-wrap: anywhere; text-wrap: balance;
+}
+.sc-cover__dek { max-width: 48ch; margin: 0; font-size: var(--sc-text-lg); color: var(--sc-text-2); line-height: 1.6; }
+.sc-cover__meta { display: flex; flex-wrap: wrap; gap: var(--sc-s1) var(--sc-s3); margin-top: var(--sc-s4); font: 500 11px/1.6 var(--sc-font-mono); color: var(--sc-text-2); }
+.sc-cover__actions { display: flex; flex-wrap: wrap; gap: var(--sc-s1); margin-top: var(--sc-s4); }
+.sc-cover__art { flex: 1 1 160px; min-width: 0; display: grid; place-items: center; gap: var(--sc-s4); padding: var(--sc-s3); }
+.sc-cover__art > img { display: block; width: min(100%, var(--sc-mark-display)); height: auto; }
+.sc-cover__caption { font: 500 11px/1.5 var(--sc-font-mono); color: var(--sc-text-2); text-align: center; letter-spacing: .04em; }
+.sc-cover--compact { padding: var(--sc-s4); gap: var(--sc-s4); }
+.sc-cover--compact .sc-cover__title { font-size: clamp(30px, 4vw, 44px); max-width: 22ch; }
+.sc-cover--compact .sc-cover__art > img { max-width: 96px; }
+
+/* A dedicated decorative panel. Its text has an opaque surface, so pattern
+   density cannot change text contrast. The pattern SVG reuses the locked mark. */
+.sc-brand-panel { position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: flex-end; min-height: 260px; padding: var(--sc-s3); border-radius: var(--sc-r-lg); background: var(--sc-ink); border: 1px solid var(--sc-ink-line-strong); }
+.sc-brand-panel--wine { background: var(--sc-brand-wine); }
+.sc-brand-panel--paper { background: var(--sc-brand-paper); border-color: var(--sc-paper-line); }
+.sc-brand-panel { --sc-focus: var(--sc-spice-400); }
+.sc-brand-panel--paper { --sc-focus: var(--sc-spice-700); }
+.sc-brand-panel__pattern { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; pointer-events: none; user-select: none; }
+.sc-brand-panel__label { padding: var(--sc-s1) var(--sc-s2); border-radius: var(--sc-r-sm); background: var(--sc-ink); color: var(--sc-on-ink); font: 500 11px/1.6 var(--sc-font-mono); }
+.sc-brand-panel--paper .sc-brand-panel__label { background: var(--sc-brand-paper); color: var(--sc-on-paper); }
+.sc-brand-panel a.sc-brand-panel__label:hover { color: var(--sc-on-ink); text-decoration: underline; }
+.sc-brand-panel--paper a.sc-brand-panel__label:hover { color: var(--sc-on-paper); }
+
+/* Decorative watermark: reserve its own space, use alt="" + aria-hidden,
+   never place this on a chart's plot area. Mono pairs follow the local theme. */
+.sc-ghost { display: grid; place-items: center; min-height: 180px; overflow: hidden; pointer-events: none; user-select: none; }
+.sc-ghost > img { width: min(60%, 200px); height: auto; opacity: var(--sc-motif-opacity); grid-area: 1 / 1; }
+.sc-ghost > .sc-ghost__light { display: none; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .sc-ghost__dark { display: none; }
+  :root:not([data-theme="dark"]) .sc-ghost__light { display: block; }
+}
+:root[data-theme="light"] .sc-ghost__dark { display: none; }
+:root[data-theme="light"] .sc-ghost__light { display: block; }
+.sc-ghost.sc-ghost--ink > .sc-ghost__dark { display: block; }
+.sc-ghost.sc-ghost--ink > .sc-ghost__light { display: none; }
+.sc-ghost.sc-ghost--paper > .sc-ghost__dark { display: none; }
+.sc-ghost.sc-ghost--paper > .sc-ghost__light { display: block; }
+
+/* The signature is contextual and legible. Existing .sc-watermark remains
+   the unchanged footer endorsement. This works in paper and chart captions. */
+.sc-signature { display: inline-flex; align-items: center; gap: var(--sc-s1); color: inherit; border: 0; text-decoration: none; min-height: 24px; }
+.sc-signature:hover { color: inherit; border: 0; text-decoration: underline; text-underline-offset: 4px; }
+.sc-signature img { display: block; width: auto; height: 24px; }
+.sc-signature__name { font: 700 15px/1.1 var(--sc-font-display); letter-spacing: -.025em; }
+.sc-signature__sub { display: block; margin-top: 5px; font: 500 10px/1.3 var(--sc-font-mono); letter-spacing: .01em; color: var(--sc-text-2); }
+.sc-signature--small img { height: 18px; }
+.sc-signature--small .sc-signature__name { font-size: 12px; }
+.sc-signature--small .sc-signature__sub { display: none; }
+
+/* A chapter changes rhythm without adding another card boundary. */
+.sc-chapter { display: flex; gap: var(--sc-s2); align-items: baseline; padding-block: var(--sc-s3); border-top: 1px solid var(--sc-border-strong); }
+.sc-chapter__index { flex: none; font: 500 12px/1.4 var(--sc-font-mono); color: var(--sc-text-3); }
+.sc-chapter__body { flex: 1; min-width: 0; }
+.sc-chapter__body > :is(h2,h3) { margin: 0; }
+.sc-chapter__body > p { margin: var(--sc-s1) 0 0; max-width: 64ch; color: var(--sc-text-2); }
+.sc-chapter__meta { font: 500 11px/1.5 var(--sc-font-mono); color: var(--sc-text-3); }
+
+/* One shared surface for related metrics. The lead is typographic, never
+   green/red numeric text. Each number keeps its unit and source context. */
+.sc-stat-strip { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); margin: 0; border: 1px solid var(--sc-border); border-radius: var(--sc-r-lg); background: var(--sc-surface); overflow: hidden; }
+.sc-stat-strip--2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.sc-stat-strip--4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+.sc-stat { min-width: 0; padding: var(--sc-s3); }
+.sc-stat + .sc-stat { border-left: 1px solid var(--sc-border); }
+.sc-stat--lead { background: var(--sc-brand-fill); }
+.sc-stat__label { font: 500 11px/1.5 var(--sc-font-mono); color: var(--sc-text-2); text-transform: lowercase; }
+.sc-stat__value { margin: var(--sc-s2) 0 var(--sc-s1); font: 700 var(--sc-stat-value)/1.1 var(--sc-font-body); letter-spacing: -.045em; color: var(--sc-heading); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.sc-stat__note { margin: 0; font-size: var(--sc-text-sm); color: var(--sc-text-2); }
+
+/* SpicyStock's portable fact-row design, promoted without its scoring logic. */
+.sc-facts { display: flex; flex-wrap: wrap; gap: var(--sc-s2) var(--sc-s4); margin: var(--sc-s3) 0 0; padding-top: var(--sc-s2); border-top: 1px solid var(--sc-border); }
+.sc-facts > div { min-width: 0; }
+.sc-facts dt { font: 500 11px/1.4 var(--sc-font-mono); color: var(--sc-text-2); text-transform: lowercase; }
+.sc-facts dd { margin: var(--sc-s0) 0 0; color: var(--sc-heading); font-size: var(--sc-text-md); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+
+.sc-chart-caption { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--sc-s1) var(--sc-s3); border-top: 1px solid var(--sc-border); padding-top: var(--sc-s2); margin-top: var(--sc-s2); font-size: var(--sc-text-sm); color: var(--sc-text-2); }
+.sc-chart-caption > p { margin: 0; max-width: 65ch; }
+.sc-empty--brand { display: grid; justify-items: center; gap: var(--sc-s2); padding: var(--sc-s6) var(--sc-s3); text-align: center; border: 1px dashed var(--sc-border-strong); border-radius: var(--sc-r-lg); background: var(--sc-surface); }
+.sc-empty--brand > img { height: 48px; width: auto; }
+.sc-empty--brand > :is(h2,h3) { margin: 0; font-size: var(--sc-h3); }
+.sc-empty--brand > p { max-width: 44ch; margin: 0; color: var(--sc-text-2); }
+.sc-adaptive-mark { display: inline-grid; }
+.sc-adaptive-mark > img { grid-area: 1 / 1; }
+.sc-adaptive-mark > .sc-adaptive-mark__light { display: none; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .sc-adaptive-mark__dark { display: none; }
+  :root:not([data-theme="dark"]) .sc-adaptive-mark__light { display: block; }
+}
+:root[data-theme="light"] .sc-adaptive-mark__dark { display: none; }
+:root[data-theme="light"] .sc-adaptive-mark__light { display: block; }
+.sc-on-ink .sc-adaptive-mark > .sc-adaptive-mark__dark { display: block; }
+.sc-on-ink .sc-adaptive-mark > .sc-adaptive-mark__light { display: none; }
+.sc-cover--paper .sc-adaptive-mark > .sc-adaptive-mark__dark { display: none; }
+.sc-cover--paper .sc-adaptive-mark > .sc-adaptive-mark__light { display: block; }
+.sc-empty--brand .sc-adaptive-mark > img { height: 48px; width: auto; }
+@media (pointer: coarse) {
+  .sc-signature { min-height: 44px; }
+  .sc-brand-panel a.sc-brand-panel__label { display: inline-flex; align-items: center; min-height: 44px; }
+}
+
+/* A real paper composition: branded front sheet, open editorial body, a
+   compact source/signature footer. No ink-heavy background behind the report. */
+.sc-report { max-width: var(--sc-w-prose); margin: var(--sc-s6) auto; background: var(--sc-surface); border: 1px solid var(--sc-border); border-radius: var(--sc-r-lg); overflow: hidden; }
+.sc-report > .sc-cover { border: 0; border-radius: 0; }
+.sc-report__body { padding: clamp(24px, 5vw, 56px); }
+.sc-report__body > :first-child { margin-top: 0; }
+.sc-report__footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--sc-s2); padding: var(--sc-s3) clamp(24px, 5vw, 56px); border-top: 1px solid var(--sc-border); font: 500 11px/1.6 var(--sc-font-mono); color: var(--sc-text-2); }
+@media (max-width: 720px) {
+  .sc-cover { gap: var(--sc-s4); }
+  .sc-cover__title { max-width: 18ch; }
+  .sc-cover__art { justify-items: start; grid-template-columns: auto 1fr; padding: 0; }
+  .sc-cover__art > img { max-width: 72px; }
+  .sc-cover__caption { text-align: left; }
+  .sc-cover--compact { padding: var(--sc-s3); gap: var(--sc-s2); }
+  .sc-cover--compact .sc-cover__title { margin-block: var(--sc-s2); }
+  .sc-cover--compact .sc-cover__dek { font-size: var(--sc-text-md); }
+  .sc-cover--compact .sc-cover__meta { margin-top: var(--sc-s2); }
+  .sc-cover--compact .sc-cover__art > img { width: 40px; }
+  .sc-cover--compact .sc-cover__art { gap: var(--sc-s2); }
+  .sc-stat-strip--4 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .sc-stat-strip--4 > .sc-stat:nth-child(3) { border-left: 0; }
+  .sc-stat-strip--4 > .sc-stat:nth-child(n+3) { border-top: 1px solid var(--sc-border); }
+  .sc-chapter { flex-wrap: wrap; }
+  .sc-chapter__meta { flex-basis: 100%; }
+  .sc-report { margin: var(--sc-s3) auto; }
+}
+@media (max-width: 480px) {
+  .sc-stat-strip { grid-template-columns: minmax(0,1fr); }
+  .sc-stat-strip > .sc-stat + .sc-stat { border-left: 0; border-top: 1px solid var(--sc-border); }
+}
+@media (forced-colors: active) {
+  .sc-brand-panel__pattern, .sc-ghost { display: none; }
+  .sc-cover, .sc-brand-panel, .sc-report, .sc-stat-strip { border: 1px solid CanvasText; }
+}
+@media print {
+  .sc-cover { break-inside: avoid; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .sc-cover__actions, .sc-ghost, .sc-brand-panel { display: none; }
+  .sc-report { max-width: none; border: 0; border-radius: 0; margin: 0; }
+  .sc-report__body { padding: 24pt 0; }
+  .sc-report__footer { padding: 12pt 0; }
+  .sc-chapter { break-after: avoid; }
+  .sc-stat-strip, .sc-facts { break-inside: avoid; }
+}
 
 /* --------------------------------------------------------------------------
    5. UTILITIES

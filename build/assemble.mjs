@@ -7,7 +7,7 @@
 //   --out DIR  (or SC_ASSEMBLE_OUT=DIR) writes DIR/styleguide.html and
 //              DIR/build/artifact/styleguide.html instead of the repo copies.
 //              Inputs are always read from the repo.
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, extname, join } from 'node:path';
 
@@ -86,8 +86,14 @@ writeFileSync(join(OUT, 'sc-map.js'), `/* SpicyChicken Design System — sc-map.
   writeFileSync(join(SKILL, 'assets', 'sc.css'), cssSys);
   writeFileSync(join(SKILL, 'assets', 'starter.html'), read(join(DS, 'starter.html')));
   for (const f of ['sc-theme.js', 'sc-charts.js', 'sc-map.js']) writeFileSync(join(SKILL, 'assets', f), read(join(OUT, f)));
-  for (const f of ['DESIGN_SYSTEM.md', 'PLAIN-HTML.md', 'CHECKLIST.md'])
+  for (const f of ['DESIGN_SYSTEM.md', 'PLAIN-HTML.md', 'CHECKLIST.md', 'VISUAL-RECIPES.md'])
     writeFileSync(join(SKILL, 'references', f), read(join(DS, f)));
+  mkdirSync(join(SKILL, 'assets', 'assets'), { recursive: true });
+  for (const f of readdirSync(join(DS, 'assets')).filter(f => f.endsWith('.svg')))
+    writeFileSync(join(SKILL, 'assets', 'assets', f), read(join(DS, 'assets', f)));
+  mkdirSync(join(SKILL, 'assets', 'templates'), { recursive: true });
+  for (const f of ['landing.html', 'dashboard.html', 'screener.html', 'report.html'])
+    writeFileSync(join(SKILL, 'assets', 'templates', f), read(join(DS, 'templates', f)));
 }
 
 // Artifact: no doctype/html/head/body — the publisher adds the skeleton.

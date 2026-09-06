@@ -8,6 +8,9 @@ guide, it's a new component — fold it into the system or take it out.
 - [ ] Title block (`.sc-title`) opens with an eyebrow; h1 is one plain sentence; dek is one sentence.
 - [ ] Exactly one spice action per view (primary button or next-action callout); at most one core callout per section.
 - [ ] Page CSS references semantic tokens only — no hex, no primitives.
+- [ ] Brand compositions preserve the original chick and clear space; no ghost or pattern overlaps evidence or body copy.
+- [ ] Cover tone matches its mark form; paper controls remain readable in dark mode; compact covers wrap in narrow containers.
+- [ ] New layouts use `VISUAL-RECIPES.md`; example content and specimen links are replaced before product use.
 - [ ] Charts use `--sc-chart-*` inside a `.sc-chart` host; one y-axis; legend for ≥2 series; a table twin under each.
 - [ ] Text never wears a chart, status or accent color; deltas carry ▲▼; chips carry words; links in tables are quiet.
 - [ ] `hidden` hides things — no `style="display:none"`, no inline sizes on headings or the watermark.

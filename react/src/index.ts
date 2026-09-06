@@ -1,5 +1,5 @@
 /**
- * SpicyChicken — React bindings for sc.css (v2.1.0).
+ * SpicyChicken — React bindings for sc.css (v2.5.0).
  *
  * Thin wrappers over the design system's own classes: every component emits the
  * markup the style guide already documents, forwards its ref to the element it
@@ -24,6 +24,10 @@ export { ThemeToggle, type ThemeToggleProps, type ThemeChoice } from './ThemeTog
 export { Footer, type FooterProps } from './Footer.js';
 export { Watermark, type WatermarkProps } from './Watermark.js';
 export { Mark, type MarkProps } from './Mark.js';
+export { AdaptiveMark, Cover, type CoverProps, Ghost, type GhostProps,
+  Signature, type SignatureProps, Chapter, type ChapterProps,
+  StatStrip, type StatStripProps, Stat, type StatProps,
+  Facts, type FactsProps, BrandedEmpty, type BrandedEmptyProps } from './Visual.js';
 
 // Title block
 export { Title, type TitleProps } from './Title.js';

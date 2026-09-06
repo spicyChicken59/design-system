@@ -118,7 +118,9 @@ if (!problems.length) ok(`version v${V} everywhere`);
   try {
     execFileSync(process.execPath, [join(HERE, 'gen-tokens.mjs'), join(ROOT, 'sc.css'), join(tmp, 'tokens.json')], { stdio: 'pipe' });
     execFileSync(process.execPath, [join(HERE, 'assemble.mjs'), '--out', tmp], { stdio: 'pipe' });
-    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js']) {
+    execFileSync(process.execPath, [join(HERE, 'templates.mjs'), '--out', tmp], { stdio: 'pipe' });
+    execFileSync(process.execPath, [join(HERE, 'brand-assets.mjs'), '--out', tmp], { stdio: 'pipe' });
+    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', ...['landing','dashboard','screener','report'].map(p => `templates/${p}.html`), ...['ink','wine','paper'].map(p => `assets/sc-pattern-${p}.svg`)]) {
       const fresh = norm(readFileSync(join(tmp, f), 'utf8'));
       if (!existsSync(join(ROOT, f))) fail(`${f}: missing — run npm run build`);
       else if (read(f) !== fresh) fail(`${f}: stale — differs from a fresh generation; run npm run build`);
@@ -324,7 +326,8 @@ if (!problems.length) ok(`version v${V} everywhere`);
                               ['assets/starter.html', 'starter.html'],
                               ['references/DESIGN_SYSTEM.md', 'DESIGN_SYSTEM.md'],
                               ['references/PLAIN-HTML.md', 'PLAIN-HTML.md'],
-                              ['references/CHECKLIST.md', 'CHECKLIST.md']]) {
+                              ['references/CHECKLIST.md', 'CHECKLIST.md'],
+                              ['references/VISUAL-RECIPES.md', 'VISUAL-RECIPES.md']]) {
       const p = join(SKILL, rel);
       if (!existsSync(join(ROOT, p))) fail(`${p}: missing — run node build/assemble.mjs`);
       else if (read(p) !== read(src)) fail(`${p}: differs from ${src} — run node build/assemble.mjs`);
@@ -350,6 +353,9 @@ if (!problems.length) ok(`version v${V} everywhere`);
     else ok(rows.length + ' contrast pairs pass (text >= 4.5:1, ui >= 3:1)');
   } catch (e) { fail('contrast: ' + e.message); }
 }
+
+try { execFileSync(process.execPath, [join(HERE, 'visual-check.mjs')], { stdio: 'pipe' }); ok('visual templates, anchors and original pattern artwork verified'); }
+catch (e) { fail('visual deliverables: ' + (e.stderr?.toString().trim() || e.message)); }
 
 if (warnings.length) {
   for (const w of warnings) console.log('  --  ' + w);

@@ -112,3 +112,12 @@ before inventing anything. `guidelines/DESIGN_SYSTEM.md` is the standard in full
   <Footer source="Source · method · last updated" />
 </>
 ```
+
+### Brand compositions (2.5.0)
+
+Use `Cover`, `Ghost`, `Signature`, `AdaptiveMark`, `Chapter`, `StatStrip` / `Stat`,
+`Facts`, and `BrandedEmpty` for the visual recipes in `VISUAL-RECIPES.md`. The brand
+studio shows complete websites, dashboards, screeners and reports. `Cover` defaults
+to ink; `tone="wine"` is a brand moment; `tone="paper"` scopes its own light colours.
+The original chick has its own art column. Watermarks reserve blank space and never
+overlap data or body copy. Keep the original footer signature.

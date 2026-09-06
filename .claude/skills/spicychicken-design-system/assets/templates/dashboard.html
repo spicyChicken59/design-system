@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Dashboard · SpicyChicken design specimen</title>
+<meta name="description" content="A reusable SpicyChicken dashboard layout. Illustrative content, not a live product.">
+<link rel="icon" href="../assets/sc-avatar-tile.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../sc.css">
+<script src="../sc-theme.js">
+</script>
+<style>.example-main figure,.sc-report figure{margin:0}.example-plot{display:grid;grid-template-columns:32px minmax(0,1fr);gap:8px}.example-y{display:flex;flex-direction:column;justify-content:space-between}.example-y,.example-x{font:500 11px/1.4 var(--sc-font-mono);color:var(--sc-text-2)}.example-plot svg{display:block;width:100%;height:auto}.example-x{grid-column:2;display:flex;justify-content:space-between}.example-main{padding-block:var(--sc-s4) var(--sc-s8)}.example-main>section+section{margin-top:var(--sc-s6)}.example-note{margin-block:var(--sc-s3);color:var(--sc-text-2)}.example-columns{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:var(--sc-s3);align-items:start}.example-columns>*{min-width:0}.example-quote{font:600 clamp(24px,3vw,36px)/1.25 var(--sc-font-display);letter-spacing:-.025em;margin:0}.example-panel{min-height:340px}.example-report-wrap{padding-inline:var(--sc-s2)}@media(max-width:720px){.example-columns{grid-template-columns:minmax(0,1fr)}}@media print{.example-main{padding:0}.example-columns{display:block}.example-note{font-size:10pt}}</style>
+</head>
+<body>
+<a class="sc-skip" href="#main">Skip to content</a>
+<header class="sc-masthead">
+<a class="sc-brand" href="../brand-studio.html">
+<img class="sc-mark" src="../assets/sc-mark-color-dark.svg" alt="" width="342" height="405">
+<span>
+<span class="sc-brand__name">SpicyCar</span>
+<span class="sc-brand__sub">purchase intelligence · design specimen</span>
+</span>
+</a>
+<div class="sc-masthead__right">
+<div class="sc-theme-toggle" role="group" aria-label="Theme">
+<button type="button" data-theme="dark">Dark</button>
+<button type="button" data-theme="light">Light</button>
+<button type="button" data-theme="auto">Auto</button>
+</div>
+</div>
+</header>
+<main class="sc-wrap sc-wrap--wide example-main" id="main">
+<section class="sc-cover sc-on-ink  sc-cover--compact">
+<div class="sc-cover__content">
+<div class="sc-eyebrow">SpicyCar · purchase intelligence</div>
+<h1 class="sc-cover__title">The watchlist.</h1>
+<p class="sc-cover__dek">The numbers that matter, with enough space to see the difference.</p>
+<div class="sc-cover__meta">
+<span>design specimen</span>
+<span>illustrative content</span>
+</div>
+</div>
+<div class="sc-cover__art" aria-hidden="true">
+<img class="sc-mark" src="../assets/sc-mark-color-dark.svg" alt="" width="342" height="405">
+<span class="sc-cover__caption">a SpicyChicken creation</span>
+</div>
+</section>
+<section>
+<header class="sc-chapter">
+<span class="sc-chapter__index" aria-hidden="true">01</span>
+<div class="sc-chapter__body">
+<h2>The decision</h2>
+<p>A shared metric strip gives the lead number room without nesting another layer of cards.</p>
+</div>
+</header>
+<dl class="sc-stat-strip">
+<div class="sc-stat sc-stat--lead">
+<dt class="sc-stat__label">lowest asking</dt>
+<dd class="sc-stat__value">$42,600</dd>
+<dd class="sc-stat__note">Illustrative listing · before tax and fees</dd>
+</div>
+<div class="sc-stat ">
+<dt class="sc-stat__label">listings compared</dt>
+<dd class="sc-stat__value">74</dd>
+<dd class="sc-stat__note">Example watchlist</dd>
+</div>
+<div class="sc-stat ">
+<dt class="sc-stat__label">price movement</dt>
+<dd class="sc-stat__value">−12.3%</dd>
+<dd class="sc-stat__note">▼ Over the four illustrated weeks</dd>
+</div>
+</dl>
+</section>
+<section class="example-columns">
+<div>
+<figure class="sc-card">
+<div class="sc-card__head">
+<div>
+<h3>Asking price over time</h3>
+<p class="sc-hint">An illustrative four-week series, in US dollars.</p>
+</div>
+<span class="sc-chip sc-chip--neutral">example</span>
+</div>
+<div class="sc-chart" style="--sc-tone: var(--sc-chart-emphasis)" role="group" aria-label="Asking price fell from $48,600 to $42,600 over four weeks. Values in the table below.">
+<div class="example-plot">
+<div class="example-y" aria-hidden="true">
+<span>50k</span>
+<span>46k</span>
+<span>42k</span>
+</div>
+<svg viewBox="0 0 560 180" aria-hidden="true" focusable="false">
+<path class="sc-chart__grid" d="M8 4H552M8 90H552M8 176H552"/>
+<path class="sc-chart__series" d="M8 34.1L189.3 57.75L370.7 109.35L552 163.1"/>
+<g class="sc-chart__marker">
+<circle cx="8" cy="34.1" r="4"/>
+<circle cx="189.3" cy="57.75" r="4"/>
+<circle cx="370.7" cy="109.35" r="4"/>
+<circle cx="552" cy="163.1" r="4"/>
+</g>
+</svg>
+<div class="example-x" aria-hidden="true">
+<span>W1</span>
+<span>W2</span>
+<span>W3</span>
+<span>W4</span>
+</div>
+</div>
+<details class="sc-details">
+<summary>View the data</summary>
+<div class="sc-table-scroll">
+<table class="sc-table">
+<caption class="sc-sr-only">Illustrative asking prices by week</caption>
+<thead>
+<tr>
+<th scope="col">week</th>
+<th scope="col" class="sc-num">asking price</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Week 1</th>
+<td class="sc-num">$48,600</td>
+</tr>
+<tr>
+<th scope="row">Week 2</th>
+<td class="sc-num">$47,500</td>
+</tr>
+<tr>
+<th scope="row">Week 3</th>
+<td class="sc-num">$45,100</td>
+</tr>
+<tr>
+<th scope="row">Week 4</th>
+<td class="sc-num">$42,600</td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+<figcaption class="sc-chart-caption">
+<p>Source: illustrative values. The maker’s signature sits outside the plot.</p>
+<a class="sc-signature sc-signature--small" href="https://github.com/spicyChicken59" rel="author">
+<span class="sc-adaptive-mark" aria-hidden="true">
+<img class="sc-mark sc-adaptive-mark__dark" src="../assets/sc-mark-color-dark.svg" alt="" width="342" height="405">
+<img class="sc-mark sc-adaptive-mark__light" src="../assets/sc-mark-color-light.svg" alt="" width="342" height="405">
+</span>
+<span class="sc-signature__name">SpicyChicken</span>
+</a>
+</figcaption>
+</figure>
+</div>
+<div class="sc-stack">
+<article class="sc-card">
+<div class="sc-eyebrow">the shortlist</div>
+<h3>BMW i5</h3>
+<p class="sc-hint">The product name leads. The supporting facts follow in a consistent row.</p>
+<dl class="sc-facts">
+<div>
+<dt>Year</dt>
+<dd>2024</dd>
+</div>
+<div>
+<dt>Mileage</dt>
+<dd>17,300 mi</dd>
+</div>
+<div>
+<dt>Condition</dt>
+<dd>Pre-owned</dd>
+</div>
+</dl>
+</article>
+<aside class="sc-callout sc-callout--core">
+<div class="sc-callout__label">Reading the view</div>
+<p>The large figure answers the first question. Labels, period, and source answer the next three.</p>
+</aside>
+</div>
+</section>
+<section>
+<div class="sc-callout sc-callout--spice">
+<div class="sc-callout__label">next</div>
+<h3>Use this rhythm in your next dashboard.</h3>
+<p>
+<a href="../brand-studio.html#recipes">See the composition recipes <span aria-hidden="true">↗</span>
+</a>
+</p>
+</div>
+</section>
+</main>
+<footer class="sc-foot">
+<span>SpicyChicken · design specimen · illustrative content</span>
+<a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author">
+<img class="sc-mark" src="../assets/sc-mark-mono-cream.svg" alt="" width="342" height="405">
+<span class="sc-watermark__name">SpicyChicken</span>
+</a>
+</footer>
+</body>
+</html>
