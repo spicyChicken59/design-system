@@ -115,3 +115,50 @@ its value is known, and a loading indicator only while work is pending.
 Avoid stacking effects. One arrival for the opening mark and quiet section
 reveals are enough for a full page. Tables, prices, scores and chart labels stay
 readable throughout. The motion library never invents or counts up a value.
+
+
+## Compose a complete page
+
+`composition-studio.html` configures the four actual templates. Choose a composition,
+cover surface, original-mark treatment, optional brand arrival and canvas width.
+An optional headline is inserted as text. Copy or download returns a complete HTML
+document with dependencies in a sibling `design-system/` folder; preview-only files
+and private example styles are excluded. The content stays explicitly illustrative.
+
+Use one committed snapshot from `build/vendor.mjs`. Copy all assets together, then
+replace the sample content, project links, metadata and document title for the real
+page. Preview width affects only the studio canvas, never the exported page.
+
+| Pattern | Use | Contract |
+|---|---|---|
+| Brand stage | A mark beside an opener or within a collection tile | `.sc-brand-stage--orbit` or `--ledger`; original SVG and reserved clear space. |
+| Evidence | A finding, chart/table and source | `.sc-evidence` with `__plot` and `__source`; frame outside the chart's measured host. |
+| Insight | One analytical sentence | `.sc-insight`; authored content determines certainty, never styling. |
+| Dossier | A car, project, collection object or research record | Distinct `__title`, `__meta`, `__evidence`, `__actions` inside `__body`. |
+| Research table | Measures with real explanations | `.sc-table--research`; preserve column order, numeric alignment and a labeled scroller. |
+| Disclosure | Optional supporting detail | Native `.sc-details.sc-disclosure`; optional `__body` opening fade respects reduced motion and pause. |
+| Inline empty state | A missing image/chart beside useful evidence | `.sc-empty--inline`; retain the complete reason, never a fabricated zero. |
+| Reading rail | A long report or methodology | `.sc-reading` with `__body` and `.sc-chapter-nav--rail`; native anchors always work. |
+
+## Chapter location
+
+Load `sc-reading.js` with `defer` and use existing same-page links:
+
+```html
+<nav class="sc-chapter-nav" data-sc-reading aria-label="On this page">
+  <a href="#finding">The finding</a>
+  <a href="#evidence">The evidence</a>
+</nav>
+```
+
+The optional script sets `aria-current="location"` on the nearest available
+chapter. It never intercepts a click, changes the URL, scrolls, or moves focus.
+Hidden sections are excluded. Call `SC.reading.refresh()` after an asynchronous
+render or a visibility change. `init(root?)`, `refresh(root?)`, and `destroy(root?)`
+are idempotent; teardown restores authored `aria-current` values and removes the
+shared scroll/resize listeners when no navigators remain. React applications that
+mount a new navigator after initial loading should refresh it in their effect and
+destroy that root in cleanup.
+
+The rail wraps on phones and is removed from print. It operates independently of
+motion, so pausing decorative animation never disables navigation.

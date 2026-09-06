@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light"><title>SpicyChicken · Composition studio</title>
+  <meta name="description" content="Compose a complete SpicyChicken website, dashboard, screener or report. Choose the surface, brand art and motion, then take the complete HTML.">
+  <link rel="icon" href="assets/sc-avatar-tile.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="sc.css"><link rel="stylesheet" href="build/composition-studio.css">
+  <script src="sc-theme.js"></script><script src="build/composition-studio.js" defer></script>
+</head>
+<body>
+<a class="sc-skip" href="#main">Skip to content</a>
+<header class="sc-masthead"><a class="sc-brand" href="brand-studio.html"><img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt=""><span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">composition studio</span></span></a><div class="sc-masthead__right"><nav class="sc-nav" aria-label="Studio"><a href="visual-library.html">Recipes</a><a href="styleguide.html">Reference</a></nav><div class="sc-theme-toggle" role="group" aria-label="Theme"><button type="button" data-theme="dark">Dark</button><button type="button" data-theme="light">Light</button><button type="button" data-theme="auto">Auto</button></div></div></header>
+<main id="main" class="sc-wrap sc-wrap--wide composer-main">
+  <header class="composer-heading"><div><p class="sc-eyebrow">the composition studio</p><h1>Your next page,<br>with character.</h1><p>Choose a composition. Set its tone. Take the whole page.</p></div><div class="composer-signature sc-on-ink" aria-hidden="true"><span class="sc-brand-stage sc-brand-stage--ledger sc-brand-stage--compact"><img src="assets/sc-mark-mono-cream.svg" alt="" width="342" height="405"><span class="sc-brand-stage__caption">made with SpicyChicken</span></span></div></header>
+  <noscript><p class="sc-insight">The website specimen is below. Enable JavaScript to configure and export it, or open the <a href="templates/landing.html">complete website</a>, <a href="templates/dashboard.html">dashboard</a>, <a href="templates/screener.html">screener</a>, or <a href="templates/report.html">report</a>.</p></noscript>
+  <div class="composer-workspace">
+    <aside id="composer-tools" hidden>
+      <form id="composer-form" class="composer-controls">
+        <div class="composer-control-group"><h2><span>01</span> Structure</h2><label class="sc-field">Composition<select class="sc-select" id="composer-layout"><option value="landing">Website</option><option value="dashboard">Dashboard</option><option value="screener">Screener</option><option value="report">Report</option></select></label><label class="sc-field">Page headline<input id="composer-title" class="sc-input" type="text" maxlength="140" placeholder="Use the composition headline"><span class="sc-hint">Optional. Preview your own title.</span></label></div>
+        <div class="composer-control-group"><h2><span>02</span> Character</h2><label class="sc-field">Cover surface<select class="sc-select" id="composer-surface"><option value="ink">Ink · focused</option><option value="wine" selected>Wine · expressive</option><option value="paper">Paper · editorial</option></select></label><label class="sc-field">Brand artwork<select class="sc-select" id="composer-art"><option value="none">Original mark</option><option value="orbit" selected>Signal rings</option><option value="ledger">Editorial frame</option></select></label><label class="composer-checkbox"><input type="checkbox" id="composer-motion" checked><span>Subtle brand arrival<small>Honours reduced motion.</small></span></label></div>
+        <div class="composer-control-group"><h2><span>03</span> Inspect</h2><label class="sc-field">Canvas width<select class="sc-select" id="composer-width"><option value="390">Phone · 390px</option><option value="320">Small phone · 320px</option><option value="768">Tablet · 768px</option><option value="1120">Desktop · 1120px</option></select></label></div>
+        <div class="composer-export"><button class="sc-btn sc-btn--primary" type="button" id="composer-copy" disabled>Copy complete page</button><button class="sc-btn sc-btn--secondary" type="button" id="composer-download" disabled>Download HTML <span aria-hidden="true">↓</span></button></div>
+      </form>
+      <div class="composer-outline"><h2>Inside this composition</h2><ol id="composer-outline"></ol><a class="sc-link--quiet" href="visual-library.html">Find individual recipes <span aria-hidden="true">↗</span></a></div>
+    </aside>
+    <section class="composer-canvas" aria-label="Composition preview"><div class="composer-canvas__bar"><span><i aria-hidden="true"></i> Live composition</span><span>Illustrative content</span></div><div class="composer-canvas__well"><iframe id="composer-frame" src="templates/landing.html" title="Website composition preview at 390 pixels"></iframe></div><p id="composer-status" class="composer-status" role="status">Choose a composition to begin.</p></section>
+  </div>
+  <section class="composer-takeaway"><div><p class="sc-eyebrow">ready for the next build</p><h2>A complete starting point.</h2><p>The page uses the shared SpicyChicken components and original brand assets. Replace the illustrative content with your own evidence and keep the hierarchy.</p></div><div class="sc-insight"><strong>Keep the assets together.</strong><p>Place the verified <code>design-system/</code> asset folder beside your exported page. The <a href="README.md">snapshot guide</a> shows the setup.</p></div></section>
+  <details class="sc-details sc-disclosure composer-source"><summary>Inspect the complete HTML</summary><pre id="composer-source" tabindex="0" aria-label="Complete page HTML"><code>Choose a composition to generate its source.</code></pre></details>
+</main>
+<footer class="sc-foot"><span>SpicyChicken · Composition studio · v2.7.0</span><a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a></footer>
+</body></html>

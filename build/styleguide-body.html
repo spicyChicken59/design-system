@@ -2,7 +2,7 @@
 <header class="sc-masthead">
   <a class="sc-brand" href="#top">
     <img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt="">
-    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.6.0</span></span>
+    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.7.0</span></span>
   </a>
   <div class="sc-masthead__right">
     <span class="sc-hide-sm">Living reference</span>
@@ -18,7 +18,7 @@
 <section class="sg-cover sc-on-ink" id="top">
   <div class="sg-cover__inner sg-cover__inner--brand">
     <div class="sc-cover sc-on-ink sg-brand-cover">
-      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.6.0</span><span>206 named tokens</span><span>87 component blocks</span></div></div>
+      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.7.0</span><span>206 named tokens</span><span>100 component blocks</span></div></div>
       <div class="sc-cover__art" aria-hidden="true"><img src="assets/sc-mark-color-dark.svg" alt="" width="342" height="405"><span class="sc-cover__caption">one mark. every creation.</span></div>
     </div>
     <div class="sg-palette-footer"><div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and spice accent"></div><span class="sc-hint">The familiar palette. A richer set of compositions.</span></div>
@@ -49,7 +49,7 @@
   <main class="sg-main" id="main-content">
 
     <section class="sg-section" id="brand-compositions">
-      <div class="sc-eyebrow">the visual language · new in v2.6.0</div>
+      <div class="sc-eyebrow">the visual language · new in v2.7.0</div>
       <h2>A brand that lives inside the page.</h2>
       <p class="sc-dek">Use a strong opener, quieter evidence, and a signature at the close. Every composition below is available in HTML and the visual React wrappers.</p>
       <div class="sc-cover sc-cover--paper sc-cover--compact">
@@ -695,6 +695,17 @@
       </ol>
     </section>
 
+    <section class="sg-section" id="composition-tools">
+      <div class="sc-eyebrow">Compose · Read · Refine</div><h2>A whole page, made from the system.</h2>
+      <p>Use the <a href="composition-studio.html">composition studio</a> to choose a website, dashboard, screener or report; set its surface and brand art; then take the complete HTML. Every preset uses the shared stylesheet. The <a href="visual-library.html">visual library</a> contains the individual patterns.</p>
+      <div class="sc-grid sc-grid--2">
+        <article class="sc-card"><h3>Page rhythm</h3><p><code>.sc-page</code> supplies section spacing; <code>.sc-split</code> places a lead beside its context; <code>.sc-standfirst</code> and <code>.sc-measure-note</code> establish the reading hierarchy. <code>.sc-plot-grid</code>, <code>.sc-plot-grid__x</code>, and <code>.sc-plot-grid__y</code> pair exact charts with visible axis labels.</p><p><code>.sc-report-wrap</code> and <code>.sc-report--wide</code> make room for an editorial rail. <code>.sc-brand-panel--tall</code> reserves a generous art region.</p></article>
+        <article class="sc-card"><h3>Character in its own space</h3><p><code>.sc-brand-stage</code> holds the unchanged logo. Choose <code>.sc-brand-stage--orbit</code> or <code>.sc-brand-stage--ledger</code>, with <code>.sc-brand-stage--compact</code> and <code>.sc-brand-stage__caption</code> where needed. Keep the stage outside prose and plotted data.</p></article>
+        <article class="sc-card"><h3>Evidence and objects</h3><p><code>.sc-evidence</code>, <code>.sc-evidence__plot</code>, <code>.sc-evidence__source</code> and <code>.sc-insight</code> connect a finding to its source. Put framing around the chart host so its measured plotting width stays accurate.</p><p><code>.sc-dossier</code> uses <code>.sc-dossier__body</code>, <code>.sc-dossier__title</code>, <code>.sc-dossier__meta</code>, <code>.sc-dossier__evidence</code> and <code>.sc-dossier__actions</code> to separate identity, evidence and actions.</p></article>
+        <article class="sc-card"><h3>Reading and inspecting</h3><p><code>.sc-reading</code> pairs <code>.sc-reading__body</code> with <code>.sc-chapter-nav</code>. Add <code>.sc-chapter-nav--rail</code> and <code>.sc-chapter-nav__index</code> for a numbered report index. Optional <code>sc-reading.js</code> tracks native anchors; it never scrolls or moves focus.</p><p><code>.sc-disclosure</code> and <code>.sc-disclosure__body</code> retain native details behaviour. <code>.sc-table--research</code> gives explanations room; <code>.sc-table__group</code> labels grouped rows. <code>.sc-empty--inline</code> keeps missing artwork secondary to a clear explanation.</p></article>
+      </div>
+    </section>
+
     <section class="sg-section" id="dont">
       <div class="sc-eyebrow">10 · Ship</div>
       <h2>Do / don't</h2>
@@ -702,12 +713,12 @@
         <div class="sc-card"><h3 class="sc-text-good">Do</h3><ul><li>Lead with a lowercase mono eyebrow.</li><li>Keep the masthead and footer dark in both modes.</li><li>Put the chick in the masthead and the watermark; name the project in type.</li><li>Use Instrument Sans for numbers, proportional figures.</li><li>Separate with hairlines and color, not shadow.</li><li>Write the outcome and the reason.</li></ul></div>
         <div class="sc-card"><h3 class="sc-text-danger">Don't</h3><ul><li>Add a hue or a gradient.</li><li>Use spice for text, headings, or large fills — <code>.sc-text-accent</code> is on its way out.</li><li>ALL-CAPS a tracked label — lowercase mono is the house style.</li><li>Use a display face or tabular figures for a big number.</li><li>Ship an icon set without noting the substitution.</li><li>End with a menu of next steps.</li></ul></div>
       </div>
-      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Tag v2.6.0 and pin it from every project — SpicyCar first: <code>https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.6.0/sc.css</code>.</p></div>
+      <div class="sc-callout sc-callout--spice" style="margin-top:24px"><div class="sc-callout__label">Next action</div><p>Compose your next page in the <a href="composition-studio.html">composition studio</a>, then pair its HTML with one verified local asset snapshot. Both SpicyCar and SpicyStock use this workflow; a standalone release tag is a separate publication.</p></div>
     </section>
   </main>
 </div>
 
 <footer class="sc-foot">
-  <span>SpicyChicken Design System · v2.6.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
+  <span>SpicyChicken Design System · v2.7.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
   <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a>
 </footer>

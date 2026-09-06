@@ -18,13 +18,15 @@ export interface CoverProps extends Omit<React.ComponentPropsWithoutRef<'section
   actions?: React.ReactNode;
   tone?: 'ink' | 'wine' | 'paper';
   compact?: boolean;
+  /** Architectural linework surrounding the unchanged mark. */
+  artwork?: 'none' | 'orbit' | 'ledger';
   headingLevel?: 1 | 2;
 }
 
 /** A branded opener. The unchanged chick has its own column, clear of copy. */
 export const Cover = React.forwardRef<HTMLElement, CoverProps>(function Cover(
   { title, eyebrow, description, meta, actions, tone = 'ink', compact = false,
-    headingLevel = 1, className, children, ...rest }, ref,
+    artwork = 'none', headingLevel = 1, className, children, ...rest }, ref,
 ) {
   const Heading = headingLevel === 2 ? 'h2' : 'h1';
   return <section ref={ref} className={cx('sc-cover', tone !== 'paper' && 'sc-on-ink',
@@ -37,7 +39,7 @@ export const Cover = React.forwardRef<HTMLElement, CoverProps>(function Cover(
       {actions && <div className="sc-cover__actions">{actions}</div>}
       {children}
     </div>
-    <div className="sc-cover__art" aria-hidden="true">
+    <div className={cx('sc-cover__art', artwork !== 'none' && 'sc-brand-stage', artwork !== 'none' && `sc-brand-stage--${artwork}`)} aria-hidden="true">
       <Mark form={tone === 'paper' ? 'colorLight' : tone === 'wine' ? 'monoCream' : 'colorDark'} />
       <span className="sc-cover__caption">a SpicyChicken creation</span>
     </div>

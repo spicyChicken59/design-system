@@ -84,6 +84,18 @@
     },
     "Reveal": {
       "cardMode": "column"
+    },
+    "ChapterNav": {
+      "cardMode": "column"
+    },
+    "Reading": {
+      "cardMode": "column"
+    },
+    "Evidence": {
+      "cardMode": "column"
+    },
+    "Insight": {
+      "cardMode": "column"
     }
   },
   "readmeHeader": ".design-sync/conventions.md"

@@ -69,7 +69,7 @@ for (const p of ['package.json', 'react/package.json', 'react/package-lock.json'
   if (v !== V) fail(`${p}: version ${v} != sc.css ${V}`);
 }
 const versionsIn = (text) => [...text.matchAll(/\bv(\d+\.\d+\.\d+)\b/g)].map(m => m[1]);
-for (const p of ['build/styleguide-body.html', 'index.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-motion.js']) {
+for (const p of ['build/styleguide-body.html', 'index.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-motion.js', 'sc-reading.js']) {
   if (!existsSync(join(ROOT, p))) { fail(`${p}: missing`); continue; }
   const stale = versionsIn(read(p)).filter(v => v !== V);
   if (stale.length) fail(`${p}: mentions v${[...new Set(stale)].join(', v')} (current is v${V})`);
@@ -192,6 +192,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
   scanHtml('starter.html');
   scanHtml('brand-studio.html');
   scanHtml('visual-library.html');
+  scanHtml('composition-studio.html');
   for (const page of ['landing','dashboard','screener','report']) scanHtml(`templates/${page}.html`);
   scanScript('build/styleguide.js');
   for (const f of readdirSync(join(ROOT, 'react', 'src'))) if (/\.tsx?$/.test(f) && !/generated/.test(f)) scanScript(join('react', 'src', f));
@@ -333,7 +334,8 @@ if (!problems.length) ok(`version v${V} everywhere`);
                               ['references/CHECKLIST.md', 'CHECKLIST.md'],
                               ['references/VISUAL-RECIPES.md', 'VISUAL-RECIPES.md'],
                               ['references/MOTION.md', 'MOTION.md'],
-                              ['assets/sc-motion.js', 'sc-motion.js']]) {
+                              ['assets/sc-motion.js', 'sc-motion.js'],
+                              ['assets/sc-reading.js', 'sc-reading.js']]) {
       const p = join(SKILL, rel);
       if (!existsSync(join(ROOT, p))) fail(`${p}: missing — run node build/assemble.mjs`);
       else if (read(p) !== read(src)) fail(`${p}: differs from ${src} — run node build/assemble.mjs`);
@@ -363,8 +365,10 @@ if (!problems.length) ok(`version v${V} everywhere`);
 try { execFileSync(process.execPath, [join(HERE, 'visual-check.mjs')], { stdio: 'pipe' }); ok('visual templates, anchors and original pattern artwork verified'); }
 catch (e) { fail('visual deliverables: ' + (e.stderr?.toString().trim() || e.message)); }
 
-try { execFileSync(process.execPath, [join(HERE, 'motion-check.mjs')], { stdio: 'pipe' }); ok('14 motion behavior scenarios pass'); }
+try { execFileSync(process.execPath, [join(HERE, 'motion-check.mjs')], { stdio: 'pipe' }); ok('16 motion behavior scenarios pass'); }
 catch (e) { fail('motion: ' + (e.stderr?.toString().trim() || e.message)); }
+try { execFileSync(process.execPath, [join(HERE, 'reading-check.mjs'), join(ROOT, 'sc-reading.js')], { stdio: 'pipe' }); ok('13 chapter navigation behavior scenarios pass'); }
+catch (e) { fail('chapter navigation: ' + (e.stderr?.toString().trim() || e.message)); }
 
 if (warnings.length) {
   for (const w of warnings) console.log('  --  ' + w);

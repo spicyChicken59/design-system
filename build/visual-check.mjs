@@ -4,12 +4,16 @@ import { readFileSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const files = ['brand-studio.html', 'visual-library.html', ...['landing','dashboard','screener','report'].map(p => `templates/${p}.html`)];
+const files = ['brand-studio.html', 'visual-library.html', 'composition-studio.html', ...['landing','dashboard','screener','report'].map(p => `templates/${p}.html`)];
 for (const name of files) {
   const path = join(root, name), html = readFileSync(path, 'utf8');
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1, `${name}: one page h1`);
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
   assert.equal(new Set(ids).size, ids.length, `${name}: unique IDs`);
+  if (name.startsWith('templates/')) {
+    assert(!/class="[^"]*\bexample-/.test(html), `${name}: exported composition uses shared classes`);
+    assert(!/<style\b/.test(html), `${name}: composition has no private stylesheet`);
+  }
   for (const [, tag, attrs] of html.matchAll(/<(a|img|iframe|script|link)\b([^>]+)>/g)) {
     const url = /(?:src|href)="([^"]+)"/.exec(attrs)?.[1];
     if (!url || /^(?:https?:|data:|mailto:)/.test(url)) continue;
@@ -25,4 +29,4 @@ for (const [tone, form] of [['ink','cream'],['wine','cream'],['paper','ink']]) {
   const pattern = readFileSync(join(root, `assets/sc-pattern-${tone}.svg`), 'utf8');
   for (const [path] of mark.matchAll(/<path\b[^>]+>/g)) assert(pattern.includes(path), `${tone}: original mark path changed`);
 }
-console.log('visual-check: 6 documents have valid assets/anchors, unique IDs and one h1; all 3 patterns preserve original logo paths');
+console.log(`visual-check: ${files.length} documents have valid assets/anchors, unique IDs and one h1; all 3 patterns preserve original logo paths; templates use shared styles only`);

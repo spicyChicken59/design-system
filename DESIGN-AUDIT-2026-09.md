@@ -60,3 +60,27 @@ for the complete existing dashboard regression suites.
 
 Consumers use an immutable design asset snapshot with source commit and hashes.
 A standalone release tag is a separate publication; it remains pending.
+
+## Composition and reading pass · v2.7.0
+
+The next loop adds a working composition studio: four complete page structures,
+three cover surfaces, two original-mark art treatments, optional brand arrival,
+phone/tablet/desktop preview widths, and complete HTML copy/download. Exported
+pages use only shared components and a verified asset folder. Template-only CSS
+has moved into the system. The library now contains 32 live recipes.
+
+New reusable patterns cover evidence frames and source bars, insight callouts,
+research tables, native disclosures, object dossiers, inline empty states, and
+chapter navigation. React wrappers and preview examples accompany the reading
+and evidence patterns. The optional reading runtime preserves native anchors.
+
+Independent review caught paper-panel caption contrast, report clipping that
+prevented sticky reading rails, lost mobile page gutters, active-nav border
+movement, and mobile chart insets. These are corrected. The motion runtime now
+resamples reduced-motion preference when reinitialized.
+
+Local verification: 206 tokens, 100 component blocks, 312 discoverable classes,
+198 contrast pairs, 16 motion scenarios and 13 reading scenarios pass. The four
+composition presets, literal headline escaping, motion exclusion, copy fallback,
+native disclosure, chapter links and narrow light/dark layouts were reviewed in
+the browser. Existing consumer regression suites remain required before merge.
