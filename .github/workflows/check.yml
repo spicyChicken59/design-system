@@ -34,3 +34,21 @@ jobs:
         run: |
           npm --prefix react ci
           npm --prefix react run build
+  decision-brief:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+      - name: Render the copyable decision brief
+        run: |
+          npm install --no-save --no-package-lock --ignore-scripts --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+          node build/visual-check.mjs --browser --shots /tmp/decision-brief-proof
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: decision-brief-proof
+          path: /tmp/decision-brief-proof
+          if-no-files-found: ignore

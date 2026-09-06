@@ -1,5 +1,57 @@
 # SpicyChicken visual recipes
 
+## Decision brief: make the opening useful
+
+Open [the complete decision brief](templates/decision-brief.html), or copy recipe 36 in
+[the visual library](visual-library.html#recipe-decision-brief). It combines existing
+`.sc-cover`, `.sc-signal-matrix`, `.sc-photo-card.sc-dossier`, and `.sc-evidence__source`
+patterns. It needs only the v2.10 stylesheet and original assets, not a new component,
+dependency, or product feature. The catalog snippet and full page share the authored
+source in `build/decision-brief.mjs`; `npm run build` refreshes both.
+
+The first screen should establish the product identity and begin answering the user's
+decision. Put the signal matrix directly after a compact opening, visible on initial
+load when there are records. Do not require a shortlist, hover, expanded disclosure,
+or a scroll through a tall decorative hero to discover the comparison. On phones,
+preserve readable content and natural page flow rather than forcing every row above
+the fold. Photo dossiers and map/evidence links follow as the next level of detail.
+
+Bind the product's existing, ordered records. This layout must not change selection,
+ranking, filtering, scoring, or verdicts. Price, mileage, evidence and locations need
+their real labels and units. A blue supplied-fact tile is not a green verdict; absence
+is neutral **Not supplied** or the product's existing unknown wording, never a zero,
+pass, fail or invented recommendation. If the product has no records, show its real
+empty state instead of specimen candidates. Replace every illustrative value, date,
+link and document title before publishing.
+
+Use the existing photo frame for real sourced imagery, with useful alt text and the
+original aspect-ratio reservation. Retain an honest missing-photo state if unavailable;
+the original chick is a decorative placeholder, not a generated vehicle or substitute
+product image. Map actions go to the existing map. No coordinates means no pin; no
+known distance means no distance label. Keep maker signatures outside measured evidence.
+
+The matrix remains a native table with a caption and row/column headers. The labeled
+`.sc-table-scroll` region takes `tabindex="0"`, a visible horizontal-scroll hint and
+`aria-describedby` pointing to that hint. Phone users can pan across criteria while
+row identity stays sticky; keyboard users can focus the scroller and use arrow keys.
+Keep the page itself within the viewport. Copying more than one brief requires unique
+IDs and corresponding anchor/ARIA references. The full page uses an h1; the catalog
+snippet starts at h3, so adjust heading levels to fit its destination.
+
+The composition is static by default. Optional motion is restricted to one short
+brand arrival or nonessential reveal using the shared motion runtime. Do not animate
+prices, scores, row order or unknown states. Keep visible base content, respect pause,
+reduced-motion and print modes, and never delay interaction. Review 320/390px phones,
+768px tablets and a desktop width in both themes, then keyboard navigation and print.
+
+The rendered regression gate is `node build/visual-check.mjs --browser --shots /tmp/sc-brief`.
+It needs Playwright 1.56.1 and its Chromium installed separately. It renders the real
+template at 390, 820 and 1280px in both themes, checks table/mark bounds, phone stacking,
+keyboard scrolling, native anchors and reduced-motion visibility, and saves screenshots.
+External requests are stubbed for reproducibility, so these captures exercise the font
+fallbacks; original local SVG assets are real. A missing browser is an explicit **SKIP**
+with a nonzero exit, never a rendered pass. The ordinary offline gate remains static.
+
 ## Benchmark rail
 
 Use `.sc-benchmark` when one exact number needs immediate context against an authored scale. The
@@ -78,6 +130,7 @@ or report close. Avoid a cover-sized logo in every card.
 |---|---|---|
 | Website or collection | [Website](templates/landing.html) | Wine opener, full mono chick, open collection, one spice CTA |
 | Dashboard or comparison | [Dashboard](templates/dashboard.html) | Compact ink opener, shared metrics, open chapters, chart caption signature |
+| Candidate decision | [Decision brief](templates/decision-brief.html) | Compact brand cover, immediately visible signal matrix, photo dossiers, evidence/map links and source footer |
 | Screener or evidence review | [Screener](templates/screener.html) | Four related metrics, deliberate empty state, supporting fact rows |
 | Report or one-pager | [Report](templates/report.html) | Warm cover, numbered chapters, restrained evidence, source/signature footer |
 

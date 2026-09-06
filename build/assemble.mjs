@@ -94,7 +94,7 @@ writeFileSync(join(OUT, 'sc-map.js'), `/* SpicyChicken Design System — sc-map.
   for (const f of readdirSync(join(DS, 'assets')).filter(f => f.endsWith('.svg')))
     writeFileSync(join(SKILL, 'assets', 'assets', f), read(join(DS, 'assets', f)));
   mkdirSync(join(SKILL, 'assets', 'templates'), { recursive: true });
-  for (const f of ['landing.html', 'dashboard.html', 'screener.html', 'report.html'])
+  for (const f of ['landing.html', 'dashboard.html', 'screener.html', 'report.html', 'decision-brief.html'])
     writeFileSync(join(SKILL, 'assets', 'templates', f), read(join(DS, 'templates', f)));
 }
 
