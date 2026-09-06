@@ -84,6 +84,9 @@ and `DESIGN_SYSTEM.md` §10.
    screen-responsive sheets — in `templates/deliverable.html` and the composition studio.
 8b. **Signal matrix.** ✅ Done (v2.9.0): a native-table candidate × criteria composition with
    sticky identity, semantic tiles, written labels, keyboard-scrolling, and a values-only mode.
+8c. **Benchmark rail.** ✅ Done (v2.10.0): one exact value located against an authored scale,
+   optional expected band and reference, with all meaning repeated in visible text. The rail is
+   reusable in dashboards, reports, comparisons, and screeners without inventing a score.
 9. **Slide template.** Six-slide arc (cover on `--sc-ink`, problem, summary, architecture, roadmap,
    ask) as standalone 1280×720 HTML pages.
 10. **License.** ✅ Done (v2.1.0): MIT for the CSS, tooling and wrappers; the chick and everything in `assets/` stay all rights reserved (`LICENSE`).
@@ -94,6 +97,12 @@ and `DESIGN_SYSTEM.md` §10.
 
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
+
+- **2.10.0 (2026-09-06, source snapshot)** — The Benchmark Rail: a compact, responsive value-in-
+  context visual with an exact written value, authored endpoints, optional band/reference,
+  forced-colors support, a copyable recipe, and a typed React wrapper. SpicyCar uses it for the
+  already-calculated value-versus-typical reading; SpicyStock uses it for the existing score out
+  of ten. Neither consumer gains a new calculation, threshold, or verdict.
 
 - **2.9.0 (2026-09-06, source snapshot)** — The Signal Matrix: a sticky, accessible candidate ×
   criteria visual with semantic glyph-and-label tiles, a values mode, copyable recipe, and typed

@@ -1,5 +1,34 @@
 # SpicyChicken visual recipes
 
+## Benchmark rail
+
+Use `.sc-benchmark` when one exact number needs immediate context against an authored scale. The
+visible `.sc-benchmark__label`, `__value`, three-part `__scale`, and `__note` carry the meaning.
+The `aria-hidden` track adds spatial recognition without becoming a second, inaccessible answer.
+
+Set `--sc-benchmark-position` as a percentage. Add `.sc-benchmark__reference` only when a real
+reference exists, and set `--sc-benchmark-reference`. Add `.sc-benchmark__band` only for a sourced
+or explicitly defined interval, with `--sc-benchmark-band-start` and `--sc-benchmark-band-end`.
+Use `--sc-benchmark-tone` only when the product already knows the tone's meaning. Do not infer a
+verdict from position, manufacture a target, or replace the written value with the rail.
+
+```html
+<figure class="sc-benchmark"
+  style="--sc-benchmark-position:68%;--sc-benchmark-reference:55%;--sc-benchmark-band-start:45%;--sc-benchmark-band-end:65%">
+  <figcaption class="sc-benchmark__head">
+    <span class="sc-benchmark__label">evidence strength</span>
+    <strong class="sc-benchmark__value">6.8 / 10</strong>
+  </figcaption>
+  <div class="sc-benchmark__track" aria-hidden="true">
+    <span class="sc-benchmark__band"></span>
+    <span class="sc-benchmark__reference"></span>
+    <span class="sc-benchmark__point"></span>
+  </div>
+  <div class="sc-benchmark__scale" aria-hidden="true"><span>0</span><span>reference 5.5</span><span>10</span></div>
+  <p class="sc-benchmark__note">Expected band 4.5–6.5 · above the 5.5 reference</p>
+</figure>
+```
+
 ## Signal matrix
 
 Use `.sc-signal-matrix` on a native `.sc-table` when several candidates must be scanned against
