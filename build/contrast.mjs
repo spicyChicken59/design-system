@@ -60,6 +60,7 @@ export function checkContrast(css) {
     }
     for (const s of ['surface', 'bg']) check(mode, `border-control vs ${s}`, t('border-control'), t(s), 3);
     for (const s of ['bg', 'surface']) check(mode, `focus vs ${s}`, t('focus'), t(s), 3);
+    check(mode, 'paper brand-stage caption', t('on-paper'), t('brand-paper'), 4.5);
     const ink = t('ink');
     for (const n of ['on-ink', 'on-ink-2', 'on-ink-3']) check(mode, `${n} on ink`, toRgb(resolve('--sc-' + n, vars), ink), ink, 4.5);
     const ctx = { ...vars, ...onInk };

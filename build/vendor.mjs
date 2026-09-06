@@ -12,7 +12,7 @@ if (destination === root || root.startsWith(destination + '/')) throw new Error(
 const commit = execFileSync('git', ['rev-parse','HEAD'], {cwd:root,encoding:'utf8'}).trim();
 const version = JSON.parse(readFileSync(join(root,'package.json'),'utf8')).version;
 const assets = readdirSync(join(root,'assets')).filter(f => /\.(svg|png|ico)$/.test(f)).map(f => `assets/${f}`);
-const files = ['sc.css','sc-theme.js','sc-charts.js','sc-map.js','sc-motion.js',...assets];
+const files = ['sc.css','sc-theme.js','sc-charts.js','sc-map.js','sc-motion.js','sc-reading.js',...assets];
 // Every published byte must be exactly the version named by the provenance.
 for (const file of files) {
   if (!existsSync(join(root,file))) throw new Error(`Missing ${file}; build the source first.`);

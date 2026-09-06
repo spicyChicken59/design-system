@@ -1,0 +1,39 @@
+.composer-main { padding-block: var(--sc-s4) var(--sc-s8); }
+.composer-heading { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: var(--sc-s4); align-items: stretch; padding-bottom: var(--sc-s4); }
+.composer-heading h1 { font-size: clamp(36px, 5vw, 64px); line-height: 1.03; letter-spacing: -.045em; margin: var(--sc-s2) 0; }
+.composer-heading p:last-child { color: var(--sc-text-2); font-size: 16px; margin: var(--sc-s2) 0 0; }
+.composer-signature { border-radius: var(--sc-r-lg); background: var(--sc-brand-wine); }
+.composer-signature .sc-brand-stage { height: 100%; }
+.composer-workspace { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: var(--sc-s4); align-items: start; }
+.composer-workspace > * { min-width: 0; }
+.composer-workspace:has(> #composer-tools[hidden]) { grid-template-columns: minmax(0, 1fr); }
+.composer-controls { display: grid; gap: var(--sc-s3); }
+.composer-control-group { display: grid; gap: var(--sc-s2); padding-bottom: var(--sc-s3); border-bottom: 1px solid var(--sc-border); }
+.composer-control-group h2 { display: flex; align-items: center; gap: var(--sc-s2); margin: 0; font: 600 16px/1.5 var(--sc-font-body); }
+.composer-control-group h2 > span { font: 500 12px/1.5 var(--sc-font-mono); color: var(--sc-text-3); }
+.composer-controls .sc-field { display: grid; gap: var(--sc-s1); font-size: 14px; }
+.composer-controls :is(input, select) { width: 100%; min-height: 44px; }
+.composer-controls .sc-hint { margin: 0; font-size: 12px; }
+.composer-checkbox { display: flex; align-items: flex-start; gap: var(--sc-s2); font-size: 14px; cursor: pointer; }
+.composer-checkbox input { width: 18px; min-height: 18px; margin-top: 3px; accent-color: var(--sc-brand); }
+.composer-checkbox small { display: block; color: var(--sc-text-2); margin-top: var(--sc-s0); font-size: 12px; }
+.composer-export { display: grid; gap: var(--sc-s1); }
+.composer-export button { justify-content: center; min-height: 44px; }
+.composer-outline { padding-top: var(--sc-s4); }
+.composer-outline h2 { font: 600 14px/1.5 var(--sc-font-body); }
+.composer-outline ol { padding-left: 20px; color: var(--sc-text-2); font-size: 14px; line-height: 1.7; }
+.composer-outline li + li { margin-top: var(--sc-s1); }
+.composer-canvas { border: 1px solid var(--sc-border-strong); border-radius: var(--sc-r-lg); overflow: hidden; }
+.composer-canvas__bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--sc-s1); padding: var(--sc-s2) var(--sc-s3); background: var(--sc-surface); font: 500 12px/1.5 var(--sc-font-mono); color: var(--sc-text-2); border-bottom: 1px solid var(--sc-border); }
+.composer-canvas__bar i { display: inline-block; height: 8px; width: 8px; border: 1px solid var(--sc-brand); margin-right: var(--sc-s1); }
+.composer-canvas__well { overflow: auto; padding: var(--sc-s3); background: var(--sc-raised); }
+.composer-canvas iframe { display: block; width: 390px; max-width: none; height: 800px; margin-inline: auto; background: var(--sc-bg); border: 1px solid var(--sc-border-control); border-radius: var(--sc-r-sm); }
+.composer-status { min-height: 52px; padding: var(--sc-s2) var(--sc-s3); margin: 0; font-size: 14px; color: var(--sc-text-2); border-top: 1px solid var(--sc-border); }
+.composer-takeaway { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sc-s5); align-items: center; margin-top: var(--sc-s6); }
+.composer-takeaway h2 { font-size: clamp(26px, 3vw, 36px); margin-block: var(--sc-s2); }
+.composer-takeaway p { font-size: 16px; line-height: 1.7; }
+.composer-source { margin-top: var(--sc-s4); }
+.composer-source pre { overflow: auto; max-height: 480px; font: 12px/1.6 var(--sc-font-mono); color: var(--sc-text-2); white-space: pre; }
+@media (max-width: 800px) { .composer-workspace { grid-template-columns: minmax(0, 1fr); } .composer-controls { grid-template-columns: repeat(3, minmax(0, 1fr)); } .composer-export { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; } .composer-outline { display: none; } .composer-takeaway { grid-template-columns: minmax(0, 1fr); gap: var(--sc-s3); } }
+@media (max-width: 540px) { .composer-heading { grid-template-columns: minmax(0, 1fr); gap: var(--sc-s2); } .composer-signature { display: none; } .composer-controls { grid-template-columns: minmax(0, 1fr); } .composer-export { grid-template-columns: minmax(0, 1fr); } .composer-canvas__well { padding: var(--sc-s1); } .composer-main { padding-top: var(--sc-s3); } }
+@media print { .composer-workspace, .composer-source, .composer-signature { display: none; } .composer-main { padding: 0; } }

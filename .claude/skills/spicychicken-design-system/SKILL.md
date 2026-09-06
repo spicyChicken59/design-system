@@ -1,6 +1,6 @@
 ---
 name: spicychicken-design-system
-description: "The SpicyChicken visual standard (sc.css v2.6.0) — cobalt structure, one spice accent, dark by default. Use this skill for ANY visual or written artifact the user asks for — HTML pages, dashboards, reports, one-pagers, READMEs, decks, docs, email, charts, React components, prototypes, mockups, landing pages, or anything with a UI. Trigger it even when the user says nothing about design, branding, or styling; this is their house style and it applies by default to everything they ship. Also trigger on mentions of SpicyChicken, sc.css, sc- classes, the chick mark, or 'my design system'."
+description: "The SpicyChicken visual standard (sc.css v2.7.0) — cobalt structure, one spice accent, dark by default. Use this skill for ANY visual or written artifact the user asks for — HTML pages, dashboards, reports, one-pagers, READMEs, decks, docs, email, charts, React components, prototypes, mockups, landing pages, or anything with a UI. Trigger it even when the user says nothing about design, branding, or styling; this is their house style and it applies by default to everything they ship. Also trigger on mentions of SpicyChicken, sc.css, sc- classes, the chick mark, or 'my design system'."
 license: "MIT for the code; the SpicyChicken mark and assets/ are all rights reserved."
 ---
 
@@ -54,10 +54,10 @@ that the matching tag exists before using the CDN example below.
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.6.0/sc.css">
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.6.0/sc-theme.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.7.0/sc.css">
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.7.0/sc-theme.js"></script>
 <!-- optional; only if the page draws charts -->
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.6.0/sc-charts.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.7.0/sc-charts.js"></script>
 ```
 
 Order matters: `color-scheme` first, preconnects and fonts before `sc.css`, theme script in
@@ -73,7 +73,7 @@ from scratch.
 
 ### Find, compose, animate
 
-Start at `visual-library.html` in the repository for searchable, copyable visual
+Use `composition-studio.html` for a complete configurable page, or start at `visual-library.html` in the repository for searchable, copyable visual
 recipes. Select a structure before applying decoration. The library covers brand
 identity, editorial layouts, data compositions, motion, and loading/empty states.
 Its snippets use only the shared stylesheet, original assets and optional motion
@@ -84,6 +84,8 @@ Read `references/MOTION.md` for the opt-in motion API. Use `.sc-reveal` with
 `.sc-hover-lift` on a linked card, and `.sc-press` on a button. Base content stays
 visible. Never animate numeric values, obscure focus, or run decorative motion
 forever. Reduced motion and the user's pause choice take precedence.
+
+Use `.sc-evidence` with `.sc-insight` for a finding and its records, `.sc-table--research` for explanatory tables, `.sc-dossier` for object cards, and `.sc-disclosure` for generous native details. `.sc-brand-stage` adds orbit or ledger linework in a reserved art region. `.sc-reading` and `.sc-chapter-nav` provide a report rail; optional `assets/sc-reading.js` sets the active location without replacing native anchors. Call `SC.reading.refresh()` after asynchronous content changes.
 
 ### Complete visual compositions
 
@@ -226,8 +228,9 @@ Read these when the summary above isn't enough:
 - `references/PLAIN-HTML.md` — inline-style equivalents for email and exported HTML.
 - `references/CHECKLIST.md` — the pre-ship gate.
 - `references/MOTION.md` — motion recipes, loading rules, reduced-motion behavior.
+- `assets/sc-reading.js` — optional chapter location highlighting; native links remain usable without it.
 - `assets/sc-motion.js` — optional motion runtime; use with the matching stylesheet.
-- `assets/sc.css` — the sheet itself (v2.6.0). Read it to confirm a class or token exists before
+- `assets/sc.css` — the sheet itself (v2.7.0). Read it to confirm a class or token exists before
   using it. Never invent an `sc-*` name.
 - `assets/sc-charts.js` — the chart primitives, if the page draws charts.
 - `assets/sc-map.js` — the map layer, if the page draws a map. `SC.geo.albersUsa48`,

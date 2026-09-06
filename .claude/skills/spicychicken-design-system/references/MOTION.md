@@ -5,7 +5,7 @@ a row of cards arrives in order, a control answers a press. The original chick
 can make an entrance without becoming a different logo. Reading, navigation,
 and data never depend on an animation finishing.
 
-This optional library is part of **v2.6.0**. Load the matching CSS and runtime.
+This optional library is part of **v2.7.0**. Load the matching CSS and runtime.
 Pinned release URLs become available when the corresponding release is published.
 
 ```html
@@ -181,3 +181,15 @@ replay, reduced motion and live preference changes, focus safety, stagger
 bounds, dynamic insertion/removal, pause synchronization, print, and teardown.
 Visual review still matters: inspect the actual composition at phone and desktop
 sizes with reduced motion enabled as well as disabled.
+
+
+### Native disclosures and reinitialization
+
+`.sc-disclosure` uses native `details` state. Its indicator rotates once; an optional
+`.sc-disclosure__body` fades in for 160ms. Reduced motion, page motion pause and print
+remove these effects. Closing is immediate, with no JavaScript-owned height or state.
+
+Reinitializing `SC.motion` after teardown resamples the current operating-system
+motion preference. Pausing completes all already registered arrivals, including
+ones below the viewport. Resuming allows newly registered elements to animate;
+use explicit replay when you want to see an earlier composition again.

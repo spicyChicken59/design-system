@@ -7,10 +7,14 @@
 <title>Website · SpicyChicken design specimen</title>
 <meta name="description" content="A reusable SpicyChicken website layout. Illustrative content, not a live product.">
 <link rel="icon" href="../assets/sc-avatar-tile.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../sc.css">
 <script src="../sc-theme.js">
 </script>
-<style>.example-main figure,.sc-report figure{margin:0}.example-plot{display:grid;grid-template-columns:32px minmax(0,1fr);gap:8px}.example-y{display:flex;flex-direction:column;justify-content:space-between}.example-y,.example-x{font:500 11px/1.4 var(--sc-font-mono);color:var(--sc-text-2)}.example-plot svg{display:block;width:100%;height:auto}.example-x{grid-column:2;display:flex;justify-content:space-between}.example-main{padding-block:var(--sc-s4) var(--sc-s8)}.example-main>section+section{margin-top:var(--sc-s6)}.example-note{margin-block:var(--sc-s3);color:var(--sc-text-2)}.example-columns{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:var(--sc-s3);align-items:start}.example-columns>*{min-width:0}.example-quote{font:600 clamp(24px,3vw,36px)/1.25 var(--sc-font-display);letter-spacing:-.025em;margin:0}.example-panel{min-height:340px}.example-report-wrap{padding-inline:var(--sc-s2)}@media(max-width:720px){.example-columns{grid-template-columns:minmax(0,1fr)}}@media print{.example-main{padding:0}.example-columns{display:block}.example-note{font-size:10pt}}</style>
+<script src="../sc-reading.js" defer>
+</script>
 </head>
 <body>
 <a class="sc-skip" href="#main">Skip to content</a>
@@ -30,7 +34,7 @@
 </div>
 </div>
 </header>
-<main class="sc-wrap sc-wrap--wide example-main" id="main">
+<main class="sc-wrap sc-wrap--wide sc-page" id="main">
 <section class="sc-cover sc-on-ink sc-cover--wine ">
 <div class="sc-cover__content">
 <div class="sc-eyebrow">the SpicyChicken collection</div>
@@ -45,13 +49,13 @@
 </a>
 </div>
 </div>
-<div class="sc-cover__art" aria-hidden="true">
+<div class="sc-cover__art sc-brand-stage sc-brand-stage--orbit" aria-hidden="true">
 <img class="sc-mark" src="../assets/sc-mark-mono-cream.svg" alt="" width="342" height="405">
-<span class="sc-cover__caption">a SpicyChicken creation</span>
+<span class="sc-cover__caption sc-brand-stage__caption">a SpicyChicken creation</span>
 </div>
 </section>
 <section id="collection">
-<header class="sc-chapter">
+<header class="sc-chapter" id="different-questions-the-same-point-of-view">
 <span class="sc-chapter__index" aria-hidden="true">01</span>
 <div class="sc-chapter__body">
 <h2>Different questions. The same point of view.</h2>
@@ -99,18 +103,18 @@
 </article>
 </div>
 </section>
-<section class="example-columns">
+<section class="sc-split">
 <div>
-<header class="sc-chapter">
+<header class="sc-chapter" id="recognisable-even-at-a-glance">
 <span class="sc-chapter__index" aria-hidden="true">02</span>
 <div class="sc-chapter__body">
 <h2>Recognisable, even at a glance.</h2>
 </div>
 </header>
-<p class="example-quote">The chick is the signature.<br>The work takes the stage.</p>
-<p class="example-note">Cobalt gives the information structure. Spice points to the next action. Wine gives the collection its character.</p>
+<p class="sc-standfirst">The chick is the signature.<br>The work takes the stage.</p>
+<p class="sc-measure-note">Cobalt gives the information structure. Spice points to the next action. Wine gives the collection its character.</p>
 </div>
-<div class="sc-brand-panel sc-brand-panel--paper example-panel">
+<div class="sc-brand-panel sc-brand-panel--paper sc-brand-panel--tall">
 <img class="sc-brand-panel__pattern" src="../assets/sc-pattern-paper.svg" alt="" aria-hidden="true">
 <span class="sc-brand-panel__label">one mark · an entire family</span>
 </div>

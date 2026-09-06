@@ -92,6 +92,8 @@ and `DESIGN_SYSTEM.md` §10.
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
 
+- **2.7.0 (2026-09-06)** — Composition studio with complete-page export, three brand-stage choices, shared page layouts without specimen-only CSS, eight new visual recipes, evidence/dossier/research/disclosure patterns, chapter navigation, and four typed React wrappers. SpicyCar and SpicyStock adopt the new reading surfaces. Motion reinitialization resamples reduced-motion preferences. Release tag remains a separate pending publication.
+
 - **2.6.0 (2026-09-06, source snapshot)** — A usable visual and motion catalog,
   portable editorial/data compositions, progressive motion with reduced-motion
   and focus safeguards, and production integration in SpicyCar and SpicyStock.

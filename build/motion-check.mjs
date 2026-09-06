@@ -308,4 +308,22 @@ await check('loading the runtime twice preserves the namespace and one observer'
   assert.equal(env.window.SC.existingFeature, true);
   assert.equal(env.observers.length, 1);
 });
+await check('reinitialization resamples a newly reduced preference', () => {
+  let item;
+  const env = environment({ setup: body => { item = body.append(reveal()); } });
+  env.api.destroy();
+  env.preference.matches = true;
+  env.api.init(); env.enter(item);
+  assert.equal(env.api.reducedMotion, true);
+  assert(!item.classList.contains('sc-motion-in'));
+});
+await check('reinitialization resamples a restored motion preference', () => {
+  let item;
+  const env = environment({ reduced: true, setup: body => { item = body.append(reveal()); } });
+  env.api.destroy();
+  env.preference.matches = false;
+  env.api.init(); env.enter(item);
+  assert.equal(env.api.reducedMotion, false);
+  assert(item.classList.contains('sc-motion-in'));
+});
 console.log(`motion-check: ${checks} behavioral scenarios passed (fail open, reveal once, replay, reduced motion, focus, dynamic content, pause, print and teardown)`);

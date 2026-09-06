@@ -37,6 +37,8 @@ export interface TableProps extends React.ComponentPropsWithoutRef<'table'> {
   onSort?: (key: string) => void;
   /** Tighter padding and 13px text for dense data. */
   compact?: boolean;
+  /** More space for identities, measures and explanatory research cells. */
+  research?: boolean;
   /**
    * Wrap in a `.sc-table-scroll` horizontal scroller. `'tall'` bounds it to 70vh
    * with a vertical scroll and a header that sticks.
@@ -60,11 +62,11 @@ function defaultKey(row: Record<string, React.ReactNode>, index: number): React.
  * through `aria-sort` and drawn by the stylesheet.
  */
 export const Table = React.forwardRef<HTMLTableElement, TableProps>(function Table(
-  { columns, rows, rowKey = defaultKey, onSort, compact = false, scroll = false, caption, empty, className, ...rest },
+  { columns, rows, rowKey = defaultKey, onSort, compact = false, research = false, scroll = false, caption, empty, className, ...rest },
   ref,
 ) {
   const table = (
-    <table ref={ref} className={cx('sc-table', compact && 'sc-table--compact', className)} {...rest}>
+    <table ref={ref} className={cx('sc-table', compact && 'sc-table--compact', research && 'sc-table--research', className)} {...rest}>
       {caption ? <caption className="sc-sr-only">{caption}</caption> : null}
       <thead>
         <tr>
