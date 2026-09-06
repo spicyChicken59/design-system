@@ -3,6 +3,8 @@
 Open `styleguide.html` beside the page. If something on the page has no equivalent in the style
 guide, it's a new component — fold it into the system or take it out.
 
+- [ ] Printable deliverables use explicit `.sc-sheet` pages, retain sources and folios, and are reviewed as Letter pages with backgrounds enabled.
+
 - [ ] Head: pinned `sc.css` + `sc-theme.js`, `color-scheme` meta, font preconnects, favicon = the chick (`assets/favicon.ico`).
 - [ ] Masthead: chick + project name left, theme toggle right, `--sc-ink` in both modes; nav has an `aria-label`.
 - [ ] Title block (`.sc-title`) opens with an eyebrow; h1 is one plain sentence; dek is one sentence.

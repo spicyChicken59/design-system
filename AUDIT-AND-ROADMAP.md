@@ -79,8 +79,9 @@ and `DESIGN_SYSTEM.md` §10.
 7. **README / GitHub profile treatment.** A profile README and a repo README template in the same
    voice (eyebrow line, one-sentence dek, a "what you get" table, one next action). Uniformity starts
    on the profile page, before anyone clicks through.
-8. **Document template.** Bring back the print-bound "Deliverable" template on SpicyChicken tokens —
-   US Letter, running header, numbered section rules — as `deliverable.html`, for reports and one-pagers.
+8. **Document template.** ✅ Done (v2.8.0): a three-sheet printable deliverable on SpicyChicken
+   tokens — US Letter, repeated document furniture, explicit folios, controlled page breaks, and
+   screen-responsive sheets — in `templates/deliverable.html` and the composition studio.
 9. **Slide template.** Six-slide arc (cover on `--sc-ink`, problem, summary, architecture, roadmap,
    ask) as standalone 1280×720 HTML pages.
 10. **License.** ✅ Done (v2.1.0): MIT for the CSS, tooling and wrappers; the chick and everything in `assets/` stay all rights reserved (`LICENSE`).
@@ -91,6 +92,11 @@ and `DESIGN_SYSTEM.md` §10.
 
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
+
+- **2.8.0 (2026-09-06, source snapshot)** — A print-ready Letter-sheet system, three-page
+  decision-brief template, composition-studio export, 33rd live recipe, typed React wrappers,
+  and compact repeated print furniture adopted by SpicyCar and SpicyStock. Print classes are
+  inert on screen; the original mark and all consumer data behavior remain unchanged.
 
 - **2.7.0 (2026-09-06)** — Composition studio with complete-page export, three brand-stage choices, shared page layouts without specimen-only CSS, eight new visual recipes, evidence/dossier/research/disclosure patterns, chapter navigation, and four typed React wrappers. SpicyCar and SpicyStock adopt the new reading surfaces. Motion reinitialization resamples reduced-motion preferences. Release tag remains a separate pending publication.
 

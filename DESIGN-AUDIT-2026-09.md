@@ -84,3 +84,12 @@ Local verification: 206 tokens, 100 component blocks, 312 discoverable classes,
 composition presets, literal headline escaping, motion exclusion, copy fallback,
 native disclosure, chapter links and narrow light/dark layouts were reviewed in
 the browser. Existing consumer regression suites remain required before merge.
+
+## Printable deliverable pass · v2.8.0
+
+The roadmap's remaining report gap is now a first-class composition: three explicit US Letter
+sheets for a cover, executive summary, and supporting evidence. Each page owns its document header,
+folio, source line, and page break, while collapsing to a normal responsive surface on phones.
+The composition studio exports it, the visual library demonstrates it, and React exposes the same
+sheet structure. SpicyCar and SpicyStock use compact print-only SpicyChicken furniture around their
+existing pages; screen layout and application behavior are unchanged.
