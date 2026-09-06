@@ -2,6 +2,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { decisionBrief } from './decision-brief.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const flag = process.argv.indexOf('--out');
 const out = flag < 0 ? root : process.argv[flag + 1];
@@ -42,5 +43,17 @@ const deliverable = shell('Deliverable', `<main id="main" class="sc-sheet-stack"
 <article class="sc-sheet">${sheetHead('Decision brief · executive summary')}<div class="sc-sheet__body"><p class="sc-eyebrow">the finding</p><h2 class="sc-standfirst">Lead with what changed.<br>Then show why it matters.</h2><p class="sc-measure-note">This is illustrative content. Replace it with the one conclusion a reader should carry into the next conversation.</p><dl class="sc-stat-strip sc-stat-strip--2">${stat('illustrative start','$48,600','Week 1')}${stat('illustrative finish','$42,600','Week 4',true)}</dl>${chapter('01','What the evidence says','State the observation before the method.') }<p class="sc-measure-note">The example series moved by $6,000 across four weekly observations. The source and measurement basis belong on the same page as the finding.</p><div class="sc-insight"><p><strong>Decision note.</strong> Keep the implication specific and bounded. A deliverable should help someone decide, not merely prove that analysis happened.</p></div></div>${sheetFoot(2)}</article>
 <article class="sc-sheet sc-sheet--dense">${sheetHead('Decision brief · supporting evidence')}<div class="sc-sheet__body">${chapter('02','The evidence','Exact values remain readable in print and on screen.')}${chart}${chapter('03','The next move')}<div class="sc-callout sc-callout--spice"><div class="sc-callout__label">recommended next step</div><p>Replace this sentence with one owned action, a named audience, and the point at which the decision will be revisited.</p></div><p class="sc-measure-note">Method: four illustrative weekly observations. No live product or market data appears in this specimen.</p></div>${sheetFoot(3,'Source: illustrative four-week series')}</article>
 </main>`);
-for (const [name, contents] of Object.entries({ landing, dashboard, screener, report, deliverable })) writeFileSync(join(out, 'templates', `${name}.html`), contents.replace(/></g, ">\n<"));
-console.log('templates: website, dashboard, screener, report and deliverable compositions');
+const decision = shell('Decision brief', `${head('SpicyChicken', 'the decision studio · design specimen')}<main class="sc-wrap sc-wrap--wide sc-page" id="main">${decisionBrief({ assets: '../assets/', heading: 1 })}</main>${foot}`);
+for (const [name, contents] of Object.entries({ landing, dashboard, screener, report, deliverable, 'decision-brief': decision })) writeFileSync(join(out, 'templates', `${name}.html`), contents.replace(/></g, ">\n<"));
+// Only this recipe is generated; the rest of the catalog remains authored HTML.
+const brief = decisionBrief();
+const escaped = brief.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+const catalogSource = readFileSync(join(root, 'visual-library.html'), 'utf8');
+for (const part of ['preview', 'code']) for (const edge of ['start', 'end']) {
+  if (catalogSource.split(`<!-- decision-brief:${part}:${edge} -->`).length !== 2) throw new Error(`Decision brief ${part} ${edge} marker must occur exactly once`);
+}
+const catalog = catalogSource
+  .replace(/<!-- decision-brief:preview:start -->[\s\S]*?<!-- decision-brief:preview:end -->/, `<!-- decision-brief:preview:start -->\n${brief}\n<!-- decision-brief:preview:end -->`)
+  .replace(/<!-- decision-brief:code:start -->[\s\S]*?<!-- decision-brief:code:end -->/, `<!-- decision-brief:code:start --><code>${escaped}</code><!-- decision-brief:code:end -->`);
+writeFileSync(join(out, 'visual-library.html'), catalog);
+console.log('templates: website, dashboard, screener, report, deliverable and decision brief compositions');

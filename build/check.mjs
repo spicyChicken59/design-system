@@ -121,7 +121,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
     execFileSync(process.execPath, [join(HERE, 'assemble.mjs'), '--out', tmp], { stdio: 'pipe' });
     execFileSync(process.execPath, [join(HERE, 'templates.mjs'), '--out', tmp], { stdio: 'pipe' });
     execFileSync(process.execPath, [join(HERE, 'brand-assets.mjs'), '--out', tmp], { stdio: 'pipe' });
-    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', ...['landing','dashboard','screener','report'].map(p => `templates/${p}.html`), ...['ink','wine','paper'].map(p => `assets/sc-pattern-${p}.svg`)]) {
+    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'visual-library.html', ...['landing','dashboard','screener','report','decision-brief'].map(p => `templates/${p}.html`), ...['ink','wine','paper'].map(p => `assets/sc-pattern-${p}.svg`)]) {
       const fresh = norm(readFileSync(join(tmp, f), 'utf8'));
       if (!existsSync(join(ROOT, f))) fail(`${f}: missing — run npm run build`);
       else if (read(f) !== fresh) fail(`${f}: stale — differs from a fresh generation; run npm run build`);
@@ -193,7 +193,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
   scanHtml('brand-studio.html');
   scanHtml('visual-library.html');
   scanHtml('composition-studio.html');
-  for (const page of ['landing','dashboard','screener','report']) scanHtml(`templates/${page}.html`);
+  for (const page of ['landing','dashboard','screener','report','decision-brief']) scanHtml(`templates/${page}.html`);
   scanScript('build/styleguide.js');
   for (const f of readdirSync(join(ROOT, 'react', 'src'))) if (/\.tsx?$/.test(f) && !/generated/.test(f)) scanScript(join('react', 'src', f));
   const missing = [];
@@ -333,6 +333,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
                               ['references/PLAIN-HTML.md', 'PLAIN-HTML.md'],
                               ['references/CHECKLIST.md', 'CHECKLIST.md'],
                               ['references/VISUAL-RECIPES.md', 'VISUAL-RECIPES.md'],
+                              ['assets/templates/decision-brief.html', 'templates/decision-brief.html'],
                               ['references/MOTION.md', 'MOTION.md'],
                               ['assets/sc-motion.js', 'sc-motion.js'],
                               ['assets/sc-reading.js', 'sc-reading.js']]) {

@@ -116,3 +116,33 @@ clearly labeled ±20% context scale. SpicyStock applies the zero-to-ten form onl
 already prints. Values outside a displayed context clamp visually while their exact written values
 remain unchanged. No ranking, threshold, screening, purchase, price, data, or trading behavior is
 introduced or changed.
+
+## First-screen decision composition · 6 September 2026
+
+Observed integration gap: adding a component to an optional, lower-page shortlist did
+not improve the default view. A system recipe is only useful when its information is
+placed where a reader actually makes a decision. The response is a complete, copyable
+**Decision brief**: compact original-mark opening, immediately visible semantic signal
+matrix, two photo/object dossiers, existing map/evidence destinations and a source footer.
+
+The matrix is in the initial content, not a conditional drawer. Existing record order,
+values and product verdicts remain authoritative; unavailable evidence is neutral and
+explicit. Photographs can be missing without inventing a replacement vehicle. The
+specimen contains labeled illustrative facts, not live listings or recommendations.
+Its map note demonstrates why absent coordinates must not produce made-up map pins.
+
+This is composition of existing v2.10 components, not another style layer. The palette,
+mark paths, geometry, stylesheet and version remain unchanged. One authored composition
+generates both recipe 36 and the standalone template; the pre-ship gate checks freshness,
+shared class vocabulary, local references and original assets. The template is bundled
+with the reusable design guidance. It is static by default; optional motion must retain
+visible base content and honor reduced-motion/pause. Phone comparison scrolling remains
+inside a named, keyboard-focusable native-table region, with sticky candidate identity.
+
+Rendered verification: the actual standalone template passed six Chromium scenarios
+(390, 820 and 1280px, light and dark), including no page overflow, visible native matrix
+before dossiers, proportional/unclipped original marks, phone stacking, keyboard focus
+and horizontal scrolling, candidate/source/map anchor navigation, and reduced-motion
+visibility. These deterministic offline screenshots use fallback fonts and the original
+local SVGs. The browser gate is opt-in and reports missing Chromium as SKIP/nonzero;
+the static offline gate does not claim browser coverage.
