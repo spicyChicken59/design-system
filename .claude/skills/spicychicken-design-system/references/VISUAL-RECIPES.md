@@ -91,7 +91,7 @@ no fonts, remote images, or runtime. The existing reserved asset licence applies
   and wine scope on-ink colours. Decorative marks have empty alt text.
 - Print removes preview controls and decorative panels, opens the report body,
   and retains cover colour. Enable browser background graphics for faithful covers.
-- No ambient animation: the logo stays still and existing reduced motion applies.
+- Motion is opt-in: use a short mark arrival, section reveal, or card feedback. Keep the logo still during reading. Follow `MOTION.md`; reduced motion always wins.
 
 ## Design-only adoption
 
@@ -99,3 +99,19 @@ SpicyCar and SpicyStock currently pin the existing release. Adopt these visual
 pieces independently, then bind existing content. A design-system branch does not
 restyle pinned websites. Purchase, screening, scoring, data, and backend behaviour
 are outside this visual update.
+
+## A visual library you can build from
+
+Open `visual-library.html` to filter real compositions by identity, layout, data,
+motion, and states. Every recipe shows its live markup and has a copy action.
+Choose the content structure first, then apply a surface and one motion treatment.
+The snippet is the rendered example; it does not depend on the catalog stylesheet.
+
+Use a bento for unequal content importance, an editorial split for a narrative
+with a reserved visual, a timeline for dated events, and a ranking for an ordered
+comparison. Use a quote with an actual attribution. Use a progress bar only when
+its value is known, and a loading indicator only while work is pending.
+
+Avoid stacking effects. One arrival for the opening mark and quiet section
+reveals are enough for a full page. Tables, prices, scores and chart labels stay
+readable throughout. The motion library never invents or counts up a value.

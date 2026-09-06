@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SpicyChicken Design System — sc.css  v2.5.0
+   SpicyChicken Design System — sc.css  v2.6.0
    Mohammed Tahir Madni · github.com/spicyChicken59
 
    One file, no build step. Drop it in (or link it) and every page shares the
@@ -100,6 +100,16 @@
   /* Motion — fades and short slides, ease-out, never load-bearing */
   --sc-motion: 240ms;
   --sc-ease: cubic-bezier(.2, .7, .3, 1);
+
+
+  --sc-motion-fast: 160ms;
+  --sc-motion-enter: 480ms;
+  --sc-motion-brand: 640ms;
+  --sc-motion-stagger: 60ms;
+  --sc-motion-loading: 1200ms;
+  --sc-motion-distance: 16px;
+  --sc-ease-out: cubic-bezier(.16, 1, .3, 1);
+  --sc-ease-in-out: cubic-bezier(.4, 0, .2, 1);
 
   /* Layout */
   --sc-w-prose: 800px;  --sc-w-content: 1120px;  --sc-w-wide: 1280px;
@@ -346,9 +356,9 @@ table { border-collapse: collapse; }
 .sc-wrap--prose { max-width: var(--sc-w-prose); }
 .sc-section { margin-top: var(--sc-s6); }
 .sc-grid { display: grid; gap: var(--sc-s2); }
-.sc-grid--2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-.sc-grid--3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-.sc-grid--4 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.sc-grid--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+.sc-grid--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+.sc-grid--4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); }
 
 /* Eyebrow — the signature tell: lowercase mono opened by a spice-less "//" */
 .sc-eyebrow { font: 600 12px/1 var(--sc-font-mono); letter-spacing: .4px; text-transform: lowercase; color: var(--sc-brand); margin: 0 0 10px; }
@@ -945,6 +955,246 @@ img.sc-mark--lg { height: 48px; }
   .sc-chapter { break-after: avoid; }
   .sc-stat-strip, .sc-facts { break-inside: avoid; }
 }
+
+/* 4e. VISUAL LIBRARY START */
+/* --------------------------------------------------------------------------
+   VISUAL COMPOSITIONS — reusable arrangements for pages, evidence and states.
+   Structure uses semantic tokens; the original mark remains an image asset.
+   These are opt-in layouts. Each flex track wraps to its own available width.
+   -------------------------------------------------------------------------- */
+
+/* Asymmetric bento — one lead surface with a supporting stack. */
+.sc-bento { display: flex; flex-wrap: wrap; align-items: stretch; gap: var(--sc-s2); }
+.sc-bento__main { flex: 1.65 1 300px; min-width: 0; }
+.sc-bento__aside { flex: 1 1 180px; min-width: 0; display: flex; flex-direction: column; gap: var(--sc-s2); }
+.sc-bento__aside > * { flex: 1; min-width: 0; }
+.sc-bento > .sc-bento__main > :last-child { margin-bottom: 0; }
+
+/* Editorial split — copy and art occupy separate, generously spaced regions. */
+.sc-editorial { display: flex; flex-wrap: wrap; align-items: stretch; gap: var(--sc-s4); }
+.sc-editorial__body { flex: 1.6 1 240px; min-width: 0; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+.sc-editorial__body > :is(h2,h3) { font: 700 clamp(26px, 3vw, 42px)/1.1 var(--sc-font-display); letter-spacing: -.035em; max-width: 22ch; }
+.sc-editorial__body > p { max-width: 54ch; color: var(--sc-text-2); }
+.sc-editorial__body > :last-child { margin-bottom: 0; }
+.sc-editorial__art { flex: 1 1 180px; min-width: 0; min-height: 240px; display: grid; place-items: center; padding: var(--sc-s3); background: var(--sc-raised); border-radius: var(--sc-r-lg); }
+.sc-editorial__art > img { width: min(46%, 120px); height: auto; }
+.sc-editorial__art > .sc-ghost { width: 100%; }
+
+/* Timeline — chronological evidence, with a real ordered-list reading order. */
+.sc-timeline { list-style: none; padding: 0; margin: 0; }
+.sc-timeline__item { display: grid; grid-template-columns: minmax(66px, .3fr) minmax(0, 1fr); gap: var(--sc-s3); position: relative; padding: 0 0 var(--sc-s4); }
+.sc-timeline__stamp { color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.6 var(--sc-font-mono); padding-top: 3px; }
+.sc-timeline__body { border-left: 1px solid var(--sc-border-strong); padding-left: var(--sc-s3); position: relative; min-width: 0; }
+.sc-timeline__body::before { content: ''; position: absolute; width: 7px; height: 7px; left: -4px; top: 7px; border-radius: 50%; background: var(--sc-brand-strong); outline: 4px solid var(--sc-surface); }
+.sc-timeline__body > :is(h2,h3,h4) { margin: 0 0 var(--sc-s1); font-size: var(--sc-text-lg); }
+.sc-timeline__body > p { margin: 0; color: var(--sc-text-2); font-size: var(--sc-text-sm); }
+.sc-timeline__item:last-child { padding-bottom: 0; }
+
+/* Pull quote — expressive type, citation directly beneath the statement. */
+.sc-quote { margin: 0; padding: var(--sc-s4) 0; border-top: 2px solid var(--sc-brand-line); }
+.sc-quote__text { margin: 0 0 var(--sc-s3); color: var(--sc-heading); font: 600 clamp(24px, 3.2vw, 40px)/1.25 var(--sc-font-display); letter-spacing: -.025em; max-width: 32ch; }
+.sc-quote__source { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sc-s1) var(--sc-s2); color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.6 var(--sc-font-mono); font-style: normal; }
+
+/* Ranked list — position, meaning and figure; no colour-only ranking. */
+.sc-rank-list { list-style: none; padding: 0; margin: 0; }
+.sc-rank-list__item { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; align-items: baseline; gap: var(--sc-s2); padding: var(--sc-s2) 0; border-bottom: 1px solid var(--sc-border); }
+.sc-rank-list__item:last-child { border-bottom: 0; }
+.sc-rank-list__position { color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.5 var(--sc-font-mono); }
+.sc-rank-list__body { min-width: 0; }
+.sc-rank-list__body > strong { display: block; color: var(--sc-heading); font-weight: 600; }
+.sc-rank-list__body > span { display: block; margin-top: var(--sc-s0); color: var(--sc-text-2); font-size: var(--sc-text-sm); }
+.sc-rank-list__value { color: var(--sc-heading); font: 600 var(--sc-text-lg)/1.3 var(--sc-font-body); font-variant-numeric: tabular-nums; text-align: right; }
+
+/* Stepper — a status overview, not a substitute for interactive navigation. */
+.sc-stepper { display: flex; flex-wrap: wrap; gap: var(--sc-s2); list-style: none; padding: 0; margin: 0; }
+.sc-stepper__item { flex: 1 1 160px; min-width: 0; display: grid; grid-template-columns: 28px minmax(0, 1fr); align-items: start; gap: var(--sc-s1); padding-top: var(--sc-s2); border-top: 2px solid var(--sc-border-strong); }
+.sc-stepper__index { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--sc-border-control); color: var(--sc-text-2); font: 600 var(--sc-text-xs)/1 var(--sc-font-mono); }
+.sc-stepper__body { padding-top: 3px; }
+.sc-stepper__body > strong { display: block; color: var(--sc-heading); font-size: var(--sc-text-sm); }
+.sc-stepper__body > span { display: block; margin-top: var(--sc-s0); color: var(--sc-text-2); font-size: var(--sc-text-sm); }
+.sc-stepper__item.is-current, .sc-stepper__item.is-complete { border-top-color: var(--sc-brand-line); }
+.sc-stepper__item.is-current .sc-stepper__index { background: var(--sc-brand-fill); color: var(--sc-heading); border-color: var(--sc-brand-line); }
+.sc-stepper__item.is-complete .sc-stepper__index { color: var(--sc-heading); border-color: var(--sc-brand-line); }
+
+/* Checkpoint — confirmation with shape and explicit words, never colour alone. */
+.sc-checkpoint { display: flex; align-items: flex-start; gap: var(--sc-s2); padding: var(--sc-s3); background: var(--sc-surface); border: 1px solid var(--sc-border); border-radius: var(--sc-r-lg); }
+.sc-checkpoint__mark { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--sc-brand-fill); color: var(--sc-heading); font: 600 18px/1 var(--sc-font-body); }
+.sc-checkpoint__body { min-width: 0; }
+.sc-checkpoint__body > :is(h2,h3,h4) { margin: 0 0 var(--sc-s0); font-size: var(--sc-text-lg); }
+.sc-checkpoint__body > p { margin: 0; color: var(--sc-text-2); font-size: var(--sc-text-sm); }
+
+/* Metric spotlight — a single lead figure, honest unit and immediate context. */
+.sc-metric-spotlight { padding-block: var(--sc-s3); border-top: 2px solid var(--sc-brand-line); }
+.sc-metric-spotlight__value { display: block; margin-block: var(--sc-s3) var(--sc-s2); color: var(--sc-heading); font: 700 clamp(48px, 7vw, 88px)/.95 var(--sc-font-body); letter-spacing: -.055em; overflow-wrap: anywhere; }
+.sc-metric-spotlight__value > small { font-size: .34em; letter-spacing: -.02em; margin-left: var(--sc-s1); }
+.sc-metric-spotlight__context { max-width: 42ch; color: var(--sc-text-2); font-size: var(--sc-text-md); margin: 0; }
+
+/* Comparison rail — parallel choices with equal visual weight. */
+.sc-comparison { display: flex; flex-wrap: wrap; gap: var(--sc-s3); margin: 0; }
+.sc-comparison__item { flex: 1 1 160px; min-width: 0; padding-top: var(--sc-s2); border-top: 2px solid var(--sc-border-strong); }
+.sc-comparison__label { color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.6 var(--sc-font-mono); }
+.sc-comparison__value { color: var(--sc-heading); font: 700 var(--sc-h2)/1.15 var(--sc-font-body); margin: var(--sc-s2) 0; letter-spacing: -.025em; }
+.sc-comparison__item > p, .sc-comparison__note { margin: 0; color: var(--sc-text-2); font-size: var(--sc-text-sm); max-width: 34ch; }
+
+/* Captioned image — the caption is outside the image and remains selectable. */
+.sc-captioned { margin: 0; }
+.sc-captioned__art { display: grid; place-items: center; min-height: 240px; padding: var(--sc-s4); background: var(--sc-raised); border-radius: var(--sc-r-lg); overflow: hidden; }
+.sc-captioned__art > img { display: block; width: 100%; height: auto; object-fit: cover; }
+.sc-captioned__art > .sc-adaptive-mark { width: min(48%, 120px); }
+.sc-captioned__art .sc-adaptive-mark > img { width: 100%; height: auto; }
+.sc-captioned__caption { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: var(--sc-s1) var(--sc-s3); padding-top: var(--sc-s2); color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.6 var(--sc-font-mono); }
+.sc-captioned__caption > strong { color: var(--sc-heading); font-weight: 500; }
+
+/* Labeled bars — every quantity is real text; the scale begins at zero.
+   Pass a percentage through --sc-bar-size and a chart slot through --sc-tone.
+   Values and labels stay visible even when the visual marks cannot render. */
+.sc-bars { margin: 0; }
+.sc-bars__row { display: grid; grid-template-columns: minmax(52px, .32fr) minmax(0, 1fr); align-items: center; gap: var(--sc-s2); padding-block: var(--sc-s1); }
+.sc-bars__label { color: var(--sc-text-2); font-size: var(--sc-text-sm); }
+.sc-bars__measure { display: grid; grid-template-columns: minmax(0, 1fr) 36px; align-items: center; gap: var(--sc-s2); margin: 0; }
+.sc-bars__track { display: block; height: 12px; background: var(--sc-chart-grid); border-radius: 2px; overflow: hidden; }
+.sc-bars__fill { display: block; width: clamp(0%, var(--sc-bar-size, 0%), 100%); height: 100%; background: var(--sc-tone, var(--sc-chart-emphasis)); }
+.sc-bars__value { color: var(--sc-heading); font: 600 var(--sc-text-sm)/1.5 var(--sc-font-body); font-variant-numeric: tabular-nums; text-align: right; }
+
+/* Skeleton — a static layout placeholder; never invent a percentage or pulse. */
+.sc-skeleton { display: block; background: var(--sc-border); border-radius: var(--sc-r-sm); }
+.sc-skeleton--line { height: 12px; width: 100%; }
+.sc-skeleton--title { height: 24px; width: 56%; }
+.sc-skeleton--block { height: 144px; width: 100%; }
+
+@media (max-width: 480px) {
+  .sc-timeline__item { grid-template-columns: 60px minmax(0, 1fr); gap: var(--sc-s2); }
+  .sc-timeline__body { padding-left: var(--sc-s2); }
+  .sc-rank-list__item { column-gap: var(--sc-s1); }
+  .sc-editorial { gap: var(--sc-s3); }
+  .sc-editorial__art { min-height: 180px; }
+}
+@media (forced-colors: active) {
+  .sc-timeline__body::before { background: CanvasText; outline-color: Canvas; }
+  .sc-stepper__index, .sc-checkpoint__mark { border: 1px solid CanvasText; }
+  .sc-skeleton { background: GrayText; }
+}
+@media print {
+  .sc-bento, .sc-editorial, .sc-quote, .sc-metric-spotlight, .sc-captioned, .sc-checkpoint { break-inside: avoid; }
+  .sc-timeline__item, .sc-rank-list__item { break-inside: avoid; }
+}
+
+
+
+/* --------------------------------------------------------------------------
+   OPT-IN MOTION — arrival, interaction and honest waiting states.
+   Content is visible before the optional runtime runs. Only an observed
+   arrival receives .sc-motion-in. Focus, reduced motion and print end it.
+   -------------------------------------------------------------------------- */
+.sc-reveal, .sc-stagger, .sc-chick-arrive, .sc-rule-reveal { --sc-motion-order: 0; }
+.sc-motion-in {
+  animation: sc-motion-rise var(--sc-motion-enter) var(--sc-ease-out) both;
+  animation-delay: calc(var(--sc-motion-order, 0) * var(--sc-motion-stagger));
+}
+.sc-motion-in[data-sc-motion="fade"] { animation-name: sc-motion-fade; }
+.sc-motion-in[data-sc-motion="scale"] { animation-name: sc-motion-scale; }
+.sc-motion-in[data-sc-motion="slide"] { animation-name: sc-motion-slide; }
+.sc-motion-in[data-sc-motion="wipe"] { animation-name: sc-motion-wipe; }
+.sc-chick-arrive.sc-motion-in { animation-name: sc-motion-chick; animation-duration: var(--sc-motion-brand); }
+.sc-rule-reveal.sc-motion-in { animation-name: sc-motion-rule; transform-origin: left center; }
+.sc-motion-in:focus-within { animation: none; }
+
+@keyframes sc-motion-rise {
+  from { opacity: 0; translate: 0 var(--sc-motion-distance); }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes sc-motion-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sc-motion-scale {
+  from { opacity: 0; scale: .97; }
+  to { opacity: 1; scale: 1; }
+}
+@keyframes sc-motion-slide {
+  from { opacity: 0; translate: calc(-1 * var(--sc-motion-distance)) 0; }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes sc-motion-wipe {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes sc-motion-chick {
+  from { opacity: 0; translate: 0 calc(var(--sc-motion-distance) / 2); }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes sc-motion-rule { from { scale: 0 1; } to { scale: 1 1; } }
+
+/* Interaction transforms are opt-in; color/focus styles keep doing their job. */
+.sc-hover-lift, .sc-press {
+  transition: translate var(--sc-motion-fast) var(--sc-ease-out),
+    scale var(--sc-motion-fast) var(--sc-ease-out),
+    background-color var(--sc-motion-fast) var(--sc-ease-out),
+    border-color var(--sc-motion-fast) var(--sc-ease-out),
+    color var(--sc-motion-fast) var(--sc-ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .sc-hover-lift:hover { translate: 0 -3px; }
+}
+.sc-press:active { scale: .985; }
+.sc-press:disabled, .sc-press[aria-disabled="true"] { scale: 1; }
+
+/* A loading symbol is decorative; its enclosing status names the real task.
+   Three gentle cycles run only in an explicitly busy region, then rest. */
+.sc-loader {
+  display: inline-block;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--sc-border-strong);
+  border-top-color: var(--sc-heading);
+  border-radius: var(--sc-r-pill);
+  vertical-align: middle;
+}
+[aria-busy="true"] .sc-loader { animation: sc-motion-spin var(--sc-motion-loading) linear 3; }
+.sc-loading-dots { display: inline-flex; align-items: center; gap: 4px; height: 20px; }
+.sc-loading-dots > span { width: 4px; height: 4px; border-radius: var(--sc-r-pill); background: var(--sc-text-2); }
+[aria-busy="true"] .sc-loading-dots > span { animation: sc-motion-dot var(--sc-motion-loading) var(--sc-ease-in-out) 3; }
+.sc-loading-dots > span:nth-child(2) { animation-delay: var(--sc-motion-fast); }
+.sc-loading-dots > span:nth-child(3) { animation-delay: calc(var(--sc-motion-fast) * 2); }
+@keyframes sc-motion-spin { to { rotate: 1turn; } }
+@keyframes sc-motion-dot { 0%, 70%, 100% { opacity: .45; } 35% { opacity: 1; } }
+.sc-progress {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--sc-r-pill);
+  background: var(--sc-border);
+  color: var(--sc-brand-strong);
+  accent-color: var(--sc-brand-strong);
+}
+.sc-progress::-webkit-progress-bar { background: var(--sc-border); border-radius: var(--sc-r-pill); }
+.sc-progress::-webkit-progress-value { background: var(--sc-brand-strong); border-radius: var(--sc-r-pill); }
+.sc-progress::-moz-progress-bar { background: var(--sc-brand-strong); border-radius: var(--sc-r-pill); }
+
+/* Pause finishes arrivals immediately. It never freezes readable content at
+   zero opacity. Loading labels and native progress values remain available. */
+:root[data-sc-motion-paused="true"] .sc-motion-in,
+:root[data-sc-motion-paused="true"] .sc-loader,
+:root[data-sc-motion-paused="true"] .sc-loading-dots > span { animation: none; }
+:root[data-sc-motion-paused="true"] .sc-hover-lift,
+:root[data-sc-motion-paused="true"] .sc-press { transition: none; translate: none; scale: none; }
+@media (prefers-reduced-motion: reduce) {
+  .sc-motion-in, .sc-loader, .sc-loading-dots > span { animation: none !important; }
+  .sc-hover-lift, .sc-press { transition: none !important; translate: none !important; scale: none !important; }
+}
+@media print {
+  .sc-motion-in, .sc-loader, .sc-loading-dots > span { animation: none !important; }
+  .sc-hover-lift, .sc-press { transition: none !important; translate: none !important; scale: none !important; }
+  [data-sc-motion-toggle], [data-sc-motion-replay] { display: none !important; }
+}
+@media (forced-colors: active) {
+  .sc-loader { border-color: GrayText; border-top-color: CanvasText; }
+  .sc-loading-dots > span { background: CanvasText; }
+  .sc-progress { forced-color-adjust: auto; }
+}
+
+/* 4e. VISUAL LIBRARY END */
 
 /* --------------------------------------------------------------------------
    5. UTILITIES

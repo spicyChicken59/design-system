@@ -4,7 +4,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const files = ['brand-studio.html', ...['landing','dashboard','screener','report'].map(p => `templates/${p}.html`)];
+const files = ['brand-studio.html', 'visual-library.html', ...['landing','dashboard','screener','report'].map(p => `templates/${p}.html`)];
 for (const name of files) {
   const path = join(root, name), html = readFileSync(path, 'utf8');
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1, `${name}: one page h1`);
@@ -25,4 +25,4 @@ for (const [tone, form] of [['ink','cream'],['wine','cream'],['paper','ink']]) {
   const pattern = readFileSync(join(root, `assets/sc-pattern-${tone}.svg`), 'utf8');
   for (const [path] of mark.matchAll(/<path\b[^>]+>/g)) assert(pattern.includes(path), `${tone}: original mark path changed`);
 }
-console.log('visual-check: 5 documents have valid assets/anchors, unique IDs and one h1; all 3 patterns preserve original logo paths');
+console.log('visual-check: 6 documents have valid assets/anchors, unique IDs and one h1; all 3 patterns preserve original logo paths');

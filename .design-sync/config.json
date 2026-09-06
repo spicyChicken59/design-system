@@ -57,6 +57,33 @@
     },
     "BrandedEmpty": {
       "cardMode": "column"
+    },
+    "Bento": {
+      "cardMode": "column"
+    },
+    "Editorial": {
+      "cardMode": "column"
+    },
+    "Timeline": {
+      "cardMode": "column"
+    },
+    "Quote": {
+      "cardMode": "column"
+    },
+    "RankList": {
+      "cardMode": "column"
+    },
+    "Stepper": {
+      "cardMode": "column"
+    },
+    "MetricSpotlight": {
+      "cardMode": "column"
+    },
+    "Comparison": {
+      "cardMode": "column"
+    },
+    "Reveal": {
+      "cardMode": "column"
     }
   },
   "readmeHeader": ".design-sync/conventions.md"

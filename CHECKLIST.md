@@ -17,3 +17,13 @@ guide, it's a new component — fold it into the system or take it out.
 - [ ] Screenshotted at 1280 and 390 in dark and light; nothing outside a `.sc-table-scroll` scrolls sideways.
 - [ ] Footer has the source line and the watermark; page ends with one next action, not a list.
 - [ ] `npm run check` passes (system repo) — the sheet, tokens, style guide and wrappers agree.
+
+## Visual composition and motion
+
+- [ ] The primary finding has clear hierarchy; supporting evidence does not compete with it.
+- [ ] The original chick has clear space and the correct colour form for its surface.
+- [ ] Reusable compositions come from the visual library and retain their semantics.
+- [ ] Motion is opt-in; no essential content depends on animation or JavaScript.
+- [ ] Keyboard focus, reduced motion, pause and print leave everything readable.
+- [ ] Loading has a text label and represents real pending work; values are never invented.
+- [ ] Copied design assets belong to one immutable snapshot; provenance matches the files.

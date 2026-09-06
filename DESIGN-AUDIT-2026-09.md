@@ -34,3 +34,29 @@ Verification results are recorded in the pull request. `npm run build` regenerat
 assets, examples, tokens, guide, skill bundle, and React output. `npm run check`
 checks consistency and visual invariants. The studio previews the actual template
 files at phone, tablet, and desktop widths.
+
+## Production integration pass
+
+The second pass expands composition into a searchable library of 24 live recipes,
+with exact markup, category/search controls, motion replay/pause and copy fallback.
+Nine more React wrappers reproduce the shared semantic markup.
+
+SpicyCar now uses a compact wine cover, the original cream mark, connected metrics,
+readable decision evidence and a paper methodology page. SpicyStock uses an ink
+cover with a dedicated wine brand panel, recorded metrics and quieter research
+sections. Business logic and source datasets remain unchanged.
+
+Review fixes include container-safe shared grid minimums at 320px, cream marks on
+wine, comparison-note alignment, and mobile caption spacing. Motion adds short
+entrances and interaction feedback, preserves visible base content, respects
+reduced motion/focus/print, and limits loading animations to three cycles.
+
+The build and local design gate pass 206 token / 87 component counts, 277 discoverable
+classes, 196 contrast pairs, 14 motion behavior scenarios, and original mark
+geometry. Browser review covers actual product pages and representative phone,
+tablet and desktop layouts; catalog search, replay, pause and copy fallback are
+exercised. SpicyCar's 342 existing Python tests pass. Consumer CI remains the gate
+for the complete existing dashboard regression suites.
+
+Consumers use an immutable design asset snapshot with source commit and hashes.
+A standalone release tag is a separate publication; it remains pending.

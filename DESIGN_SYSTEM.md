@@ -1,4 +1,4 @@
-# SpicyChicken Design System — v2.5.0
+# SpicyChicken Design System — v2.6.0
 
 **The visual standard for everything Mohammed Tahir Madni ships under SpicyChicken.**
 
@@ -10,7 +10,7 @@ Files in this folder:
 
 | File | What it is |
 |---|---|
-| `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.5.0`. |
+| `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.6.0`. |
 | `sc-map.js` | `SC.geo` (projection, topojson, geodesic ring, box fitting — all pure) and `SC.mapView` (pan, zoom, and the marks that must not scale with it). Optional; needed only by a page that draws a map. |
 | `sc-charts.js` | The chart primitives the sheet's `.sc-chart` / `.sc-spark` / `.sc-tooltip` contracts were always describing. Optional; load it after `sc.css`. |
 | `sc-theme.js` | The theme script (source: `build/theme.js`). Reads the saved choice before paint, wires the toggle, and swaps a pinned-dark page to light for printing. Link it or inline it. |
@@ -153,10 +153,11 @@ in columns that must align.
 - **Borders:** 1px hairlines in `--sc-border`. Separate with color, not heavy shadow. Form controls
   are the one exception: their edge is `--sc-border-control` so the box reads at 3:1.
 - **Shadow:** `--sc-shadow` only — soft and rare. `--sc-shadow-pop` for the tooltip.
-- **Motion:** fades and short slides, 240ms, ease-out. Base state = finished state. No bounce, no loops,
-  no filters, no transforms. Hover signals with color (fill toward `--sc-hover`, border toward
-  `--sc-brand-strong`), never scale; pressed secondary/ghost buttons shift to `--sc-hover`.
-  `prefers-reduced-motion` zeroes it.
+- **Motion:** opt-in and purposeful. Base state is the finished state; content is always available.
+  The motion library adds short reveals, staggered groups, a gentle hover lift, pressed feedback,
+  and bounded loading sequences. Translate/scale only the opted-in composition, never data labels
+  or an entire reading surface. No bounce, parallax, flashing, or decorative infinite loops.
+  Reduced motion, keyboard focus, print, and the pause control cancel movement. Read `MOTION.md`.
 - **Widths:** prose 800 · content 1120 · wide (dashboards, tables) 1280.
 - **Targets: 24px minimum; 44px under a coarse pointer.** Every interactive thing — toggle
   buttons, tabs, `summary`, checkbox labels, field labels — is at least 24px tall (WCAG 2.5.8).
@@ -206,6 +207,13 @@ attribute now beats every component's `display`, so hide with `hidden`, never wi
 | Component | Class | Rules |
 |---|---|---|
 | Layout | `.sc-wrap` (`--wide` `--prose`) · `.sc-section` · `.sc-grid` (`--2` `--3` `--4`) · `.sc-stack` · `.sc-row` · `.sc-right` · `.sc-sep` | Wrap = measure + gutters; section = 48px rhythm; grid = auto-fit columns at 280/220/180px minimums; stack = 16px between children (no inline `margin-top`); row = inline run, `.sc-right` pushes to the end; `.sc-sep` = the `·` in a meta row, a 1px rule in the masthead. |
+| Bento / editorial | `.sc-bento` + `__main` / `__aside`; `.sc-editorial` + `__body` / `__art` | Let unequal content have unequal space; tracks wrap to their container width. Keep decorative art separate from selectable copy. |
+| Timeline / ranking | `.sc-timeline` / `.sc-rank-list` | Use ordered lists and real dates/values. Context stays beside its figure. |
+| Quote / comparison | `.sc-quote`; `.sc-comparison` | Use actual attribution; comparison values get equal visual weight and explicit labels. |
+| Metric / bars | `.sc-metric-spotlight`; `.sc-bars` | One lead figure; exact labeled bars with a stated scale and a table twin. No fabricated progress. |
+| Steps / checkpoint | `.sc-stepper`; `.sc-checkpoint` | Words carry the state. The stepper is a status overview, not interactive navigation. |
+| Image / skeleton | `.sc-captioned`; `.sc-skeleton` | Keep captions outside the art. Skeletons are static and only stand in for pending content. |
+| Motion | `.sc-reveal`, `.sc-stagger`, `.sc-hover-lift`, `.sc-press` | Optional runtime; content always visible. `MOTION.md` documents variants, pause/replay, focus and reduced motion. |
 | Skip link | `.sc-skip` | `<a class="sc-skip" href="#main">` as the first thing in `<body>`; off-screen until focused. |
 | On-ink block | `.sc-on-ink` | Gives any ink-filled block (a cover, a dark strip) the masthead's token re-scope (§2): headings, text, links and code read correctly on ink in both modes. |
 | Masthead | `.sc-masthead` · `.sc-brand` (`__name` `__sub`) · `.sc-masthead__right` · `.sc-nav` | Project left, endorsement/toggle/status right. Dark in both modes. `.sc-nav` needs an `aria-label`; the current page carries `aria-current="page"`, underlined in spice. Bare text in `__right` is the status slot (11px mono) and wraps on phones. |
@@ -290,7 +298,7 @@ Validated with the `dataviz` method; re-run the checks if a slot ever changes. C
 ## 9. Marks & watermark
 
 **Expanded compositions:** [VISUAL-RECIPES.md](VISUAL-RECIPES.md) and
-[the brand studio](brand-studio.html) demonstrate the v2.5.0 additions. `.sc-cover`
+[the brand studio](brand-studio.html) demonstrate the v2.6.0 additions. `.sc-cover`
 uses ink, wine, or warm paper; `.sc-brand-panel` provides a dedicated mark texture;
 `.sc-ghost` reserves blank space for a mono mark; `.sc-signature` credits the maker
 outside chart plots. `.sc-chapter`, `.sc-stat-strip`, `.sc-facts`,
@@ -362,10 +370,10 @@ Measured, not assumed — the numbers are WCAG 2 contrast ratios from the curren
 **Link a pinned version.** Tags are served by jsDelivr; pin the exact release and upgrade on purpose:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.6.0/sc.css">
 ```
 
-`@2` in place of `@v2.5.0` follows the newest 2.x tag (non-breaking upgrades, re-resolved by the CDN
+`@2` in place of `@v2.6.0` follows the newest 2.x tag (non-breaking upgrades, re-resolved by the CDN
 within hours). The GitHub Pages URL `https://spicychicken59.github.io/design-system/sc.css` is
 **latest** — it is what the style guide runs on and it may change on a major, so it is for
 prototypes, not production. Vendoring (copy `sc.css` next to the page) is the third option; note the
@@ -384,8 +392,8 @@ version from its header when you refresh it.
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc.css">
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc-theme.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.6.0/sc.css">
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.6.0/sc-theme.js"></script>
 ```
 
 Order matters: `color-scheme` first so the browser paints the right default before CSS arrives, the
@@ -399,7 +407,7 @@ code changes the attribute), and swaps a pinned-dark page to light for printing.
 nothing else.
 
 **Assets** — every file in `assets/`, at `https://spicychicken59.github.io/design-system/assets/<file>`
-or `https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/assets/<file>`:
+or `https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.6.0/assets/<file>`:
 
 | File | Where it goes |
 |---|---|

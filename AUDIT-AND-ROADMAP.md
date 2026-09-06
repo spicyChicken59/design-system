@@ -92,6 +92,12 @@ and `DESIGN_SYSTEM.md` §10.
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
 
+- **2.6.0 (2026-09-06, source snapshot)** — A usable visual and motion catalog,
+  portable editorial/data compositions, progressive motion with reduced-motion
+  and focus safeguards, and production integration in SpicyCar and SpicyStock.
+  Original chick paths and all application data behavior are preserved.
+  Consumers vendor a verified immutable design snapshot.
+
 - **2.5.0 (2026-09-06, release candidate)** — A richer visual language around the
   original chick: ink, wine and paper covers; original-mark pattern SVGs; reserved
   ghosts; contextual signatures; chapters; metric strips; fact rows; branded empty

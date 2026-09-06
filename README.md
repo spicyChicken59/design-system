@@ -3,20 +3,24 @@
 The visual standard for everything Mohammed Tahir Madni ships under **SpicyChicken** —
 dashboards, documents, READMEs, decks. Cobalt structure, one spice accent, dark by default.
 
-**Start here:** open [the brand studio](brand-studio.html) for compositions, logo
-treatments and responsive previews. Read [visual recipes](VISUAL-RECIPES.md) to use
-them. Then open `styleguide.html` (every token and component, both modes), and read
-`DESIGN_SYSTEM.md` (the rules). New project: copy `starter.html`, keep its head, and build.
+**Start with [the visual library](visual-library.html):** preview, filter, and copy
+complete visual recipes. Explore [the brand studio](brand-studio.html) for page
+compositions and logo treatments, then use [the style guide](styleguide.html) for
+the complete component reference. [Visual recipes](VISUAL-RECIPES.md) explains
+composition; [motion](MOTION.md) explains safe, purposeful animation.
 
 | File | Purpose |
 |---|---|
-| `sc.css` | The system — tokens, base styles, components. One file; consumers need no build step. Header carries the version (`v2.5.0`). |
+| `visual-library.html` | Searchable, copyable live recipes across identity, layout, data, motion, and states. |
+| `sc-motion.js` | Optional, dependency-free reveals, sequencing and pause controls. Content stays visible without it. |
+| `build/vendor.mjs` | Copy a committed design snapshot, original assets and provenance into any static website. |
+| `sc.css` | The system — tokens, base styles, components. One file; consumers need no build step. Header carries the version (`v2.6.0`). |
 | `sc-map.js` | The map layer: an Albers projection for the lower 48, a quantized-topojson reader, a geodesic ring, box fitting, and a pan/zoom view engine. The geo half is pure — it runs in Node. |
 | `sc-charts.js` | Chart primitives: nice ticks, the end-label solver, the sparkline, one tooltip controller, the accessible table twin. Generated from `build/charts.js`, same version stream. Optional — `sc.css` styles charts you draw yourself just as well. |
 | `sc-theme.js` | The theme script: saved choice before paint, toggle wiring, print swap. Link it or inline it. Source: `build/theme.js`. |
 | `starter.html` | Page skeleton: head snippet, masthead with theme toggle, title block, footer with watermark. |
 | `styleguide.html` | Living reference. Open it next to any page you're building. Generated — edit `build/`. |
-| `index.html` | Redirects the Pages root to the style guide. |
+| `index.html` | Opens the brand studio from the Pages root. |
 | `tokens.json` | Tokens in W3C format for Figma / Tokens Studio. Generated from the CSS. |
 | `DESIGN_SYSTEM.md` | The standard. Attach it to Claude or any AI tool before generating material. |
 | `PLAIN-HTML.md` | Inline-style equivalents (eyebrow, chip, card, callout) for email and exported HTML. |
@@ -29,15 +33,33 @@ them. Then open `styleguide.html` (every token and component, both modes), and r
 
 ## Use it in a project
 
-**Release candidate:** v2.5.0 is the visual update on this branch. Use local files
-until the v2.5.0 tag is published; the versioned CDN examples below become available
-with that release. Existing consumers can keep their published release pins.
+**Current source snapshot: v2.6.0.** SpicyCar and SpicyStock use checked-in design
+assets with their source commit and SHA-256 hashes in `provenance.json`.
+The standalone release tag is not yet published. Use the snapshot workflow now;
+the CDN examples below apply only after the matching release tag exists.
+
+From a clean, committed checkout, copy the complete visual runtime and original
+brand assets into a consumer:
+
+```sh
+node build/vendor.mjs ../my-website/design-system
+```
+
+```html
+<link rel="stylesheet" href="design-system/sc.css">
+<script src="design-system/sc-theme.js"></script>
+<script src="design-system/sc-motion.js" defer></script>
+```
+
+Put the theme script in the head, before paint. Motion is optional. Copy a recipe
+from the visual library and keep the `assets/` subtree beside these files. Refresh
+the entire snapshot together; no consumer build step is required.
 
 Pin a release — tags are served by jsDelivr:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc.css">
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.5.0/sc-theme.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.6.0/sc.css">
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.6.0/sc-theme.js"></script>
 ```
 
 `@2` follows the newest 2.x tag. The Pages URL is **latest** and may change on a major — fine for

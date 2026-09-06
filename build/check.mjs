@@ -69,7 +69,7 @@ for (const p of ['package.json', 'react/package.json', 'react/package-lock.json'
   if (v !== V) fail(`${p}: version ${v} != sc.css ${V}`);
 }
 const versionsIn = (text) => [...text.matchAll(/\bv(\d+\.\d+\.\d+)\b/g)].map(m => m[1]);
-for (const p of ['build/styleguide-body.html', 'index.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js']) {
+for (const p of ['build/styleguide-body.html', 'index.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-motion.js']) {
   if (!existsSync(join(ROOT, p))) { fail(`${p}: missing`); continue; }
   const stale = versionsIn(read(p)).filter(v => v !== V);
   if (stale.length) fail(`${p}: mentions v${[...new Set(stale)].join(', v')} (current is v${V})`);
@@ -102,8 +102,9 @@ for (const p of ['README.md', 'DESIGN_SYSTEM.md', 'CHECKLIST.md', 'PLAIN-HTML.md
     || (() => { try { return execFileSync('git', ['rev-parse', '--abbrev-ref', 'HEAD'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { return ''; } })();
   const released = branch === 'main' || branch === 'master';
   let refs = null;
-  try { refs = execFileSync('git', ['ls-remote', '--tags', 'origin'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], timeout: 20000 }); }
+  try { if (!process.argv.includes('--offline')) refs = execFileSync('git', ['ls-remote', '--tags', 'origin'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], timeout: 20000 }); }
   catch { warn(`could not reach origin to confirm the v${V} tag is pushed — the documented jsDelivr pins were not verified`); }
+  if (process.argv.includes('--offline')) warn('offline check: release-tag lookup skipped; all local design gates still run');
   if (refs !== null && !new RegExp(`refs/tags/v${V.replace(/\./g, '\\.')}(\\^\\{\\})?$`, 'm').test(refs)) {
     const m = `origin has no v${V} tag — every documented pin (design-system@v${V}/...) is a 404 until \`git push origin v${V}\` runs`;
     released ? fail(m) : warn(m);
@@ -189,6 +190,9 @@ if (!problems.length) ok(`version v${V} everywhere`);
   };
   scanHtml('build/styleguide-body.html');
   scanHtml('starter.html');
+  scanHtml('brand-studio.html');
+  scanHtml('visual-library.html');
+  for (const page of ['landing','dashboard','screener','report']) scanHtml(`templates/${page}.html`);
   scanScript('build/styleguide.js');
   for (const f of readdirSync(join(ROOT, 'react', 'src'))) if (/\.tsx?$/.test(f) && !/generated/.test(f)) scanScript(join('react', 'src', f));
   const missing = [];
@@ -303,7 +307,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
   const before = problems.length;
   const defined = new Set();
   for (const { sel } of cssRules(css)) for (const m of sel.matchAll(/\.(sc-[A-Za-z0-9_-]+)/g)) defined.add(m[1]);
-  let hay = read('build/styleguide-body.html') + read('starter.html');
+  let hay = read('build/styleguide-body.html') + read('starter.html') + read('visual-library.html');
   for (const f of readdirSync(join(ROOT, 'react/src'))) hay += read(join('react/src', f));
   const missing = [...defined].filter((c) => !hay.includes(c)).sort();
   if (missing.length) fail(`sc.css defines ${missing.length} class(es) the guide never shows or names: ${missing.join(', ')}`);
@@ -327,7 +331,9 @@ if (!problems.length) ok(`version v${V} everywhere`);
                               ['references/DESIGN_SYSTEM.md', 'DESIGN_SYSTEM.md'],
                               ['references/PLAIN-HTML.md', 'PLAIN-HTML.md'],
                               ['references/CHECKLIST.md', 'CHECKLIST.md'],
-                              ['references/VISUAL-RECIPES.md', 'VISUAL-RECIPES.md']]) {
+                              ['references/VISUAL-RECIPES.md', 'VISUAL-RECIPES.md'],
+                              ['references/MOTION.md', 'MOTION.md'],
+                              ['assets/sc-motion.js', 'sc-motion.js']]) {
       const p = join(SKILL, rel);
       if (!existsSync(join(ROOT, p))) fail(`${p}: missing — run node build/assemble.mjs`);
       else if (read(p) !== read(src)) fail(`${p}: differs from ${src} — run node build/assemble.mjs`);
@@ -356,6 +362,9 @@ if (!problems.length) ok(`version v${V} everywhere`);
 
 try { execFileSync(process.execPath, [join(HERE, 'visual-check.mjs')], { stdio: 'pipe' }); ok('visual templates, anchors and original pattern artwork verified'); }
 catch (e) { fail('visual deliverables: ' + (e.stderr?.toString().trim() || e.message)); }
+
+try { execFileSync(process.execPath, [join(HERE, 'motion-check.mjs')], { stdio: 'pipe' }); ok('14 motion behavior scenarios pass'); }
+catch (e) { fail('motion: ' + (e.stderr?.toString().trim() || e.message)); }
 
 if (warnings.length) {
   for (const w of warnings) console.log('  --  ' + w);
