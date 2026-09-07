@@ -90,7 +90,7 @@ Assets are at `https://spicychicken59.github.io/design-system/assets/<file>` (ta
   `sc-*` class used by the style guide, starter and wrappers exists in the sheet; checks the version strings agree.
 - `.github/workflows/check.yml` runs the same gate plus the wrapper build on every push; `.gitattributes` keeps every checkout LF.
 - `npm run build:react` — the wrappers alone.
-- `node build/visual-check.mjs --browser --shots /tmp/sc-brief` — six real Chromium renders of the decision brief, at 390/820/1280px in light/dark. Requires separately installed Playwright 1.56.1 and Chromium; a missing browser reports SKIP and exits nonzero. Captures use offline font fallbacks and original local SVGs.
+- `node build/visual-check.mjs --browser --shots /tmp/sc-brief` — six real Chromium renders of the decision brief, at 390/820/1280px in light/dark, plus eight instrument/dossier scenarios at 320/390/820/1280px covering exact counts, contrast, wrapping, keyboard focus, reduced motion, print and forced colors. Requires separately installed Playwright 1.56.1 and Chromium; a missing browser reports SKIP and exits nonzero. Captures use offline font fallbacks and original local SVGs.
 - Releases: bump the `sc.css` header (and both `package.json` versions), add the changelog entry in
   `AUDIT-AND-ROADMAP.md` §5, rebuild, tag `vX.Y.Z`. One number everywhere; repo-only changes bump the patch.
 - Node ≥ 20. No Python.

@@ -278,7 +278,7 @@ no fonts, remote images, or runtime. The existing reserved asset licence applies
 - Keep the mark away from evidence. Place a chart signature below the plot and
   retain the accessible data table.
 - Covers wrap with available component space. Compact covers shorten title and
-  mark; phones stack metric strips rather than shrinking type.
+  mark; phones stack ordinary metric strips. Four-cell instrument decks keep a 2×2 grid.
 - Example chart axes use HTML labels outside the scalable SVG to keep phone text
   readable. Its table contains the same illustrative values.
 - Automatic mark pairs follow the theme. Paper scopes local light colours; ink
@@ -289,8 +289,8 @@ no fonts, remote images, or runtime. The existing reserved asset licence applies
 
 ## Design-only adoption
 
-SpicyCar and SpicyStock currently pin the existing release. Adopt these visual
-pieces independently, then bind existing content. A design-system branch does not
+SpicyCar and SpicyStock use checked-in source snapshots with commit and file hashes.
+Adopt these visual pieces independently, then bind existing content. A design-system branch does not
 restyle pinned websites. Purchase, screening, scoring, data, and backend behaviour
 are outside this visual update.
 
@@ -356,3 +356,97 @@ destroy that root in cleanup.
 
 The rail wraps on phones and is removed from print. It operates independently of
 motion, so pausing decorative animation never disables navigation.
+
+## The instrument deck
+
+[Recipe 37](visual-library.html#recipe-instrument-deck) extends the existing native
+metric strip. Add `sc-stat-strip--instrument` for a fixed ink surface, large exact
+figures, a fine spice edge, and a wine lead compartment. The palette stays readable
+in either page theme. There is no meter, tick scale, progress fill, or counter animation.
+
+```html
+<dl class="sc-stat-strip sc-stat-strip--4 sc-stat-strip--instrument sc-stat-strip--route">
+  <div class="sc-stat"><dt class="sc-stat__label">universe</dt><dd class="sc-stat__value">230</dd><dd class="sc-stat__note">Illustrative input</dd></div>
+  <div class="sc-stat"><dt class="sc-stat__label">bursts</dt><dd class="sc-stat__value">0</dd><dd class="sc-stat__note">None recorded</dd></div>
+  <div class="sc-stat"><dt class="sc-stat__label">scored</dt><dd class="sc-stat__value">0</dd><dd class="sc-stat__note">None recorded</dd></div>
+  <div class="sc-stat sc-stat--lead"><dt class="sc-stat__label">shortlist</dt><dd class="sc-stat__value">0</dd><dd class="sc-stat__note">None to review</dd></div>
+</dl>
+```
+
+The optional `sc-stat-strip--route` is for genuinely sequential stages only. Hollow
+stations and equal connecting rules show **order**, never count, elapsed time,
+completion, or success. Keep zeroes exactly as supplied. Four stations become a
+2×2 phone grid; rules stop at each row end, and reading continues across then down.
+For unrelated facts such as price, mileage, and movement, omit the route modifier.
+For quantitative attrition, retain the existing labeled funnel and its table.
+
+An existing application can opt in entirely from its design adapter. Set these
+inherited hooks on its existing `.sc-stat-strip`; the shared stylesheet consumes
+them without rewriting labels, numbers, HTML, or application code:
+
+```css
+/* Example alias; replace .product-metrics with an existing strip selector. */
+.product-metrics {
+  --sc-stat-surface: var(--sc-ink);
+  --sc-stat-line: var(--sc-ink-line-strong);
+  --sc-stat-ink: var(--sc-on-ink);
+  --sc-stat-muted: var(--sc-on-ink-2);
+  --sc-stat-lead-surface: var(--sc-brand-wine);
+  --sc-stat-pad: var(--sc-s3);
+  --sc-stat-size: clamp(30px, 4vw, 46px);
+  --sc-stat-radius: var(--sc-r-sm);
+  --sc-stat-accent: var(--sc-on-ink-accent);
+  --sc-focus: var(--sc-on-ink-accent);
+  border-block-start: 2px solid var(--sc-stat-accent);
+}
+```
+
+All hooks default to the existing metric-strip presentation when omitted. A CSS
+alias retains the product's own responsive columns. Set `--sc-stat-route: ''` and
+`--sc-stat-route-space: 16px` together only when its source sequence warrants a
+route; keep the base `.sc-stat` elements so station spacing reserves its own area.
+If an app already overrides child padding, fonts or colors, map those declarations
+to the corresponding hooks in the same scoped adapter. Do not use a dark surface
+with inherited light-theme status colors: `--sc-on-ink-good` and
+`--sc-on-ink-warn` preserve the system's existing semantic colors on fixed ink.
+Fixed surfaces also use `--sc-on-ink-accent` for visible keyboard focus.
+
+No script is needed. Reduced motion stays static. The `sc-stat-strip--instrument`
+modifier supplies forced-color and print surface resets; forced colors removes
+decorative routes, and print removes ink fills and rails while retaining every
+written figure. A CSS-only selector alias must supply its own scoped print and
+forced-color resets in its product adapter, because it does not carry the modifier
+class. Reset its surface, line, ink, muted, lead-surface, accent and any local status
+color hooks together. Both consumer integrations keep these resets locally.
+
+## The photo-led dossier
+
+[Recipe 30](visual-library.html#recipe-object-dossier) adds `sc-dossier--studio` to
+the existing photo dossier. A supplied photograph gets a full-width contained view,
+fine corner framing, and a separate `sc-dossier__folio` source caption. Prices and
+condition evidence remain below the picture. The image is not zoomed or cropped.
+
+```html
+<article class="sc-photo-card sc-dossier sc-dossier--studio">
+  <figure>
+    <div class="sc-photo-card__media">
+      <img class="sc-frame sc-frame__img" src="your-supplied-photo.jpg"
+        alt="A precise description of the actual object in this photograph">
+    </div>
+    <figcaption class="sc-dossier__folio"><span>Record 01</span><span>Your actual photo source</span></figcaption>
+  </figure>
+  <div class="sc-dossier__body">
+    <h3 class="sc-dossier__title">Your object</h3>
+    <p class="sc-dossier__meta">Exact supplied facts and units</p>
+    <p class="sc-dossier__evidence">Evidence, limitations, and provenance</p>
+    <div class="sc-dossier__actions"><a href="your-source">Review the source ↗</a></div>
+  </div>
+</article>
+```
+
+`--sc-dossier-media-ratio` defaults to `16 / 10` and `--sc-dossier-media-fit` to
+`contain`. Products can use a wider ratio for landscape photography. Keep true image
+alternative text and a source caption; do not substitute a stock or generated image
+for a missing listing photograph. With `.sc-frame--empty`, the media region compacts
+to 144px, keeps the original mark at its original proportions, and removes photo
+corner framing. The copyable recipe and decision brief show this honest fallback.
