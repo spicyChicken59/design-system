@@ -29,5 +29,6 @@ guide, it's a new component — fold it into the system or take it out.
 - [ ] Reusable compositions come from the visual library and retain their semantics.
 - [ ] Motion is opt-in; no essential content depends on animation or JavaScript.
 - [ ] Keyboard focus, reduced motion, pause and print leave everything readable.
+- [ ] Bounded report tables release their height and sticky cells in print; the last row is included. Wide column sets still need an appropriate paper size or a dedicated report composition.
 - [ ] Loading has a text label and represents real pending work; values are never invented.
 - [ ] Copied design assets belong to one immutable snapshot; provenance matches the files.
