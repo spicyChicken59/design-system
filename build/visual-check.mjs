@@ -9,6 +9,7 @@ import { createServer } from 'node:http';
 import { dirname, join, resolve, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkInstrumentCompositions } from './instrument-check.mjs';
+import { checkPrintTable } from './print-table-check.mjs';
 import { checkMatrixCriteria, checkMatrixLifecycle, checkMatrixWithoutJS } from './matrix-nav-check.mjs';
 import { checkMatrixBundleSource, checkAutomaticMatrixBundle } from './matrix-bundle-check.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -146,6 +147,7 @@ async function checkRenderedDecisionBrief() {
       } finally { await context.close(); }
     }
     await checkInstrumentCompositions(browser, base, shots);
+    await checkPrintTable(browser, base);
     await checkMatrixLifecycle(browser, root);
     await checkMatrixWithoutJS(browser, base);
     await checkAutomaticMatrixBundle(browser, root, base);
