@@ -199,3 +199,8 @@ values so consumer adapters retain accessible status colors in either page theme
 Adoption is through scoped CSS and immutable design snapshots. Existing HTML, data,
 ranking, screening, chart geometry, and interaction behavior remain authoritative.
 No motion or release tag is introduced. Verification details accompany the PR.
+
+The merged integrations were checked on both public websites. Live review also
+refined the Car stage for its actual near-4:3 dealer photographs; the phone
+geometry stayed unchanged. [Live screenshots, exact source commits and verification](docs/design-review/instrument-live.md)
+record the published result and distinguish it from offline layout fixtures.
