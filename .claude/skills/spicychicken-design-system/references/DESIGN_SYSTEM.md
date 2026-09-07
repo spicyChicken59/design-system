@@ -474,3 +474,13 @@ is gone in 3.0 — "new" is a spice chip); use spice for large fills; give a pro
 the chick is the one mark, in the masthead and the watermark, and the project is named in type; use
 a display face for numbers; hide things with `style="display:none"` when `hidden` works; end with a
 list of next steps instead of one; use an icon set without noting the substitution.
+
+### Instrument decks and photo dossiers
+
+Use `.sc-stat-strip--instrument` for a fixed ink metric deck and add `--route` only
+for supplied sequential stages. Station spacing is decorative and never encodes
+magnitude, progress, or success. Use `.sc-dossier--studio` for supplied photographs
+with a separate `.sc-dossier__folio` caption. Both are CSS-only; see
+[copyable recipes and existing-app adapter hooks](VISUAL-RECIPES.md#the-instrument-deck).
+The fixed-ink aliases `--sc-on-ink-accent`, `--sc-on-ink-good`, and
+`--sc-on-ink-warn` reuse the established palette when the surrounding page is light.

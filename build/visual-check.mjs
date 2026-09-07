@@ -8,6 +8,7 @@ import { readFile, mkdir } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { dirname, join, resolve, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { checkInstrumentCompositions } from './instrument-check.mjs';
 import { checkMatrixCriteria, checkMatrixLifecycle, checkMatrixWithoutJS } from './matrix-nav-check.mjs';
 import { checkMatrixBundleSource, checkAutomaticMatrixBundle } from './matrix-bundle-check.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -144,6 +145,7 @@ async function checkRenderedDecisionBrief() {
         console.log(`  ok rendered ${label}: matrix, layout, original marks, focus, anchors and reduced motion`);
       } finally { await context.close(); }
     }
+    await checkInstrumentCompositions(browser, base, shots);
     await checkMatrixLifecycle(browser, root);
     await checkMatrixWithoutJS(browser, base);
     await checkAutomaticMatrixBundle(browser, root, base);

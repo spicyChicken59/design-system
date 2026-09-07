@@ -180,3 +180,22 @@ The adapter observes insertion, header changes and removal, keeps controls with 
 regions, and rebinds disclosure ancestors. Body values and unrelated chart changes do not
 rebuild controls. Original chart source, palette, logos, core stylesheet and version stay
 unchanged. The standalone helper remains an independent, explicitly optional asset.
+
+## Instrument and photo pass · 7 September 2026
+
+SpicyCar supplied real photographs but displayed them as small floated thumbnails,
+including 84px phone images. Existing metric strips in both products had little
+visual hierarchy. Stock’s empty shortlist means candidate-only treatments can be
+invisible on the default page.
+
+The shared instrument modifier gives exact metrics an ink surface, clear typography,
+and a fine brand edge. An optional hollow-station route shows source order only, so
+the Stock opening remains useful with the supplied 230/0/0/0 counts. Unrelated Car
+metrics use the same surface without a route. Photo dossiers gain a full media view
+and separate provenance caption; unavailable photographs retain a compact original
+mark, not an invented vehicle. Three fixed-ink semantic aliases reuse existing color
+values so consumer adapters retain accessible status colors in either page theme.
+
+Adoption is through scoped CSS and immutable design snapshots. Existing HTML, data,
+ranking, screening, chart geometry, and interaction behavior remain authoritative.
+No motion or release tag is introduced. Verification details accompany the PR.
