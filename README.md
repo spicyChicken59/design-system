@@ -49,7 +49,7 @@ same house.
 | **SpicyCar** | vehicle research and comparison | vendored snapshot + `provenance.json` |
 | **SpicyStock** | market screening and analysis | vendored snapshot + `provenance.json` |
 | **SpicyHome** | property search and evaluation | vendored snapshot |
-| **SpicyArchitect** | a pre-sales Solutions Architect copilot for manufacturing on Databricks | vendored snapshot, inlined into every page it ships (decks, leave-behinds and a Databricks App must open offline) |
+| **SpicyArchitect** | a pre-sales Solutions Architect copilot for manufacturing on Databricks | vendored snapshot + `provenance.json`, inlined into every customer page it ships (decks, leave-behinds and a Databricks App must open offline); its own site links a second, byte-identical copy under `docs/` |
 
 SpicyArchitect is the one consumer that publishes to an audience outside the family: the pages it
 generates go in front of a customer. It therefore inlines the sheet rather than linking it, and it
