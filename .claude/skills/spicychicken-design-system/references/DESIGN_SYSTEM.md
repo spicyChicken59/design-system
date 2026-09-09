@@ -1,6 +1,6 @@
 # SpicyChicken Design System — v2.10.0
 
-**The visual standard for everything Mohammed Tahir Madni ships under SpicyChicken.**
+**The visual standard for everything shipped under SpicyChicken.**
 
 Attach this file (and `sc.css`) to any build — a dashboard, a README, a deck, a one-pager — and
 follow it exactly. When something seems to need a new color, a new font, or a new component, it
@@ -36,7 +36,7 @@ Files in this folder:
   name set beside it in the display face. The name is the project's identity; the mark is the maker's.
 - **The watermark repeats it.** Mono form + wordmark, footer-right on every page, same size and
   opacity everywhere, linking to the profile.
-- **The person authors.** "Mohammed Tahir Madni" appears in READMEs, document covers, and `rel="author"`
+- **A person authors.** The name of whoever ships the page appears in READMEs, document covers and `rel="author"`
   — never in UI chrome.
 
 - **Voice:** plain-spoken and specific. State the outcome and the reason; no hype, no buzzword stacks.

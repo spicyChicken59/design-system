@@ -6,7 +6,7 @@ license: "MIT for the code; the SpicyChicken mark and assets/ are all rights res
 
 # SpicyChicken Design System
 
-The visual standard for everything Mohammed Tahir Madni ships under **SpicyChicken**.
+The visual standard for everything shipped under **SpicyChicken**.
 Cobalt structure, one spice accent, dark by default.
 
 **Apply this to every artifact unless the user explicitly opts out.** Uniformity across

@@ -1,6 +1,6 @@
 # Audit and roadmap — from a corporate BI template to SpicyChicken
 
-*August 2026. Mohammed Tahir Madni / SpicyChicken.*
+*August 2026. SpicyChicken.*
 
 ## 1. What the template got right (kept)
 

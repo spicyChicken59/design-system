@@ -1,6 +1,6 @@
 # SpicyChicken Design System
 
-The visual standard for everything Mohammed Tahir Madni ships under **SpicyChicken** —
+The visual standard for everything shipped under **SpicyChicken** —
 dashboards, documents, READMEs, decks. Cobalt structure, one spice accent, dark by default.
 
 **Build a complete page in [the composition studio](composition-studio.html):** choose a website, dashboard, screener, report, or printable deliverable; then copy or download the HTML.
