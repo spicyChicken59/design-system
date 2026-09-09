@@ -39,10 +39,28 @@ composition; [motion](MOTION.md) explains safe, purposeful animation.
 | `build/` | Maintainer tooling, Node only: `node build/gen-tokens.mjs` (tokens.json), `node build/assemble.mjs` (styleguide.html), `check.mjs` (the pre-ship gate behind `npm run check` and CI), `contrast.mjs` (the contrast gate), `color.mjs` (OKLCH/contrast math), `theme.js` (source of `sc-theme.js`). |
 | `react/` | Optional thin React wrappers that emit the exact `sc-*` markup. Private, unpublished; the CSS is the source of truth. |
 
+## The family
+
+Four projects share this standard. A page from any of them should look like it came from the
+same house.
+
+| Project | What it is | How it consumes the system |
+|---|---|---|
+| **SpicyCar** | vehicle research and comparison | vendored snapshot + `provenance.json` |
+| **SpicyStock** | market screening and analysis | vendored snapshot + `provenance.json` |
+| **SpicyHome** | property search and evaluation | vendored snapshot |
+| **SpicyArchitect** | a pre-sales Solutions Architect copilot for manufacturing on Databricks | vendored snapshot, inlined into every page it ships (decks, leave-behinds and a Databricks App must open offline) |
+
+SpicyArchitect is the one consumer that publishes to an audience outside the family: the pages it
+generates go in front of a customer. It therefore inlines the sheet rather than linking it, and it
+strips every brand element except the mark — the family names, the lockup and the wordmark never
+appear on a page a customer sees. Treat that as the pattern for any future consumer whose output
+leaves the house.
+
 ## Use it in a project
 
-**Current source snapshot: v2.10.0.** SpicyCar and SpicyStock use checked-in design
-assets with their source commit and SHA-256 hashes in `provenance.json`.
+**Current source snapshot: v2.10.0.** SpicyCar, SpicyStock and SpicyArchitect use checked-in
+design assets with their source commit and SHA-256 hashes in `provenance.json`.
 The standalone release tag is not yet published. Use the snapshot workflow now;
 the CDN examples below apply only after the matching release tag exists.
 
