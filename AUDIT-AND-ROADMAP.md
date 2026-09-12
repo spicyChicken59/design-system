@@ -87,6 +87,12 @@ and `DESIGN_SYSTEM.md` §10.
 8c. **Benchmark rail.** ✅ Done (v2.10.0): one exact value located against an authored scale,
    optional expected band and reference, with all meaning repeated in visible text. The rail is
    reusable in dashboards, reports, comparisons, and screeners without inventing a score.
+8d. **Action bar and labelled control group.** ✅ Done (v2.11.0): `.sc-actionbar`, the bar that
+   states the one action available with its status and reason, laid out as a row and stacked on a
+   phone without a row basis turning into a column of dead height; and `.sc-field--group`, the
+   caption that tells two segmented controls apart for the eye and for assistive tech. Both were
+   improvised in consumers first (SpicyCar captions its filter groups, SpicyStock its chart
+   modes); neither carries a product decision.
 9. **Slide template.** Six-slide arc (cover on `--sc-ink`, problem, summary, architecture, roadmap,
    ask) as standalone 1280×720 HTML pages.
 10. **License.** ✅ Done (v2.1.0): MIT for the CSS, tooling and wrappers; the chick and everything in `assets/` stay all rights reserved (`LICENSE`).
@@ -97,6 +103,16 @@ and `DESIGN_SYSTEM.md` §10.
 
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
+
+- **2.11.0 (2026-09-12, source snapshot)** — The action bar and the labelled control group.
+  `.sc-actionbar` (`__more`) is the bar a page ends a decision on: an optional status chip, one
+  sentence saying what is on offer or why nothing is, one button, and an optional follow-on row.
+  It stacks under 720px with the paragraph's row basis released — the flex-basis-becomes-height
+  trap that had one consumer's only button sitting under 230px of empty bar on a phone.
+  `.sc-field--group` with `.sc-field__label` makes the caption beside a `role="group"` official:
+  `<label>` cannot name a group, so the caption is its own element and the group points at it with
+  `aria-labelledby`. Both patterns were already improvised in two consumers; nothing about either
+  changes a product's data, thresholds or verdicts.
 
 - **2.10.0 (2026-09-06, source snapshot)** — The Benchmark Rail: a compact, responsive value-in-
   context visual with an exact written value, authored endpoints, optional band/reference,

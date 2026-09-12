@@ -22,7 +22,7 @@ composition; [motion](MOTION.md) explains safe, purposeful animation.
 | `visual-library.html` | Searchable, copyable live recipes across identity, layout, data, motion, and states. |
 | `sc-motion.js` | Optional, dependency-free reveals, sequencing and pause controls. Content stays visible without it. |
 | `build/vendor.mjs` | Copy a committed design snapshot, original assets and provenance into any static website. |
-| `sc.css` | The system — tokens, base styles, components. One file; consumers need no build step. Header carries the version (`v2.10.0`). |
+| `sc.css` | The system — tokens, base styles, components. One file; consumers need no build step. Header carries the version (`v2.11.0`). |
 | `sc-map.js` | The map layer: an Albers projection for the lower 48, a quantized-topojson reader, a geodesic ring, box fitting, and a pan/zoom view engine. The geo half is pure — it runs in Node. |
 | `sc-charts.js` | Chart and native-table presentation bundle: unchanged chart primitives plus criterion navigation for eligible signal matrices. Composed from `build/charts.js`, `sc-matrix-nav.js`, and `build/matrix-auto.js`; see [automatic matrix behavior and opt-out](VISUAL-RECIPES.md#when-the-page-already-uses-charts). |
 | `sc-theme.js` | The theme script: saved choice before paint, toggle wiring, print swap. Link it or inline it. Source: `build/theme.js`. |
@@ -59,7 +59,7 @@ leaves the house.
 
 ## Use it in a project
 
-**Current source snapshot: v2.10.0.** SpicyCar, SpicyStock and SpicyArchitect use checked-in
+**Current source snapshot: v2.11.0.** SpicyCar, SpicyStock and SpicyArchitect use checked-in
 design assets with their source commit and SHA-256 hashes in `provenance.json`.
 The standalone release tag is not yet published. Use the snapshot workflow now;
 the CDN examples below apply only after the matching release tag exists.
@@ -84,8 +84,8 @@ the entire snapshot together; no consumer build step is required.
 Pin a release — tags are served by jsDelivr:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.10.0/sc.css">
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.10.0/sc-theme.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.11.0/sc.css">
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.11.0/sc-theme.js"></script>
 ```
 
 `@2` follows the newest 2.x tag. The Pages URL is **latest** and may change on a major — fine for

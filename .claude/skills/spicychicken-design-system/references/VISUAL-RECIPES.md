@@ -85,6 +85,65 @@ verdict from position, manufacture a target, or replace the written value with t
 </figure>
 ```
 
+## Action bar
+
+Use `.sc-actionbar` where a view ends a decision: one bar carrying the status word, one sentence
+saying what is on offer — or why nothing is — and the single action that follows from it. It is
+not a callout (no tint, no fold) and not a toolbar; it is the place a reader looks to find out
+whether there is anything to do here, and it holds at most one action.
+
+Keep the sentence to the reason, in the product's own words, and let the chip carry the state.
+Put anything that follows from the action — a saved-for-later row, an undo, a link to where the
+result went — in `.sc-actionbar__more`, which wraps to its own full-width row under a dashed rule.
+
+Under 720px the bar becomes a column: the button goes full width, the chip hugs its text, and the
+paragraph drops its row flex-basis. That last line is the whole reason this is a system pattern
+rather than four lines of page CSS — a `flex: 1 1 260px` written for a row silently becomes a
+260px *height* the moment the container turns into a column, and the only button in the view ends
+up under a screenful of empty bar. It is invisible on a desktop and obvious on a phone.
+
+```html
+<div class="sc-actionbar">
+  <span class="sc-chip sc-chip--good">ready</span>
+  <p>Release 4.2 cleared every gate at 09:12. Publishing stays manual; nothing is scheduled from this page.</p>
+  <button class="sc-btn sc-btn--secondary" type="button">Review the release</button>
+  <div class="sc-actionbar__more">
+    <span class="sc-chip sc-chip--neutral">watching</span>
+    <span class="sc-note">Kept in this browser · the publish is still yours to run</span>
+  </div>
+</div>
+```
+
+## Labelled control group
+
+A `<label>` can name exactly one labelable control, and `role="group"` is not one — so a segmented
+control that needs a visible caption takes the group form: a `div.sc-field.sc-field--group` holding
+a `.sc-field__label` with an id, and `aria-labelledby` on the group pointing at it. The reader and
+the screen reader then get the same words, from one place.
+
+Caption every segmented group as soon as a row holds more than one. Two captionless pill rows read
+as one long control, and the moment the same word appears in both — a *setup* mode beside a *setup*
+range, a *summary* view beside a *summary* period — neither row can be told from the other.
+
+```html
+<div class="sc-filters">
+  <div class="sc-field sc-field--group">
+    <span class="sc-field__label" id="view-label">View</span>
+    <div class="sc-tabs" role="group" aria-labelledby="view-label">
+      <button class="sc-tab" type="button" aria-pressed="true">summary</button>
+      <button class="sc-tab" type="button" aria-pressed="false">detail</button>
+    </div>
+  </div>
+  <div class="sc-field sc-field--group">
+    <span class="sc-field__label" id="period-label">Period</span>
+    <div class="sc-tabs" role="group" aria-labelledby="period-label">
+      <button class="sc-tab" type="button" aria-pressed="true">month</button>
+      <button class="sc-tab" type="button" aria-pressed="false">quarter</button>
+    </div>
+  </div>
+</div>
+```
+
 ## Signal matrix
 
 Use `.sc-signal-matrix` on a native `.sc-table` when several candidates must be scanned against

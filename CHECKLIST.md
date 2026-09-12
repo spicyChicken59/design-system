@@ -11,6 +11,8 @@ guide, it's a new component — fold it into the system or take it out.
 - [ ] Masthead: chick + project name left, theme toggle right, `--sc-ink` in both modes; nav has an `aria-label`.
 - [ ] Title block (`.sc-title`) opens with an eyebrow; h1 is one plain sentence; dek is one sentence.
 - [ ] Exactly one spice action per view (primary button or next-action callout); at most one core callout per section.
+- [ ] A view that offers an action ends it in one `.sc-actionbar` — status word, the reason in a sentence, one button — and the phone layout was opened: a row `flex-basis` becomes a height in a column.
+- [ ] Every segmented control in a row of two or more carries a visible `.sc-field--group` caption, and the group names it with `aria-labelledby`.
 - [ ] Page CSS references semantic tokens only — no hex, no primitives.
 - [ ] Brand compositions preserve the original chick and clear space; no ghost or pattern overlaps evidence or body copy.
 - [ ] Cover tone matches its mark form; paper controls remain readable in dark mode; compact covers wrap in narrow containers.
