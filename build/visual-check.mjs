@@ -12,6 +12,7 @@ import { fileURLToPath } from 'node:url';
 import { checkInstrumentCompositions } from './instrument-check.mjs';
 import { checkPrintTable } from './print-table-check.mjs';
 import { checkPick } from './pick-check.mjs';
+import { checkParsed } from './parse-check.mjs';
 import { checkMatrixCriteria, checkMatrixLifecycle, checkMatrixWithoutJS } from './matrix-nav-check.mjs';
 import { checkMatrixBundleSource, checkAutomaticMatrixBundle } from './matrix-bundle-check.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -151,6 +152,7 @@ async function checkRenderedDecisionBrief() {
     await checkInstrumentCompositions(browser, base, shots);
     await checkPrintTable(browser, base);
     await checkPick(browser, base);
+    await checkParsed(browser, base);
     await checkMatrixLifecycle(browser, root);
     await checkMatrixWithoutJS(browser, base);
     await checkAutomaticMatrixBundle(browser, root, base);
