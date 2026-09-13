@@ -93,6 +93,12 @@ and `DESIGN_SYSTEM.md` §10.
    caption that tells two segmented controls apart for the eye and for assistive tech. Both were
    improvised in consumers first (SpicyCar captions its filter groups, SpicyStock its chart
    modes); neither carries a product decision.
+8e. **Ambiguous-selection pick.** ✅ Done (v2.12.0): `.sc-pick`, the panel that asks which mark
+   a press meant when several are within one finger of it. The plotted surfaces the system already
+   ships — `.sc-map`, the scatter, any `.sc-chart` — got dense enough in production that a press
+   resolved by z-order returned the wrong datum, silently; the answer is distance, and a question
+   when distance cannot settle it. Improvised in two consumers first (SpicyStock's burst map,
+   SpicyHome's listing map) before it came here; it carries no product decision.
 9. **Slide template.** Six-slide arc (cover on `--sc-ink`, problem, summary, architecture, roadmap,
    ask) as standalone 1280×720 HTML pages.
 10. **License.** ✅ Done (v2.1.0): MIT for the CSS, tooling and wrappers; the chick and everything in `assets/` stay all rights reserved (`LICENSE`).
@@ -103,6 +109,20 @@ and `DESIGN_SYSTEM.md` §10.
 
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
+
+- **2.12.0 (2026-09-13, source snapshot)** — The ambiguous-selection pick. `.sc-pick`
+  (`__head` `__hint` `__list` `__item` `__name` `__meta` `__more`) is the panel a crowded plot
+  opens when a press cannot name one mark: the options nearest first, the current one carrying
+  `aria-pressed`, a `.sc-figure` in the second column and a `__more` that admits how long the list
+  really is. It is a popover, not a modal — a dense surface leaves hundreds of tabbable marks
+  live behind it, so `aria-modal` would be a claim the page cannot keep; Tab may leave, leaving
+  closes, and Escape returns focus to the control that opened the panel, never to the mark the
+  browser hit-tested. That mark is the one the panel exists to refuse, and handing it the focus
+  hands the reader the wrong datum one keystroke later. Measured in a consumer before it was
+  written: 364 markers in a 360×388px pane, and a press at a marker's own centre selected a
+  different one 363 times out of 364. Hosted by any positioned surface; the style guide's working
+  example runs on a `.sc-chart`. No token, no other component and no existing consumer layout
+  changes.
 
 - **2.11.0 (2026-09-12, source snapshot)** — The action bar and the labelled control group.
   `.sc-actionbar` (`__more`) is the bar a page ends a decision on: an optional status chip, one

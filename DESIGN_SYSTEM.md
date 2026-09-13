@@ -1,4 +1,4 @@
-# SpicyChicken Design System — v2.11.0
+# SpicyChicken Design System — v2.12.0
 
 **The visual standard for everything shipped under SpicyChicken.**
 
@@ -10,7 +10,7 @@ Files in this folder:
 
 | File | What it is |
 |---|---|
-| `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.11.0`. |
+| `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.12.0`. |
 | `sc-map.js` | `SC.geo` (projection, topojson, geodesic ring, box fitting — all pure) and `SC.mapView` (pan, zoom, and the marks that must not scale with it). Optional; needed only by a page that draws a map. |
 | `sc-charts.js` | The chart primitives the sheet's `.sc-chart` / `.sc-spark` / `.sc-tooltip` contracts were always describing. Optional; load it after `sc.css`. |
 | `sc-theme.js` | The theme script (source: `build/theme.js`). Reads the saved choice before paint, wires the toggle, and swaps a pinned-dark page to light for printing. Link it or inline it. |
@@ -242,6 +242,7 @@ attribute now beats every component's `display`, so hide with `hidden`, never wi
 | Map | `.sc-map` (`--labels`) · `__btns` `__btn` `__scrollhint` `__state` `__state-label` `__radius` `__anchor` | A projected SVG that pans and zooms. Plain scroll keeps scrolling the page (the embedded-map convention), so `__scrollhint` teaches the modifier when a scroll passes through; `touch-action: pan-y` does the same for one finger. Buttons are 32px, 44px under a coarse pointer. `--labels` reveals the region labels past a zoom threshold. Geography is `--sc-bg` on `--sc-border`; `__radius` is the dashed "within N of here" ring, `__anchor` the "you are here" point. |
 | Data dot | `.sc-dot` (`.is-filled` `.is-hollow` `--link`) · `.sc-dot-ring` | One datum as a point, shared by the map and the scatter. Filled and hollow are a **second channel beside hue**, which is what lets an all-pairs form carry more than the three slots §8 validates. `pointer-events: all` is load-bearing: `fill="none"` makes an SVG circle's interior untouchable, so a hollow dot would otherwise only hit-test on its stroke. `.sc-dot-ring` calls one out in the accent without blocking it. |
 | Scatter | `.sc-scatter__line` `__line-hit` `__series-label` · `.sc-chart__hit` | The furniture around the dots: a dashed reference line in `--sc-border-strong`, a transparent 14px `__line-hit` twin so a 1.2px line has a real target, and a clickable direct label. `.sc-chart__hit` is the invisible full-height rect that gives a hover chart one clean hit area. |
+| Pick | `.sc-pick` · `__head` `__hint` `__list` `__item`[`aria-pressed`] `__name` `__meta` `__more` | "Which one did you mean?" — what a plotted surface offers when a press cannot name one mark. Resolve a press by **distance from the press**, never by which mark the browser hit-tested (in practice the last one appended): one mark within a finger is taken outright, several open the panel, nearest first, and it chooses nothing until the reader does. It is a **popover, not a modal** — a dense surface leaves hundreds of tabbable marks live behind it, so `aria-modal` would be a claim the page cannot keep; Tab may leave and leaving closes. Escape returns focus to the control that opened it, never to the mark underneath, which is the one the panel exists to refuse. Items are 44px, the value rides in the second column as a `.sc-figure`, and `__more` says how many are still unlisted rather than hiding them in a scroller. Lives inside the positioned surface (`.sc-map` and `.sc-chart` already are). The plot stays for the eye; the `.sc-details` table twin stays the precise path to a named row. |
 | Photo card | `.sc-photo-card` · `__media` `__price` `__price-sub` `__chip` `__body` | A `.sc-card` is text-first; this one leads with the picture, so it sheds the padding and puts one headline figure on a scrim over the image. 16:10, capped at 300px. The scrim tokens (`--sc-scrim`, `--sc-on-scrim`, `--sc-on-scrim-2`) are the one place the system paints over an arbitrary photograph, so they are identical in both modes — and the only surface whose contrast cannot be pre-verified. Keep it to a short figure, never body copy. |
 | Filter bar | `.sc-filter-bar` · `__head` `__toggle` · `.is-open` | The controls that scope a page, pinned to the top so they stay under the cursor while everything below re-renders. Wraps a `.sc-filters`. On a phone it folds to one 44px row that expands on tap, so the state stays visible without the controls eating the fold. |
 | Frame | `img.sc-frame` · `.sc-frame--empty` · `--lg` · `--sc-frame-w` / `--sc-frame-h` | The photo slot (§7): 56×40, hairline border, 6px radius, raised fill, `object-fit: cover`. `--lg` = 120×80; other sizes set the two custom properties. `--empty` is a `div` that says "no photo" in lowercase mono, or holds a `.sc-frame__mark` (the mono chick at .28). `--photo` turns the frame into a loader: `.sc-frame__img` starts blurred and transparent and resolves on `.is-loaded`, so a slow photo never pops. In dark mode photos are damped to 82% brightness — they are lit for white — and shown as shot on hover. A mono mark must flip with the surface under it; there is no CSS-only switch, so ship both files and choose with a media query or in script. |
@@ -306,7 +307,7 @@ Validated with the `dataviz` method; re-run the checks if a slot ever changes. C
 ## 9. Marks & watermark
 
 **Expanded compositions:** [VISUAL-RECIPES.md](VISUAL-RECIPES.md) and
-[the brand studio](brand-studio.html) demonstrate the v2.11.0 additions. `.sc-cover`
+[the brand studio](brand-studio.html) demonstrate the v2.12.0 additions. `.sc-cover`
 uses ink, wine, or warm paper; `.sc-brand-panel` provides a dedicated mark texture;
 `.sc-ghost` reserves blank space for a mono mark; `.sc-signature` credits the maker
 outside chart plots. `.sc-chapter`, `.sc-stat-strip`, `.sc-facts`,
@@ -378,10 +379,10 @@ Measured, not assumed — the numbers are WCAG 2 contrast ratios from the curren
 **Link a pinned version.** Tags are served by jsDelivr; pin the exact release and upgrade on purpose:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.11.0/sc.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.12.0/sc.css">
 ```
 
-`@2` in place of `@v2.11.0` follows the newest 2.x tag (non-breaking upgrades, re-resolved by the CDN
+`@2` in place of `@v2.12.0` follows the newest 2.x tag (non-breaking upgrades, re-resolved by the CDN
 within hours). The GitHub Pages URL `https://spicychicken59.github.io/design-system/sc.css` is
 **latest** — it is what the style guide runs on and it may change on a major, so it is for
 prototypes, not production. Vendoring (copy `sc.css` next to the page) is the third option; note the
@@ -400,8 +401,8 @@ version from its header when you refresh it.
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.11.0/sc.css">
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.11.0/sc-theme.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.12.0/sc.css">
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.12.0/sc-theme.js"></script>
 ```
 
 Order matters: `color-scheme` first so the browser paints the right default before CSS arrives, the
@@ -415,7 +416,7 @@ code changes the attribute), and swaps a pinned-dark page to light for printing.
 nothing else.
 
 **Assets** — every file in `assets/`, at `https://spicychicken59.github.io/design-system/assets/<file>`
-or `https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.11.0/assets/<file>`:
+or `https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.12.0/assets/<file>`:
 
 | File | Where it goes |
 |---|---|

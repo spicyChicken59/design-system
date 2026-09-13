@@ -207,7 +207,7 @@
 <header class="sc-masthead">
   <a class="sc-brand" href="#top">
     <img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt="">
-    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.11.0</span></span>
+    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.12.0</span></span>
   </a>
   <div class="sc-masthead__right">
     <span class="sc-hide-sm">Living reference</span>
@@ -223,7 +223,7 @@
 <section class="sg-cover sc-on-ink" id="top">
   <div class="sg-cover__inner sg-cover__inner--brand">
     <div class="sc-cover sc-on-ink sg-brand-cover">
-      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.11.0</span><span>212 named tokens</span><span>107 component blocks</span></div></div>
+      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.12.0</span><span>212 named tokens</span><span>108 component blocks</span></div></div>
       <div class="sc-cover__art" aria-hidden="true"><img src="assets/sc-mark-color-dark.svg" alt="" width="342" height="405"><span class="sc-cover__caption">one mark. every creation.</span></div>
     </div>
     <div class="sg-palette-footer"><div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and spice accent"></div><span class="sc-hint">The familiar palette. A richer set of compositions.</span></div>
@@ -254,7 +254,7 @@
   <main class="sg-main" id="main-content">
 
     <section class="sg-section" id="brand-compositions">
-      <div class="sc-eyebrow">the visual language · new in v2.11.0</div>
+      <div class="sc-eyebrow">the visual language · new in v2.12.0</div>
       <h2>A brand that lives inside the page.</h2>
       <p class="sc-dek">Use a strong opener, quieter evidence, and a signature at the close. Every composition below is available in HTML and the visual React wrappers.</p>
       <div class="sc-cover sc-cover--paper sc-cover--compact">
@@ -873,6 +873,69 @@
           <p class="sg-rule"><code>.sc-photo-card</code> · <code>__media</code> <code>__price</code> <code>__price-sub</code> <code>__chip</code> <code>__body</code> · <code>--sc-scrim</code> <code>--sc-on-scrim</code></p>
         </div>
       </div>
+      <div class="sg-block" id="pick">
+        <h3>Pick &mdash; which one did you mean?</h3>
+        <p class="sc-hint">Fourteen sites, five of them inside one fingertip. Press anywhere near a cluster.</p>
+        <div class="sc-grid sc-grid--2">
+          <div class="sc-card">
+            <div class="sc-card__head"><div><h3>Sites in the search ring</h3><p class="sc-hint">Distance decides; when it cannot, the panel asks.</p></div></div>
+            <div class="sc-chart" id="sg-pick-plot" role="group" tabindex="0" aria-label="Sites in the search ring, as a plot. The table view below lists every site.">
+              <svg viewBox="0 0 320 180" width="100%" aria-hidden="true">
+                <line class="sc-scatter__line" x1="12" y1="150" x2="308" y2="150"></line>
+              <circle class="sc-dot sc-dot--link is-filled" cx="64" cy="118" r="6.5" style="fill:var(--sc-chart-1)" data-site="0"></circle>
+              <circle class="sc-dot sc-dot--link is-hollow" cx="96" cy="72" r="6.5" style="stroke:var(--sc-chart-2)" data-site="1"></circle>
+              <circle class="sc-dot sc-dot--link is-filled" cx="99" cy="69" r="6.5" style="fill:var(--sc-chart-1)" data-site="2"></circle>
+              <circle class="sc-dot sc-dot--link is-hollow" cx="93" cy="75" r="6.5" style="stroke:var(--sc-chart-2)" data-site="3"></circle>
+              <circle class="sc-dot sc-dot--link is-filled" cx="168" cy="44" r="6.5" style="fill:var(--sc-chart-1)" data-site="4"></circle>
+              <circle class="sc-dot sc-dot--link is-hollow" cx="171" cy="47" r="6.5" style="stroke:var(--sc-chart-2)" data-site="5"></circle>
+              <circle class="sc-dot sc-dot--link is-filled" cx="232" cy="104" r="6.5" style="fill:var(--sc-chart-1)" data-site="6"></circle>
+              <circle class="sc-dot sc-dot--link is-hollow" cx="235" cy="101" r="6.5" style="stroke:var(--sc-chart-2)" data-site="7"></circle>
+              <circle class="sc-dot sc-dot--link is-filled" cx="229" cy="107" r="6.5" style="fill:var(--sc-chart-1)" data-site="8"></circle>
+              <circle class="sc-dot sc-dot--link is-hollow" cx="236" cy="108" r="6.5" style="stroke:var(--sc-chart-2)" data-site="9"></circle>
+              <circle class="sc-dot sc-dot--link is-filled" cx="231" cy="99" r="6.5" style="fill:var(--sc-chart-1)" data-site="10"></circle>
+              <circle class="sc-dot sc-dot--link is-hollow" cx="276" cy="140" r="6.5" style="stroke:var(--sc-chart-2)" data-site="11"></circle>
+              <circle class="sc-dot sc-dot--link is-filled" cx="46" cy="38" r="6.5" style="fill:var(--sc-chart-1)" data-site="12"></circle>
+              <circle class="sc-dot sc-dot--link is-hollow" cx="148" cy="150" r="6.5" style="stroke:var(--sc-chart-2)" data-site="13"></circle>
+              </svg>
+              <div class="sc-pick" id="sg-pick-panel" role="dialog" aria-labelledby="sg-pick-title" hidden>
+                <div class="sc-pick__head"><h4 id="sg-pick-title">5 sites within a finger of this press</h4><button class="sc-btn sc-btn--ghost sc-btn--sm" type="button" data-pick="close">Close</button></div>
+                <p class="sc-pick__hint">nearest first &middot; esc closes</p>
+                <div class="sc-pick__list" id="sg-pick-list" role="group" aria-label="Sites within a finger of the press, nearest first"></div>
+                <button class="sc-btn sc-btn--ghost sc-btn--sm sc-pick__more" type="button" data-pick="more" hidden>Show the rest</button>
+              </div>
+            </div>
+            <div class="sc-row"><p class="sc-note" id="sg-pick-selection">No site chosen yet.</p><button class="sc-btn sc-btn--ghost sc-btn--sm sc-right" id="sg-pick-open" type="button" hidden>Nearby sites</button></div>
+            <details class="sc-details"><summary>Table view</summary>
+              <table class="sc-table sc-table--compact">
+                <thead><tr><th scope="col">Site</th><th scope="col">From here</th><th scope="col" class="sc-num">Rent</th></tr></thead>
+                <tbody>
+                <tr><td><button class="sc-table__sort" type="button" data-site-row="0">Harrison &amp; 4th</button></td><td>0.4 mi · 2 rooms</td><td class="sc-num">$1,480</td></tr>
+                <tr><td><button class="sc-table__sort" type="button" data-site-row="1">Lakeview Court</button></td><td>0.6 mi · 1 room</td><td class="sc-num">$1,310</td></tr>
+                <tr><td><button class="sc-table__sort" type="button" data-site-row="2">Bishop Row</button></td><td>0.6 mi · 2 rooms</td><td class="sc-num">$1,690</td></tr>
+                <tr><td><button class="sc-table__sort" type="button" data-site-row="3">Marlowe Green</button></td><td>0.7 mi · 1 room</td><td class="sc-num">$1,255</td></tr>
+                <tr><td><button class="sc-table__sort" type="button" data-site-row="4">Selby Yard</button></td><td>1.1 mi · 2 rooms</td><td class="sc-num">$1,940</td></tr>
+                <tr><td><button class="sc-table__sort" type="button" data-site-row="5">Pike &amp; Vine</button></td><td>1.2 mi · 1 room</td><td class="sc-num">$1,420</td></tr>
+                <tr><td><button class="sc-table__sort" type="button" data-site-row="6">Ashgrove</button></td><td>1.8 mi · 2 rooms</td><td class="sc-num">$1,615</td></tr>
+                <tr><td><button class="sc-table__sort" type="button" data-site-row="7">Kestrel Flats</button></td><td>1.9 mi · 1 room</td><td class="sc-num">$1,330</td></tr>
+                <tr><td><button class="sc-table__sort" type="button" data-site-row="8">Orchard Nine</button></td><td>2.0 mi · 2 rooms</td><td class="sc-num">$2,050</td></tr>
+                <tr><td><button class="sc-table__sort" type="button" data-site-row="9">Dover Mill</button></td><td>2.1 mi · 1 room</td><td class="sc-num">$1,180</td></tr>
+                <tr><td><button class="sc-table__sort" type="button" data-site-row="10">Tamarack</button></td><td>2.3 mi · 2 rooms</td><td class="sc-num">$1,775</td></tr>
+                <tr><td><button class="sc-table__sort" type="button" data-site-row="11">Calder Point</button></td><td>2.6 mi · 1 room</td><td class="sc-num">$1,505</td></tr>
+                <tr><td><button class="sc-table__sort" type="button" data-site-row="12">Rowan Gate</button></td><td>3.0 mi · 2 rooms</td><td class="sc-num">$1,860</td></tr>
+                <tr><td><button class="sc-table__sort" type="button" data-site-row="13">Ivy &amp; Main</button></td><td>3.4 mi · 1 room</td><td class="sc-num">$1,225</td></tr>
+                </tbody>
+              </table>
+            </details>
+          </div>
+          <div class="sc-card">
+            <div class="sc-eyebrow">why it exists</div>
+            <p class="sc-hint">A press on a crowded plot lands on whichever mark the browser hit-tested &mdash; in practice the last one appended &mdash; so the reader gets a different datum than the one under the finger, and nothing says so. Resolve by <strong>distance from the press</strong> instead, inside the radius the pointer already uses: one mark in reach is taken outright, and when several are, the panel asks, nearest first, choosing nothing until the reader does.</p>
+            <p class="sc-hint">It is a <strong>popover, not a modal</strong>. The marks behind it stay live and tabbable &mdash; there can be hundreds &mdash; so <code>aria-modal</code> would be a claim the page cannot keep: Tab may leave, and leaving closes. Escape returns focus to the control that opened the panel, never to the mark underneath, which is the one the panel exists to refuse; focusing it hands the reader the wrong datum one keystroke later. The dismissing press needs the same care, because its own default action runs after the handler.</p>
+            <p class="sc-hint"><code>__more</code> says how many are still unlisted rather than hiding them in a scroller, and the width comes from the surface while the height does not &mdash; a surface too short for about three options is overflowed rather than made unreadable. The plot is for the eye; the <code>.sc-details</code> table twin stays the precise path to a named row.</p>
+          </div>
+        </div>
+        <p class="sg-rule"><code>.sc-pick</code> &middot; <code>.sc-pick__head</code> <code>.sc-pick__hint</code> <code>.sc-pick__list</code> <code>.sc-pick__item</code>[<code>aria-pressed</code>] <code>.sc-pick__name</code> <code>.sc-pick__meta</code> <code>.sc-pick__more</code> &middot; composes <code>.sc-figure</code>, <code>.sc-btn--sm</code>, <code>.sc-dot--link</code>; hosted by any positioned surface (<code>.sc-chart</code>, <code>.sc-map</code>)</p>
+      </div>
       <div class="sg-block">
         <h3>The rest of the vocabulary</h3>
         <p class="sc-hint">Everything else 2.3 added, in one place, so no class in the sheet is a class you cannot find.</p>
@@ -966,7 +1029,7 @@
 </div>
 
 <footer class="sc-foot">
-  <span>SpicyChicken Design System · v2.11.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
+  <span>SpicyChicken Design System · v2.12.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
   <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a>
 </footer>
 
@@ -1214,6 +1277,94 @@
     twin('demo-bar-twin', 'Listings by state per week', ['Week', ...MARKETS, 'Total'], WEEKS.map(([w, v]) => [w, ...v, v.reduce((a, b) => a + b, 0)]));
   }
 
+  // ---- pick: resolving an ambiguous press on a plotted surface ----
+  // TAP is half the 44px box a browser hit-tests under a finger, so "in reach"
+  // means the same thing here as it does to the pointer.
+  const TAP = 22, SHOWN = 3;
+  function renderPick() {
+    const host = $('sg-pick-plot'); if (!host) return;
+    const panel = $('sg-pick-panel'), list = $('sg-pick-list'), line = $('sg-pick-selection'), open = $('sg-pick-open');
+    const more = panel.querySelector('[data-pick="more"]'), title = $('sg-pick-title');
+    const dots = [...host.querySelectorAll('[data-site]')];
+    const rows = [...document.querySelectorAll('[data-site-row]')];
+    const site = (i) => { const r = rows[i].closest('tr').children;
+      return { name: r[0].textContent.trim(), meta: r[1].textContent.trim(), figure: r[2].textContent.trim() }; };
+    const centre = (dot) => { const r = dot.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; };
+    let selected = -1, opener = null, shown = SHOWN, crowd = [];
+
+    const near = (x, y, radius) => dots
+      .map((d, i) => { const c = centre(d); return { i, d: Math.hypot(c.x - x, c.y - y) }; })
+      .filter((p) => p.d <= radius).sort((a, b) => a.d - b.d);
+
+    function choose(i) {
+      selected = i;
+      dots.forEach((d, n) => d.setAttribute('r', n === i ? '9' : '6.5'));
+      const s = site(i);
+      line.textContent = s.name + ' · ' + s.meta + ' · ' + s.figure;
+      const others = near(centre(dots[i]).x, centre(dots[i]).y, TAP).filter((p) => p.i !== i).length;
+      open.hidden = !others;
+      open.textContent = others ? 'Nearby sites (' + (others + 1) + ')' : '';
+      open.setAttribute('aria-label', others
+        ? 'Choose among the ' + (others + 1) + ' sites within a finger of this one, including ' + s.name : '');
+    }
+    function close(refocus) {
+      if (panel.hidden) return;
+      panel.hidden = true;
+      // The dismissing press runs its own default action AFTER this handler, so
+      // the focus has to be placed deliberately or it lands on <body>.
+      if (refocus && opener && opener.isConnected && !opener.hidden) opener.focus();
+      else if (refocus) host.focus();
+      opener = null;
+    }
+    function fill() {
+      list.textContent = '';
+      crowd.slice(0, shown).forEach((p) => {
+        const s = site(p.i);
+        const item = el('button', { class: 'sc-pick__item', type: 'button', 'aria-pressed': p.i === selected ? 'true' : 'false' },
+          el('span', { class: 'sc-pick__name' }, s.name),
+          el('span', { class: 'sc-pick__meta' }, s.meta),
+          el('span', { class: 'sc-figure' }, s.figure));
+        item.addEventListener('click', () => { const i = p.i; close(false); choose(i); open.hidden ? host.focus() : open.focus(); });
+        list.appendChild(item);
+      });
+      more.hidden = crowd.length <= shown;
+      more.textContent = 'Show the other ' + (crowd.length - shown);
+    }
+    function openPanel(found, x, y, back) {
+      crowd = found; shown = SHOWN; opener = back;
+      title.textContent = found.length + ' sites within a finger of this press';
+      fill();
+      const hr = host.getBoundingClientRect();
+      panel.hidden = false;
+      const w = panel.offsetWidth, h = panel.offsetHeight;
+      panel.style.left = Math.max(6, Math.min(hr.width - w - 6, x - hr.left + 14)) + 'px';
+      panel.style.top = Math.max(6, Math.min(hr.height - h - 6, y - hr.top + 14)) + 'px';
+      list.querySelector('.sc-pick__item').focus();
+    }
+
+    host.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('.sc-pick')) return;
+      const found = near(e.clientX, e.clientY, TAP);
+      if (!found.length) { close(true); return; }
+      if (found.length === 1) { close(false); choose(found[0].i); return; }
+      // The press's own default action runs AFTER this handler and would move
+      // the focus to the host, which reads as a focusout of the panel we are
+      // about to open — the panel would close on the frame it appeared.
+      e.preventDefault();
+      openPanel(found, e.clientX, e.clientY, null);
+    });
+    open.addEventListener('click', () => {
+      const c = centre(dots[selected]);
+      openPanel(near(c.x, c.y, TAP), c.x, c.y, open);
+    });
+    panel.querySelector('[data-pick="close"]').addEventListener('click', () => close(true));
+    more.addEventListener('click', () => { shown = crowd.length; fill(); list.querySelector('.sc-pick__item').focus(); });
+    panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.preventDefault(); close(true); } });
+    // Tab may leave a popover; leaving is what closes it.
+    panel.addEventListener('focusout', (e) => { if (e.relatedTarget && !panel.contains(e.relatedTarget)) close(false); });
+    rows.forEach((b, i) => b.addEventListener('click', () => { close(false); choose(i); }));
+  }
+
   // ---- theme state line + nav ----
   function renderThemeState() {
     const t = root.getAttribute('data-theme'); const os = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
@@ -1240,7 +1391,7 @@
   }
 
   function renderAll() { renderCover(); renderRamps(); renderRoles(); renderPalettes(); renderLine(); renderBars(); renderThemeState(); }
-  renderAll(); renderTwins(); nav();
+  renderAll(); renderTwins(); renderPick(); nav();
   new MutationObserver(() => setTimeout(renderAll, 0)).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
   matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => setTimeout(renderAll, 0));
   let raf = null; window.addEventListener('resize', () => { if (raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { renderLine(); renderBars(); }); });
