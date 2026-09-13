@@ -93,6 +93,14 @@ and `DESIGN_SYSTEM.md` §10.
    caption that tells two segmented controls apart for the eye and for assistive tech. Both were
    improvised in consumers first (SpicyCar captions its filter groups, SpicyStock its chart
    modes); neither carries a product decision.
+8e. **Figure basis and the transposed comparison.** ✅ Done (v2.12.0): `.sc-estimate` and
+   `.sc-unreported`, which say how a printed number was arrived at — read from the record,
+   derived from stated assumptions, or never supplied — where the sheet previously had one ink
+   for all three; and `.sc-signal-matrix--fit`, the narrow band for a matrix whose columns are
+   the records rather than the criteria, which is the one shape the criterion navigator declines
+   by design. Both were measured in a consumer before they were written. Neither computes a
+   value, derives a tone, or carries a product decision: the word in the markup still says what
+   the basis is, and the marks only make the difference visible.
 9. **Slide template.** Six-slide arc (cover on `--sc-ink`, problem, summary, architecture, roadmap,
    ask) as standalone 1280×720 HTML pages.
 10. **License.** ✅ Done (v2.1.0): MIT for the CSS, tooling and wrappers; the chick and everything in `assets/` stay all rights reserved (`LICENSE`).
@@ -103,6 +111,24 @@ and `DESIGN_SYSTEM.md` §10.
 
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
+
+- **2.12.0 (2026-09-13, source snapshot)** — Figure basis and the transposed comparison.
+  `.sc-estimate` and `.sc-unreported` say how a printed number was arrived at. Until now the sheet
+  had one ink for three different things: a figure read from the record, a figure derived from
+  stated assumptions, and a figure the source never supplied. Recorded stays the default and wears
+  no class; `.sc-estimate` quiets a derived figure one step and prefixes the approximation mark
+  (decorative, empty alt text, `--sc-estimate-mark` to change or drop it); `.sc-unreported` is a
+  mono lowercase status word at its own size, so an absence cannot line up with, or be mistaken
+  for, a measurement. The word in the markup still carries the meaning, exactly as `.sc-signal`'s
+  label does. `.sc-signal-matrix--fit` is the narrow band for a TRANSPOSED comparison — columns
+  that are the records, rows that are the measures — which is the one shape the criterion
+  navigator excludes by design, leaving the 680px floor as the only behaviour on a phone. It
+  drops the floor and caps the record columns (`--sc-matrix-identity` 96px, `--sc-matrix-record`
+  112px — a 390px phone's arithmetic with the matrix's own 4px border-spacing counted in) so two
+  sit beside the sticky identity column at 390px instead of one; above 720px nothing changes.
+  Both were measured in a consumer first: a three-record comparison rendered 693px wide inside a
+  348px region, and a recorded price, a derived total and a derived monthly payment stood in one
+  column at one weight, one size and one ink. Neither class computes a value or derives a tone.
 
 - **2.11.0 (2026-09-12, source snapshot)** — The action bar and the labelled control group.
   `.sc-actionbar` (`__more`) is the bar a page ends a decision on: an optional status chip, one

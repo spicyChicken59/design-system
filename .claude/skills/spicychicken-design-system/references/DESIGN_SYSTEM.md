@@ -1,4 +1,4 @@
-# SpicyChicken Design System — v2.11.0
+# SpicyChicken Design System — v2.12.0
 
 **The visual standard for everything shipped under SpicyChicken.**
 
@@ -10,7 +10,7 @@ Files in this folder:
 
 | File | What it is |
 |---|---|
-| `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.11.0`. |
+| `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.12.0`. |
 | `sc-map.js` | `SC.geo` (projection, topojson, geodesic ring, box fitting — all pure) and `SC.mapView` (pan, zoom, and the marks that must not scale with it). Optional; needed only by a page that draws a map. |
 | `sc-charts.js` | The chart primitives the sheet's `.sc-chart` / `.sc-spark` / `.sc-tooltip` contracts were always describing. Optional; load it after `sc.css`. |
 | `sc-theme.js` | The theme script (source: `build/theme.js`). Reads the saved choice before paint, wires the toggle, and swaps a pinned-dark page to light for printing. Link it or inline it. |
@@ -237,6 +237,7 @@ attribute now beats every component's `display`, so hide with `hidden`, never wi
 | Button | `.sc-btn` (`--primary` `--secondary` `--ghost` `--sm`) · `[disabled]` / `[aria-disabled="true"]` | Primary = spice, one per view. Secondary = outline. Pressed = fill shift, no transform. `a.sc-btn[aria-disabled]` blocks the click only — also drop the `href`, or use `<button disabled>`. |
 | Inputs | `.sc-input` · `.sc-select` · `.sc-check` · `.sc-field` · `.sc-filters` | Edge in `--sc-border-control`; hover = brand-strong. States: `:disabled` (50%, not-allowed), `[aria-invalid="true"]` (danger edge), `:read-only` (raised fill). `label.sc-field` wraps a control with its mono label; `label.sc-check` carries the same label typography on its own, so use one or the other, not `.sc-field.sc-check`. A `role="group"` is not a labelable control, so a segmented control takes the group form instead: `div.sc-field.sc-field--group` holding a `.sc-field__label` with an id, and the group names it with `aria-labelledby`. Filters: one row, above everything they scope. |
 | Table | `.sc-table` (`--compact`) · `.sc-table-scroll` (`--tall`) · `th.is-sortable` · `th[aria-sort]` · `button.sc-table__sort` · `.sc-num` · `tr.sc-empty` | Open header: lowercase mono over a 2px cobalt rule, no filled bar. Hairline rows, row hover. Numbers right-aligned, tabular, non-wrapping. **Sort contract:** the `th` carries `aria-sort="ascending|descending"` (the glyph follows it; `.is-sorted` is a deprecated alias for descending) and its label is a `<button class="sc-table__sort">` so sorting is keyboard-reachable. The header sticks only inside `.sc-table-scroll--tall` (bounded at 70vh, scrolls vertically); a plain `.sc-table-scroll` only scrolls sideways. **Since 2.3.0** the first column pins while it does, and `.is-clipped` (set by the consumer when `scrollWidth > clientWidth`) fades the clipped edge — a sideways-scrolling table must never hide the column that names each row. Links in cells are `.sc-link--quiet`. |
+| Signal matrix | `.sc-signal-matrix` (`--values` `--fit`) · `__name` `__note` `__value` · `.sc-signal` (`--good` `--caution` `--blocked` `--info`) · `td.is-best` | A native table read as candidates × criteria, in a labelled `.sc-table-scroll` region with the identity column sticky. `--values` is the ordinary-figures mode. `--fit` is for the **transposed** shape — columns that are the records, rows that are the measures — which the criterion navigator excludes by design, since its buttons would be named after the records; it drops the 680px floor and caps the record columns (`--sc-matrix-identity` 96px, `--sc-matrix-record` 112px) so two sit beside the identity column at 390px — the defaults are a 390px phone's arithmetic with the matrix's 4px border-spacing counted in, and changes nothing above 720px. Colour and glyph always reinforce a written label; never derive a tone in CSS. |
 | Chart | `.sc-chart` · `svg` · `text` · `.sc-chart__label` `__grid` `__crosshair` `__series` (`--emphasis` `--context`) `__marker` | **Host contract:** `<div class="sc-chart" role="group" tabindex="0" aria-label="…">` around an `aria-hidden="true"` SVG, with a `.sc-details` table twin directly below. The host takes the focus ring; arrow keys step the crosshair; the SVG's `text` is 10.5px mono in `--sc-text-2`, `__label` is 12px body in `--sc-heading`. Series are 2px round-joined strokes; markers ring in `--sc-surface`. Colour from §8 tokens only. |
 | Sparkline | `svg.sc-spark` (`--emphasis`) · `.sc-tile__spark` | An inline SVG: path in `--sc-chart-context` (1.5px), end dot ringed in the surface; `--emphasis` switches both to `--sc-chart-emphasis`. Marks wear chart tokens, never text or brand tokens. |
 | Map | `.sc-map` (`--labels`) · `__btns` `__btn` `__scrollhint` `__state` `__state-label` `__radius` `__anchor` | A projected SVG that pans and zooms. Plain scroll keeps scrolling the page (the embedded-map convention), so `__scrollhint` teaches the modifier when a scroll passes through; `touch-action: pan-y` does the same for one finger. Buttons are 32px, 44px under a coarse pointer. `--labels` reveals the region labels past a zoom threshold. Geography is `--sc-bg` on `--sc-border`; `__radius` is the dashed "within N of here" ring, `__anchor` the "you are here" point. |
@@ -248,6 +249,7 @@ attribute now beats every component's `display`, so hide with `hidden`, never wi
 | Media row | `.sc-media` · `__body` `__title` `__sub` `__code` `__links` · `--card` · `__aside` `__foot` | Frame + title / sub / code (VIN, in faint mono) + quiet links, in a table cell or a list. `--card` is the phone twin: a bordered grid (frame · body · right-aligned aside) with a `__foot` row for flags and links. |
 | Empty | `.sc-empty` · `tr.sc-empty` | Nothing to show yet: one sentence in muted text, no graphic, no apology. The `tr` form centres it across a table. |
 | Figure / note | `.sc-figure` · `.sc-note` | The lead value in a cell (bold heading colour, non-wrapping) and its mono footnote on the next line. Emphasis beside a chart is `.sc-figure`, not brand-strong. |
+| Figure basis | `.sc-estimate` · `.sc-unreported` · `--sc-estimate-mark` | How a printed number was arrived at. **Recorded is the default and wears no class.** `.sc-estimate` marks a figure DERIVED from stated assumptions: one step down from heading ink, with the approximation mark before it (drawn in CSS with empty alt text, so it is decorative — set `--sc-estimate-mark` to change it or `""` to drop it). `.sc-unreported` marks a figure the source never supplied: mono, lowercase, at its own size, and never tabular — an absence must not align with, weigh like, or be mistaken for a measurement, and a headline slot holding one stops being a headline. **The word still has to be in the markup**: a row label, a caption or the value's own text says "estimated" or "not supplied", exactly as `.sc-signal`'s label carries its meaning. Wrap the value, never the row. Never apply either from a computation the page just did — apply them from what the record says about the figure. |
 | Quiet link | `.sc-link--quiet` | Muted link with a hairline underline; spice only on hover. For tables and media rows, where a spice link per row is noise. |
 | Tooltip / legend | `.sc-tooltip` (`__date` `__row` `__meta`) · `.is-on` · `.sc-legend` · `i.is-swatch` | Ink surface, `--sc-shadow-pop`. Values lead, labels follow; line keys for lines, `is-swatch` boxes for bars. Hidden = `visibility: hidden` (out of the accessibility tree); `.is-on` fades it in. Needs a `position: relative` parent. `--tap` gives the pointer back to a tooltip opened by tap, so the links inside it work; `__img` is a 150×94 thumbnail, `__link` an underlined on-ink action, `__dash` the SVG twin of `__row i` when a series is dashed. `.sc-legend__chip` is a legend key that is also a control — pressed-off strikes out because the series is hidden, while `--select` stays fully legible because nothing is. |
 | Tabs | `.sc-tabs` · `.sc-tab[aria-pressed]` (`--case`) | **A segmented control, not tabs:** `<div class="sc-tabs" role="group" aria-label="…">` with `<button class="sc-tab" aria-pressed="true|false">`. Switches the subject (which model, which range), not navigation. `aria-selected` is still styled for old markup. `--case` keeps proper-noun casing (BMW i5). More than one group in a row: caption each with `.sc-field--group` — two captionless segmented rows are unreadable the moment one word appears in both. |
@@ -306,7 +308,7 @@ Validated with the `dataviz` method; re-run the checks if a slot ever changes. C
 ## 9. Marks & watermark
 
 **Expanded compositions:** [VISUAL-RECIPES.md](VISUAL-RECIPES.md) and
-[the brand studio](brand-studio.html) demonstrate the v2.11.0 additions. `.sc-cover`
+[the brand studio](brand-studio.html) demonstrate the v2.12.0 additions. `.sc-cover`
 uses ink, wine, or warm paper; `.sc-brand-panel` provides a dedicated mark texture;
 `.sc-ghost` reserves blank space for a mono mark; `.sc-signature` credits the maker
 outside chart plots. `.sc-chapter`, `.sc-stat-strip`, `.sc-facts`,
@@ -378,10 +380,10 @@ Measured, not assumed — the numbers are WCAG 2 contrast ratios from the curren
 **Link a pinned version.** Tags are served by jsDelivr; pin the exact release and upgrade on purpose:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.11.0/sc.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.12.0/sc.css">
 ```
 
-`@2` in place of `@v2.11.0` follows the newest 2.x tag (non-breaking upgrades, re-resolved by the CDN
+`@2` in place of `@v2.12.0` follows the newest 2.x tag (non-breaking upgrades, re-resolved by the CDN
 within hours). The GitHub Pages URL `https://spicychicken59.github.io/design-system/sc.css` is
 **latest** — it is what the style guide runs on and it may change on a major, so it is for
 prototypes, not production. Vendoring (copy `sc.css` next to the page) is the third option; note the
@@ -400,8 +402,8 @@ version from its header when you refresh it.
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.11.0/sc.css">
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.11.0/sc-theme.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.12.0/sc.css">
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.12.0/sc-theme.js"></script>
 ```
 
 Order matters: `color-scheme` first so the browser paints the right default before CSS arrives, the
@@ -415,7 +417,7 @@ code changes the attribute), and swaps a pinned-dark page to light for printing.
 nothing else.
 
 **Assets** — every file in `assets/`, at `https://spicychicken59.github.io/design-system/assets/<file>`
-or `https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.11.0/assets/<file>`:
+or `https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.12.0/assets/<file>`:
 
 | File | Where it goes |
 |---|---|
