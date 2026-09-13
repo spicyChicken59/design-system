@@ -13,6 +13,7 @@ guide, it's a new component — fold it into the system or take it out.
 - [ ] Exactly one spice action per view (primary button or next-action callout); at most one core callout per section.
 - [ ] A view that offers an action ends it in one `.sc-actionbar` — status word, the reason in a sentence, one button — and the phone layout was opened: a row `flex-basis` becomes a height in a column.
 - [ ] Every segmented control in a row of two or more carries a visible `.sc-field--group` caption, and the group names it with `aria-labelledby`.
+- [ ] A plot whose marks can overlap resolves a press by distance and opens a `.sc-pick` when several marks are within a finger; a press at a mark's own centre was tested, at phone width, and selected that mark or asked — never a neighbour.
 - [ ] Page CSS references semantic tokens only — no hex, no primitives.
 - [ ] Brand compositions preserve the original chick and clear space; no ghost or pattern overlaps evidence or body copy.
 - [ ] Cover tone matches its mark form; paper controls remain readable in dark mode; compact covers wrap in narrow containers.

@@ -144,6 +144,58 @@ range, a *summary* view beside a *summary* period — neither row can be told fr
 </div>
 ```
 
+## Ambiguous selection on a plot
+
+`.sc-pick` is what a plotted surface offers when a press cannot name one mark. Use it on any
+positioned surface that draws more marks than it has room for — `.sc-map`, a scatter, any
+`.sc-chart`.
+
+**Resolve by distance, never by z-order.** A press hits whichever mark the browser hit-tested,
+which in practice is the last one appended, so on a crowded surface the reader gets a different
+datum than the one under the finger and nothing says so. Measure the distance from the press to
+each mark's centre instead, inside the radius the pointer already uses — half of the 44px box, so
+"in reach" means the same thing to the code as it does to the finger. One mark in reach is taken
+outright. Several open the panel, **nearest first**, and the panel chooses nothing until the
+reader does.
+
+**It is a popover, not a modal.** The marks behind it stay live and tabbable — there can be
+hundreds — so `aria-modal` would be a claim the page cannot keep. Give it `role="dialog"` and a
+heading that states the count, let Tab leave, and close on the way out. Escape returns focus to
+the control that opened the panel. Never to the mark underneath: that mark is the one the panel
+exists to refuse, and focusing it hands the reader the wrong datum one keystroke later. A press on
+bare surface dismisses it, and the focus has to be placed deliberately there too — the press's own
+default action runs after the handler and would otherwise drop it on `<body>`.
+
+**Say how long the list is.** Show a readable few and put the remainder behind `__more` with its
+real number. A scroller that hides its own length reads as a short list.
+
+**The panel is not the precise path.** Keep the `.sc-details` table twin the system already asks
+for under every chart: the plot is for the eye, and a named row is always one click away without
+aiming. A compressed axis, a wider pane and a smaller mark all reduce crowding; none of them
+removes it, and a surface can be dense enough that nearly every press is ambiguous. That is a
+readable distribution with an honest way out of any press — not a broken one.
+
+```html
+<div class="sc-chart" role="group" tabindex="0" aria-label="Sites in the search ring">
+  <svg viewBox="0 0 320 180" aria-hidden="true"><!-- .sc-dot marks --></svg>
+  <div class="sc-pick" role="dialog" aria-labelledby="pick-title" hidden>
+    <div class="sc-pick__head">
+      <h4 id="pick-title">5 sites within a finger of this press</h4>
+      <button class="sc-btn sc-btn--ghost sc-btn--sm" type="button">Close</button>
+    </div>
+    <p class="sc-pick__hint">nearest first · esc closes</p>
+    <div class="sc-pick__list" role="group" aria-label="Sites within a finger of the press, nearest first">
+      <button class="sc-pick__item" type="button" aria-pressed="true">
+        <span class="sc-pick__name">Kestrel Flats</span>
+        <span class="sc-pick__meta">1.9 mi · 1 room</span>
+        <span class="sc-figure">$1,330</span>
+      </button>
+    </div>
+    <button class="sc-btn sc-btn--ghost sc-btn--sm sc-pick__more" type="button">Show the other 4</button>
+  </div>
+</div>
+```
+
 ## Signal matrix
 
 Use `.sc-signal-matrix` on a native `.sc-table` when several candidates must be scanned against

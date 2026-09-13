@@ -1,5 +1,6 @@
 // Visual deliverables: local references, document outlines and unchanged mark geometry.
-// Add --browser for the rendered decision-brief gate; --shots <directory> saves
+// Add --browser for the rendered gates — the decision brief, the instrument deck,
+// the print table, the matrix and the pick's press resolution; --shots <directory> saves
 // actual browser captures. Playwright + Chromium must be installed separately.
 // A requested browser run without a working browser reports SKIP and exits 1.
 import assert from 'node:assert/strict';
@@ -10,6 +11,7 @@ import { dirname, join, resolve, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkInstrumentCompositions } from './instrument-check.mjs';
 import { checkPrintTable } from './print-table-check.mjs';
+import { checkPick } from './pick-check.mjs';
 import { checkMatrixCriteria, checkMatrixLifecycle, checkMatrixWithoutJS } from './matrix-nav-check.mjs';
 import { checkMatrixBundleSource, checkAutomaticMatrixBundle } from './matrix-bundle-check.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -148,6 +150,7 @@ async function checkRenderedDecisionBrief() {
     }
     await checkInstrumentCompositions(browser, base, shots);
     await checkPrintTable(browser, base);
+    await checkPick(browser, base);
     await checkMatrixLifecycle(browser, root);
     await checkMatrixWithoutJS(browser, base);
     await checkAutomaticMatrixBundle(browser, root, base);
