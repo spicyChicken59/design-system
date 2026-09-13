@@ -243,6 +243,59 @@ whose cells hold sentences wants more room: set `--sc-matrix-identity` and `--sc
 the table. Keep the row headers, the labelled region and `tabindex="0"` — the identity column is
 what tells a reader which measure they have scrolled to.
 
+### Where the records differ, and the pair view
+
+`--fit` gets two record columns onto a phone. Two things it does not do, both met in consumers
+first.
+
+**Mark what differs.** A comparison of four records prints every measure at one weight while the
+reader is asking something narrower: where do these actually differ? Put `data-differs="true"` on
+the row. The mark is a rule down the row's own label — never on a cell, because a difference is
+not a winner and the matrix already has `.is-best` for that other question. A page may fold the
+identical measures away, but only if it says it did and keeps them readable somewhere; identity,
+cost basis and any statement of uncertainty are never folded.
+
+```html
+<tr data-differs="true"><th scope="row">Quoted unit price</th><td>$4.20</td><td>$3.95</td></tr>
+<tr><th scope="row">Certification</th><td>ISO 9001</td><td>ISO 9001</td></tr>
+```
+
+**Below two columns, turn it on its side.** Where even two record columns cannot carry the values,
+`.sc-compare-pair` names both records in a sticky head and puts one measure per row with the two
+values beside each other. Shrinking the type further is not an answer, and a scroller that pushes
+one record's identity off the edge is worse than either: a value read against the wrong record is
+worse than a value not read at all. Where the comparison holds more than two records, put the
+control that chooses which two in the heads — the third record is then a selection the reader
+makes, not a truncation they never see.
+
+```html
+<div class="sc-compare-pair">
+  <div class="sc-compare-pair__heads">
+    <div class="sc-compare-pair__head">
+      <span class="sc-eyebrow sc-eyebrow--muted">record A</span>
+      <select class="sc-select" aria-label="Record A in the comparison">…</select>
+      <p class="sc-note">Northgate Mills · quoted 12 Aug</p>
+    </div>
+    <div class="sc-compare-pair__head">
+      <span class="sc-eyebrow sc-eyebrow--muted">record B</span>
+      <select class="sc-select" aria-label="Record B in the comparison">…</select>
+      <p class="sc-note">Harrow Press · quoted 9 Aug</p>
+    </div>
+  </div>
+  <dl class="sc-compare-pair__rows">
+    <dt class="sc-compare-pair__measure" data-differs="true">Quoted unit price</dt>
+    <dd class="sc-compare-pair__values">
+      <div class="sc-compare-pair__value"><span class="sc-figure">$4.20</span><span class="sc-note">written quote</span></div>
+      <div class="sc-compare-pair__value is-best"><span class="sc-figure">$3.95</span><span class="sc-note sc-text-good">lowest quoted</span></div>
+    </dd>
+  </dl>
+</div>
+```
+
+`.is-best` means here exactly what it means in the matrix. The value boxes are a grid of equal
+columns: a column flex box that scrolls would shrink them, which is how a comparison ends up two
+pixels tall.
+
 ### Figure basis — recorded, estimated, not supplied
 
 A page prints three kinds of number and, until 2.12, one ink for all of them. Recorded is the

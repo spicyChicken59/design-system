@@ -8,6 +8,8 @@ guide, it's a new component — fold it into the system or take it out.
 - [ ] Benchmark rails print the exact value and authored scale in words; bands and references come from real definitions, never decorative targets.
 - [ ] Every printed figure says how it was arrived at: recorded wears no class, a figure derived from stated assumptions is `.sc-estimate`, one the source never supplied is `.sc-unreported`, and the word is in the markup either way — the mark and the colour are reinforcement.
 - [ ] A comparison whose columns are records, not criteria, carries `.sc-signal-matrix--fit` and was opened at 390px: two record columns beside the identity column, not one.
+- [ ] Rows the records differ on are marked with `data-differs="true"` on the row, never on a cell — a difference is not a winner — and any measures folded away are said to be folded and stay readable; identity, cost basis and uncertainty are never folded.
+- [ ] Below the width two record columns need, the comparison is a `.sc-compare-pair`: both records named in a sticky head, one measure per row, and a control that chooses which two when there are more.
 
 - [ ] Head: pinned `sc.css` + `sc-theme.js`, `color-scheme` meta, font preconnects, favicon = the chick (`assets/favicon.ico`).
 - [ ] Masthead: chick + project name left, theme toggle right, `--sc-ink` in both modes; nav has an `aria-label`.

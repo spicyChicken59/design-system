@@ -207,7 +207,7 @@
 <header class="sc-masthead">
   <a class="sc-brand" href="#top">
     <img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt="">
-    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.12.0</span></span>
+    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.13.0</span></span>
   </a>
   <div class="sc-masthead__right">
     <span class="sc-hide-sm">Living reference</span>
@@ -223,7 +223,7 @@
 <section class="sg-cover sc-on-ink" id="top">
   <div class="sg-cover__inner sg-cover__inner--brand">
     <div class="sc-cover sc-on-ink sg-brand-cover">
-      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.12.0</span><span>212 named tokens</span><span>110 component blocks</span></div></div>
+      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.13.0</span><span>212 named tokens</span><span>111 component blocks</span></div></div>
       <div class="sc-cover__art" aria-hidden="true"><img src="assets/sc-mark-color-dark.svg" alt="" width="342" height="405"><span class="sc-cover__caption">one mark. every creation.</span></div>
     </div>
     <div class="sg-palette-footer"><div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and spice accent"></div><span class="sc-hint">The familiar palette. A richer set of compositions.</span></div>
@@ -254,7 +254,7 @@
   <main class="sg-main" id="main-content">
 
     <section class="sg-section" id="brand-compositions">
-      <div class="sc-eyebrow">the visual language · new in v2.12.0</div>
+      <div class="sc-eyebrow">the visual language · new in v2.13.0</div>
       <h2>A brand that lives inside the page.</h2>
       <p class="sc-dek">Use a strong opener, quieter evidence, and a signature at the close. Every composition below is available in HTML and the visual React wrappers.</p>
       <div class="sc-cover sc-cover--paper sc-cover--compact">
@@ -711,6 +711,57 @@
       </div>
 
       <div class="sg-block">
+        <h3>Where the records differ, and the pair view <span class="sc-chip sc-chip--spice">2.13</span></h3>
+        <p class="sc-hint">Two walls that <code>--fit</code> does not reach, both met in consumers first. A comparison of four records prints every measure at one weight while the reader is asking a narrower question: <code>data-differs="true"</code> on a row marks the ones the records do not agree on. It marks the row’s own <em>label</em>, never a cell — a difference is not a winner. Fold the identical rows away only if the page says it did and keeps them readable; identity, cost basis and any statement of uncertainty are never folded.</p>
+        <div class="sg-demo">
+          <div class="sc-table-scroll" tabindex="0" role="region" aria-label="Illustrative supplier comparison, differences marked">
+            <table class="sc-table sc-table--compact sc-signal-matrix sc-signal-matrix--values sc-signal-matrix--fit" id="sg-differs-matrix">
+              <caption class="sc-sr-only">Two illustrative suppliers compared on three measures, the two they differ on marked</caption>
+              <thead><tr><th scope="col">measure</th><th class="sc-case" scope="col">Northgate Mills</th><th class="sc-case" scope="col">Harrow Press</th></tr></thead>
+              <tbody>
+                <tr data-differs="true"><th scope="row">Quoted unit price</th><td>$4.20<span class="sc-signal-matrix__note">written quote · 12 Aug</span></td><td>$3.95<span class="sc-signal-matrix__note">written quote · 9 Aug</span></td></tr>
+                <tr data-differs="true"><th scope="row">Lead time</th><td>18 days<span class="sc-signal-matrix__note">stated on the quote</span></td><td><span class="sc-unreported">Not stated</span></td></tr>
+                <tr><th scope="row">Certification</th><td>ISO 9001<span class="sc-signal-matrix__note">certificate on file</span></td><td>ISO 9001<span class="sc-signal-matrix__note">certificate on file</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="sc-hint">Below the width two columns need, the matrix turns on its side. <code>.sc-compare-pair</code> names both records at the top and keeps them there while the measures scroll past, so no value is ever read against the wrong record. One measure per row, the two values under it. Where the comparison holds more than two records, the heads carry the control that chooses which two — a selection the reader makes, never a silent truncation.</p>
+        <div class="sg-demo">
+          <div class="sc-compare-pair" id="sg-compare-pair">
+            <div class="sc-compare-pair__heads">
+              <div class="sc-compare-pair__head">
+                <span class="sc-eyebrow sc-eyebrow--muted">record A</span>
+                <p class="sc-note">Northgate Mills · quoted 12 Aug</p>
+              </div>
+              <div class="sc-compare-pair__head">
+                <span class="sc-eyebrow sc-eyebrow--muted">record B</span>
+                <p class="sc-note">Harrow Press · quoted 9 Aug</p>
+              </div>
+            </div>
+            <dl class="sc-compare-pair__rows">
+              <dt class="sc-compare-pair__measure" data-differs="true">Quoted unit price</dt>
+              <dd class="sc-compare-pair__values">
+                <div class="sc-compare-pair__value"><span class="sc-figure">$4.20</span><span class="sc-note">written quote</span></div>
+                <div class="sc-compare-pair__value is-best"><span class="sc-figure">$3.95</span><span class="sc-note">written quote</span><span class="sc-note sc-text-good">lowest quoted</span></div>
+              </dd>
+              <dt class="sc-compare-pair__measure" data-differs="true">Lead time</dt>
+              <dd class="sc-compare-pair__values">
+                <div class="sc-compare-pair__value"><span class="sc-figure">18 days</span><span class="sc-note">stated on the quote</span></div>
+                <div class="sc-compare-pair__value"><span class="sc-unreported">Not stated</span></div>
+              </dd>
+              <dt class="sc-compare-pair__measure">Certification<span class="sc-note">same for both</span></dt>
+              <dd class="sc-compare-pair__values">
+                <div class="sc-compare-pair__value"><span class="sc-figure">ISO 9001</span></div>
+                <div class="sc-compare-pair__value"><span class="sc-figure">ISO 9001</span></div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <p class="sg-rule"><code>data-differs="true"</code> · <code>.sc-compare-pair</code> <code>__heads</code> <code>__head</code> <code>__rows</code> <code>__measure</code> <code>__values</code> <code>__value</code> · a difference, never a winner; both identities stay on screen</p>
+      </div>
+
+      <div class="sg-block">
         <h3>Chart container &amp; sparkline <span class="sc-chip sc-chip--spice">2.1</span></h3>
         <p class="sc-hint">Every chart lives in a focusable host with a name, an <code>aria-hidden</code> SVG, and a table twin below it. Marks wear the <code>.sc-chart__*</code> classes so they follow the tokens; text inside wears text tokens. A sparkline is the same idea at 80×26 — chart tokens for the line, never text tokens. The live charts in <a href="#charts">Data visualization</a> use exactly this contract. On phones this fixed-width specimen scrolls sideways inside its host.</p>
         <div class="sg-demo">
@@ -1067,7 +1118,7 @@
 </div>
 
 <footer class="sc-foot">
-  <span>SpicyChicken Design System · v2.12.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
+  <span>SpicyChicken Design System · v2.13.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
   <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a>
 </footer>
 

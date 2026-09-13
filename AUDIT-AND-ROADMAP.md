@@ -118,6 +118,28 @@ and `DESIGN_SYSTEM.md` §10.
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
 
+- **2.13.0 (2026-09-13, source snapshot)** — The record comparison, where two columns are not
+  enough. Both halves were improvised in two consumers before they came here, which is the bar
+  for promotion.
+
+  **Which rows differ.** `tr[data-differs="true"]` on a `.sc-signal-matrix` marks a row the
+  records do not agree on. The mark lands on the row's own label — a rule inside the identity
+  column — and never on a cell, because a difference is not a winner and the matrix's one
+  existing emphasis (`.is-best`) already means something else. A page may fold the identical
+  rows away, but only if it says so and keeps them readable; identity, cost basis and any
+  statement of uncertainty are never folded. Measured in a consumer: a comparison of four saved
+  vehicles printed nine measures at one weight, and the reader's actual question was which two
+  of the nine separated the cars.
+
+  **The pair view.** `.sc-compare-pair` (`__heads` `__head` `__rows` `__measure` `__values`
+  `__value`) is the same comparison turned on its side for a screen too narrow for two record
+  columns — the width below which `--fit`'s answer runs out. Both records are named in a sticky
+  head so a value is never read against the wrong record, one measure per row, the two values
+  beside each other. Where the comparison holds more than two records the heads carry the
+  control that chooses which two, so the third record is a selection the reader makes rather
+  than a truncation they never see. `.is-best` carries the same meaning it does in the matrix.
+  Additive: no token, no other component and no existing consumer layout changes.
+
 - **2.12.0 (2026-09-13, source snapshot)** — Two contributions, reconciled into one release.
 
   **The ambiguous-selection pick.** The ambiguous-selection pick. `.sc-pick`
