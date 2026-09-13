@@ -144,6 +144,58 @@ range, a *summary* view beside a *summary* period — neither row can be told fr
 </div>
 ```
 
+## Ambiguous selection on a plot
+
+`.sc-pick` is what a plotted surface offers when a press cannot name one mark. Use it on any
+positioned surface that draws more marks than it has room for — `.sc-map`, a scatter, any
+`.sc-chart`.
+
+**Resolve by distance, never by z-order.** A press hits whichever mark the browser hit-tested,
+which in practice is the last one appended, so on a crowded surface the reader gets a different
+datum than the one under the finger and nothing says so. Measure the distance from the press to
+each mark's centre instead, inside the radius the pointer already uses — half of the 44px box, so
+"in reach" means the same thing to the code as it does to the finger. One mark in reach is taken
+outright. Several open the panel, **nearest first**, and the panel chooses nothing until the
+reader does.
+
+**It is a popover, not a modal.** The marks behind it stay live and tabbable — there can be
+hundreds — so `aria-modal` would be a claim the page cannot keep. Give it `role="dialog"` and a
+heading that states the count, let Tab leave, and close on the way out. Escape returns focus to
+the control that opened the panel. Never to the mark underneath: that mark is the one the panel
+exists to refuse, and focusing it hands the reader the wrong datum one keystroke later. A press on
+bare surface dismisses it, and the focus has to be placed deliberately there too — the press's own
+default action runs after the handler and would otherwise drop it on `<body>`.
+
+**Say how long the list is.** Show a readable few and put the remainder behind `__more` with its
+real number. A scroller that hides its own length reads as a short list.
+
+**The panel is not the precise path.** Keep the `.sc-details` table twin the system already asks
+for under every chart: the plot is for the eye, and a named row is always one click away without
+aiming. A compressed axis, a wider pane and a smaller mark all reduce crowding; none of them
+removes it, and a surface can be dense enough that nearly every press is ambiguous. That is a
+readable distribution with an honest way out of any press — not a broken one.
+
+```html
+<div class="sc-chart" role="group" tabindex="0" aria-label="Sites in the search ring">
+  <svg viewBox="0 0 320 180" aria-hidden="true"><!-- .sc-dot marks --></svg>
+  <div class="sc-pick" role="dialog" aria-labelledby="pick-title" hidden>
+    <div class="sc-pick__head">
+      <h4 id="pick-title">5 sites within a finger of this press</h4>
+      <button class="sc-btn sc-btn--ghost sc-btn--sm" type="button">Close</button>
+    </div>
+    <p class="sc-pick__hint">nearest first · esc closes</p>
+    <div class="sc-pick__list" role="group" aria-label="Sites within a finger of the press, nearest first">
+      <button class="sc-pick__item" type="button" aria-pressed="true">
+        <span class="sc-pick__name">Kestrel Flats</span>
+        <span class="sc-pick__meta">1.9 mi · 1 room</span>
+        <span class="sc-figure">$1,330</span>
+      </button>
+    </div>
+    <button class="sc-btn sc-btn--ghost sc-btn--sm sc-pick__more" type="button">Show the other 4</button>
+  </div>
+</div>
+```
+
 ## Signal matrix
 
 Use `.sc-signal-matrix` on a native `.sc-table` when several candidates must be scanned against
@@ -155,6 +207,63 @@ Inside a matrix cell, `.sc-signal` pairs `.sc-signal__glyph` with `.sc-signal__l
 label carries the meaning; the glyph is `aria-hidden`, and the tone only reinforces it. Available
 tones are `--good`, `--caution`, `--blocked`, and `--info`; omit a tone for neutral. Never derive a
 tone in CSS—apply it only from a decision or status the product already knows.
+
+### The transposed comparison
+
+When the columns are the RECORDS and the rows are the measures — three suppliers against four
+terms, two plans against six limits — the criterion navigator below does not apply, and says so:
+its buttons would be named after the records rather than the criteria. That leaves a phone with
+the scroll alone, and `.sc-signal-matrix`'s 680px floor guarantees one long enough to hide every
+column but the first. Add `.sc-signal-matrix--fit` to that table: it drops the floor and caps the
+record columns instead, so two sit beside the sticky identity column at 390px and the fourth
+record is what starts a scroll. Nothing above 720px changes, and nothing is hidden or collapsed —
+the whole comparison is still one native table.
+
+```html
+<div class="sc-table-scroll" tabindex="0" role="region" aria-label="Supplier comparison">
+  <table class="sc-table sc-table--compact sc-signal-matrix sc-signal-matrix--values sc-signal-matrix--fit">
+    <caption class="sc-sr-only">Three suppliers, one column each, compared on four measures</caption>
+    <thead><tr><th scope="col">measure</th>
+      <th class="sc-case" scope="col">Northgate Mills</th><th class="sc-case" scope="col">Harrow Press</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Quoted unit price</th>
+        <td>$4.20<span class="sc-signal-matrix__note">written quote · 12 Aug</span></td>
+        <td>$3.95<span class="sc-signal-matrix__note">written quote · 9 Aug</span></td></tr>
+      <tr><th scope="row">Lead time</th>
+        <td>18 days</td><td><span class="sc-unreported">Not stated</span></td></tr>
+    </tbody>
+  </table>
+</div>
+```
+
+The two widths are custom properties because 96px / 112px is tuned to short figures — the defaults
+are a 390px phone's own arithmetic, the matrix's 4px border-spacing included (96 + 112 + 112 + 16
+= 336 in a 348px region). A comparison
+whose cells hold sentences wants more room: set `--sc-matrix-identity` and `--sc-matrix-record` on
+the table. Keep the row headers, the labelled region and `tabindex="0"` — the identity column is
+what tells a reader which measure they have scrolled to.
+
+### Figure basis — recorded, estimated, not supplied
+
+A page prints three kinds of number and, until 2.12, one ink for all of them. Recorded is the
+default and wears no class. `.sc-estimate` marks a figure derived from stated assumptions;
+`.sc-unreported` marks one the source never supplied. Wrap the value, not the row.
+
+```html
+<dl class="sc-facts">
+  <div><dt>metered use</dt><dd>41,800 kWh</dd></div>
+  <div><dt>annual cost</dt><dd><span class="sc-estimate">$6,140</span></dd></div>
+  <div><dt>carbon intensity</dt><dd><span class="sc-unreported">Not supplied by the meter</span></dd></div>
+</dl>
+```
+
+The approximation mark is drawn by CSS with empty alt text, so it is decorative and a screen
+reader never hears it: the word beside the figure is what says "estimated", the same way
+`.sc-signal`'s label — not its glyph or its tone — carries its meaning. Change the mark with
+`--sc-estimate-mark`, or set it to `""` where a leading character would be wrong. `.sc-unreported`
+does not inherit the figure's size: an absence in a headline slot stops being a headline, which is
+the point. Apply both from what the record says about a figure, never from a computation the page
+has just performed.
 
 ### Optional criterion navigator
 

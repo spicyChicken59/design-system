@@ -5,7 +5,7 @@ a row of cards arrives in order, a control answers a press. The original chick
 can make an entrance without becoming a different logo. Reading, navigation,
 and data never depend on an animation finishing.
 
-This optional library is part of **v2.11.0**. Load the matching CSS and runtime.
+This optional library is part of **v2.12.0**. Load the matching CSS and runtime.
 Pinned release URLs become available when the corresponding release is published.
 
 ```html

@@ -93,6 +93,20 @@ and `DESIGN_SYSTEM.md` §10.
    caption that tells two segmented controls apart for the eye and for assistive tech. Both were
    improvised in consumers first (SpicyCar captions its filter groups, SpicyStock its chart
    modes); neither carries a product decision.
+8e. **Ambiguous-selection pick.** ✅ Done (v2.12.0): `.sc-pick`, the panel that asks which mark
+   a press meant when several are within one finger of it. The plotted surfaces the system already
+   ships — `.sc-map`, the scatter, any `.sc-chart` — got dense enough in production that a press
+   resolved by z-order returned the wrong datum, silently; the answer is distance, and a question
+   when distance cannot settle it. Improvised in two consumers first (SpicyStock's burst map,
+   SpicyHome's listing map) before it came here; it carries no product decision.
+8f. **Figure basis and the transposed comparison.** ✅ Done (v2.12.0): `.sc-estimate` and
+   `.sc-unreported`, which say how a printed number was arrived at — read from the record,
+   derived from stated assumptions, or never supplied — where the sheet previously had one ink
+   for all three; and `.sc-signal-matrix--fit`, the narrow band for a matrix whose columns are
+   the records rather than the criteria, which is the one shape the criterion navigator declines
+   by design. Both were measured in a consumer before they were written. Neither computes a
+   value, derives a tone, or carries a product decision: the word in the markup still says what
+   the basis is, and the marks only make the difference visible.
 9. **Slide template.** Six-slide arc (cover on `--sc-ink`, problem, summary, architecture, roadmap,
    ask) as standalone 1280×720 HTML pages.
 10. **License.** ✅ Done (v2.1.0): MIT for the CSS, tooling and wrappers; the chick and everything in `assets/` stay all rights reserved (`LICENSE`).
@@ -103,6 +117,46 @@ and `DESIGN_SYSTEM.md` §10.
 
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
+
+- **2.12.0 (2026-09-13, source snapshot)** — Two contributions, reconciled into one release.
+
+  **The ambiguous-selection pick.** The ambiguous-selection pick. `.sc-pick`
+  (`__head` `__hint` `__list` `__item` `__name` `__meta` `__more`) is the panel a crowded plot
+  opens when a press cannot name one mark: the options nearest first, the current one carrying
+  `aria-pressed`, a `.sc-figure` in the second column and a `__more` that admits how long the list
+  really is. It is a popover, not a modal — a dense surface leaves hundreds of tabbable marks
+  live behind it, so `aria-modal` would be a claim the page cannot keep; Tab may leave, leaving
+  closes, and Escape returns focus to the control that opened the panel, never to the mark the
+  browser hit-tested. That mark is the one the panel exists to refuse, and handing it the focus
+  hands the reader the wrong datum one keystroke later. Measured in a consumer before it was
+  written: 364 markers in a 360×388px pane, and a press at a marker's own centre selected a
+  different one 363 times out of 364. Hosted by any positioned surface; the style guide's working
+  example runs on a `.sc-chart`. No token, no other component and no existing consumer layout
+  changes.
+
+  **Figure basis and the transposed comparison.** Figure basis and the transposed comparison.
+  `.sc-estimate` and `.sc-unreported` say how a printed number was arrived at. Until now the sheet
+  had one ink for three different things: a figure read from the record, a figure derived from
+  stated assumptions, and a figure the source never supplied. Recorded stays the default and wears
+  no class; `.sc-estimate` quiets a derived figure one step and prefixes the approximation mark
+  (decorative, empty alt text, `--sc-estimate-mark` to change or drop it); `.sc-unreported` is a
+  mono lowercase status word at its own size, so an absence cannot line up with, or be mistaken
+  for, a measurement. The word in the markup still carries the meaning, exactly as `.sc-signal`'s
+  label does. `.sc-signal-matrix--fit` is the narrow band for a TRANSPOSED comparison — columns
+  that are the records, rows that are the measures — which is the one shape the criterion
+  navigator excludes by design, leaving the 680px floor as the only behaviour on a phone. It
+  drops the floor and caps the record columns (`--sc-matrix-identity` 96px, `--sc-matrix-record`
+  112px — a 390px phone's arithmetic with the matrix's own 4px border-spacing counted in) so two
+  sit beside the sticky identity column at 390px instead of one; above 720px nothing changes.
+  Both were measured in a consumer first: a three-record comparison rendered 693px wide inside a
+  348px region, and a recorded price, a derived total and a derived monthly payment stood in one
+  column at one weight, one size and one ink. Neither class computes a value or derives a tone.
+
+  The two arrived as separate branches proposing the same number from the same base and
+  overlapping on every file either generated; they were reconciled onto one branch, the
+  component bands ordered so the figure basis stays last (a value slot sets its own colour at
+  one class of specificity, so the basis has to follow it), and every generated file rebuilt
+  once from the combined source.
 
 - **2.11.0 (2026-09-12, source snapshot)** — The action bar and the labelled control group.
   `.sc-actionbar` (`__more`) is the bar a page ends a decision on: an optional status chip, one

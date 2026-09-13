@@ -241,6 +241,94 @@
     twin('demo-bar-twin', 'Listings by state per week', ['Week', ...MARKETS, 'Total'], WEEKS.map(([w, v]) => [w, ...v, v.reduce((a, b) => a + b, 0)]));
   }
 
+  // ---- pick: resolving an ambiguous press on a plotted surface ----
+  // TAP is half the 44px box a browser hit-tests under a finger, so "in reach"
+  // means the same thing here as it does to the pointer.
+  const TAP = 22, SHOWN = 3;
+  function renderPick() {
+    const host = $('sg-pick-plot'); if (!host) return;
+    const panel = $('sg-pick-panel'), list = $('sg-pick-list'), line = $('sg-pick-selection'), open = $('sg-pick-open');
+    const more = panel.querySelector('[data-pick="more"]'), title = $('sg-pick-title');
+    const dots = [...host.querySelectorAll('[data-site]')];
+    const rows = [...document.querySelectorAll('[data-site-row]')];
+    const site = (i) => { const r = rows[i].closest('tr').children;
+      return { name: r[0].textContent.trim(), meta: r[1].textContent.trim(), figure: r[2].textContent.trim() }; };
+    const centre = (dot) => { const r = dot.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; };
+    let selected = -1, opener = null, shown = SHOWN, crowd = [];
+
+    const near = (x, y, radius) => dots
+      .map((d, i) => { const c = centre(d); return { i, d: Math.hypot(c.x - x, c.y - y) }; })
+      .filter((p) => p.d <= radius).sort((a, b) => a.d - b.d);
+
+    function choose(i) {
+      selected = i;
+      dots.forEach((d, n) => d.setAttribute('r', n === i ? '9' : '6.5'));
+      const s = site(i);
+      line.textContent = s.name + ' · ' + s.meta + ' · ' + s.figure;
+      const others = near(centre(dots[i]).x, centre(dots[i]).y, TAP).filter((p) => p.i !== i).length;
+      open.hidden = !others;
+      open.textContent = others ? 'Nearby sites (' + (others + 1) + ')' : '';
+      open.setAttribute('aria-label', others
+        ? 'Choose among the ' + (others + 1) + ' sites within a finger of this one, including ' + s.name : '');
+    }
+    function close(refocus) {
+      if (panel.hidden) return;
+      panel.hidden = true;
+      // The dismissing press runs its own default action AFTER this handler, so
+      // the focus has to be placed deliberately or it lands on <body>.
+      if (refocus && opener && opener.isConnected && !opener.hidden) opener.focus();
+      else if (refocus) host.focus();
+      opener = null;
+    }
+    function fill() {
+      list.textContent = '';
+      crowd.slice(0, shown).forEach((p) => {
+        const s = site(p.i);
+        const item = el('button', { class: 'sc-pick__item', type: 'button', 'aria-pressed': p.i === selected ? 'true' : 'false' },
+          el('span', { class: 'sc-pick__name' }, s.name),
+          el('span', { class: 'sc-pick__meta' }, s.meta),
+          el('span', { class: 'sc-figure' }, s.figure));
+        item.addEventListener('click', () => { const i = p.i; close(false); choose(i); open.hidden ? host.focus() : open.focus(); });
+        list.appendChild(item);
+      });
+      more.hidden = crowd.length <= shown;
+      more.textContent = 'Show the other ' + (crowd.length - shown);
+    }
+    function openPanel(found, x, y, back) {
+      crowd = found; shown = SHOWN; opener = back;
+      title.textContent = found.length + ' sites within a finger of this press';
+      fill();
+      const hr = host.getBoundingClientRect();
+      panel.hidden = false;
+      const w = panel.offsetWidth, h = panel.offsetHeight;
+      panel.style.left = Math.max(6, Math.min(hr.width - w - 6, x - hr.left + 14)) + 'px';
+      panel.style.top = Math.max(6, Math.min(hr.height - h - 6, y - hr.top + 14)) + 'px';
+      list.querySelector('.sc-pick__item').focus();
+    }
+
+    host.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('.sc-pick')) return;
+      const found = near(e.clientX, e.clientY, TAP);
+      if (!found.length) { close(true); return; }
+      if (found.length === 1) { close(false); choose(found[0].i); return; }
+      // The press's own default action runs AFTER this handler and would move
+      // the focus to the host, which reads as a focusout of the panel we are
+      // about to open — the panel would close on the frame it appeared.
+      e.preventDefault();
+      openPanel(found, e.clientX, e.clientY, null);
+    });
+    open.addEventListener('click', () => {
+      const c = centre(dots[selected]);
+      openPanel(near(c.x, c.y, TAP), c.x, c.y, open);
+    });
+    panel.querySelector('[data-pick="close"]').addEventListener('click', () => close(true));
+    more.addEventListener('click', () => { shown = crowd.length; fill(); list.querySelector('.sc-pick__item').focus(); });
+    panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.preventDefault(); close(true); } });
+    // Tab may leave a popover; leaving is what closes it.
+    panel.addEventListener('focusout', (e) => { if (e.relatedTarget && !panel.contains(e.relatedTarget)) close(false); });
+    rows.forEach((b, i) => b.addEventListener('click', () => { close(false); choose(i); }));
+  }
+
   // ---- theme state line + nav ----
   function renderThemeState() {
     const t = root.getAttribute('data-theme'); const os = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
@@ -267,7 +355,7 @@
   }
 
   function renderAll() { renderCover(); renderRamps(); renderRoles(); renderPalettes(); renderLine(); renderBars(); renderThemeState(); }
-  renderAll(); renderTwins(); nav();
+  renderAll(); renderTwins(); renderPick(); nav();
   new MutationObserver(() => setTimeout(renderAll, 0)).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
   matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => setTimeout(renderAll, 0));
   let raf = null; window.addEventListener('resize', () => { if (raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { renderLine(); renderBars(); }); });
