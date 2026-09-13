@@ -207,7 +207,7 @@
 <header class="sc-masthead">
   <a class="sc-brand" href="#top">
     <img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt="">
-    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.11.0</span></span>
+    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.12.0</span></span>
   </a>
   <div class="sc-masthead__right">
     <span class="sc-hide-sm">Living reference</span>
@@ -223,7 +223,7 @@
 <section class="sg-cover sc-on-ink" id="top">
   <div class="sg-cover__inner sg-cover__inner--brand">
     <div class="sc-cover sc-on-ink sg-brand-cover">
-      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.11.0</span><span>212 named tokens</span><span>107 component blocks</span></div></div>
+      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.12.0</span><span>212 named tokens</span><span>109 component blocks</span></div></div>
       <div class="sc-cover__art" aria-hidden="true"><img src="assets/sc-mark-color-dark.svg" alt="" width="342" height="405"><span class="sc-cover__caption">one mark. every creation.</span></div>
     </div>
     <div class="sg-palette-footer"><div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and spice accent"></div><span class="sc-hint">The familiar palette. A richer set of compositions.</span></div>
@@ -254,7 +254,7 @@
   <main class="sg-main" id="main-content">
 
     <section class="sg-section" id="brand-compositions">
-      <div class="sc-eyebrow">the visual language · new in v2.11.0</div>
+      <div class="sc-eyebrow">the visual language · new in v2.12.0</div>
       <h2>A brand that lives inside the page.</h2>
       <p class="sc-dek">Use a strong opener, quieter evidence, and a signature at the close. Every composition below is available in HTML and the visual React wrappers.</p>
       <div class="sc-cover sc-cover--paper sc-cover--compact">
@@ -673,6 +673,44 @@
       </div>
 
       <div class="sg-block">
+        <h3>Figure basis <span class="sc-chip sc-chip--spice">2.12</span></h3>
+        <p class="sc-hint">A page prints three kinds of number: one <strong>read</strong> from the record, one <strong>derived</strong> from stated assumptions, and one the source never supplied. Recorded is the default and wears no class. <code>.sc-estimate</code> quiets a derived figure one step and prefixes the approximation mark — decorative, empty alt text, so the word beside it still has to say “estimated”. <code>.sc-unreported</code> is not a value at all: mono, lowercase, its own size, so an absence can never be mistaken for a measurement or line up with one. Set <code>--sc-estimate-mark</code> to change the mark or <code>""</code> to drop it.</p>
+        <div class="sg-demo">
+          <dl class="sc-facts">
+            <div><dt>metered use</dt><dd>41,800 kWh</dd></div>
+            <div><dt>annual cost</dt><dd><span class="sc-estimate">$6,140</span></dd></div>
+            <div><dt>peak demand</dt><dd><span class="sc-estimate">92 kW</span></dd></div>
+            <div><dt>carbon intensity</dt><dd><span class="sc-unreported">Not supplied</span></dd></div>
+          </dl>
+          <dl class="sc-stat-strip sc-stat-strip--2" style="margin-top:14px">
+            <div class="sc-stat"><dt class="sc-stat__label">metered use · 2025</dt><dd class="sc-stat__value">41,800 kWh</dd><dd class="sc-stat__note">Read from the building meter, 1 Jan – 31 Dec.</dd></div>
+            <div class="sc-stat"><dt class="sc-stat__label">annual cost · estimated</dt><dd class="sc-stat__value sc-estimate">$6,140</dd><dd class="sc-stat__note">At the published standing charge and unit rate. Not a quote.</dd></div>
+          </dl>
+        </div>
+        <p class="sg-rule"><code>.sc-estimate</code> · <code>.sc-unreported</code> · <code>--sc-estimate-mark</code> · composes with <code>.sc-facts</code>, <code>.sc-stat</code>, <code>.sc-figure</code> and any table cell</p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Transposed comparison <span class="sc-chip sc-chip--spice">2.12</span></h3>
+        <p class="sc-hint">A signal matrix whose <em>columns</em> are the records and whose rows are the measures. The criterion navigator declines these on purpose — its buttons would be named after the records — so a phone has only the scroll, and the matrix’s 680px floor guarantees one long enough to hide every column but the first. <code>.sc-signal-matrix--fit</code> drops the floor and caps the record columns instead, so two sit beside the sticky identity column at 390px — the 96px / 112px defaults are that phone’s own arithmetic with the matrix’s 4px border-spacing counted in. Tune with <code>--sc-matrix-identity</code> and <code>--sc-matrix-record</code> when the cells hold sentences rather than figures. Above 720px nothing changes.</p>
+        <div class="sg-demo">
+          <div class="sc-table-scroll" tabindex="0" role="region" aria-label="Illustrative supplier comparison">
+            <table class="sc-table sc-table--compact sc-signal-matrix sc-signal-matrix--values sc-signal-matrix--fit">
+              <caption class="sc-sr-only">Three illustrative suppliers, one column each, compared on four measures</caption>
+              <thead><tr><th scope="col">measure</th><th class="sc-case" scope="col">Northgate Mills</th><th class="sc-case" scope="col">Harrow Press</th><th class="sc-case" scope="col">Selby &amp; Co</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Quoted unit price</th><td>$4.20<span class="sc-signal-matrix__note">written quote · 12 Aug</span></td><td>$3.95<span class="sc-signal-matrix__note">written quote · 9 Aug</span></td><td>$4.75<span class="sc-signal-matrix__note">written quote · 14 Aug</span></td></tr>
+                <tr><th scope="row">Landed per unit</th><td><span class="sc-estimate">$4.68</span><span class="sc-signal-matrix__note">quote + published freight</span></td><td><span class="sc-estimate">$4.61</span><span class="sc-signal-matrix__note">quote + published freight</span></td><td><span class="sc-estimate">$4.83</span><span class="sc-signal-matrix__note">quote + published freight</span></td></tr>
+                <tr><th scope="row">Lead time</th><td>18 days<span class="sc-signal-matrix__note">stated on the quote</span></td><td><span class="sc-unreported">Not stated</span></td><td>11 days<span class="sc-signal-matrix__note">stated on the quote</span></td></tr>
+                <tr><th scope="row">Audited since</th><td>2021</td><td>2019</td><td><span class="sc-unreported">No audit on file</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="sg-rule"><code>.sc-signal-matrix--fit</code> · <code>--sc-matrix-identity</code> <code>--sc-matrix-record</code> · keep the native table, the labelled region and the sticky identity column</p>
+      </div>
+
+      <div class="sg-block">
         <h3>Chart container &amp; sparkline <span class="sc-chip sc-chip--spice">2.1</span></h3>
         <p class="sc-hint">Every chart lives in a focusable host with a name, an <code>aria-hidden</code> SVG, and a table twin below it. Marks wear the <code>.sc-chart__*</code> classes so they follow the tokens; text inside wears text tokens. A sparkline is the same idea at 80×26 — chart tokens for the line, never text tokens. The live charts in <a href="#charts">Data visualization</a> use exactly this contract. On phones this fixed-width specimen scrolls sideways inside its host.</p>
         <div class="sg-demo">
@@ -966,7 +1004,7 @@
 </div>
 
 <footer class="sc-foot">
-  <span>SpicyChicken Design System · v2.11.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
+  <span>SpicyChicken Design System · v2.12.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
   <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a>
 </footer>
 

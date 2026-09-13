@@ -156,6 +156,63 @@ label carries the meaning; the glyph is `aria-hidden`, and the tone only reinfor
 tones are `--good`, `--caution`, `--blocked`, and `--info`; omit a tone for neutral. Never derive a
 tone in CSS—apply it only from a decision or status the product already knows.
 
+### The transposed comparison
+
+When the columns are the RECORDS and the rows are the measures — three suppliers against four
+terms, two plans against six limits — the criterion navigator below does not apply, and says so:
+its buttons would be named after the records rather than the criteria. That leaves a phone with
+the scroll alone, and `.sc-signal-matrix`'s 680px floor guarantees one long enough to hide every
+column but the first. Add `.sc-signal-matrix--fit` to that table: it drops the floor and caps the
+record columns instead, so two sit beside the sticky identity column at 390px and the fourth
+record is what starts a scroll. Nothing above 720px changes, and nothing is hidden or collapsed —
+the whole comparison is still one native table.
+
+```html
+<div class="sc-table-scroll" tabindex="0" role="region" aria-label="Supplier comparison">
+  <table class="sc-table sc-table--compact sc-signal-matrix sc-signal-matrix--values sc-signal-matrix--fit">
+    <caption class="sc-sr-only">Three suppliers, one column each, compared on four measures</caption>
+    <thead><tr><th scope="col">measure</th>
+      <th class="sc-case" scope="col">Northgate Mills</th><th class="sc-case" scope="col">Harrow Press</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Quoted unit price</th>
+        <td>$4.20<span class="sc-signal-matrix__note">written quote · 12 Aug</span></td>
+        <td>$3.95<span class="sc-signal-matrix__note">written quote · 9 Aug</span></td></tr>
+      <tr><th scope="row">Lead time</th>
+        <td>18 days</td><td><span class="sc-unreported">Not stated</span></td></tr>
+    </tbody>
+  </table>
+</div>
+```
+
+The two widths are custom properties because 96px / 112px is tuned to short figures — the defaults
+are a 390px phone's own arithmetic, the matrix's 4px border-spacing included (96 + 112 + 112 + 16
+= 336 in a 348px region). A comparison
+whose cells hold sentences wants more room: set `--sc-matrix-identity` and `--sc-matrix-record` on
+the table. Keep the row headers, the labelled region and `tabindex="0"` — the identity column is
+what tells a reader which measure they have scrolled to.
+
+### Figure basis — recorded, estimated, not supplied
+
+A page prints three kinds of number and, until 2.12, one ink for all of them. Recorded is the
+default and wears no class. `.sc-estimate` marks a figure derived from stated assumptions;
+`.sc-unreported` marks one the source never supplied. Wrap the value, not the row.
+
+```html
+<dl class="sc-facts">
+  <div><dt>metered use</dt><dd>41,800 kWh</dd></div>
+  <div><dt>annual cost</dt><dd><span class="sc-estimate">$6,140</span></dd></div>
+  <div><dt>carbon intensity</dt><dd><span class="sc-unreported">Not supplied by the meter</span></dd></div>
+</dl>
+```
+
+The approximation mark is drawn by CSS with empty alt text, so it is decorative and a screen
+reader never hears it: the word beside the figure is what says "estimated", the same way
+`.sc-signal`'s label — not its glyph or its tone — carries its meaning. Change the mark with
+`--sc-estimate-mark`, or set it to `""` where a leading character would be wrong. `.sc-unreported`
+does not inherit the figure's size: an absence in a headline slot stops being a headline, which is
+the point. Apply both from what the record says about a figure, never from a computation the page
+has just performed.
+
 ### Optional criterion navigator
 
 On a phone, a sticky identity column can hide the existence of later criteria. Load
