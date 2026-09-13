@@ -2,7 +2,7 @@
 <header class="sc-masthead">
   <a class="sc-brand" href="#top">
     <img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt="">
-    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.10.0</span></span>
+    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.11.0</span></span>
   </a>
   <div class="sc-masthead__right">
     <span class="sc-hide-sm">Living reference</span>
@@ -18,7 +18,7 @@
 <section class="sg-cover sc-on-ink" id="top">
   <div class="sg-cover__inner sg-cover__inner--brand">
     <div class="sc-cover sc-on-ink sg-brand-cover">
-      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.10.0</span><span>212 named tokens</span><span>106 component blocks</span></div></div>
+      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.11.0</span><span>212 named tokens</span><span>107 component blocks</span></div></div>
       <div class="sc-cover__art" aria-hidden="true"><img src="assets/sc-mark-color-dark.svg" alt="" width="342" height="405"><span class="sc-cover__caption">one mark. every creation.</span></div>
     </div>
     <div class="sg-palette-footer"><div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and spice accent"></div><span class="sc-hint">The familiar palette. A richer set of compositions.</span></div>
@@ -49,7 +49,7 @@
   <main class="sg-main" id="main-content">
 
     <section class="sg-section" id="brand-compositions">
-      <div class="sc-eyebrow">the visual language · new in v2.10.0</div>
+      <div class="sc-eyebrow">the visual language · new in v2.11.0</div>
       <h2>A brand that lives inside the page.</h2>
       <p class="sc-dek">Use a strong opener, quieter evidence, and a signature at the close. Every composition below is available in HTML and the visual React wrappers.</p>
       <div class="sc-cover sc-cover--paper sc-cover--compact">
@@ -355,7 +355,7 @@
 
       <div class="sg-block">
         <h3>Filters &amp; inputs</h3>
-        <p class="sc-hint">One row, above everything it scopes. Labels are mono eyebrows; controls are 14px Instrument Sans on the card surface with a 3:1 control border. A bare <code>label.sc-check</code> carries the same label type as <code>.sc-field</code>.</p>
+        <p class="sc-hint">One row, above everything it scopes. Labels are mono eyebrows; controls are 14px Instrument Sans on the card surface with a 3:1 control border. A bare <code>label.sc-check</code> carries the same label type as <code>.sc-field</code>. A segmented control cannot live in a <code>&lt;label&gt;</code> — <code>role="group"</code> is not a labelable control — so it takes the group form: <code>div.sc-field.sc-field--group</code> with a <code>.sc-field__label</code> the group names through <code>aria-labelledby</code>. Two captionless segmented rows side by side are unreadable the moment a word appears in both, as <em>summary</em> does here.</p>
         <div class="sg-demo">
           <div class="sc-filters">
             <label class="sc-field">Market <select class="sc-select"><option>All markets</option><option>Local only</option><option>Chicago (200 mi)</option></select></label>
@@ -369,8 +369,14 @@
             <span class="sc-note sc-text-danger" id="vin-err">17 characters expected</span>
             <label class="sc-field">Read-only <input class="sc-input" type="text" value="2026-08-23" readonly></label>
           </div>
+          <div class="sc-filters" style="margin-top:14px">
+            <div class="sc-field sc-field--group"><span class="sc-field__label" id="sg-view">View</span>
+              <div class="sc-tabs" role="group" aria-labelledby="sg-view"><button class="sc-tab" type="button" aria-pressed="true">summary</button><button class="sc-tab" type="button" aria-pressed="false">detail</button></div></div>
+            <div class="sc-field sc-field--group"><span class="sc-field__label" id="sg-period">Period</span>
+              <div class="sc-tabs" role="group" aria-labelledby="sg-period"><button class="sc-tab" type="button" aria-pressed="false">summary</button><button class="sc-tab" type="button" aria-pressed="true">month</button><button class="sc-tab" type="button" aria-pressed="false">quarter</button></div></div>
+          </div>
         </div>
-        <p class="sg-rule"><code>.sc-filters</code> · <code>.sc-field</code> · <code>.sc-select</code> · <code>.sc-input</code> (<code>:disabled</code> <code>[aria-invalid="true"]</code> <code>:read-only</code>) · <code>.sc-check</code></p>
+        <p class="sg-rule"><code>.sc-filters</code> · <code>.sc-field</code> (<code>--group</code> <code>__label</code>) · <code>.sc-select</code> · <code>.sc-input</code> (<code>:disabled</code> <code>[aria-invalid="true"]</code> <code>:read-only</code>) · <code>.sc-check</code></p>
       </div>
 
       <div class="sg-block">
@@ -519,6 +525,25 @@
         <p class="sc-hint">The stop-and-read block: what failed and what to do. No apology, no vagueness.</p>
         <div class="sg-demo"><div class="sc-notice"><div class="sc-eyebrow">Could not load data.json</div><p>This page reads <code>data.json</code> from the same folder, so it needs to be served over HTTP — GitHub Pages, or a local static server from the docs folder.</p></div></div>
         <p class="sg-rule"><code>.sc-notice</code></p>
+      </div>
+
+      <div class="sg-block">
+        <h3>Action bar</h3>
+        <p class="sc-hint">How a page ends a decision: the status word, one sentence saying what is on offer — or why nothing is — and the one action, on a single line while there is room. Under 720px it stacks, the button goes full width and the sentence keeps only the height it needs; a flex basis written for a row becomes a height in a column, which is how a one-line sentence ends up 260px tall. <code>__more</code> carries what follows from the action.</p>
+        <div class="sg-demo">
+          <div class="sc-actionbar">
+            <span class="sc-chip sc-chip--good">ready</span>
+            <p>Release 4.2 cleared every gate at 09:12. Publishing stays manual; nothing is scheduled from this page.</p>
+            <button class="sc-btn sc-btn--secondary" type="button">Review the release</button>
+            <div class="sc-actionbar__more"><span class="sc-chip sc-chip--neutral">watching</span><span class="sc-note">Kept in this browser · the publish is still yours to run</span></div>
+          </div>
+          <div class="sc-actionbar" style="margin-top:14px">
+            <span class="sc-chip sc-chip--neutral">nothing to do</span>
+            <p>No gate has reported since 08:40, so there is nothing to publish from here.</p>
+            <button class="sc-btn sc-btn--secondary" type="button">Inspect the gates</button>
+          </div>
+        </div>
+        <p class="sg-rule"><code>.sc-actionbar</code> (<code>__more</code>) · composes <code>.sc-chip</code>, <code>.sc-btn</code></p>
       </div>
 
       <div class="sg-block">
@@ -736,6 +761,6 @@
 </div>
 
 <footer class="sc-foot">
-  <span>SpicyChicken Design System · v2.10.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
+  <span>SpicyChicken Design System · v2.11.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
   <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a>
 </footer>
