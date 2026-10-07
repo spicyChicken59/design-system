@@ -375,7 +375,7 @@ catch (e) { fail('motion: ' + (e.stderr?.toString().trim() || e.message)); }
 try { execFileSync(process.execPath, [join(HERE, 'reading-check.mjs'), join(ROOT, 'sc-reading.js')], { stdio: 'pipe' }); ok('13 chapter navigation behavior scenarios pass'); }
 catch (e) { fail('chapter navigation: ' + (e.stderr?.toString().trim() || e.message)); }
 
-try { execFileSync(process.execPath, [join(HERE, 'activity-check.mjs'), join(ROOT, 'sc-activity.js')], { stdio: 'pipe' }); ok('17 dated-activity and task-session scenarios pass'); }
+try { execFileSync(process.execPath, [join(HERE, 'activity-check.mjs'), join(ROOT, 'sc-activity.js')], { stdio: 'pipe' }); ok('18 dated-activity and task-session scenarios pass'); }
 catch (e) { fail('studio interaction: ' + (e.stderr?.toString().trim() || e.message)); }
 
 if (warnings.length) {

@@ -164,14 +164,16 @@
 <ol class="sc-task-list">
 <li class="sc-task" data-save-state="saved">
 <label class="sc-task__label">
-<input type="checkbox" checked aria-describedby="studio-saved">
+<button type="button" role="checkbox" aria-checked="true" aria-labelledby="studio-primitive-name" aria-describedby="studio-saved" disabled>
+<span aria-hidden="true">✓</span>
+</button>
 <span class="sc-task__body">
-<strong>Read the change summary</strong>
+<strong id="studio-primitive-name">Read the change summary</strong>
 <span class="sc-task__target">Confirm the problem, the resulting behaviour and the source revision.</span>
 </span>
 </label>
 <span class="sc-task__save" id="studio-saved">Example save state: saved</span>
-<div class="sc-task__detail">Completion is an authored checkbox state, never inferred from time spent.</div>
+<div class="sc-task__detail">Disabled accessible-checkbox specimen. A production primitive supplies keyboard and state behaviour; completion is never inferred from elapsed time.</div>
 </li>
 <li class="sc-task" data-save-state="pending" aria-busy="true">
 <label class="sc-task__label">

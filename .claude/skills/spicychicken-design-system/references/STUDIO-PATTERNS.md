@@ -53,11 +53,21 @@ value as a labelled `time` element and the running, paused or finished state in
 words. A timer must not be an assertive live region announcing every second.
 The component does not start or advance a timer.
 
-Use ordered native tasks: `.sc-task` contains a `label.sc-task__label` with a
-checkbox and `.sc-task__body`, an optional `.sc-task__target`, and optional
+Use ordered tasks: `.sc-task` contains a `.sc-task__label` with a native
+`input[type="checkbox"]` or an accessible `[role="checkbox"]` primitive and
+`.sc-task__body`, an optional `.sc-task__target`, and optional
 `.sc-task__detail` and `.sc-task__save`. Long names and targets wrap at narrow
-widths; the checkbox remains visible. A checkbox says that the user confirmed a
+widths; the 20px control remains visible and does not shrink, while the labelled
+row retains at least 44px height. Native `:checked` and primitive
+`aria-checked="true"` states receive the same checked-row treatment. A checkbox
+says that the user confirmed a
 task, not that all unmeasured details were completed.
+
+The application or primitive library owns focus, Space activation and checked
+state. Supply a visible associated label, `aria-labelledby` or an equivalent
+accessible name. A role by itself does not implement checkbox behaviour. The
+disabled primitive in the specimen demonstrates styling and naming without
+pretending to provide an interactive checkbox implementation.
 
 The application controls checked state and `data-save-state="saved|pending|error"`.
 Repeat each state in written text and associate it using `aria-describedby`.

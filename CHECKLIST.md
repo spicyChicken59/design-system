@@ -30,7 +30,7 @@ guide, it's a new component — fold it into the system or take it out.
 - [ ] `npm run check` passes (system repo) — the sheet, tokens, style guide and wrappers agree.
 
 - [ ] Dated activity keeps zero and missing distinct, announces the selected date/value, retains a table twin, and lets Tab leave its roving focus group.
-- [ ] Task checkboxes and save states have written labels; changing a checkbox never implies a server save until the application confirms it.
+- [ ] Native and role-based task checkboxes have visible accessible names and correct checked state; save states have written labels; changing a checkbox never implies a server save until the application confirms it.
 - [ ] Sticky action areas are bounded by their section, fit at 320px, retain safe-area space, and become static in print.
 - [ ] Workspace navigation uses named native links/actions and `aria-current`; it is not an ARIA tab list. Compact navigation retains visible short names and hides only decorative icons from assistive tech.
 
