@@ -118,6 +118,8 @@ and `DESIGN_SYSTEM.md` §10.
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
 
+- **2.14.0 (2026-10-07, source snapshot)** — Working studios need dates and save states, not another product-specific theme. The dated activity grid pairs sequential marks with actual written values and a table, distinguishing a recorded zero from a missing reading. Its optional controller preserves native fallback, uses one roving tab stop, follows responsive rows with arrow keys, and restores listeners/attributes on disposal. A task-session composition promotes readable timer/status furniture and wrapping native/accessible-primitive checkbox targets; applications still own elapsed time, persistence and interpretation. Workspace navigation, its optional compact icon/short-label modifier, and a bounded sticky action reuse the existing action bar and tokens, retain native semantics and become unobtrusive in print. No new color, no changed existing component contract, no domain logic. The source was SpicyBod; the example domain is editorial review so the promotion cannot accidentally prescribe health behaviour.
+
 - **2.13.0 (2026-09-13, source snapshot)** — The record comparison, where two columns are not
   enough. Both halves were improvised in two consumers before they came here, which is the bar
   for promotion.
