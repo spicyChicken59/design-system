@@ -671,3 +671,15 @@ alternative text and a source caption; do not substitute a stock or generated im
 for a missing listing photograph. With `.sc-frame--empty`, the media region compacts
 to 144px, keeps the original mark at its original proportions, and removes photo
 corner framing. The copyable recipe and decision brief show this honest fallback.
+# Working studio recipe
+
+The visual library's **Dated activity and a task session** recipe and
+`templates/studio.html` compose the patterns documented in `STUDIO-PATTERNS.md`.
+They use the shared stylesheet, existing chart tokens and optional
+`sc-activity.js` for keyboard inspection. Native section links can use the
+existing `sc-reading.js`. No application record or timer logic is bundled.
+
+Keep the date/value table, written missing/zero meanings, checkbox save feedback
+and one available action when adapting the recipe. The sticky action is bounded
+by its own session. It is a composition of shared primitives rather than a
+viewport-fixed control tray.

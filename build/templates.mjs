@@ -3,6 +3,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { decisionBrief } from './decision-brief.mjs';
+import { studioExamples } from './studio-examples.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const flag = process.argv.indexOf('--out');
 const out = flag < 0 ? root : process.argv[flag + 1];
@@ -44,7 +45,8 @@ const deliverable = shell('Deliverable', `<main id="main" class="sc-sheet-stack"
 <article class="sc-sheet sc-sheet--dense">${sheetHead('Decision brief · supporting evidence')}<div class="sc-sheet__body">${chapter('02','The evidence','Exact values remain readable in print and on screen.')}${chart}${chapter('03','The next move')}<div class="sc-callout sc-callout--spice"><div class="sc-callout__label">recommended next step</div><p>Replace this sentence with one owned action, a named audience, and the point at which the decision will be revisited.</p></div><p class="sc-measure-note">Method: four illustrative weekly observations. No live product or market data appears in this specimen.</p></div>${sheetFoot(3,'Source: illustrative four-week series')}</article>
 </main>`);
 const decision = shell('Decision brief', `${head('SpicyChicken', 'the decision studio · design specimen')}<main class="sc-wrap sc-wrap--wide sc-page" id="main">${decisionBrief({ assets: '../assets/', heading: 1 })}</main>${foot}`, '<script src="../sc-matrix-nav.js" defer></script>');
-for (const [name, contents] of Object.entries({ landing, dashboard, screener, report, deliverable, 'decision-brief': decision })) writeFileSync(join(out, 'templates', `${name}.html`), contents.replace(/></g, ">\n<"));
+const studio = shell('Studio patterns', `${head('SpicyChicken', 'a working studio · design specimen')}<main class="sc-wrap sc-page" id="main"><header class="sc-title"><p class="sc-eyebrow">dated activity and task sessions</p><h1>A workspace stays readable while work is in progress.</h1><p class="sc-dek">Illustrative data demonstrates inspection, truthful save states and an action that fits a phone.</p></header>${studioExamples()}</main>${foot}`, '<script src="../sc-activity.js" defer></script><script src="../sc-reading.js" defer></script>');
+for (const [name, contents] of Object.entries({ landing, dashboard, screener, report, deliverable, studio, 'decision-brief': decision })) writeFileSync(join(out, 'templates', `${name}.html`), contents.replace(/></g, ">\n<"));
 // Only this recipe is generated; the rest of the catalog remains authored HTML.
 const brief = decisionBrief();
 const escaped = brief.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');

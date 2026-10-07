@@ -10,6 +10,7 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, extname, join } from 'node:path';
+import { studioExamples } from './studio-examples.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const B = join(ROOT, 'build'), DS = ROOT;
@@ -23,7 +24,7 @@ const read = p => readFileSync(p, 'utf8').replace(/\r\n?/g, '\n');
 const cssSys = read(join(DS, 'sc.css'));
 const cssPage = read(join(B, 'styleguide-page.css'));
 const theme = read(join(B, 'theme.js'));
-const body = read(join(B, 'styleguide-body.html'));
+const body = read(join(B, 'styleguide-body.html')).replace('<!-- studio-patterns -->', studioExamples('guide-studio', 3, '.'));
 const js = read(join(B, 'styleguide.js'));
 const FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">';
 
@@ -57,6 +58,8 @@ ${theme}</script>
 ${body}
 <script>
 ${js}</script>
+<script src="sc-activity.js" defer></script>
+<script src="sc-reading.js" defer></script>
 </body>
 </html>
 `;
@@ -77,6 +80,8 @@ writeFileSync(join(OUT, 'sc-charts.js'), `/* SpicyChicken Design System — sc-c
 const map = read(join(B, 'map.js'));
 writeFileSync(join(OUT, 'sc-map.js'), `/* SpicyChicken Design System — sc-map.js v${version} · source: build/map.js · projection, topojson and the pan/zoom view engine */\n${map}`);
 
+writeFileSync(join(OUT, 'sc-activity.js'), '/* SpicyChicken Design System — sc-activity.js v' + version + ' · source: build/activity.js */\n' + read(join(B, 'activity.js')));
+
 // The skill bundle. The skill is what reaches every OTHER project, so its copy
 // of the sheet is the one most likely to drift and the one that matters most
 // when it does. Copy, never hand-maintain; check.mjs rule 13 enforces it.
@@ -90,14 +95,14 @@ writeFileSync(join(OUT, 'sc-map.js'), `/* SpicyChicken Design System — sc-map.
   writeFileSync(join(SKILL, 'assets', 'sc-motion.js'), read(join(DS, 'sc-motion.js')));
   writeFileSync(join(SKILL, 'assets', 'sc-reading.js'), read(join(DS, 'sc-reading.js')));
   writeFileSync(join(SKILL, 'assets', 'sc-matrix-nav.js'), read(join(DS, 'sc-matrix-nav.js')));
-  for (const f of ['sc-theme.js', 'sc-charts.js', 'sc-map.js']) writeFileSync(join(SKILL, 'assets', f), read(join(OUT, f)));
-  for (const f of ['DESIGN_SYSTEM.md', 'PLAIN-HTML.md', 'CHECKLIST.md', 'VISUAL-RECIPES.md', 'MOTION.md'])
+  for (const f of ['sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-activity.js']) writeFileSync(join(SKILL, 'assets', f), read(join(OUT, f)));
+  for (const f of ['DESIGN_SYSTEM.md', 'PLAIN-HTML.md', 'CHECKLIST.md', 'VISUAL-RECIPES.md', 'MOTION.md', 'STUDIO-PATTERNS.md'])
     writeFileSync(join(SKILL, 'references', f), read(join(DS, f)));
   mkdirSync(join(SKILL, 'assets', 'assets'), { recursive: true });
   for (const f of readdirSync(join(DS, 'assets')).filter(f => f.endsWith('.svg')))
     writeFileSync(join(SKILL, 'assets', 'assets', f), read(join(DS, 'assets', f)));
   mkdirSync(join(SKILL, 'assets', 'templates'), { recursive: true });
-  for (const f of ['landing.html', 'dashboard.html', 'screener.html', 'report.html', 'decision-brief.html'])
+  for (const f of ['landing.html', 'dashboard.html', 'screener.html', 'report.html', 'decision-brief.html', 'studio.html'])
     writeFileSync(join(SKILL, 'assets', 'templates', f), read(join(DS, 'templates', f)));
 }
 

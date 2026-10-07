@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SpicyChicken Design System — sc.css  v2.13.0
+   SpicyChicken Design System — sc.css  v2.14.0
    SpicyChicken · github.com/spicyChicken59
 
    One file, no build step. Drop it in (or link it) and every page shares the
@@ -1696,6 +1696,71 @@ html[data-sc-motion-paused="true"] .sc-disclosure[open] > .sc-disclosure__body {
    The instrument deck is the one ink surface that carries its own channel
    instead, so it hands the basis that channel rather than the page's. */
 .sc-stat-strip--instrument { --sc-basis-ink: var(--sc-stat-muted); --sc-basis-muted: var(--sc-stat-muted); }
+
+/* Dated activity, task sessions and workspace navigation. This source is
+   folded into sc.css; consumers ship one stylesheet. No product logic. */
+.sc-activity { min-width: 0; }
+.sc-activity__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(44px, 1fr)); gap: var(--sc-s1); margin-block: var(--sc-s3); }
+.sc-activity__day { appearance: none; display: grid; align-content: center; gap: var(--sc-s1); min-width: 44px; min-height: 48px; padding: var(--sc-s1); border: 1px solid var(--sc-border); border-radius: var(--sc-r-sm); background: var(--sc-surface); color: var(--sc-heading); font: 500 var(--sc-text-xs)/1 var(--sc-font-mono); cursor: pointer; }
+.sc-activity__day::before { content: ''; display: block; height: 8px; background: var(--sc-chart-grid); border-radius: 2px; }
+.sc-activity__day[data-level="1"]::before { background: var(--sc-chart-seq-1); }
+.sc-activity__day[data-level="2"]::before { background: var(--sc-chart-seq-2); }
+.sc-activity__day[data-level="3"]::before { background: var(--sc-chart-seq-3); }
+.sc-activity__day[data-level="4"]::before { background: var(--sc-chart-seq-4); }
+.sc-activity__day[data-level="5"]::before { background: var(--sc-chart-seq-5); }
+.sc-activity__day[data-level="missing"]::before { background: transparent; border: 1px dashed var(--sc-chart-context); }
+.sc-activity__day[aria-pressed="true"] { border-color: var(--sc-brand-line); box-shadow: inset 0 0 0 1px var(--sc-brand-line); }
+.sc-activity__day:hover { background: var(--sc-hover); }
+.sc-activity__day:focus-visible { outline: 2px solid var(--sc-focus); outline-offset: 2px; }
+.sc-activity__selection { min-height: 2em; color: var(--sc-text); font-size: var(--sc-text-sm); overflow-wrap: anywhere; }
+.sc-activity__legend { display: flex; flex-wrap: wrap; gap: var(--sc-s1) var(--sc-s3); color: var(--sc-text-2); font-size: var(--sc-text-sm); }
+.sc-session { min-width: 0; scroll-margin-block: var(--sc-s3); }
+.sc-session__head { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: var(--sc-s3); margin-bottom: var(--sc-s3); }
+.sc-session__head > div:not(.sc-session__timer) { min-width: 0; flex: 1 1 220px; }
+.sc-session__head :is(h2,h3) { margin: 0 0 var(--sc-s1); }
+.sc-session__timer { flex: 0 1 auto; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--sc-s1) var(--sc-s2); color: var(--sc-heading); }
+.sc-session__timer time { font: 600 28px/1.2 var(--sc-font-body); font-variant-numeric: tabular-nums; }
+.sc-session__status { color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.5 var(--sc-font-mono); text-transform: lowercase; }
+.sc-task-list { list-style: none; padding: 0; margin-block: var(--sc-s3); display: grid; gap: var(--sc-s2); }
+.sc-task { min-width: 0; padding: var(--sc-s3); border: 1px solid var(--sc-border); border-radius: var(--sc-r-md); background: var(--sc-surface); }
+.sc-task__label { display: flex; align-items: flex-start; gap: var(--sc-s2); min-height: 44px; cursor: pointer; }
+.sc-task__label input { flex: 0 0 auto; width: 20px; height: 20px; accent-color: var(--sc-accent); margin: 2px 0 0; }
+.sc-task__body { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.sc-task__body > strong { display: block; color: var(--sc-heading); font-size: var(--sc-text-md); line-height: 1.4; }
+.sc-task__target { display: block; color: var(--sc-text-2); font-size: var(--sc-text-sm); line-height: 1.5; margin-top: var(--sc-s0); white-space: normal; }
+.sc-task__detail { color: var(--sc-text-2); font-size: var(--sc-text-sm); margin-top: var(--sc-s2); overflow-wrap: anywhere; }
+.sc-task__save { display: block; color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.5 var(--sc-font-mono); margin-top: var(--sc-s1); }
+.sc-task:has(input:checked) { border-color: var(--sc-brand-line); background: var(--sc-raised); }
+.sc-task[data-save-state="error"] { border-color: var(--sc-danger); }
+.sc-session__actions { margin-top: var(--sc-s3); }
+.sc-actionbar--sticky { position: sticky; bottom: max(var(--sc-s2), env(safe-area-inset-bottom)); z-index: 3; box-shadow: var(--sc-shadow); }
+.sc-workspace-nav { display: flex; flex-wrap: wrap; gap: var(--sc-s1); padding-block: var(--sc-s2); min-width: 0; }
+.sc-workspace-nav > :is(a,button) { appearance: none; display: flex; align-items: center; justify-content: center; flex: 1 1 120px; min-width: 0; min-height: 44px; padding: var(--sc-s2); border: 1px solid var(--sc-border); border-radius: var(--sc-r-sm); background: var(--sc-surface); color: var(--sc-text-2); font: 600 var(--sc-text-sm)/1.4 var(--sc-font-body); overflow-wrap: anywhere; text-align: center; cursor: pointer; }
+.sc-workspace-nav > :is(a,button):hover { background: var(--sc-hover); color: var(--sc-heading); }
+.sc-workspace-nav > [aria-current] { border-color: var(--sc-brand-line); background: var(--sc-brand-fill); color: var(--sc-heading); }
+.sc-workspace-nav > [aria-current="false"] { border-color: var(--sc-border); background: var(--sc-surface); color: var(--sc-text-2); }
+.sc-workspace-nav > :is(a,button):focus-visible { outline: 2px solid var(--sc-focus); outline-offset: 2px; }
+/* Compact navigation keeps short labels beside their meaning. The icon is
+   optional and decorative; the visible label remains the accessible name. */
+.sc-workspace-nav--compact { gap: var(--sc-s0); }
+.sc-workspace-nav--compact > :is(a,button) { flex: 1 1 60px; flex-direction: column; gap: var(--sc-s0); min-height: 44px; padding: var(--sc-s0); font-size: var(--sc-text-xs); line-height: 1.3; }
+.sc-workspace-nav--compact > :is(a,button) > :is(svg,img), .sc-workspace-nav__icon { display: block; flex: none; width: 18px; height: 18px; object-fit: contain; font: 600 16px/18px var(--sc-font-body); }
+@media (max-width: 720px) {
+  .sc-session__head > div:not(.sc-session__timer) { flex-basis: 100%; }
+  .sc-session__timer { width: 100%; }
+  .sc-task { padding: var(--sc-s2); }
+  .sc-actionbar--sticky { bottom: 0; border-radius: var(--sc-r-md) var(--sc-r-md) 0 0; padding-bottom: max(var(--sc-s2), env(safe-area-inset-bottom)); }
+}
+@media print {
+  .sc-actionbar--sticky { position: static; box-shadow: none; }
+  .sc-workspace-nav { display: none; }
+  .sc-task { break-inside: avoid; }
+}
+@media (forced-colors: active) {
+  .sc-activity__day::before { background: CanvasText; }
+  .sc-activity__day[data-level="missing"]::before { background: Canvas; border-color: CanvasText; }
+  .sc-activity__day[aria-pressed="true"] { outline: 2px solid Highlight; }
+}
 
 /* --------------------------------------------------------------------------
    5. UTILITIES

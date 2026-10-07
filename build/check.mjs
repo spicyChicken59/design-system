@@ -69,7 +69,7 @@ for (const p of ['package.json', 'react/package.json', 'react/package-lock.json'
   if (v !== V) fail(`${p}: version ${v} != sc.css ${V}`);
 }
 const versionsIn = (text) => [...text.matchAll(/\bv(\d+\.\d+\.\d+)\b/g)].map(m => m[1]);
-for (const p of ['build/styleguide-body.html', 'index.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-motion.js', 'sc-reading.js']) {
+for (const p of ['build/styleguide-body.html', 'index.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-activity.js', 'sc-motion.js', 'sc-reading.js']) {
   if (!existsSync(join(ROOT, p))) { fail(`${p}: missing`); continue; }
   const stale = versionsIn(read(p)).filter(v => v !== V);
   if (stale.length) fail(`${p}: mentions v${[...new Set(stale)].join(', v')} (current is v${V})`);
@@ -121,7 +121,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
     execFileSync(process.execPath, [join(HERE, 'assemble.mjs'), '--out', tmp], { stdio: 'pipe' });
     execFileSync(process.execPath, [join(HERE, 'templates.mjs'), '--out', tmp], { stdio: 'pipe' });
     execFileSync(process.execPath, [join(HERE, 'brand-assets.mjs'), '--out', tmp], { stdio: 'pipe' });
-    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'visual-library.html', ...['landing','dashboard','screener','report','decision-brief'].map(p => `templates/${p}.html`), ...['ink','wine','paper'].map(p => `assets/sc-pattern-${p}.svg`)]) {
+    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-activity.js', 'visual-library.html', ...['landing','dashboard','screener','report','decision-brief','studio'].map(p => `templates/${p}.html`), ...['ink','wine','paper'].map(p => `assets/sc-pattern-${p}.svg`)]) {
       const fresh = norm(readFileSync(join(tmp, f), 'utf8'));
       if (!existsSync(join(ROOT, f))) fail(`${f}: missing — run npm run build`);
       else if (read(f) !== fresh) fail(`${f}: stale — differs from a fresh generation; run npm run build`);
@@ -208,7 +208,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
 // --- 6. line endings ----------------------------------------------------------
 {
   const CR = String.fromCharCode(13);
-  const bad = ['sc.css', 'starter.html', 'index.html', 'tokens.json', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'styleguide.html', 'build/theme.js', 'build/charts.js', 'build/map.js']
+  const bad = ['sc.css', 'starter.html', 'index.html', 'tokens.json', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-activity.js', 'styleguide.html', 'build/theme.js', 'build/charts.js', 'build/map.js']
     .filter(f => existsSync(join(ROOT, f)) && readFileSync(join(ROOT, f), 'utf8').includes(CR));
   if (bad.length) fail('CRLF line endings in: ' + bad.join(', ') + ' (see .gitattributes)');
   else ok('source and generated files are LF');
@@ -337,6 +337,9 @@ if (!problems.length) ok(`version v${V} everywhere`);
                               ['references/MOTION.md', 'MOTION.md'],
                               ['assets/sc-motion.js', 'sc-motion.js'],
                               ['assets/sc-reading.js', 'sc-reading.js'],
+                              ['assets/sc-activity.js', 'sc-activity.js'],
+                              ['references/STUDIO-PATTERNS.md', 'STUDIO-PATTERNS.md'],
+                              ['assets/templates/studio.html', 'templates/studio.html'],
                               ['assets/sc-matrix-nav.js', 'sc-matrix-nav.js']]) {
       const p = join(SKILL, rel);
       if (!existsSync(join(ROOT, p))) fail(`${p}: missing — run node build/assemble.mjs`);
@@ -371,6 +374,9 @@ try { execFileSync(process.execPath, [join(HERE, 'motion-check.mjs')], { stdio: 
 catch (e) { fail('motion: ' + (e.stderr?.toString().trim() || e.message)); }
 try { execFileSync(process.execPath, [join(HERE, 'reading-check.mjs'), join(ROOT, 'sc-reading.js')], { stdio: 'pipe' }); ok('13 chapter navigation behavior scenarios pass'); }
 catch (e) { fail('chapter navigation: ' + (e.stderr?.toString().trim() || e.message)); }
+
+try { execFileSync(process.execPath, [join(HERE, 'activity-check.mjs'), join(ROOT, 'sc-activity.js')], { stdio: 'pipe' }); ok('17 dated-activity and task-session scenarios pass'); }
+catch (e) { fail('studio interaction: ' + (e.stderr?.toString().trim() || e.message)); }
 
 if (warnings.length) {
   for (const w of warnings) console.log('  --  ' + w);

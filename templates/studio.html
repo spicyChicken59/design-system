@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Studio patterns · SpicyChicken design specimen</title>
+<meta name="description" content="A reusable SpicyChicken studio patterns layout. Illustrative content, not a live product.">
+<link rel="icon" href="../assets/sc-avatar-tile.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../sc.css">
+<script src="../sc-theme.js">
+</script>
+<script src="../sc-reading.js" defer>
+</script>
+<script src="../sc-activity.js" defer>
+</script>
+<script src="../sc-reading.js" defer>
+</script>
+</head>
+<body>
+<a class="sc-skip" href="#main">Skip to content</a>
+<header class="sc-masthead">
+<a class="sc-brand" href="../brand-studio.html">
+<img class="sc-mark" src="../assets/sc-mark-color-dark.svg" alt="" width="342" height="405">
+<span>
+<span class="sc-brand__name">SpicyChicken</span>
+<span class="sc-brand__sub">a working studio · design specimen</span>
+</span>
+</a>
+<div class="sc-masthead__right">
+<div class="sc-theme-toggle" role="group" aria-label="Theme">
+<button type="button" data-theme="dark">Dark</button>
+<button type="button" data-theme="light">Light</button>
+<button type="button" data-theme="auto">Auto</button>
+</div>
+</div>
+</header>
+<main class="sc-wrap sc-page" id="main">
+<header class="sc-title">
+<p class="sc-eyebrow">dated activity and task sessions</p>
+<h1>A workspace stays readable while work is in progress.</h1>
+<p class="sc-dek">Illustrative data demonstrates inspection, truthful save states and an action that fits a phone.</p>
+</header>
+<nav class="sc-workspace-nav" aria-label="Illustrative workspace sections" data-sc-reading>
+<a href="#studio-activity" aria-current="location">Review activity</a>
+<a href="#studio-session">Task session</a>
+<a href="#studio-contract">Interaction contract</a>
+</nav>
+<div class="sc-stack">
+<section class="sc-card sc-activity" data-sc-activity aria-labelledby="studio-activity-title" id="studio-activity">
+<h2 id="studio-activity-title">Review activity by date</h2>
+<p class="sc-hint">Illustrative review passes, October 1–14. Zero is a recorded count; a dashed mark means no reading was supplied.</p>
+<div class="sc-activity__grid" role="group" aria-label="Illustrative review activity dates" aria-describedby="studio-activity-help">
+<button class="sc-activity__day" type="button" data-date="2026-10-01" data-level="0" aria-label="2026-10-01: 0 review passes recorded. Illustrative data.">01</button>
+<button class="sc-activity__day" type="button" data-date="2026-10-02" data-level="1" aria-label="2026-10-02: 1 review passes recorded. Illustrative data.">02</button>
+<button class="sc-activity__day" type="button" data-date="2026-10-03" data-level="missing" aria-label="2026-10-03: no reading supplied. Illustrative data.">03</button>
+<button class="sc-activity__day" type="button" data-date="2026-10-04" data-level="2" aria-label="2026-10-04: 2 review passes recorded. Illustrative data.">04</button>
+<button class="sc-activity__day" type="button" data-date="2026-10-05" data-level="3" aria-label="2026-10-05: 3 review passes recorded. Illustrative data.">05</button>
+<button class="sc-activity__day" type="button" data-date="2026-10-06" data-level="1" aria-label="2026-10-06: 1 review passes recorded. Illustrative data.">06</button>
+<button class="sc-activity__day" type="button" data-date="2026-10-07" data-level="0" aria-label="2026-10-07: 0 review passes recorded. Illustrative data.">07</button>
+<button class="sc-activity__day" type="button" data-date="2026-10-08" data-level="4" aria-label="2026-10-08: 4 review passes recorded. Illustrative data.">08</button>
+<button class="sc-activity__day" type="button" data-date="2026-10-09" data-level="2" aria-label="2026-10-09: 2 review passes recorded. Illustrative data.">09</button>
+<button class="sc-activity__day" type="button" data-date="2026-10-10" data-level="1" aria-label="2026-10-10: 1 review passes recorded. Illustrative data.">10</button>
+<button class="sc-activity__day" type="button" data-date="2026-10-11" data-level="missing" aria-label="2026-10-11: no reading supplied. Illustrative data.">11</button>
+<button class="sc-activity__day" type="button" data-date="2026-10-12" data-level="0" aria-label="2026-10-12: 0 review passes recorded. Illustrative data.">12</button>
+<button class="sc-activity__day" type="button" data-date="2026-10-13" data-level="5" aria-label="2026-10-13: 5 review passes recorded. Illustrative data.">13</button>
+<button class="sc-activity__day" type="button" data-date="2026-10-14" data-level="2" aria-label="2026-10-14: 2 review passes recorded. Illustrative data.">14</button>
+</div>
+<p class="sc-activity__selection" data-sc-activity-selection aria-live="polite" aria-atomic="true">Choose a date to inspect its recorded value.</p>
+<p class="sc-hint" id="studio-activity-help">With the optional activity script, arrows inspect adjacent dates; up/down follow the responsive row, Home/End reach the first/last date. Tab leaves the grid. Values are repeated in the table.</p>
+<p class="sc-activity__legend">Neutral mark = zero · cobalt light to dark = 1–5 passes · dashed mark = missing.</p>
+<details class="sc-disclosure">
+<summary>Read every date and value</summary>
+<div class="sc-table-scroll" tabindex="0" role="region" aria-label="Illustrative activity data table">
+<table class="sc-table">
+<caption>Illustrative review passes by date</caption>
+<thead>
+<tr>
+<th scope="col">date</th>
+<th scope="col">recorded passes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">2026-10-01</th>
+<td>0</td>
+</tr>
+<tr>
+<th scope="row">2026-10-02</th>
+<td>1</td>
+</tr>
+<tr>
+<th scope="row">2026-10-03</th>
+<td>Not supplied</td>
+</tr>
+<tr>
+<th scope="row">2026-10-04</th>
+<td>2</td>
+</tr>
+<tr>
+<th scope="row">2026-10-05</th>
+<td>3</td>
+</tr>
+<tr>
+<th scope="row">2026-10-06</th>
+<td>1</td>
+</tr>
+<tr>
+<th scope="row">2026-10-07</th>
+<td>0</td>
+</tr>
+<tr>
+<th scope="row">2026-10-08</th>
+<td>4</td>
+</tr>
+<tr>
+<th scope="row">2026-10-09</th>
+<td>2</td>
+</tr>
+<tr>
+<th scope="row">2026-10-10</th>
+<td>1</td>
+</tr>
+<tr>
+<th scope="row">2026-10-11</th>
+<td>Not supplied</td>
+</tr>
+<tr>
+<th scope="row">2026-10-12</th>
+<td>0</td>
+</tr>
+<tr>
+<th scope="row">2026-10-13</th>
+<td>5</td>
+</tr>
+<tr>
+<th scope="row">2026-10-14</th>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</section>
+<section class="sc-card sc-session" aria-labelledby="studio-session-title" id="studio-session">
+<header class="sc-session__head">
+<div>
+<p class="sc-eyebrow">illustrative task session</p>
+<h2 id="studio-session-title">Review the release notes</h2>
+<p class="sc-hint">The timer is a paused specimen. Checkboxes change locally; this example does not save records.</p>
+</div>
+<div class="sc-session__timer" aria-label="Illustrative elapsed session time">
+<time datetime="PT12M30S">12:30</time>
+<span class="sc-session__status">paused</span>
+</div>
+</header>
+<label class="sc-field">
+<span>Illustrative completion</span>
+<progress class="sc-progress" value="1" max="3">1 of 3 tasks</progress>
+</label>
+<ol class="sc-task-list">
+<li class="sc-task" data-save-state="saved">
+<label class="sc-task__label">
+<input type="checkbox" checked aria-describedby="studio-saved">
+<span class="sc-task__body">
+<strong>Read the change summary</strong>
+<span class="sc-task__target">Confirm the problem, the resulting behaviour and the source revision.</span>
+</span>
+</label>
+<span class="sc-task__save" id="studio-saved">Example save state: saved</span>
+<div class="sc-task__detail">Completion is an authored checkbox state, never inferred from time spent.</div>
+</li>
+<li class="sc-task" data-save-state="pending" aria-busy="true">
+<label class="sc-task__label">
+<input type="checkbox" disabled aria-describedby="studio-pending">
+<span class="sc-task__body">
+<strong>Check a deliberately long accessibility and keyboard interaction target</strong>
+<span class="sc-task__target">Inspect at a narrow width, keep the full target readable, and confirm that the page and the data table retain their own keyboard behaviour.</span>
+</span>
+</label>
+<span class="sc-task__save" id="studio-pending">Example save state: saving</span>
+</li>
+<li class="sc-task" data-save-state="error">
+<label class="sc-task__label">
+<input type="checkbox" aria-describedby="studio-failed">
+<span class="sc-task__body">
+<strong>Record the evidence reference</strong>
+<span class="sc-task__target">The application decides when a save succeeded; the component shows that result.</span>
+</span>
+</label>
+<span class="sc-task__save" id="studio-failed">Example save state: could not save. Previous records remain available.</span>
+</li>
+</ol>
+<div class="sc-session__actions sc-actionbar sc-actionbar--sticky">
+<span class="sc-chip sc-chip--neutral">specimen only</span>
+<p>The sticky action stays in normal flow and is bounded by this session. It becomes static in print.</p>
+<button class="sc-btn sc-btn--primary" type="button" disabled>Finish example session</button>
+</div>
+</section>
+<section class="sc-card" id="studio-contract">
+<h2>The application owns the record</h2>
+<p>These shared patterns supply readable states, focus behaviour and responsive layout. Timers, saves, dates, counts and any interpretation come from the application.</p>
+<p>Use native links for locations, native buttons for actions, and named segmented controls for subject choices. Navigation does not become a tab list.</p>
+<h2>Compact destination navigation</h2>
+<p class="sc-hint">Short labels remain visible below optional decorative icons. Controls wrap into another row when the available width cannot fit all six.</p>
+<nav class="sc-workspace-nav sc-workspace-nav--compact" aria-label="Design specimen destinations">
+<a href="../brand-studio.html">
+<span class="sc-workspace-nav__icon" aria-hidden="true">↗</span>
+<span>Brand</span>
+</a>
+<a href="../composition-studio.html">
+<span class="sc-workspace-nav__icon" aria-hidden="true">↗</span>
+<span>Compose</span>
+</a>
+<a href="../visual-library.html">
+<span class="sc-workspace-nav__icon" aria-hidden="true">↗</span>
+<span>Library</span>
+</a>
+<a href="../styleguide.html">
+<span class="sc-workspace-nav__icon" aria-hidden="true">↗</span>
+<span>Guide</span>
+</a>
+<a href="../templates/report.html">
+<span class="sc-workspace-nav__icon" aria-hidden="true">↗</span>
+<span>Report</span>
+</a>
+<a href="../templates/studio.html">
+<span class="sc-workspace-nav__icon" aria-hidden="true">↗</span>
+<span>Studio</span>
+</a>
+</nav>
+</section>
+</div>
+</main>
+<footer class="sc-foot">
+<span>SpicyChicken · design specimen · illustrative content</span>
+<a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author">
+<img class="sc-mark" src="../assets/sc-mark-mono-cream.svg" alt="" width="342" height="405">
+<span class="sc-watermark__name">SpicyChicken</span>
+</a>
+</footer>
+</body>
+</html>

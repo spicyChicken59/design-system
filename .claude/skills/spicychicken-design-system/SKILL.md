@@ -1,6 +1,6 @@
 ---
 name: spicychicken-design-system
-description: "The SpicyChicken visual standard (sc.css v2.13.0) — cobalt structure, one spice accent, dark by default. Use this skill for ANY visual or written artifact the user asks for — HTML pages, dashboards, reports, one-pagers, READMEs, decks, docs, email, charts, React components, prototypes, mockups, landing pages, or anything with a UI. Trigger it even when the user says nothing about design, branding, or styling; this is their house style and it applies by default to everything they ship. Also trigger on mentions of SpicyChicken, sc.css, sc- classes, the chick mark, or 'my design system'."
+description: "The SpicyChicken visual standard (sc.css v2.14.0) — cobalt structure, one spice accent, dark by default. Use this skill for ANY visual or written artifact the user asks for — HTML pages, dashboards, reports, one-pagers, READMEs, decks, docs, email, charts, React components, prototypes, mockups, landing pages, or anything with a UI. Trigger it even when the user says nothing about design, branding, or styling; this is their house style and it applies by default to everything they ship. Also trigger on mentions of SpicyChicken, sc.css, sc- classes, the chick mark, or 'my design system'."
 license: "MIT for the code; the SpicyChicken mark and assets/ are all rights reserved."
 ---
 
@@ -160,6 +160,12 @@ fades the clipped edge with `.is-clipped`), `.sc-legend` + `.sc-legend__chip` (`
 **Utilities** — `.sc-mono`, `.sc-num`, `.sc-case`, `.sc-muted`, `.sc-faint`, `.sc-nowrap`,
 `.sc-truncate`, `.sc-right`, `.sc-on-ink`, `.sc-sr-only`, `.sc-hide-sm`
 
+### Working studio patterns
+
+Read `references/STUDIO-PATTERNS.md`. Use `.sc-activity` with a native date grid, written selected value and table twin; optional `assets/sc-activity.js` adds one roving tab stop and arrow/Home/End inspection. Values and sequential bins are authored by the application; zero and missing stay distinct. Call `SC.activity.init(root)` for dynamic content, then `refresh()` or `dispose()` on returned controllers.
+
+Use `.sc-session` and `.sc-task-list` for a timer/status header and native checklist rows. `.sc-task__target` wraps long targets, and `.sc-task__save` repeats the actual save state in words. `.sc-actionbar--sticky` is bounded by its section and becomes static in print. `.sc-workspace-nav` keeps named navigation and 44px controls readable on phones. Add `.sc-workspace-nav--compact` for short labels with optional decorative `.sc-workspace-nav__icon` elements; controls stack and wrap rather than creating a clipped rail. These patterns do not implement timers, saves or product decisions.
+
 ## Token vocabulary
 
 Reference **semantic** tokens only. Primitives (`--sc-cobalt-*`, `--sc-gray-*`, `--sc-night-*`,
@@ -242,7 +248,7 @@ Read these when the summary above isn't enough:
 - `references/MOTION.md` — motion recipes, loading rules, reduced-motion behavior.
 - `assets/sc-reading.js` — optional chapter location highlighting; native links remain usable without it.
 - `assets/sc-motion.js` — optional motion runtime; use with the matching stylesheet.
-- `assets/sc.css` — the sheet itself (v2.13.0). Read it to confirm a class or token exists before
+- `assets/sc.css` — the sheet itself (v2.14.0). Read it to confirm a class or token exists before
   using it. Never invent an `sc-*` name.
 - `assets/sc-charts.js` — the chart primitives, if the page draws charts.
 - `assets/sc-map.js` — the map layer, if the page draws a map. `SC.geo.albersUsa48`,
