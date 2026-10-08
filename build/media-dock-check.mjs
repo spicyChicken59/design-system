@@ -15,6 +15,7 @@ function dock(){return{viewport:{width:390,height:844},header:box(0,0,390,74),bo
 check('valid landscape preserves genuine aspect',()=>assertIntrinsicStage(media()));
 check('valid portrait preserves genuine aspect',()=>assertIntrinsicStage(media(true)));
 check('wrong image aspect is rejected',()=>{const x=media();x.frames[0].height=220;assert.throws(()=>assertIntrinsicStage(x));});
+check('downward frame shift is rejected even with correct dimensions and ratio',()=>{const x=media();x.frames[0]={...x.frames[0],...box(1,20,400,250)};assert.throws(()=>assertIntrinsicStage(x),/frame stays vertically inside stage/);});
 check('forced unrelated ratio is rejected',()=>{const x=media();x.hasForcedRatio=true;assert.throws(()=>assertIntrinsicStage(x));});
 check('multiple presented frames are rejected',()=>{const x=media();x.activeCount=2;assert.throws(()=>assertIntrinsicStage(x));});
 check('an inaccessible active frame is rejected',()=>{const x=media();x.frames[0].ariaHidden=true;assert.throws(()=>assertIntrinsicStage(x));});

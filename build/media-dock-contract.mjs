@@ -22,6 +22,7 @@ export function assertIntrinsicStage(observation) {
     const expectedHeight=frame.width*frame.sourceHeight/frame.sourceWidth;
     assert(Math.abs(frame.height-expectedHeight)<=tolerance,'rendering preserves source ratio');
     assert(frame.left>=stage.left-tolerance&&frame.right<=stage.right+tolerance,'frame stays inside stage');
+    assert(frame.top>=stage.top-tolerance&&frame.bottom<=stage.bottom+tolerance,'frame stays vertically inside stage');
     if(frame.active) {
       assert(!frame.ariaHidden&&!frame.visibilityHidden,'active frame is exposed');
       assert(Math.abs(frame.width-stage.contentWidth)<=tolerance,'active frame fills its content width');
