@@ -87,6 +87,14 @@ forever. Reduced motion and the user's pause choice take precedence.
 
 Use `.sc-evidence` with `.sc-insight` for a finding and its records, `.sc-table--research` for explanatory tables, `.sc-dossier` for object cards, and `.sc-disclosure` for generous native details. `.sc-brand-stage` adds orbit or ledger linework in a reserved art region. `.sc-reading` and `.sc-chapter-nav` provide a report rail; optional `assets/sc-reading.js` sets the active location without replacing native anchors. Call `SC.reading.refresh()` after asynchronous content changes.
 
+For multi-selection and reversible selected-field restores, compose existing
+task labels, disclosures, paired comparison values and one actionbar. Read
+`references/STUDIO-PATTERNS.md`: filters retain stable selected IDs, bulk review
+matches the basket, partial restores preserve omitted fields, and Undo checks the
+current revision. `assets/templates/studio.html` shows illustrative states;
+drafts, persistence and authorization remain consumer-owned. No new CSS or
+selection runtime is required.
+
 Use `.sc-signal-matrix` when readers must scan candidates against shared criteria. Every
 `.sc-signal` needs a written `.sc-signal__label`; its glyph is decorative and color only
 reinforces meaning the product already knows. Keep the native table and a labeled,

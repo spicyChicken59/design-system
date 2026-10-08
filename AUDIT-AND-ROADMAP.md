@@ -115,6 +115,14 @@ and `DESIGN_SYSTEM.md` §10.
 
 ## 5. Changelog
 
+Documentation follow-up (2026-10-07): the studio guide/specimen now composes
+existing task labels, paired values and an actionbar for selection → basket →
+bulk review and reversible selected-field restore. The contracts prevent lost
+selections, silent capacity truncation, dirty-edit loss and stale full-object
+Undo. Illustrative controls are disabled and claim no save. This changes no
+CSS, token, consumer runtime or release version; the current release remains
+2.15.0. Source/generated references and negative-control checks stay together.
+
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
 

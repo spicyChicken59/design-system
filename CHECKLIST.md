@@ -38,6 +38,10 @@ guide, it's a new component — fold it into the system or take it out.
 - [ ] Mobile docks reserve a real row; the last body control and each focused dock control remain visible at 320/390px, large text, short height and a real phone keyboard.
 - [ ] Safe-area padding handles physical left/right/bottom insets; print releases body clipping and removes navigation/actions.
 
+- [ ] Multi-selection keeps stable IDs and names across filters, reconciles Undo/removal, names Select all scope, and never truncates a basket silently.
+- [ ] Bulk review includes exactly the selected eligible rows and their previous/new values; pending saves retain or lock newer edits; a dirty close/navigation decision is visible and focused.
+- [ ] Field restore previews exactly its selected scope, distinguishes omitted/empty/zero, preserves unrelated history and authorization, and uses revision-aware Undo instead of replacing a stale full object.
+
 ## Visual composition and motion
 
 - [ ] The primary finding has clear hierarchy; supporting evidence does not compete with it.
