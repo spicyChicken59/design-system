@@ -41,6 +41,9 @@ guide, it's a new component — fold it into the system or take it out.
 - [ ] Multi-selection keeps stable IDs and names across filters, reconciles Undo/removal, names Select all scope, and never truncates a basket silently.
 - [ ] Bulk review includes exactly the selected eligible rows and their previous/new values; pending saves retain or lock newer edits; a dirty close/navigation decision is visible and focused.
 - [ ] Field restore previews exactly its selected scope, distinguishes omitted/empty/zero, preserves unrelated history and authorization, and uses revision-aware Undo instead of replacing a stale full object.
+- [ ] Dated batch review names actual kept records, preserves stable omissions through refresh, counts capacity and states the currently removable/protected Undo scope before acting.
+- [ ] Prepared task preview and Start resolve the same content/source witness; pinned continuation uses the saved identity and targets, counts only remaining work, and separates per-visit choices.
+- [ ] Task reviews invalidate stale account/date/source responses, show loading/error/ready state, return focus on Cancel and hand focus to the active task on Start; imperative dialogs supply their own opener reference.
 
 ## Visual composition and motion
 

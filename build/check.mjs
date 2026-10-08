@@ -386,6 +386,9 @@ catch (e) { fail('media/dock: ' + (e.stderr?.toString().trim() || e.message)); }
 try { execFileSync(process.execPath, [join(HERE, 'selection-review-check.mjs')], { stdio: 'pipe' }); ok('selection/basket and selected-field restore scope contracts, negative controls and authored states pass'); }
 catch (e) { fail('selection/restore compositions: ' + (e.stderr?.toString().trim() || e.message)); }
 
+try { execFileSync(process.execPath, [join(HERE, 'reviewed-work-check.mjs')], { stdio: 'pipe' }); ok('dated-batch and pinned-task authored states and negative controls pass'); }
+catch (e) { fail('reviewed work compositions: ' + (e.stderr?.toString().trim() || e.message)); }
+
 if (warnings.length) {
   for (const w of warnings) console.log('  --  ' + w);
 }
