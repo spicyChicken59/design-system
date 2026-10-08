@@ -1,6 +1,6 @@
 ---
 name: spicychicken-design-system
-description: "The SpicyChicken visual standard (sc.css v2.14.0) — cobalt structure, one spice accent, dark by default. Use this skill for ANY visual or written artifact the user asks for — HTML pages, dashboards, reports, one-pagers, READMEs, decks, docs, email, charts, React components, prototypes, mockups, landing pages, or anything with a UI. Trigger it even when the user says nothing about design, branding, or styling; this is their house style and it applies by default to everything they ship. Also trigger on mentions of SpicyChicken, sc.css, sc- classes, the chick mark, or 'my design system'."
+description: "The SpicyChicken visual standard (sc.css v2.15.0) — cobalt structure, one spice accent, dark by default. Use this skill for ANY visual or written artifact the user asks for — HTML pages, dashboards, reports, one-pagers, READMEs, decks, docs, email, charts, React components, prototypes, mockups, landing pages, or anything with a UI. Trigger it even when the user says nothing about design, branding, or styling; this is their house style and it applies by default to everything they ship. Also trigger on mentions of SpicyChicken, sc.css, sc- classes, the chick mark, or 'my design system'."
 license: "MIT for the code; the SpicyChicken mark and assets/ are all rights reserved."
 ---
 
@@ -166,6 +166,8 @@ Read `references/STUDIO-PATTERNS.md`. Use `.sc-activity` with a native date grid
 
 Use `.sc-session` and `.sc-task-list` for a timer/status header and checklist rows with native inputs or accessible checkbox primitives. Checked rows recognise native checked state and aria-checked=true; the application owns primitive behaviour and labelling. `.sc-task__target` wraps long targets, and `.sc-task__save` repeats the actual save state in words. `.sc-actionbar--sticky` is bounded by its section and becomes static in print. `.sc-workspace-nav` keeps named navigation and 44px controls readable on phones. Add `.sc-workspace-nav--compact` for short labels with optional decorative `.sc-workspace-nav__icon` elements; controls stack and wrap rather than creating a clipped rail. These patterns do not implement timers, saves or product decisions.
 
+Use `.sc-media-stage` with `.sc-media-stage__frame` for intrinsic instructional media. Supply real width/height metadata; matching frames retain one geometry, and the application owns their aria-hidden/playback state. Use `.sc-dock-layout` with `.sc-dock-layout__head`, `.sc-dock-layout__body` and `.sc-bottom-dock` for an opt-in phone header/body/dock row layout. Reuse existing named navigation and action-bar primitives; no viewport-fixed overlay or copied bottom offset. See `references/STUDIO-PATTERNS.md`.
+
 ## Token vocabulary
 
 Reference **semantic** tokens only. Primitives (`--sc-cobalt-*`, `--sc-gray-*`, `--sc-night-*`,
@@ -248,7 +250,7 @@ Read these when the summary above isn't enough:
 - `references/MOTION.md` — motion recipes, loading rules, reduced-motion behavior.
 - `assets/sc-reading.js` — optional chapter location highlighting; native links remain usable without it.
 - `assets/sc-motion.js` — optional motion runtime; use with the matching stylesheet.
-- `assets/sc.css` — the sheet itself (v2.14.0). Read it to confirm a class or token exists before
+- `assets/sc.css` — the sheet itself (v2.15.0). Read it to confirm a class or token exists before
   using it. Never invent an `sc-*` name.
 - `assets/sc-charts.js` — the chart primitives, if the page draws charts.
 - `assets/sc-map.js` — the map layer, if the page draws a map. `SC.geo.albersUsa48`,

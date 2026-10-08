@@ -1,4 +1,4 @@
-/* SpicyChicken Design System — sc-reading.js v2.14.0 — optional chapter navigation. Native anchors remain native. */
+/* SpicyChicken Design System — sc-reading.js v2.15.0 — optional chapter navigation. Native anchors remain native. */
 (function (w, d) {
   'use strict';
   if (!w || !d || typeof d.querySelectorAll !== 'function') return;

@@ -34,6 +34,10 @@ guide, it's a new component — fold it into the system or take it out.
 - [ ] Sticky action areas are bounded by their section, fit at 320px, retain safe-area space, and become static in print.
 - [ ] Workspace navigation uses named native links/actions and `aria-current`; it is not an ARIA tab list. Compact navigation retains visible short names and hides only decorative icons from assistive tech.
 
+- [ ] Instructional media declares genuine dimensions, has no unrelated fixed ratio, preserves all source bounds, and exposes exactly the selected frame.
+- [ ] Mobile docks reserve a real row; the last body control and each focused dock control remain visible at 320/390px, large text, short height and a real phone keyboard.
+- [ ] Safe-area padding handles physical left/right/bottom insets; print releases body clipping and removes navigation/actions.
+
 ## Visual composition and motion
 
 - [ ] The primary finding has clear hierarchy; supporting evidence does not compete with it.

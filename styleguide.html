@@ -207,7 +207,7 @@
 <header class="sc-masthead">
   <a class="sc-brand" href="#top">
     <img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt="">
-    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.14.0</span></span>
+    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.15.0</span></span>
   </a>
   <div class="sc-masthead__right">
     <span class="sc-hide-sm">Living reference</span>
@@ -223,7 +223,7 @@
 <section class="sg-cover sc-on-ink" id="top">
   <div class="sg-cover__inner sg-cover__inner--brand">
     <div class="sc-cover sc-on-ink sg-brand-cover">
-      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.14.0</span><span>212 named tokens</span><span>116 component blocks</span></div></div>
+      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.15.0</span><span>212 named tokens</span><span>119 component blocks</span></div></div>
       <div class="sc-cover__art" aria-hidden="true"><img src="assets/sc-mark-color-dark.svg" alt="" width="342" height="405"><span class="sc-cover__caption">one mark. every creation.</span></div>
     </div>
     <div class="sg-palette-footer"><div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and spice accent"></div><span class="sc-hint">The familiar palette. A richer set of compositions.</span></div>
@@ -254,7 +254,7 @@
   <main class="sg-main" id="main-content">
 
     <section class="sg-section" id="brand-compositions">
-      <div class="sc-eyebrow">the visual language · new in v2.14.0</div>
+      <div class="sc-eyebrow">the visual language · new in v2.15.0</div>
       <h2>A brand that lives inside the page.</h2>
       <p class="sc-dek">Use a strong opener, quieter evidence, and a signature at the close. Every composition below is available in HTML and the visual React wrappers.</p>
       <div class="sc-cover sc-cover--paper sc-cover--compact">
@@ -1133,7 +1133,9 @@
 <li class="sc-task" data-save-state="error"><label class="sc-task__label"><input type="checkbox" aria-describedby="guide-studio-failed"><span class="sc-task__body"><strong>Record the evidence reference</strong><span class="sc-task__target">The application decides when a save succeeded; the component shows that result.</span></span></label><span class="sc-task__save" id="guide-studio-failed">Example save state: could not save. Previous records remain available.</span></li>
 </ol><div class="sc-session__actions sc-actionbar sc-actionbar--sticky"><span class="sc-chip sc-chip--neutral">specimen only</span><p>The sticky action stays in normal flow and is bounded by this session. It becomes static in print.</p><button class="sc-btn sc-btn--primary" type="button" disabled>Finish example session</button></div></section><section class="sc-card" id="guide-studio-contract"><h3>The application owns the record</h3><p>These shared patterns supply readable states, focus behaviour and responsive layout. Timers, saves, dates, counts and any interpretation come from the application.</p><p>Use native links for locations, native buttons for actions, and named segmented controls for subject choices. Navigation does not become a tab list.</p><h3>Compact destination navigation</h3><p class="sc-hint">Short labels remain visible below optional decorative icons. Controls wrap into another row when the available width cannot fit all six.</p><nav class="sc-workspace-nav sc-workspace-nav--compact" aria-label="Design specimen destinations"><a href="./brand-studio.html"><span class="sc-workspace-nav__icon" aria-hidden="true">↗</span><span>Brand</span></a><a href="./composition-studio.html"><span class="sc-workspace-nav__icon" aria-hidden="true">↗</span><span>Compose</span></a><a href="./visual-library.html"><span class="sc-workspace-nav__icon" aria-hidden="true">↗</span><span>Library</span></a><a href="./styleguide.html"><span class="sc-workspace-nav__icon" aria-hidden="true">↗</span><span>Guide</span></a><a href="./templates/report.html"><span class="sc-workspace-nav__icon" aria-hidden="true">↗</span><span>Report</span></a><a href="./templates/studio.html"><span class="sc-workspace-nav__icon" aria-hidden="true">↗</span><span>Studio</span></a></nav></section></div><p class="sc-hint">Names: <code>.sc-activity</code>, <code>.sc-activity__grid</code>, <code>.sc-activity__day</code>, <code>.sc-activity__selection</code>, <code>.sc-activity__legend</code>; <code>.sc-session</code>, <code>.sc-session__head</code>, <code>.sc-session__timer</code>, <code>.sc-session__status</code>, <code>.sc-session__actions</code>; <code>.sc-task-list</code>, <code>.sc-task</code>, <code>.sc-task__label</code>, <code>.sc-task__body</code>, <code>.sc-task__target</code>, <code>.sc-task__detail</code>, <code>.sc-task__save</code>; <code>.sc-workspace-nav</code>, <code>.sc-workspace-nav--compact</code>, <code>.sc-workspace-nav__icon</code> and <code>.sc-actionbar--sticky</code>.</p><p><a href="templates/studio.html">Open the complete studio specimen</a> · <a href="STUDIO-PATTERNS.md">Read the interaction contract</a></p></section>
 
-    <section class="sg-section" id="dont">
+    <section class="sg-section" id="media-dock-patterns"><div class="sc-eyebrow">source geometry and reachable actions</div><h2>Keep the full source and reserve the action row.</h2><p class="sc-dek">Intrinsic media preserves the asset shape. A phone dock gets its own row, so content and focus do not live beneath it.</p><section class="sc-card" data-sc-media-specimen aria-labelledby="guide-media-title"><h3 id="guide-media-title">Media keeps its own shape</h3><p class="sc-hint">Illustrative source geometry, not a photograph. Source dimensions are real and reserve the stage before loading.</p><figure><div class="sc-media-stage" data-sc-media-stage><img class="sc-media-stage__frame" src="assets/sc-media-specimen-wide-start.svg" width="800" height="500" alt="Illustrative first frame: the full landscape boundary and ascending diagonal" data-sc-specimen-frame="0"><img class="sc-media-stage__frame" src="assets/sc-media-specimen-wide-finish.svg" width="800" height="500" alt="Illustrative second frame: the same boundary and descending diagonal" aria-hidden="true" data-sc-specimen-frame="1"></div><figcaption class="sc-note">Two matching 800 × 500 frames. Both retain the full source bounds.</figcaption></figure><div class="sc-field sc-field--group"><span class="sc-field__label" id="guide-media-positions">Position</span><div class="sc-tabs" role="group" aria-labelledby="guide-media-positions"><button type="button" class="sc-tab" aria-pressed="true" data-sc-specimen-select="0">First frame</button><button type="button" class="sc-tab" aria-pressed="false" data-sc-specimen-select="1">Second frame</button></div></div><details class="sc-disclosure"><summary>View a portrait source</summary><div class="sc-disclosure__body"><div class="sc-media-stage"><img class="sc-media-stage__frame" src="assets/sc-media-specimen-portrait.svg" width="500" height="800" alt="Illustrative portrait boundary, with all four corners visible"></div></div></details><p class="sc-hint">The specimen buttons change presentation only. Playback, licensing and interpretation belong to the application.</p></section><p class="sc-hint">Names: <code>.sc-media-stage</code>, <code>.sc-media-stage__frame</code>, <code>.sc-dock-layout</code>, <code>.sc-dock-layout__head</code>, <code>.sc-dock-layout__body</code> and <code>.sc-bottom-dock</code>. The dock reuses <code>.sc-workspace-nav--compact</code> and <code>.sc-actionbar</code>.</p><p><a href="templates/media-dock.html">Open the complete phone dock specimen</a> · <a href="STUDIO-PATTERNS.md">Read the layout contract</a></p></section>
+
+<section class="sg-section" id="dont">
       <div class="sc-eyebrow">10 · Ship</div>
       <h2>Do / don't</h2>
       <div class="sg-dont">
@@ -1146,7 +1148,7 @@
 </div>
 
 <footer class="sc-foot">
-  <span>SpicyChicken Design System · v2.14.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
+  <span>SpicyChicken Design System · v2.15.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
   <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a>
 </footer>
 
@@ -1516,5 +1518,6 @@
 </script>
 <script src="sc-activity.js" defer></script>
 <script src="sc-reading.js" defer></script>
+<script src="build/media-dock-specimen.js" defer></script>
 </body>
 </html>

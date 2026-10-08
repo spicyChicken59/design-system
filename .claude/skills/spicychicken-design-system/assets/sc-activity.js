@@ -1,4 +1,4 @@
-/* SpicyChicken Design System — sc-activity.js v2.14.0 · source: build/activity.js */
+/* SpicyChicken Design System — sc-activity.js v2.15.0 · source: build/activity.js */
 /* Dated activity inspection. Native buttons and a table remain usable without
    this optional enhancement. Values, labels and tone bins belong to the caller.
    SC.activity.init(root) returns controllers with refresh() and dispose(). */

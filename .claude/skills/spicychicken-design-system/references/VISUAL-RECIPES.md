@@ -683,3 +683,7 @@ Keep the date/value table, written missing/zero meanings, checkbox save feedback
 and one available action when adapting the recipe. The sticky action is bounded
 by its own session. It is a composition of shared primitives rather than a
 viewport-fixed control tray.
+
+## Intrinsic media and reserved mobile docks
+
+The media/dock recipe and `templates/media-dock.html` show full source bounds with real dimensions and a phone layout whose action/navigation occupies a separate row. `sc-media-stage` does not prescribe a ratio, crop a subject or supply playback. `sc-dock-layout` keeps the scrolling body above `sc-bottom-dock`; keyboard, safe area, short screens and print remain part of verification. Reuse the existing action bar and compact workspace navigation. See `STUDIO-PATTERNS.md`.
