@@ -233,3 +233,78 @@ Undo; and keyboard focus on the review/close decision at 320px and 390px in both
 themes. `node build/selection-review-check.mjs` checks illustrative selection and
 field-scope contracts with negative controls. It does not claim live persistence
 or rendered browser verification. No new CSS vocabulary or release is introduced.
+
+## Review a dated batch from a saved starting point
+
+Use `templates/studio.html#studio-batch` for an illustrative review schedule.
+This extends the selection composition with dates and existing reservations;
+it does not supply a scheduler. Prefill from the saved intent, state the source
+version/date range, and distinguish each row as **Will add**, **Keep existing**,
+**Blocked** or **Left out**. Existing rows name the actual retained record,
+including its date/setup when relevant, rather than the proposed candidate.
+
+Selection is deliberate. Refreshing a source or extending a date horizon keeps
+omissions by stable date/kind key where they still apply. A proposed date is not
+a completed task. Do not backfill past dates, compress missed work into the next
+day, copy observed history, or claim that time hints send reminders. Counts name
+their basis; capacity overflow requires a choice rather than truncation.
+
+The reviewed source witness must include the account, relevant revision and
+current local date. A changed reservation, newly started task or restored record
+requires a fresh review. Keep valid choices; show what changed. The authoritative
+apply path verifies the witness again and appends only the reviewed eligible
+IDs. A retry cannot create another copy of the same reservation silently.
+
+Undo has its own current scope: say how many original additions remain untouched
+and how many are protected before the action. Never remove an edited, started
+or linked task merely because it once belonged to that batch. Consumer-owned
+revision checks prevent a concurrent start/restore from changing the meaning
+between review and removal. Do not replace a stale full object as an Undo.
+
+Compose `.sc-task` rows, `.sc-facts`, disclosures and one `.sc-actionbar`.
+Dates and reasons wrap vertically at 320px and 390px. Review focuses a named
+heading/region; Cancel returns to its opener. A failed apply retains the draft.
+The specimen's controls are disabled: all records are illustrative and nothing
+is scheduled, applied or undone by the page.
+
+## Prepare the exact task, including pinned continuation
+
+Use `templates/studio.html#studio-prepared` for an illustrative document-review
+continuation. Show source identity/version, exact target rows, already confirmed
+work and remaining work before one deliberate Start/Continue action. Opening
+the review does not start a timer, confirm a task or write a record.
+
+First-run choices may alter the executable preview; refetch/recompute the
+authoritative task when they change and disable Start while loading. A pinned
+continuation instead prints the saved name/version/mode/targets as read-only
+values. A renamed, edited or removed current template must not make the saved
+task's heading describe another version or incorrectly say it is unavailable.
+Already confirmed work stays confirmed and is not counted again.
+
+Keep permitted per-visit choices visibly separate from pinned targets. For
+example, an available-time hint may change without changing the source task;
+say that it does not shorten, stop or complete the task. Preserve original work
+identities and ordering. Required resources apply to remaining work; unresolved
+resources or permissions have a written reason and an owned repair route.
+
+The preview and eventual Start share the same authoritative resolution. Bind
+their exact content and source witness, not a client reconstruction that can
+drift. Refresh when local date, relevant history, account or template state
+changes, including on return to a visible page. Cancel outstanding responses
+when the selected task changes. Lock choices during Start or retain newer edits
+explicitly. Source payloads, permissions and persistence remain consumer-owned.
+
+Use a named loading/ready/error state. Future reservations can show an explicitly
+provisional preview, but cannot start without the relevant date/ownership rules.
+An already active task offers Return to task, rather than another timer. Cancel
+restores the invoking control; successful Start focuses the active task. An
+imperative dialog has no automatic trigger reference: the consumer must provide
+that focus handoff. Relevant saved guidance remains available while respecting
+the application's privacy/presentation preferences.
+
+Compose `.sc-session`, `.sc-facts`, task target rows and one bounded actionbar.
+Avoid nested scrolling lists that hide the final control. Test dark/light,
+320/390px, short height, large text, pending/failure and continuation. The
+specimen adds no playback, timer, scheduling or save runtime. Run
+`node build/reviewed-work-check.mjs` for authored-state/negative-control checks;
+actual browser/persistence/ownership verification remains separate.

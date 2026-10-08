@@ -123,6 +123,14 @@ Undo. Illustrative controls are disabled and claim no save. This changes no
 CSS, token, consumer runtime or release version; the current release remains
 2.15.0. Source/generated references and negative-control checks stay together.
 
+Documentation follow-up (2026-10-08): verified consumer workflows now inform a
+dated-batch review and prepared-task continuation recipe. Kept rows describe
+actual records, omission/Undo counts retain their scope, and a continuation uses
+its saved identity and targets while permitted per-visit choices remain separate.
+Non-health, inactive editorial specimens demonstrate the existing primitives.
+No CSS, token, consumer runtime or release-version change is introduced; source
+and generated documentation and contract checks remain synchronized.
+
 One version stream from 2.1.0: the tag, the `sc.css` header, both `package.json` files, the style
 guide's version strings and this list say the same number. Repo-only changes bump the patch.
 

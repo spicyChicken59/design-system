@@ -25,9 +25,9 @@ composition; [motion](MOTION.md) explains safe, purposeful animation.
 | `sc.css` | The system — tokens, base styles, components. One file; consumers need no build step. Header carries the version (`v2.15.0`). |
 | `sc-map.js` | The map layer: an Albers projection for the lower 48, a quantized-topojson reader, a geodesic ring, box fitting, and a pan/zoom view engine. The geo half is pure — it runs in Node. |
 | `sc-activity.js` | Optional dated-activity keyboard inspection; native buttons/table remain readable without it. |
-| `STUDIO-PATTERNS.md` | Dated activity, task/checklist sessions, selection/bulk review, selected-field restore and responsive workspace action/navigation contracts. |
+| `STUDIO-PATTERNS.md` | Dated activity, task/checklist sessions, selection/bulk review, field restore, reviewed dated batches, pinned task continuation and responsive workspace action/navigation contracts. |
 | `templates/media-dock.html` | Complete intrinsic-media and reserved mobile dock specimen, with illustrative source geometry. |
-| `templates/studio.html` | Complete accessible specimen with illustrative activity, long targets, truthful save states, a selection basket and selected-field differences. |
+| `templates/studio.html` | Complete accessible specimen with illustrative activity, truthful save states, selection/field differences, a dated batch and prepared pinned continuation. |
 | `sc-charts.js` | Chart and native-table presentation bundle: unchanged chart primitives plus criterion navigation for eligible signal matrices. Composed from `build/charts.js`, `sc-matrix-nav.js`, and `build/matrix-auto.js`; see [automatic matrix behavior and opt-out](VISUAL-RECIPES.md#when-the-page-already-uses-charts). |
 | `sc-theme.js` | The theme script: saved choice before paint, toggle wiring, print swap. Link it or inline it. Source: `build/theme.js`. |
 | `starter.html` | Page skeleton: head snippet, masthead with theme toggle, title block, footer with watermark. |

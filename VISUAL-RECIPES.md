@@ -697,3 +697,14 @@ runtime is needed. A filter does not clear selection, a limit does not silently
 truncate it, and a partial restore does not replace omitted fields with defaults.
 See [the contracts](STUDIO-PATTERNS.md#select-collect-review-apply) and the named
 sections in [the studio specimen](templates/studio.html#studio-selection).
+
+### Dated batches and prepared task continuation
+
+For a batch built from saved intent, show named added/kept/blocked/omitted rows,
+the source/date witness and the current untouched/protected Undo counts. For a
+prepared task, put its actual source identity and executable targets before the
+action; a pinned continuation keeps the saved version and confirmed work while
+separating any permitted per-visit choice. Reuse the existing session, facts,
+task, disclosure and actionbar primitives. See the [batch contract](STUDIO-PATTERNS.md#review-a-dated-batch-from-a-saved-starting-point),
+[prepared-task contract](STUDIO-PATTERNS.md#prepare-the-exact-task-including-pinned-continuation)
+and illustrative [studio states](templates/studio.html#studio-batch).

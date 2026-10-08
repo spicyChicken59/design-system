@@ -95,6 +95,14 @@ current revision. `assets/templates/studio.html` shows illustrative states;
 drafts, persistence and authorization remain consumer-owned. No new CSS or
 selection runtime is required.
 
+The same studio reference documents reviewed dated batches and prepared task
+continuations. State actual kept records, preserve omissions across refresh,
+name the removable/protected Undo scope, and keep a continuation's saved identity,
+targets and confirmed work pinned. Preview and Start share an authoritative
+source witness; per-visit choices stay separate. See the illustrative batch and
+prepared sections in `assets/templates/studio.html`. Existing primitives suffice;
+source resolution, timers, scheduling, saves and focus handoff belong to the app.
+
 Use `.sc-signal-matrix` when readers must scan candidates against shared criteria. Every
 `.sc-signal` needs a written `.sc-signal__label`; its glyph is decorative and color only
 reinforces meaning the product already knows. Keep the native table and a labeled,

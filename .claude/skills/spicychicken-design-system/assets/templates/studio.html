@@ -349,6 +349,162 @@
 <button type="button" class="sc-btn sc-btn--primary" disabled>Apply selected field</button>
 </div>
 </section>
+<section class="sc-card sc-session" id="studio-batch" aria-labelledby="studio-batch-title">
+<h2 id="studio-batch-title">Review a dated batch before adding it</h2>
+<p class="sc-hint">Illustrative editorial reservations, October 12–15, 2026. Disabled choices show a reviewed state; nothing is scheduled or saved by this page.</p>
+<dl class="sc-facts">
+<div>
+<dt>saved starting point</dt>
+<dd>Editorial rhythm · revision 12</dd>
+</div>
+<div>
+<dt>reviewed on</dt>
+<dd>2026-10-08</dd>
+</div>
+<div>
+<dt>capacity available</dt>
+<dd>5 reservations</dd>
+</div>
+</dl>
+<ol class="sc-task-list">
+<li class="sc-task" data-sc-batch-row="notes" data-sc-batch-state="ready">
+<label class="sc-task__label">
+<input type="checkbox" data-sc-batch-choice="notes" checked disabled>
+<span class="sc-task__body">
+<strong>Review release notes</strong>
+<span class="sc-task__target">2026-10-12 · 09:00</span>
+<span class="sc-task__save">Will add</span>
+</span>
+</label>
+</li>
+<li class="sc-task" data-sc-batch-row="sources" data-sc-batch-state="existing">
+<label class="sc-task__label">
+<input type="checkbox" data-sc-batch-choice="sources" disabled>
+<span class="sc-task__body">
+<strong>Verify the source index</strong>
+<span class="sc-task__target">2026-10-13 · 10:00</span>
+<span class="sc-task__save">Keep this actual reservation</span>
+</span>
+</label>
+</li>
+<li class="sc-task" data-sc-batch-row="screens" data-sc-batch-state="blocked">
+<label class="sc-task__label">
+<input type="checkbox" data-sc-batch-choice="screens" disabled>
+<span class="sc-task__body">
+<strong>Inspect the screenshots</strong>
+<span class="sc-task__target">2026-10-14 · 10:00</span>
+<span class="sc-task__save">Time already reserved for an editorial meeting</span>
+</span>
+</label>
+</li>
+<li class="sc-task" data-sc-batch-row="captions" data-sc-batch-state="omitted">
+<label class="sc-task__label">
+<input type="checkbox" data-sc-batch-choice="captions" disabled>
+<span class="sc-task__body">
+<strong>Check the image captions</strong>
+<span class="sc-task__target">2026-10-15 · Flexible time</span>
+<span class="sc-task__save">Left out by the reviewer</span>
+</span>
+</label>
+</li>
+</ol>
+<details class="sc-disclosure">
+<summary>What a refresh and Undo must preserve</summary>
+<div class="sc-disclosure__body">
+<p>The existing source-index reservation keeps its actual name and time. The caption review remains left out when the source is refreshed. Blocked work is not silently moved to another day.</p>
+<p data-sc-batch-undo-count="2">A prior illustrative batch has 2 untouched reservations and 1 changed reservation. Only the untouched reservations would be removed.</p>
+<button type="button" class="sc-btn sc-btn--secondary" disabled>Undo 2 untouched · keep 1 changed</button>
+<p class="sc-hint">The app checks current revisions and linked work before Apply or Undo. A preview is not a completed task, and a time hint is not a reminder.</p>
+</div>
+</details>
+<div class="sc-actionbar">
+<span class="sc-chip sc-chip--neutral">not applied</span>
+<p data-sc-batch-add-count="1">1 new reservation reviewed. Existing, blocked and omitted rows are not additions.</p>
+<button class="sc-btn sc-btn--primary" type="button" disabled>Add 1 illustrative reservation</button>
+</div>
+</section>
+<section class="sc-card sc-session" id="studio-prepared" aria-labelledby="studio-prepared-title">
+<header class="sc-session__head">
+<div>
+<p class="sc-eyebrow">illustrative pinned continuation</p>
+<h2 id="studio-prepared-title">Review the release bundle</h2>
+<p class="sc-hint">Continue the saved document-review task. This page has no timer, save request or active task.</p>
+</div>
+<span class="sc-chip sc-chip--neutral">preview only</span>
+</header>
+<dl class="sc-facts">
+<div>
+<dt>saved source</dt>
+<dd>Bundle version 3</dd>
+</div>
+<div>
+<dt>saved workflow</dt>
+<dd>Standard</dd>
+</div>
+<div>
+<dt>work remaining</dt>
+<dd data-sc-prepared-remaining="4">4 review passes</dd>
+</div>
+</dl>
+<p class="sc-note">The current template is now version 4. This continuation keeps the saved version 3 name, targets and confirmed work; it is not replaced by the newer template.</p>
+<div class="sc-task" role="group" aria-labelledby="studio-visit-title">
+<h3 id="studio-visit-title">This visit's separate choice · illustrative only</h3>
+<label class="sc-field">
+<span>Available time</span>
+<select class="sc-select" disabled aria-describedby="studio-visit-help">
+<option value="20" selected>20 minutes</option>
+<option value="35">35 minutes</option>
+<option value="">Open time</option>
+</select>
+</label>
+<p class="sc-hint" id="studio-visit-help">A per-visit hint does not shorten, stop or complete the pinned task. Disabled fixture controls cannot change the saved source.</p>
+</div>
+<ol class="sc-task-list">
+<li class="sc-task" data-sc-prepared-task="summary">
+<label class="sc-task__label">
+<input type="checkbox" checked disabled>
+<span class="sc-task__body">
+<strong>Read the change summary</strong>
+<span class="sc-task__target">Saved earlier; not repeated</span>
+</span>
+</label>
+<span class="sc-task__save">Previously confirmed</span>
+</li>
+<li class="sc-task" data-sc-prepared-task="links">
+<label class="sc-task__label">
+<input type="checkbox" disabled>
+<span class="sc-task__body">
+<strong>Verify the referenced source links</strong>
+<span class="sc-task__target">2 of 3 passes remaining · 1 already confirmed</span>
+</span>
+</label>
+<span class="sc-task__save">Not complete; Start has not occurred</span>
+</li>
+<li class="sc-task" data-sc-prepared-task="keyboard">
+<label class="sc-task__label">
+<input type="checkbox" disabled>
+<span class="sc-task__body">
+<strong>Inspect the complete keyboard path and long-label wrapping</strong>
+<span class="sc-task__target">2 of 2 passes remaining · 0 already confirmed</span>
+</span>
+</label>
+<span class="sc-task__save">Not complete; Start has not occurred</span>
+</li>
+</ol>
+<details class="sc-disclosure">
+<summary>Source and interaction contract</summary>
+<div class="sc-disclosure__body">
+<p>The eventual Start must use the same task identity, version, order, targets and confirmed counts as this preview. The application checks the current account, date and source witness again.</p>
+<p>A changed source shows Review again, preserving valid choices. Loading or errors prevent Start. Cancel returns focus to its invoking control; a successful Start focuses the active task.</p>
+<p>Illustrative source: editorial bundle version 3, review revision 8. No private source, provider authorization or health data appears here.</p>
+</div>
+</details>
+<div class="sc-actionbar">
+<span class="sc-chip sc-chip--neutral">not started</span>
+<p>Only 4 remaining passes would continue. Earlier confirmation and elapsed time do not manufacture new work.</p>
+<button class="sc-btn sc-btn--primary" type="button" disabled>Continue illustrative review</button>
+</div>
+</section>
 <section class="sc-card" id="studio-contract">
 <h2>The application owns the record</h2>
 <p>These shared patterns supply readable states, focus behaviour and responsive layout. Timers, saves, dates, counts and any interpretation come from the application.</p>
