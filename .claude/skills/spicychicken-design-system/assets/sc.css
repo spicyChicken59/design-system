@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SpicyChicken Design System — sc.css  v2.14.0
+   SpicyChicken Design System — sc.css  v2.15.0
    SpicyChicken · github.com/spicyChicken59
 
    One file, no build step. Drop it in (or link it) and every page shares the
@@ -1743,7 +1743,7 @@ html[data-sc-motion-paused="true"] .sc-disclosure[open] > .sc-disclosure__body {
 /* Compact navigation keeps short labels beside their meaning. The icon is
    optional and decorative; the visible label remains the accessible name. */
 .sc-workspace-nav--compact { gap: var(--sc-s0); }
-.sc-workspace-nav--compact > :is(a,button) { flex: 1 1 60px; flex-direction: column; gap: var(--sc-s0); min-height: 44px; padding: var(--sc-s0); font-size: var(--sc-text-sm); line-height: 1.3; }
+.sc-workspace-nav--compact > :is(a,button) { flex: 1 1 var(--sc-workspace-nav-basis, 60px); flex-direction: column; gap: var(--sc-s0); min-height: 44px; padding: var(--sc-s0); font-size: var(--sc-text-sm); line-height: 1.3; }
 .sc-workspace-nav--compact > :is(a,button) > :is(svg,img), .sc-workspace-nav__icon { display: block; flex: none; width: 18px; height: 18px; object-fit: contain; font: 600 16px/18px var(--sc-font-body); }
 @media (max-width: 720px) {
   .sc-session__head > div:not(.sc-session__timer) { flex-basis: 100%; }
@@ -1760,6 +1760,89 @@ html[data-sc-motion-paused="true"] .sc-disclosure[open] > .sc-disclosure__body {
   .sc-activity__day::before { background: CanvasText; }
   .sc-activity__day[data-level="missing"]::before { background: Canvas; border-color: CanvasText; }
   .sc-activity__day[aria-pressed="true"] { outline: 2px solid Highlight; }
+}
+
+/* Intrinsic media stage. Authored width/height attributes reserve the real
+   ratio. Frame pairs must use one matching ratio; inactive frames retain
+   geometry, while visibility and aria-hidden keep them out of inspection. */
+.sc-media-stage {
+  display: grid;
+  min-inline-size: 0;
+  inline-size: 100%;
+  overflow: hidden;
+  border: 1px solid var(--sc-border);
+  border-radius: var(--sc-r-md);
+  background: var(--sc-surface);
+}
+.sc-media-stage__frame {
+  grid-area: 1 / 1;
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  max-inline-size: 100%;
+  object-fit: contain;
+}
+.sc-media-stage__frame[aria-hidden="true"] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Opt-in mobile dock layout. Header, scrolling body and dock are real rows.
+   The existing workspace nav/action bar supply their normal semantics. */
+.sc-dock-layout,
+.sc-dock-layout__head,
+.sc-dock-layout__body { min-inline-size: 0; }
+.sc-bottom-dock {
+  min-inline-size: 0;
+  display: grid;
+  gap: var(--sc-s1);
+  padding: var(--sc-s2) var(--sc-s3);
+  border-block-start: 1px solid var(--sc-border);
+  background: var(--sc-surface);
+  color: var(--sc-text);
+}
+.sc-bottom-dock > .sc-workspace-nav { margin: 0; padding-block: 0; }
+.sc-bottom-dock > .sc-actionbar { margin: 0; box-shadow: none; }
+.sc-bottom-dock > .sc-actionbar--sticky { position: static; inset: auto; }
+.sc-bottom-dock .sc-btn { min-block-size: 44px; justify-content: center; }
+@media (max-width: 720px) {
+  .sc-dock-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    block-size: var(--sc-dock-block-size, 100vh);
+    min-block-size: 0;
+    overflow: hidden;
+  }
+  .sc-dock-layout__head { grid-row: 1; }
+  .sc-dock-layout__body {
+    grid-row: 2;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    min-block-size: 0;
+    overflow: auto;
+    scroll-padding-block: var(--sc-s2);
+  }
+  .sc-dock-layout__body .sc-field--group,
+  .sc-dock-layout__body .sc-tabs { min-inline-size: 0; max-inline-size: 100%; }
+  .sc-dock-layout__body .sc-tab { max-inline-size: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .sc-bottom-dock {
+    grid-row: 3;
+    max-block-size: min(45vh, 20rem);
+    overflow: auto;
+    padding-left: max(var(--sc-s3), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--sc-s3), env(safe-area-inset-right, 0px));
+    padding-block-end: max(var(--sc-s2), env(safe-area-inset-bottom, 0px));
+  }
+  @supports (block-size: 100dvh) {
+    .sc-dock-layout { block-size: var(--sc-dock-block-size, 100dvh); }
+    .sc-bottom-dock { max-block-size: min(45dvh, 20rem); }
+  }
+}
+@media print {
+  .sc-dock-layout { display: block; block-size: auto; overflow: visible; }
+  .sc-dock-layout__body { overflow: visible; }
+  .sc-bottom-dock { display: none; }
 }
 
 /* --------------------------------------------------------------------------

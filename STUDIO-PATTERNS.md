@@ -112,3 +112,60 @@ pending/error labels, long names, and sticky bounds at 320px, 390px and desktop.
 Review both themes, reduced motion, forced colours and print. Run
 `node build/activity-check.mjs` and the normal repository gate. The style guide,
 gallery and complete specimen must stay consistent with the shared stylesheet.
+
+## Intrinsic media (v2.15.0)
+
+Use `.sc-media-stage` with `.sc-media-stage__frame` on an image, video or
+SVG source. Supply genuine width/height metadata. The source determines the
+ratio: no universal square, fixed-height crop or unrelated 16:9 box is added.
+Matching-ratio frames share one grid area; inactive frames carry
+`aria-hidden="true"` and remain hidden while retaining layout geometry.
+The authored first frame is exposed without JavaScript. The consumer changes
+frame/pressed states together and owns playback, focus, errors and attribution.
+
+A stable shared stage requires matching frame ratios. Different ratios cannot
+all fill one rectangle without empty space, cropping or distortion; show them
+separately or prepare genuinely aligned sources. Publisher-video borders are
+not application-container borders. Do not crop instructional contact points.
+Use existing `sc-note`/`sc-empty` for attribution and fallback.
+
+The three `sc-media-specimen-*.svg` files are small illustrative geometry
+fixtures with real source bounds; they contain no exercise or health records.
+`build/media-dock-specimen.js` is a specimen-only selector, not a published
+consumer playback runtime. Production applications own their controls.
+
+## Reserved phone dock (v2.15.0)
+
+`.sc-dock-layout` contains an optional `.sc-dock-layout__head`, a
+`.sc-dock-layout__body`, and `.sc-bottom-dock`. At 720px and below these
+occupy real header/body/dock rows. The body scrolls above the dock rather than
+beneath a fixed overlay. Reuse the existing named `sc-workspace-nav--compact`
+and one `sc-actionbar`; do not stack independent fixed phone bars. A nested
+`sc-actionbar--sticky` is static within this reserved row.
+
+The complete header belongs inside the shell. Optional layout channel
+`--sc-dock-block-size` accepts the actual available block size when a host or
+application must account for a different viewport region. The fallback is vh;
+dynamic viewport units are used when supported. Browsers handle virtual
+keyboards differently, so test an actual device rather than promising that dvh
+alone solves keyboard resizing. Any visual-viewport enhancement and teardown
+remain consumer-owned.
+
+Physical left/right/bottom safe-area insets are reserved. Controls wrap, and a
+short-screen dock may scroll instead of erasing the body or clipping controls.
+Focus must scroll into view in both regions. Desktop remains ordinary flow;
+print removes the dock and releases body clipping. Open
+`templates/media-dock.html` for the complete specimen.
+
+## Media/dock verification
+
+`node build/media-dock-check.mjs` checks geometry invariants using synthetic
+observations, negative controls, genuine SVG metadata and specimen state. It is
+not rendered browser verification. The reviewer supplies actual observations to
+`build/media-dock-contract.mjs` and records phone/desktop, both themes, cold
+loading, paired-frame selection, last-control focus, safe areas, enlarged text,
+short viewports, keyboard resizing and print results separately. The contract
+must reject crop/distortion, duplicate active frames, overlapping rows, clipped
+or undersized targets and focused controls hidden by the dock.
+
+The compact navigation layout channel `--sc-workspace-nav-basis` optionally changes its 60px flex basis without replacing the component layout. The six-destination dock specimen uses an authored three-column fraction; a five-destination app can keep the unchanged default. In dock bodies, named control groups wrap within the column. Put intrinsic media inside `sc-disclosure__body` when a disclosure supplies surrounding margins.

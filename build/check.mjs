@@ -121,7 +121,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
     execFileSync(process.execPath, [join(HERE, 'assemble.mjs'), '--out', tmp], { stdio: 'pipe' });
     execFileSync(process.execPath, [join(HERE, 'templates.mjs'), '--out', tmp], { stdio: 'pipe' });
     execFileSync(process.execPath, [join(HERE, 'brand-assets.mjs'), '--out', tmp], { stdio: 'pipe' });
-    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-activity.js', 'visual-library.html', ...['landing','dashboard','screener','report','decision-brief','studio'].map(p => `templates/${p}.html`), ...['ink','wine','paper'].map(p => `assets/sc-pattern-${p}.svg`)]) {
+    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-activity.js', 'visual-library.html', ...['landing','dashboard','screener','report','decision-brief','studio','media-dock'].map(p => `templates/${p}.html`), ...['ink','wine','paper'].map(p => `assets/sc-pattern-${p}.svg`)]) {
       const fresh = norm(readFileSync(join(tmp, f), 'utf8'));
       if (!existsSync(join(ROOT, f))) fail(`${f}: missing — run npm run build`);
       else if (read(f) !== fresh) fail(`${f}: stale — differs from a fresh generation; run npm run build`);
@@ -340,6 +340,8 @@ if (!problems.length) ok(`version v${V} everywhere`);
                               ['assets/sc-activity.js', 'sc-activity.js'],
                               ['references/STUDIO-PATTERNS.md', 'STUDIO-PATTERNS.md'],
                               ['assets/templates/studio.html', 'templates/studio.html'],
+                              ['assets/templates/media-dock.html', 'templates/media-dock.html'],
+                              ['assets/build/media-dock-specimen.js', 'build/media-dock-specimen.js'],
                               ['assets/sc-matrix-nav.js', 'sc-matrix-nav.js']]) {
       const p = join(SKILL, rel);
       if (!existsSync(join(ROOT, p))) fail(`${p}: missing — run node build/assemble.mjs`);
@@ -377,6 +379,9 @@ catch (e) { fail('chapter navigation: ' + (e.stderr?.toString().trim() || e.mess
 
 try { execFileSync(process.execPath, [join(HERE, 'activity-check.mjs'), join(ROOT, 'sc-activity.js')], { stdio: 'pipe' }); ok('18 dated-activity and task-session scenarios pass'); }
 catch (e) { fail('studio interaction: ' + (e.stderr?.toString().trim() || e.message)); }
+
+try { execFileSync(process.execPath, [join(HERE, 'media-dock-check.mjs')], { stdio: 'pipe' }); ok('media/dock geometry contracts, negative controls, metadata and specimen state pass'); }
+catch (e) { fail('media/dock: ' + (e.stderr?.toString().trim() || e.message)); }
 
 if (warnings.length) {
   for (const w of warnings) console.log('  --  ' + w);

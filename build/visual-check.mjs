@@ -19,7 +19,7 @@ import { checkMatrixCriteria, checkMatrixLifecycle, checkMatrixWithoutJS } from 
 import { checkMatrixBundleSource, checkAutomaticMatrixBundle } from './matrix-bundle-check.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 checkMatrixBundleSource(root);
-const files = ['brand-studio.html', 'visual-library.html', 'composition-studio.html', ...['landing','dashboard','screener','report','deliverable','decision-brief','studio'].map(p => `templates/${p}.html`)];
+const files = ['brand-studio.html', 'visual-library.html', 'composition-studio.html', ...['landing','dashboard','screener','report','deliverable','decision-brief','studio','media-dock'].map(p => `templates/${p}.html`)];
 for (const name of files) {
   const path = join(root, name), html = readFileSync(path, 'utf8');
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1, `${name}: one page h1`);

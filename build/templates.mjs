@@ -4,6 +4,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { decisionBrief } from './decision-brief.mjs';
 import { studioExamples } from './studio-examples.mjs';
+import { dockExample } from './media-dock-examples.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const flag = process.argv.indexOf('--out');
 const out = flag < 0 ? root : process.argv[flag + 1];
@@ -46,7 +47,8 @@ const deliverable = shell('Deliverable', `<main id="main" class="sc-sheet-stack"
 </main>`);
 const decision = shell('Decision brief', `${head('SpicyChicken', 'the decision studio · design specimen')}<main class="sc-wrap sc-wrap--wide sc-page" id="main">${decisionBrief({ assets: '../assets/', heading: 1 })}</main>${foot}`, '<script src="../sc-matrix-nav.js" defer></script>');
 const studio = shell('Studio patterns', `${head('SpicyChicken', 'a working studio · design specimen')}<main class="sc-wrap sc-page" id="main"><header class="sc-title"><p class="sc-eyebrow">dated activity and task sessions</p><h1>A workspace stays readable while work is in progress.</h1><p class="sc-dek">Illustrative data demonstrates inspection, truthful save states and an action that fits a phone.</p></header>${studioExamples()}</main>${foot}`, '<script src="../sc-activity.js" defer></script><script src="../sc-reading.js" defer></script>');
-for (const [name, contents] of Object.entries({ landing, dashboard, screener, report, deliverable, studio, 'decision-brief': decision })) writeFileSync(join(out, 'templates', `${name}.html`), contents.replace(/></g, ">\n<"));
+const mediaDock = shell('Intrinsic media and mobile dock', dockExample(), '<script src="../build/media-dock-specimen.js" defer></script>');
+for (const [name, contents] of Object.entries({ landing, dashboard, screener, report, deliverable, studio, 'media-dock':mediaDock, 'decision-brief': decision })) writeFileSync(join(out, 'templates', `${name}.html`), contents.replace(/></g, ">\n<"));
 // Only this recipe is generated; the rest of the catalog remains authored HTML.
 const brief = decisionBrief();
 const escaped = brief.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');

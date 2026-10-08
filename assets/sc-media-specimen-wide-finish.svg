@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">Landscape geometry specimen, second frame</title><desc id="desc">The same full source bounds contain a diagonal in the opposite direction, so frame selection must not move the stage.</desc>
+  <rect width="800" height="500" fill="#F3F7FC"/>
+  <rect x="16" y="16" width="768" height="468" fill="none" stroke="#2766B1" stroke-width="4"/>
+  <path d="M40 50L760 450" fill="none" stroke="#2766B1" stroke-width="8"/>
+  <text x="40" y="82" fill="#182E4B" font-family="system-ui,sans-serif" font-size="28">Illustrative second frame · 800 × 500</text>
+</svg>

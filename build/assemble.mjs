@@ -11,6 +11,7 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, extname, join } from 'node:path';
 import { studioExamples } from './studio-examples.mjs';
+import { mediaExample } from './media-dock-examples.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const B = join(ROOT, 'build'), DS = ROOT;
@@ -24,7 +25,7 @@ const read = p => readFileSync(p, 'utf8').replace(/\r\n?/g, '\n');
 const cssSys = read(join(DS, 'sc.css'));
 const cssPage = read(join(B, 'styleguide-page.css'));
 const theme = read(join(B, 'theme.js'));
-const body = read(join(B, 'styleguide-body.html')).replace('<!-- studio-patterns -->', studioExamples('guide-studio', 3, '.'));
+const body = read(join(B, 'styleguide-body.html')).replace('<!-- studio-patterns -->', studioExamples('guide-studio', 3, '.')).replace('<!-- media-dock-patterns -->', mediaExample('guide-media','assets/',3));
 const js = read(join(B, 'styleguide.js'));
 const FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">';
 
@@ -60,6 +61,7 @@ ${body}
 ${js}</script>
 <script src="sc-activity.js" defer></script>
 <script src="sc-reading.js" defer></script>
+<script src="build/media-dock-specimen.js" defer></script>
 </body>
 </html>
 `;
@@ -101,8 +103,10 @@ writeFileSync(join(OUT, 'sc-activity.js'), '/* SpicyChicken Design System — sc
   mkdirSync(join(SKILL, 'assets', 'assets'), { recursive: true });
   for (const f of readdirSync(join(DS, 'assets')).filter(f => f.endsWith('.svg')))
     writeFileSync(join(SKILL, 'assets', 'assets', f), read(join(DS, 'assets', f)));
+  mkdirSync(join(SKILL, 'assets', 'build'), { recursive: true });
+  writeFileSync(join(SKILL, 'assets', 'build', 'media-dock-specimen.js'), read(join(B, 'media-dock-specimen.js')));
   mkdirSync(join(SKILL, 'assets', 'templates'), { recursive: true });
-  for (const f of ['landing.html', 'dashboard.html', 'screener.html', 'report.html', 'decision-brief.html', 'studio.html'])
+  for (const f of ['landing.html', 'dashboard.html', 'screener.html', 'report.html', 'decision-brief.html', 'studio.html', 'media-dock.html'])
     writeFileSync(join(SKILL, 'assets', 'templates', f), read(join(DS, 'templates', f)));
 }
 
