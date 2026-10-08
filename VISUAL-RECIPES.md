@@ -687,3 +687,13 @@ viewport-fixed control tray.
 ## Intrinsic media and reserved mobile docks
 
 The media/dock recipe and `templates/media-dock.html` show full source bounds with real dimensions and a phone layout whose action/navigation occupies a separate row. `sc-media-stage` does not prescribe a ratio, crop a subject or supply playback. `sc-dock-layout` keeps the scrolling body above `sc-bottom-dock`; keyboard, safe area, short screens and print remain part of verification. Reuse the existing action bar and compact workspace navigation. See `STUDIO-PATTERNS.md`.
+
+### Selection and field restore compositions
+
+The studio specimen also shows a **selection → basket → bulk review** state and
+a **selected-field restore** state. Compose existing task checkbox labels,
+disclosures, paired comparison values and one actionbar; no new styling or
+runtime is needed. A filter does not clear selection, a limit does not silently
+truncate it, and a partial restore does not replace omitted fields with defaults.
+See [the contracts](STUDIO-PATTERNS.md#select-collect-review-apply) and the named
+sections in [the studio specimen](templates/studio.html#studio-selection).

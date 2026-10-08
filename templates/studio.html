@@ -202,6 +202,153 @@
 <button class="sc-btn sc-btn--primary" type="button" disabled>Finish example session</button>
 </div>
 </section>
+<section class="sc-card sc-session" id="studio-selection" aria-labelledby="studio-selection-title">
+<h2 id="studio-selection-title">Select, collect, then review</h2>
+<p class="sc-hint" id="studio-selection-help">Illustrative document state: disabled controls show two selected documents. No application records are changed or saved.</p>
+<div class="sc-grid sc-grid--2">
+<div role="group" aria-label="Illustrative document selection" aria-describedby="studio-selection-help">
+<ol class="sc-task-list">
+<li class="sc-task">
+<label class="sc-task__label">
+<input type="checkbox" data-sc-selection-item="layout" checked disabled>
+<span class="sc-task__body">
+<strong>Layout notes</strong>
+<span class="sc-task__target">Selected for this review</span>
+</span>
+</label>
+</li>
+<li class="sc-task">
+<label class="sc-task__label">
+<input type="checkbox" data-sc-selection-item="index" checked disabled>
+<span class="sc-task__body">
+<strong>Source index</strong>
+<span class="sc-task__target">Selected for this review</span>
+</span>
+</label>
+</li>
+<li class="sc-task">
+<label class="sc-task__label">
+<input type="checkbox" data-sc-selection-item="attachments" disabled>
+<span class="sc-task__body">
+<strong>Archived attachments</strong>
+<span class="sc-task__target">Not selected; current state stays</span>
+</span>
+</label>
+</li>
+</ol>
+</div>
+<div>
+<h3>Your basket</h3>
+<p class="sc-hint" data-sc-selection-count="2">2 documents selected; capacity 3. Filters do not change this basket.</p>
+<ul>
+<li data-sc-basket-item="layout">Layout notes</li>
+<li data-sc-basket-item="index">Source index</li>
+</ul>
+<p class="sc-note">Select all must name its scope. If capacity changes, retain the selection and explain the limit.</p>
+<a class="sc-link--quiet" href="#studio-bulk-review">Inspect the selected changes</a>
+</div>
+</div>
+<details class="sc-disclosure" open id="studio-bulk-review">
+<summary>Review changes to 2 documents</summary>
+<div class="sc-disclosure__body">
+<p>Only these selected documents would change; other documents retain their state.</p>
+<div class="sc-task" data-sc-review-item="layout">
+<h3>Layout notes</h3>
+<div class="sc-compare-pair__values">
+<span class="sc-compare-pair__value">
+<span class="sc-note">Current state</span>
+<strong class="sc-figure">Draft</strong>
+</span>
+<span class="sc-compare-pair__value">
+<span class="sc-note">Proposed state</span>
+<strong class="sc-figure">Ready for review</strong>
+</span>
+</div>
+</div>
+<div class="sc-task" data-sc-review-item="index">
+<h3>Source index</h3>
+<div class="sc-compare-pair__values">
+<span class="sc-compare-pair__value">
+<span class="sc-note">Current state</span>
+<strong class="sc-figure">Draft</strong>
+</span>
+<span class="sc-compare-pair__value">
+<span class="sc-note">Proposed state</span>
+<strong class="sc-figure">Ready for review</strong>
+</span>
+</div>
+</div>
+<p class="sc-hint">Cancel keeps the draft and selection. The application owns pending/error states, revision checks and Undo.</p>
+</div>
+</details>
+<div class="sc-actionbar">
+<span class="sc-chip sc-chip--neutral">not applied</span>
+<p>Specimen only: review 2 named documents before one deliberate apply. A selected checkbox does not mean saved.</p>
+<button type="button" class="sc-btn sc-btn--primary" disabled>Apply illustrative bulk edit</button>
+</div>
+</section>
+<section class="sc-card sc-session" id="studio-restore" aria-labelledby="studio-restore-title">
+<h2 id="studio-restore-title">Restore only the fields you reviewed</h2>
+<p class="sc-hint">Illustrative archive dated October 1, 2026; current revision 8. Disabled choices show a one-field patch, not a full replacement.</p>
+<div role="group" aria-label="Illustrative field restore choices">
+<ol class="sc-task-list">
+<li class="sc-task" data-sc-restore-field="project">
+<label class="sc-task__label">
+<input type="checkbox" data-sc-restore-choice="project" checked disabled>
+<span class="sc-task__body">
+<strong>Project name</strong>
+<span class="sc-task__target">Included in this illustrative patch</span>
+</span>
+</label>
+<div class="sc-compare-pair__values">
+<span class="sc-compare-pair__value">
+<span class="sc-note">Current value</span>
+<strong class="sc-figure">Launch notes</strong>
+</span>
+<span class="sc-compare-pair__value">
+<span class="sc-note">Incoming archive value</span>
+<strong class="sc-figure">Release guide</strong>
+</span>
+</div>
+</li>
+<li class="sc-task" data-sc-restore-field="cadence">
+<label class="sc-task__label">
+<input type="checkbox" data-sc-restore-choice="cadence" disabled>
+<span class="sc-task__body">
+<strong>Review cadence</strong>
+<span class="sc-task__target">Excluded; keep current value</span>
+</span>
+</label>
+<div class="sc-compare-pair__values">
+<span class="sc-compare-pair__value">
+<span class="sc-note">Current value</span>
+<strong class="sc-figure">Monthly</strong>
+</span>
+<span class="sc-compare-pair__value">
+<span class="sc-note">Incoming archive value</span>
+<strong class="sc-figure">Weekly</strong>
+</span>
+</div>
+</li>
+</ol>
+</div>
+<details class="sc-disclosure" open>
+<summary>Review the exact restore and Undo scope</summary>
+<div class="sc-disclosure__body">
+<p data-sc-restore-count="1">Only 1 selected field would be applied: Project name.</p>
+<ul>
+<li data-sc-restore-preview="project">Project name: Launch notes → Release guide</li>
+</ul>
+<p>Review cadence stays Monthly. Authorization and history were omitted and remain untouched; missing does not mean blank or zero.</p>
+<p>Revision-aware Undo would restore the prior Project name only. If a later edit changed the revision, reload and review the conflict rather than replace a stale full object.</p>
+</div>
+</details>
+<div class="sc-actionbar">
+<span class="sc-chip sc-chip--neutral">not applied</span>
+<p>No restore occurs here. A production consumer preserves omitted fields and checks the current revision before Apply or Undo.</p>
+<button type="button" class="sc-btn sc-btn--primary" disabled>Apply selected field</button>
+</div>
+</section>
 <section class="sc-card" id="studio-contract">
 <h2>The application owns the record</h2>
 <p>These shared patterns supply readable states, focus behaviour and responsive layout. Timers, saves, dates, counts and any interpretation come from the application.</p>

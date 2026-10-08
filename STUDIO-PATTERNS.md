@@ -169,3 +169,67 @@ must reject crop/distortion, duplicate active frames, overlapping rows, clipped
 or undersized targets and focused controls hidden by the dock.
 
 The compact navigation layout channel `--sc-workspace-nav-basis` optionally changes its 60px flex basis without replacing the component layout. The six-destination dock specimen uses an authored three-column fraction; a five-destination app can keep the unchanged default. In dock bodies, named control groups wrap within the column. Put intrinsic media inside `sc-disclosure__body` when a disclosure supplies surrounding margins.
+
+## Select, collect, review, apply
+
+This is a composition of existing task labels, disclosures, comparison values
+and an action bar, not a new component or selection runtime. See the illustrative
+document-selection state in `templates/studio.html#studio-selection`.
+
+1. **Select:** use native checkboxes with named `.sc-task__label` rows. Keep the
+   glyph bounded and give its whole label at least 44px height. A filter changes
+   visible candidates, not the selected set. Say when a candidate is unavailable.
+2. **Collect:** show the names and count in a basket that stays readable while
+   filters change. Define whether Select all means visible or all eligible rows;
+   name that scope. Duplicate IDs, stale IDs and silent truncation are errors.
+   If the next step exceeds capacity, retain the selection and explain the limit.
+3. **Review:** list exactly the selected eligible records and each previous/new
+   value. Reuse `.sc-compare-pair__values` or a native table. The count must match
+   those rows. Cancel returns to the unchanged draft, with selection intact.
+4. **Apply:** one `.sc-actionbar` names the scope and the owned action. A checkbox
+   changes selection; it never implies a save. Pending work has a written state.
+   Lock editing during the request or retain newer edits as a separate draft.
+
+Use stable record IDs rather than positions. Undo/reorder/removal and an external
+refresh must reconcile the basket and selected IDs against the current record
+set. Unrelated background updates must not erase dirty fields. Before in-app
+navigation, dialog close or account change, keep the draft or offer an explicit
+Keep/Discard choice. A close decision must be visible and focused; appending an
+alert far below a long form does not make its actions reachable.
+
+The consumer owns draft recovery, authorization, revision checks, save requests
+and Undo lifetime. A local Undo before save is different from a reversible saved
+operation. Name which one is available; do not offer a no-op Apply to zero rows.
+At phone width, stack search, basket and review in reading order. Prefer the
+existing wrapping controls and bounded actionbar over a second fixed dock.
+
+## Restore selected fields with a visible difference
+
+See `templates/studio.html#studio-restore` for a non-operational field-difference
+state. Reuse native checkbox task labels and paired current/incoming values.
+Every field states its name, present value, incoming value and selection. A
+difference is not a winner; missing, empty, zero and omitted stay distinct.
+Long values wrap or live in a named disclosure. Keep both sides named on phones.
+
+The preview and apply operation must share the same selected field set. Show
+included and excluded categories before exporting or restoring. A partial file
+is a patch of explicitly included fields: never fill omissions with schema
+defaults and then describe it as a complete replacement. Current history or
+authorization cannot be overwritten merely because a profile field was chosen.
+Present source/date and the restore scope beside the action, without tokens or
+private data in the specimen.
+
+Before Apply, retain the prior values and expected revision for only the fields
+being changed. Undo must name its scope and detect intervening edits: restore
+those prior field values through a reviewed revision check, rather than replace
+the entire object with a stale snapshot. A changed server revision requires
+reload/review; preserve the draft while showing that conflict. Cancel keeps all
+current values. Completion states refer to the actual saved result.
+
+Verification: two filters with retained selection; capacity after Undo; zero or
+stale selected rows; pending and failed save; dirty in-app navigation; selected
+field parity between preview/apply; omitted versus empty values; conflicting
+Undo; and keyboard focus on the review/close decision at 320px and 390px in both
+themes. `node build/selection-review-check.mjs` checks illustrative selection and
+field-scope contracts with negative controls. It does not claim live persistence
+or rendered browser verification. No new CSS vocabulary or release is introduced.
