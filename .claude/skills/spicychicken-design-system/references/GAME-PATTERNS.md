@@ -14,7 +14,7 @@ game rules and no persistence.
 
 | Shared (this repository) | Owned by the game |
 |---|---|
-| The stage, HUD slots, plates, crosshair, timer, measurement, count, stars, hint, controls legend and the capture/pause layer (`sc.css` band 4i) | Physics, snow, levels, coin and star rules, difficulty, audio |
+| The stage, HUD slots, plates, crosshair, timer, measurement, count, stars, milestones, meter, hint, controls legend, the capture/pause layer and cinematic moments — letterbox, captions, skip, title card (`sc.css` band 4i) | Physics, snow, levels, coin and star rules, what raises or lowers a meter, difficulty, audio, cutscene scripts and their timing |
 | The optional capture lifecycle and truncating formatters (`sc-game.js`) | The engine's input handling, including clearing held keys and buttons on blur or release |
 | The world/canvas colour rule below | Every colour on the canvas |
 | Accessibility contracts and their checks | Saves (local-only by default), settings storage and any account |
@@ -165,9 +165,11 @@ tick.
 
 `.sc-game__measure` holds a mono `.sc-game__measure-label`, a tabular
 `.sc-game__measure-value` with its unit in `<small>`, and one short
-`.sc-game__measure-note` of guidance ("arch limit 38 ft · fits"). Progress toward
-a threshold composes the existing `.sc-benchmark` (the threshold is its
-reference line) or native `progress.sc-progress`; there is no game meter.
+`.sc-game__measure-note` of guidance ("arch limit 38 ft · fits"). A size against
+a limit composes the existing `.sc-benchmark` (the threshold is its reference
+line) or native `progress.sc-progress`. A level that rises and falls with a
+written state is the [meter](#meter); a count moving toward thresholds is
+[milestones](#milestones).
 
 `.sc-game__count` with a tabular `.sc-game__count-value` shows a collectible
 count. The words are in the markup: "12 / 24 coins", "1 purple key held".
@@ -213,6 +215,145 @@ in **shape** (filled and outlined) as well as tone, using heading and brand ink 
 never a new gold. Three labelled slots fit a 320px plate; labels and states wrap
 beside the glyph and the rule takes its own line. The same list reads on an
 ordinary `.sc-card`, for a results screen.
+
+## Milestones
+
+A count moving along a track toward thresholds — coins toward the explorer and
+collector stars, on a HUD plate and on a results card.
+
+```html
+<div class="sc-game__milestones sc-game__milestones--animate" style="--sc-game-milestones-value: .5">
+  <p class="sc-game__milestones-head">
+    <span class="sc-game__milestones-label">coins this run</span>
+    <span class="sc-game__milestones-count"><span class="sc-game__milestones-value">12</span> of 24 coins</span>
+  </p>
+  <div class="sc-game__milestones-track" aria-hidden="true">
+    <span class="sc-game__milestones-fill"></span>
+    <span class="sc-game__milestones-marker is-earned" style="--sc-game-milestone-at: .3333"></span>
+    <span class="sc-game__milestones-marker" style="--sc-game-milestone-at: 1"></span>
+  </div>
+  <p class="sc-game__milestones-note">collector star at 24</p>   <!-- and/or an ol.sc-game__stars -->
+</div>
+<p class="sc-sr-only" role="status"></p>   <!-- filled once, when a count-up ends -->
+```
+
+- **Words first.** The count is written in `.sc-game__milestones-count` ("12 of
+  24 coins"), the thresholds are written in a `.sc-game__milestones-note` naming
+  the next one, an `ol.sc-game__stars` of the stars the markers stand for, or
+  both. The track is `aria-hidden="true"`; the label is optional.
+- **The consumer computes, the system draws.** Set `--sc-game-milestones-value`
+  (count ÷ total, 0–1) on the block and `--sc-game-milestone-at` (threshold ÷
+  total) on each marker, and add `.is-earned` to a marker once the count has
+  reached it. A lit marker is a **filled** star in heading ink; an unlit one an
+  **outlined** star in brand ink, slightly smaller — shape, not a new gold. Each
+  `.sc-game__star` in a list beside it says the same thing in words
+  ("explorer · earned this run · 8 of 24 coins").
+- **Counting up.** `--animate` lets the fill glide between the values a count-up
+  steps through and a marker grow as it lights — only under
+  `prefers-reduced-motion: no-preference` and never on a `.sc-game--still`
+  stage. Step the number yourself (one step per frame or per coin), light each
+  marker and its star as the count passes the threshold, and under reduced
+  motion show the end at once. **Announce once**: the count readout is never a
+  live region (it would announce every step); put the final sentence in one
+  polite status when the count stops ("12 of 24 coins. Explorer star earned;
+  collector star not yet."). Every total works — a level with 30 coins puts
+  explorer at 10 (`.3333`); two thresholds at the same place draw on top of each
+  other, and the words keep them apart.
+
+## Meter
+
+One level that rises and falls with a written state — awareness while
+sneaking, stamina, heat — on a plate.
+
+```html
+<div class="sc-game__plate sc-game__meter" role="meter" aria-labelledby="awareness-label"
+     aria-valuemin="0" aria-valuemax="100" aria-valuenow="58"
+     aria-valuetext="Mom noticed something (58%)" data-state="alert" style="--sc-game-meter-value: .58">
+  <p class="sc-game__meter-label" id="awareness-label">awareness</p>
+  <span class="sc-game__meter-glyph" aria-hidden="true"></span>
+  <p class="sc-game__meter-state">Mom noticed something</p>
+  <span class="sc-game__meter-track" aria-hidden="true"><span class="sc-game__meter-fill"></span></span>
+</div>
+```
+
+| `data-state` | Word (the game's) | Glyph | Fill |
+|---|---|---|---|
+| `calm` | "Hidden", "Unseen" | an open ring | a third of the track's height |
+| `alert` | "Mom noticed something" | an open triangle | two thirds |
+| `danger` | "Spotted!" | a solid triangle with a knocked-out "!" | the whole track |
+
+States differ in **words, shape and thickness**; the tone (brand, warn, danger
+on the plate's dark-mode values) only repeats them. `role="meter"` makes the
+plate one node for assistive technology: name it, keep `aria-valuenow` and the
+drawn `--sc-game-meter-value` in step, and put the written state in
+`aria-valuetext`. A meter is not a live region; when the **state** changes (not
+every value tick), say so once in a polite region of your own. The game decides
+what moves the value and when a state begins; the meter is static and moves
+only when the game moves it.
+
+## Cinematic moments
+
+A cutscene, a story beat or a level intro over the live canvas.
+
+```html
+<div class="sc-game sc-game--viewport sc-game--cinematic">
+  <canvas class="sc-game__canvas" …></canvas>
+  <span class="sc-game__crosshair" aria-hidden="true"></span>        <!-- hidden while cinematic -->
+  <div class="sc-game__hud">
+    <div class="sc-game__slot sc-game__slot--bottom">
+      <div class="sc-game__captions" aria-live="polite" aria-atomic="true">
+        <p class="sc-game__plate sc-game__caption">
+          <span class="sc-game__caption-speaker">Mom</span>
+          <span class="sc-game__caption-line">Kids! Inside, now — dinner's on the table.</span>
+        </p>
+      </div>
+    </div>
+    <div class="sc-game__slot sc-game__slot--br">
+      <div class="sc-game__plate sc-game__skip">
+        <button class="sc-btn sc-btn--secondary sc-btn--sm" type="button" aria-keyshortcuts="Space Enter">Skip</button>
+        <span class="sc-game__skip-hint"><kbd>Space</kbd> or <kbd>Enter</kbd></span>
+      </div>
+    </div>
+    <div class="sc-game__title-card" aria-live="polite">
+      <div class="sc-game__plate">
+        <p class="sc-eyebrow">level 1</p>
+        <h2 class="sc-game__title-card-title">The new house</h2>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+- **`.sc-game--cinematic`** on the stage draws letterbox bars (flat ink, one
+  `::before` under the HUD that never takes pointer input, `7cqi` thick within
+  16–96px), hides the crosshair and the content of every HUD slot except
+  `.sc-game__captions` / `.sc-game__caption` and `.sc-game__skip`, and widens the
+  centre column for subtitles. Remove the class and the HUD is back exactly as
+  it was. The bars grow in from the edges only under
+  `prefers-reduced-motion: no-preference`; add **`.sc-game--still`** to the stage
+  when the game's own reduced-motion setting is on, and nothing in the band
+  moves at all.
+- **Captions** are subtitles on a plate, bottom centre, at most `60ch` wide (two
+  lines of about 60 characters at most). The speaker is a **written label** on
+  its own line — mono, weight — never a colour. `aria-live="polite"` (with
+  `aria-atomic="true"`) sits on the persistent `.sc-game__captions` container,
+  which stays in the document while lines come and go; replace its plate once
+  per line with the **final** text, never letter by letter, so each line is
+  announced once. Leave it empty between lines.
+- **Skip** is a plate in the bottom-right slot with a real button and its keys
+  written beside it. Move focus to it when the moment starts and back to where
+  it was when the moment ends. A game may also map <kbd>Space</kbd> and
+  <kbd>Enter</kbd> to it while the moment plays (ignore repeats, and keys aimed
+  at an open dialog). **Escape never skips** — Escape pauses, as it does
+  everywhere else in the shell. An unskippable moment hides the plate.
+- **Title card** — `.sc-game__title-card` is a direct child of a HUD, outside
+  the slots: a persistent, centred region (it may carry `aria-live="polite"`)
+  that draws nothing until a plate with an eyebrow and a heading is put inside
+  it. It lets the pointer through. Its title scales with the stage (20–56px).
+  On a short stage, show a title card and a caption one after the other rather
+  than together.
+- The engine owns the script: when lines change, how long they stay, what
+  happens on skip, and pausing on Escape. The shell owns how it reads.
 
 ## Hints and the controls legend
 
@@ -328,13 +469,24 @@ behaviour stays in the consumer.
   up while the page was not listening does not stay "down".
 - **Saves are the game's job.** A save stays local unless the player chooses
   otherwise; the shell neither reads nor writes storage.
-- **Reduced motion.** Nothing in the band animates. Keep camera shake, screen
-  flashes and HUD motion behind the player's reduced-motion setting in the game.
-- **Forced colours.** Plates keep a CanvasText border on Canvas; the crosshair
-  and star glyphs opt out of forced-colour adjustment and draw in
-  CanvasText/Canvas so they stay visible.
-- **Print** keeps the record, not the moment: the canvas, crosshair and layers are
-  hidden, and plates print statically in flow, in ink.
+- **Reduced motion.** Only two things in the band move, and only under
+  `prefers-reduced-motion: no-preference`: the cinematic letterbox bars grow in,
+  and an `--animate` milestones fill glides while its markers grow as they light.
+  `.sc-game--still` on the stage stops both, for a game whose own setting says
+  reduced motion. Keep camera shake, screen flashes and other HUD motion behind
+  that setting in the game.
+- **Forced colours.** Plates keep a CanvasText border on Canvas; the crosshair,
+  star glyphs, meter glyph and fill, and milestones markers and fill opt out of
+  forced-colour adjustment and draw in CanvasText/Canvas so they keep their
+  shape; meter and milestones tracks keep a CanvasText edge; letterbox bars
+  become Canvas, a frame rather than content.
+- **Live regions** persist and speak once: the hint and the caption region are
+  polite containers that stay in the document; a title-card region may be one
+  too; a counting readout never is (announce its total once, at the end); a
+  meter is not one (announce a change of state once, yourself).
+- **Print** keeps the record, not the moment: the canvas, crosshair, layers and
+  letterbox bars are hidden, and plates (a title card's included) print
+  statically in flow, in ink.
 - **Text** never wears a world colour, and the HUD never depends on colour alone.
 
 ## What is not shared
@@ -358,6 +510,23 @@ the stage), the contract's own declarations (HUD `pointer-events: none`, canvas
 `touch-action: none`, safe-area padding, a nowrap tabular timer, filled vs
 outlined star shapes, a two-tone crosshair above the HUD, an undrawn closed
 dialog) and opaque plates across the whole sheet, each with negative controls.
+The 2.16 moments have their own contracts, each with negative controls: in
+markup, a meter is a named `role="meter"` plate whose `aria-valuetext` carries
+the written state and whose drawn value matches `aria-valuenow`; a milestones
+writes its count in words (never as a live region), writes its thresholds, hides
+its track, and lights exactly the markers its value has reached, in agreement
+with its written stars; captions sit on plates inside a persistent polite
+region with the speaker written before a line of at most two subtitle lines; the
+skip control is one real "Skip" button in the bottom-right slot whose keys never
+include Escape; a title card is a plate-backed heading with an eyebrow, a direct
+child of a HUD. In CSS: three meter glyph shapes and fill thicknesses, filled vs
+outlined markers, a `60ch` caption, a cinematic that hides the crosshair and
+every slot but captions and skip (never the title card), bars under the HUD that
+take no input, motion only inside `prefers-reduced-motion: no-preference` and
+stopped by `.sc-game--still`, and marks that keep their shape in forced colours.
+`build/contrast.mjs` checks the moments' text on a plate at 4.5:1 and their
+marks (meter fills against the track and glyphs against the plate in each state,
+milestones fill and markers on a plate and on a card) at 3:1, in both modes.
 
 `node build/visual-check.mjs --browser` renders `templates/game.html` in Chromium
 at 320 × 720, 390 × 844, 820 and 1280px in both themes; the refusal path in
@@ -373,4 +542,19 @@ control reachable by Tab instead); opaque plates with 4.5:1 text over the bright
 and the dark scene, rendered identically in both page modes; a canvas focus ring
 at 3:1 over both scenes in both modes; the level `h1` in the accessibility tree
 while the layer is open and while paused; and a results dialog that is not drawn
-while closed.
+while closed. The results count-up starts from zero, only goes up, lights each
+marker and its written star exactly as the count passes the threshold, says
+nothing until it stops and then announces the total once; under reduced motion
+it shows the end at once, static. The meter scenarios (390 and 1280px) find three
+named meters in the accessibility tree whose values carry their words, three
+glyph shapes, fills that thicken with the state and are drawn at the reported
+value, and 3:1 marks with 4.5:1 words. The cinematic scenarios (390 and 1280px,
+both themes, and reduced motion) find equal letterbox bars under the HUD that
+grow in only when motion is allowed, nothing on screen but the caption, the skip
+control and the title card, a caption centred low and at most `60ch` wide, a
+centred title card that lets a pointer through to the canvas, focus on Skip with
+a visible ring, Escape that does not skip, Space that does and focus back on the
+opener — and rendered negative controls (bars or a title card that take input, a
+caption let out past `60ch`) caught by the same measurements. The compact
+cinematic and meter stages embedded in the style guide and the visual library
+pass the same geometry at 320 and 390px and as a 320px stage in a 1280px page.

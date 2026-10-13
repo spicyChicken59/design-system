@@ -213,6 +213,18 @@ centring a `.sc-card` with `.sc-game__panel`, one `.sc-actionbar` primary ("Clic
 release ("Escape releases the mouse and pauses") and, after a refusal, a `.sc-notice` with a
 keyboard path.
 
+**Counts, levels and cinematic moments:** `.sc-game__milestones` is a written count
+(`.sc-game__milestones-count`) moving along an aria-hidden `.sc-game__milestones-track` whose
+`.sc-game__milestones-marker` stars light (`.is-earned`: outlined to filled) as the count passes each
+threshold; write the thresholds in a `.sc-game__milestones-note` or an `ol.sc-game__stars`, set
+`--sc-game-milestones-value` and `--sc-game-milestone-at` inline, and announce a count-up's total once.
+`.sc-game__meter` is a `role="meter"` plate (`data-state` calm, alert or danger: word, glyph shape
+and fill thickness all change) with its state in `aria-valuetext`. `.sc-game--cinematic` on the
+stage draws letterbox bars and keeps only `.sc-game__captions` (a persistent polite region holding
+`.sc-game__caption` plates with `.sc-game__caption-speaker` and `.sc-game__caption-line`, at most
+`60ch`), `.sc-game__skip` (a real button, keys written beside it; Escape pauses, never skips) and a
+centred `.sc-game__title-card`. Add `.sc-game--still` when the game's own reduced-motion setting is on.
+
 **How to wire capture:** load `assets/sc-game.js` (it adds nothing until called), then
 `const c = SC.game.capture(stage, { target: canvas, resumeControl: playButton, onCapture, onRelease,
 onDenied })` and call `c.request()` only from the Play/Resume click. `onRelease(reason)` receives

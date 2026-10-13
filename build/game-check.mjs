@@ -11,7 +11,8 @@ const root = new URL('../', import.meta.url);
 const source = readFileSync(process.argv[2] || new URL('sc-game.js', root), 'utf8');
 let checks = 0;
 async function check(name, run) { try { await run(); checks++; } catch (e) { const was = e.message; e.message = `${name}: ${was}`; if (typeof e.stack === 'string') e.stack = e.stack.replace(was, e.message); throw e; } }
-const rejects = (label, run) => assert.throws(run, undefined, `negative control was accepted: ${label}`);
+// SC_EXPLAIN=1 prints the assertion each negative control trips, to confirm it fails for its own reason.
+const rejects = (label, run) => assert.throws(run, e => { if (process.env.SC_EXPLAIN) console.log(`  rejected ${label}: ${e.message.split('\n')[0]}`); return true; }, `negative control was accepted: ${label}`);
 
 // ---------------------------------------------------------------- fake DOM --
 class Node {
@@ -277,10 +278,13 @@ export function assertGameMarkup(html, { page = false } = {}) {
     if (n.tag === 'dialog') assert(ids.includes(n.attrs.get('aria-labelledby')), 'the dialog is named by its heading');
   }
   for (const n of by('sc-game__plate')) assert(within(n, p => has(p, 'sc-game__hud')), 'plates sit in the HUD');
+  assertMomentsMarkup(nodes, ids);
   if (page) {
     assert.equal(nodes.filter(n => n.tag === 'h1').length, 1, 'exactly one h1');
     assert(nodes.some(n => n.tag === 'a' && has(n, 'sc-skip')), 'a skip link');
-    for (const slot of ['tl', 'top', 'tr', 'left', 'right', 'bl', 'bottom', 'br']) assert.equal(by(`sc-game__slot--${slot}`).length, 1, `the ${slot} slot is populated once`);
+    const full = by('sc-game--viewport')[0];
+    assert(full, 'a full-viewport stage');
+    for (const slot of ['tl', 'top', 'tr', 'left', 'right', 'bl', 'bottom', 'br']) assert.equal(all(full).filter(n => has(n, `sc-game__slot--${slot}`)).length, 1, `the ${slot} slot of the full stage is populated once`);
     const layer = nodes.find(n => n.attrs.has('data-sc-game-capture-layer'));
     assert(layer && has(layer, 'sc-game__layer') && layer.tag === 'div', 'a plain-div capture layer');
     assert.equal(text(all(layer).find(c => has(c, 'sc-btn--primary'))), 'Click to play', 'the one primary action says what it does');
@@ -290,7 +294,93 @@ export function assertGameMarkup(html, { page = false } = {}) {
     const dialog = nodes.find(n => n.tag === 'dialog' && has(n, 'sc-game__layer'));
     assert(dialog, 'a native dialog layer');
     assert(nodes.some(n => n.attrs.has('data-sc-game-results-open') && n.attrs.get('aria-controls') === dialog.attrs.get('id')), 'the dialog has a named opener');
+    // The page shows every 2.16 moment: a meter and a milestones track in play,
+    // a counting milestones on the results with its one closing status, and a
+    // cinematic preview with its caption region, skip control and title card.
+    assert(by('sc-game__meter').some(n => within(n, p => has(p, 'sc-game__hud'))), 'a meter in the HUD');
+    assert(by('sc-game__milestones').some(n => within(n, p => has(p, 'sc-game__hud'))), 'a milestones track in the HUD');
+    const counting = all(dialog).find(c => has(c, 'sc-game__milestones--animate'));
+    assert(counting, 'the results count coins along an animated milestones track');
+    assert(all(dialog).some(c => c.attrs.get('role') === 'status' && c.attrs.has('data-sc-game-count-status')), 'the results announce the final count once, through a status');
+    for (const part of ['sc-game__captions', 'sc-game__skip', 'sc-game__title-card']) assert.equal(all(full).filter(n => has(n, part)).length, 1, `the full stage carries one ${part.slice(9)} for its cinematic moment`);
+    assert(nodes.some(n => n.attrs.has('data-sc-game-cinematic-open') && n.attrs.get('aria-controls') === full.attrs.get('id')), 'the cinematic preview has a named opener');
   }
+}
+
+// --------------------------------------------------- 2.16 moments markup --
+// Meter, milestones, captions, skip and title card: meaning in words and
+// shapes, values that agree with what is drawn, and live regions that
+// persist and speak once.
+const styleProp = (n, name) => { const m = new RegExp(`${name}\\s*:\\s*(-?[\\d.]+)`).exec(n.attrs.get('style') || ''); return m ? Number(m[1]) : NaN; };
+const order = (root, n) => all(root).indexOf(n);
+export function assertMomentsMarkup(nodes, ids) {
+  const by = c => nodes.filter(n => has(n, c));
+  for (const n of by('sc-game__meter')) {
+    assert(has(n, 'sc-game__plate'), 'a meter sits on a plate');
+    assert.equal(n.attrs.get('role'), 'meter', 'a meter has role=meter');
+    const [min, max, now] = ['aria-valuemin', 'aria-valuemax', 'aria-valuenow'].map(a => Number(n.attrs.get(a) ?? NaN));
+    assert([min, max, now].every(Number.isFinite) && min < max && now >= min && now <= max, 'a meter reports a number inside its range');
+    assert(ids.includes(n.attrs.get('aria-labelledby')) || n.attrs.get('aria-label'), 'a meter is named');
+    const state = all(n).find(c => has(c, 'sc-game__meter-state')), label = all(n).find(c => has(c, 'sc-game__meter-label'));
+    assert(label && text(label), 'a meter has a written label');
+    assert(state && text(state), 'a meter writes its state');
+    assert((n.attrs.get('aria-valuetext') || '').includes(text(state)), 'aria-valuetext carries the written state');
+    assert(['calm', 'alert', 'danger'].includes(n.attrs.get('data-state')), 'a meter state is calm, alert or danger');
+    for (const part of ['sc-game__meter-glyph', 'sc-game__meter-track']) assert.equal(all(n).find(c => has(c, part))?.attrs.get('aria-hidden'), 'true', `the ${part.slice(14)} is decorative`);
+    assert(Math.abs(styleProp(n, '--sc-game-meter-value') - (now - min) / (max - min)) <= 0.011, 'the drawn fill agrees with aria-valuenow');
+  }
+  for (const n of by('sc-game__milestones')) {
+    const count = all(n).find(c => has(c, 'sc-game__milestones-count'));
+    assert(count && /\d/.test(text(count)) && /[a-z]{3,}/.test(text(count)), 'a milestones writes its count, in words');
+    assert(!count.attrs.has('aria-live') && !within(count, p => p.attrs.has('aria-live')) && !['status', 'log'].includes(count.attrs.get('role')), 'the count readout is not a live region: a count-up would announce every step');
+    const track = all(n).find(c => has(c, 'sc-game__milestones-track'));
+    assert(track && track.attrs.get('aria-hidden') === 'true', 'the milestones track is decorative');
+    const list = all(n).find(c => has(c, 'sc-game__stars')), note = all(n).find(c => has(c, 'sc-game__milestones-note'));
+    assert(list || (note && text(note)), 'the thresholds are written: a note, a star list, or both');
+    const value = styleProp(n, '--sc-game-milestones-value');
+    assert(value >= 0 && value <= 1, 'the fill is a fraction between 0 and 1');
+    const markers = all(track).filter(c => has(c, 'sc-game__milestones-marker'));
+    assert(markers.length >= 1, 'a milestones has at least one threshold marker');
+    for (const m of markers) {
+      const at = styleProp(m, '--sc-game-milestone-at');
+      assert(at > 0 && at <= 1, 'a marker sits at a fraction of the track');
+      assert.equal(has(m, 'is-earned'), value >= at - 0.001, 'a marker is lit exactly when the count has reached it');
+    }
+    if (list) assert.equal(all(list).filter(c => has(c, 'sc-game__star') && has(c, 'is-earned')).length, markers.filter(m => has(m, 'is-earned')).length, 'the written stars agree with the lit markers');
+  }
+  for (const n of by('sc-game__captions')) {
+    assert.equal(n.attrs.get('aria-live'), 'polite', 'the caption region is polite and persistent');
+    assert(has(n.parent, 'sc-game__slot'), 'the caption region sits in a HUD slot');
+  }
+  for (const n of by('sc-game__caption')) {
+    assert(has(n, 'sc-game__plate'), 'a caption sits on a plate');
+    assert(has(n.parent, 'sc-game__captions'), 'a caption sits inside the persistent caption region');
+    assert(!n.attrs.has('aria-live'), 'the caption plate comes and goes, so it is not the live region');
+    const line = all(n).find(c => has(c, 'sc-game__caption-line')), speaker = all(n).find(c => has(c, 'sc-game__caption-speaker'));
+    assert(line && text(line), 'a caption has its line');
+    assert(text(line).length <= 120, 'a caption is at most two lines of about 60 characters');
+    if (speaker) assert(text(speaker) && order(n, speaker) < order(n, line), 'the speaker is written, before the line');
+  }
+  for (const n of by('sc-game__skip')) {
+    assert(has(n, 'sc-game__plate'), 'the skip control sits on a plate');
+    assert(within(n, p => has(p, 'sc-game__slot--br')), 'the skip control sits in the bottom-right slot');
+    const buttons = all(n).filter(c => c.tag === 'button');
+    assert(buttons.length === 1 && buttons[0].attrs.get('type') === 'button' && /\bskip\b/i.test(text(buttons[0])), 'one real button that says Skip');
+    const keys = all(n).filter(c => c.tag === 'kbd').map(text);
+    assert(keys.length >= 1, 'the skip keys are written');
+    assert(!keys.some(k => /^esc/i.test(k)) && !/escape/i.test(buttons[0].attrs.get('aria-keyshortcuts') || ''), 'Escape never skips: it pauses');
+  }
+  for (const n of by('sc-game__title-card')) {
+    assert(has(n.parent, 'sc-game__hud'), 'a title card is a direct child of a HUD, outside the slots');
+    assert.equal(n.attrs.get('aria-live'), 'polite', 'the title-card region is polite and persistent');
+    for (const plate of n.children.filter(c => c.tag)) {
+      assert(has(plate, 'sc-game__plate'), 'a title card is plate-backed');
+      const title = all(plate).find(c => has(c, 'sc-game__title-card-title'));
+      assert(title && /^h[1-6]$/.test(title.tag) && text(title), 'a title card has a written heading');
+      assert(all(plate).some(c => has(c, 'sc-eyebrow') && text(c)) , 'a title card has its eyebrow');
+    }
+  }
+  for (const n of by('sc-game--cinematic')) assert(has(n, 'sc-game'), 'the cinematic modifier sits on a stage');
 }
 const template = readFileSync(new URL('templates/game.html', root), 'utf8');
 await check('the template specimen satisfies the markup contract', () => assertGameMarkup(template, { page: true }));
@@ -312,6 +402,40 @@ await check('markup negative controls are rejected', () => {
     'a refusal message without a way forward': stage.replace('Continue with the keyboard —', 'Sorry —')
   };
   for (const [label, html] of Object.entries(planted)) { assert.notEqual(html, stage, `planted: ${label}`); rejects(label, () => assertGameMarkup(page(html), { page: true })); }
+});
+await check('moments markup negative controls are rejected (meter, milestones, captions, skip, title card)', () => {
+  const stage = `<a class="sc-skip" href="#main">Skip</a><main id="main">${gameStage()}${gameNotes()}</main>`, guide = gameGuide('n', 3), page = h => h;
+  assertGameMarkup(page(stage), { page: true }); assertGameMarkup(guide);
+  const inStage = {
+    'a meter without role=meter': stage.replace('role="meter"', 'role="img"'),
+    'a meter whose valuetext drops the written state': stage.replace(/aria-valuetext="A guard noticed something \(58%\)"/, 'aria-valuetext="58%"'),
+    'a meter state that is colour only': stage.replace('<p class="sc-game__meter-state">A guard noticed something</p>', '<p class="sc-game__meter-state"></p>'),
+    'a meter drawn at another value than it reports': stage.replace('--sc-game-meter-value:0.58', '--sc-game-meter-value:0.9'),
+    'a meter in an unknown state': stage.replace('data-state="alert"', 'data-state="orange"'),
+    'a milestones track exposed to assistive tech': stage.replace('<div class="sc-game__milestones-track" aria-hidden="true">', '<div class="sc-game__milestones-track">'),
+    'a marker lit before the count reaches it': stage.replace('<span class="sc-game__milestones-marker" data-sc-game-milestone="collector"', '<span class="sc-game__milestones-marker is-earned" data-sc-game-milestone="collector"'),
+    'a marker left dark after the count passed it': stage.replace('<span class="sc-game__milestones-marker is-earned" data-sc-game-milestone="explorer"', '<span class="sc-game__milestones-marker" data-sc-game-milestone="explorer"'),
+    'a count without words': stage.replace('<span class="sc-game__milestones-value">12</span> of 24 coins</span>', '<span class="sc-game__milestones-value">12</span> / 24</span>'),
+    'a counting readout in a live region': stage.replace('<span class="sc-game__milestones-count">', '<span class="sc-game__milestones-count" aria-live="polite">'),
+    'thresholds that are never written': stage.replace(/<p class="sc-game__milestones-note">[^<]*<\/p>/, ''),
+    'written stars that disagree with the lit markers': stage.replace(`<li data-sc-game-milestone="collector" class="sc-game__star"><span class="sc-game__star-glyph" aria-hidden="true"></span><span class="sc-game__star-label">collector</span><span class="sc-game__star-state">not yet</span>`, `<li data-sc-game-milestone="collector" class="sc-game__star is-earned"><span class="sc-game__star-glyph" aria-hidden="true"></span><span class="sc-game__star-label">collector</span><span class="sc-game__star-state">earned this run</span>`),
+    'an assertive caption region': stage.replace('<div class="sc-game__captions" id="game-captions" aria-live="polite"', '<div class="sc-game__captions" id="game-captions" aria-live="assertive"'),
+    'a skip control that names Escape': stage.replace('<kbd>Space</kbd> or <kbd>Enter</kbd>', '<kbd>Esc</kbd>'),
+    'a skip control that is not a button': stage.replace('<button class="sc-btn sc-btn--secondary sc-btn--sm" type="button" aria-keyshortcuts="Space Enter">Skip</button>', '<span class="sc-btn sc-btn--secondary sc-btn--sm">Skip</span>'),
+    'a skip control outside the bottom-right slot': stage.replace(/(<div class="sc-game__plate sc-game__skip"[^]*?<\/div>)(<\/div>)(<div class="sc-game__title-card")/, '$2<div class="sc-game__slot sc-game__slot--tl">$1</div>$3'),
+    'a title-card region that is not live': stage.replace('<div class="sc-game__title-card" id="game-title-card" aria-live="polite">', '<div class="sc-game__title-card" id="game-title-card">')
+  };
+  for (const [label, html] of Object.entries(inStage)) { assert.notEqual(html, stage, `planted: ${label}`); rejects(label, () => assertGameMarkup(page(html), { page: true })); }
+  const inGuide = {
+    'a speaker written after the line': guide.replace(/(<span class="sc-game__caption-speaker">Grandma<\/span>)(<span class="sc-game__caption-line">[^<]*<\/span>)/, '$2$1'),
+    'a caption plate that is its own live region': guide.replace('<p class="sc-game__plate sc-game__caption">', '<p class="sc-game__plate sc-game__caption" aria-live="polite">'),
+    'a caption outside the persistent region': guide.replace(/<div class="sc-game__captions"[^>]*>(<p class="sc-game__plate sc-game__caption">[^]*?<\/p>)<\/div>/, '$1'),
+    'a caption longer than two subtitle lines': guide.replace('Mind the window, love — that snowball has a mind of its own.', 'Mind the window, love — that snowball has a mind of its own, and it has been rolling around this kitchen since breakfast, so keep an eye on it.'),
+    'a title card without a plate': guide.replace(/(<div class="sc-game__title-card"[^>]*>)<div class="sc-game__plate">/, '$1<div>'),
+    'a title card inside a slot': guide.replace(/<\/div>(<div class="sc-game__title-card"[^>]*>[^]*?<\/h3><\/div><\/div>)/, '$1</div>'),
+    'a title card without a heading': guide.replace(/<h3 class="sc-game__title-card-title"([^>]*)>([^<]*)<\/h3>/, '<p class="sc-game__title-card-title"$1>$2</p>')
+  };
+  for (const [label, html] of Object.entries(inGuide)) { assert.notEqual(html, guide, `planted: ${label}`); rejects(label, () => assertGameMarkup(html)); }
 });
 
 // ------------------------------------------------------------ CSS opt-in --
@@ -387,6 +511,50 @@ export function assertBandContract(band) {
   const drawsLayer = rules.some(r => splitSelectors(r.sel).some(s => /\.sc-game__layer(?![\w-])/.test(subjectOf(s)) && !/:not\(\[open\]\)/.test(s)) && declarations(r.body).some(d => d.prop === 'display' && d.value !== 'none'));
   if (drawsLayer) assert(valuesFor(rules, 'dialog.sc-game__layer:not([open])', 'display').includes('none'), 'a closed dialog.sc-game__layer is not drawn');
 }
+// The 2.16 moments in CSS: meter states coded by shape and thickness, filled
+// versus outlined markers, a 60ch caption, a cinematic that keeps only its
+// captions, skip control and title card, letterbox bars that never take input
+// or cover the HUD, motion only behind the reduced-motion query and never on
+// a still stage, and marks that keep their shape in forced colours.
+export function cssBlock(sheet, head) {
+  const i = sheet.indexOf(head);
+  if (i < 0) return '';
+  const open = sheet.indexOf('{', i) + 1;
+  let depth = 1, k = open;
+  for (; k < sheet.length && depth; k++) { if (sheet[k] === '{') depth++; else if (sheet[k] === '}') depth--; }
+  return sheet.slice(open, k - 1);
+}
+// What a selector moves: its last .sc-game__* class (or the stage) plus any pseudo-element.
+const movedPart = selector => { const last = compounds(selector).parts.at(-1) || ''; return (/\.sc-game__[\w-]+/.exec(bare(last))?.[0] || 'stage') + (/::[\w-]+$/.exec(last)?.[0] || ''); };
+export function assertMomentsCss(band) {
+  const rules = rulesOf(band);
+  const states = s => [`.sc-game__meter-${s}`, `.sc-game__meter[data-state="alert"] .sc-game__meter-${s}`, `.sc-game__meter[data-state="danger"] .sc-game__meter-${s}`];
+  const glyphs = states('glyph').map(s => first(rules, s, 'clip-path')), thickness = states('fill').map(s => first(rules, s, 'block-size'));
+  assert(glyphs.every(Boolean) && new Set(glyphs).size === 3, 'the meter glyph takes a different shape in each state');
+  assert(thickness.every(Boolean) && new Set(thickness).size === 3, 'the meter fill takes a different thickness in each state');
+  const outlined = first(rules, '.sc-game__milestones-marker', 'clip-path'), filled = first(rules, '.sc-game__milestones-marker.is-earned', 'clip-path');
+  assert(outlined && filled && /evenodd/.test(outlined) && !/evenodd/.test(filled), 'a lit milestone marker is a filled star and an unlit one an outline');
+  assert(/\b60ch\b/.test(first(rules, '.sc-game__caption', 'max-inline-size')), 'a caption is at most about 60 characters wide');
+  const bars = '.sc-game--cinematic::before';
+  assert.equal(first(rules, bars, 'pointer-events'), 'none', 'the letterbox bars never take pointer input');
+  assert(Number(first(rules, bars, 'z-index')) <= Number(first(rules, '.sc-game__hud', 'z-index')), 'the letterbox bars paint under the HUD');
+  assert(/var\(--sc-ink\)/.test(first(rules, bars, 'border-block')), 'the letterbox bars are flat ink');
+  assert.equal(first(rules, '.sc-game--cinematic > .sc-game__crosshair', 'display'), 'none', 'a cinematic hides the crosshair');
+  const hide = rules.find(r => splitSelectors(r.sel).some(s => s.startsWith('.sc-game--cinematic .sc-game__slot > :not(')) && declarations(r.body).some(d => d.prop === 'display' && d.value === 'none'));
+  assert(hide, 'a cinematic hides the content of every slot but its own');
+  const kept = /:not\(([^)]*)\)/.exec(hide.sel)[1].split(',').map(s => s.trim());
+  for (const keep of ['.sc-game__captions', '.sc-game__caption', '.sc-game__skip']) assert(kept.includes(keep), `a cinematic keeps ${keep} on screen`);
+  assert(!rules.some(r => r.sel.includes('sc-game--cinematic') && r.sel.includes('sc-game__title-card') && declarations(r.body).some(d => d.prop === 'display' && d.value === 'none')), 'a cinematic keeps its title card');
+  const motion = cssBlock(band, '@media (prefers-reduced-motion: no-preference)');
+  const allowed = new Set(rulesOf(motion).map(r => `${r.sel}{${r.body}`));
+  const moving = rules.filter(r => declarations(r.body).some(d => /^(?:transition|animation)(?:-|$)/.test(d.prop) && !/^none\b/.test(d.value)));
+  assert(moving.length >= 3, 'the bars, the milestones fill and its markers carry their motion');
+  for (const r of moving) assert(allowed.has(`${r.sel}{${r.body}`), `motion only behind prefers-reduced-motion: no-preference: "${r.sel}"`);
+  const stilled = new Set(rules.filter(r => declarations(r.body).some(d => d.prop === 'transition' && d.value === 'none')).flatMap(r => splitSelectors(r.sel)).filter(s => s.startsWith('.sc-game--still')).map(movedPart));
+  for (const r of moving) for (const s of splitSelectors(r.sel)) assert(stilled.has(movedPart(s)), `a .sc-game--still stage holds ${movedPart(s)} still`);
+  const forced = rulesOf(cssBlock(band, '@media (forced-colors: active)'));
+  for (const s of ['.sc-game__meter-glyph', '.sc-game__meter-fill', '.sc-game__milestones-fill', '.sc-game__milestones-marker']) assert(valuesFor(forced, s, 'forced-color-adjust').includes('none') && valuesFor(forced, s, 'background').includes('CanvasText'), `${s} keeps its shape in forced colours`);
+}
 // Plates are the contrast guarantee: nothing anywhere in the sheet may make a
 // plate (or the stage, HUD or slot that holds it) translucent, blurred or
 // blended, or give a plate a see-through or gradient fill or a shadow.
@@ -414,6 +582,27 @@ await check('the game band is opt-in: scoped selectors, no tokens, no global inp
   assertOptInBand(band);
 });
 await check('the band carries the contract: input, safe area, timer, star shapes, two-tone crosshair, closed dialog', () => assertBandContract(band));
+await check('the moments carry their contract: shaped meter states, filled markers, 60ch captions, cinematic keeps, guarded motion, forced colours', () => assertMomentsCss(band));
+await check('moments CSS negative controls are rejected', () => {
+  const baseGlyph = /\.sc-game__meter-glyph \{[^}]*clip-path: ([^;]*);/.exec(band)[1];
+  const outline = /\.sc-game__milestones-marker \{[^}]*clip-path: ([^;]*);/.exec(band)[1];
+  const planted = {
+    'meter glyphs that keep one shape': band.replace(/(\.sc-game__meter\[data-state="(?:alert|danger)"\] \.sc-game__meter-glyph \{[^}]*clip-path:)[^;]*;/g, `$1 ${baseGlyph};`),
+    'a meter fill that keeps one thickness': band.replace(/(\.sc-game__meter\[data-state="(?:alert|danger)"\] \.sc-game__meter-fill \{[^}]*block-size:)[^;]*;/g, '$1 33.333%;'),
+    'milestone markers that differ only in colour': band.replace(/(\.sc-game__milestones-marker\.is-earned \{[^}]*clip-path:)[^;]*;/, `$1 ${outline};`),
+    'a caption as wide as the stage': band.replace('max-inline-size: min(100%, 60ch);', 'max-inline-size: 100%;'),
+    'letterbox bars that take pointer input': band.replace(/(\.sc-game--cinematic::before \{[^}]*)pointer-events: none;/, '$1'),
+    'letterbox bars over the HUD': band.replace(/(\.sc-game--cinematic::before \{[^}]*z-index:) 1;/, '$1 5;'),
+    'a cinematic that keeps the crosshair': band.replace('.sc-game--cinematic > .sc-game__crosshair { display: none; }', ''),
+    'a cinematic that hides the skip control': band.replace(':not(.sc-game__captions, .sc-game__caption, .sc-game__skip)', ':not(.sc-game__captions, .sc-game__caption)'),
+    'a cinematic that hides its title card': `${band}\n.sc-game--cinematic .sc-game__title-card { display: none; }\n`,
+    'a transition that ignores reduced motion': `${band}\n.sc-game__meter-fill { transition: inline-size .2s linear; }\n`,
+    'an animation outside the motion query': `${band}\n.sc-game__caption { animation: sc-game-rise .3s; }\n`,
+    'a still stage that still moves': band.replace(/\.sc-game--still::before, [^{]*\{ transition: none; \}/, ''),
+    'a meter fill that vanishes in forced colours': band.replace('.sc-game__meter-glyph, .sc-game__meter-fill, .sc-game__milestones-fill', '.sc-game__meter-glyph, .sc-game__milestones-fill')
+  };
+  for (const [label, sheet] of Object.entries(planted)) { assert.notEqual(sheet, band, `planted: ${label}`); rejects(label, () => assertMomentsCss(sheet)); }
+});
 await check('plates take the 2c on-ink re-scope and stay opaque everywhere in the sheet', () => {
   const onInk = /(\.sc-masthead[^{]*)\{([^}]*)\}/.exec(css.slice(css.indexOf('2c. ON-INK CONTEXT')));
   assert(splitSelectors(onInk[1]).includes('.sc-game__plate'), 'the on-ink selector list includes .sc-game__plate');

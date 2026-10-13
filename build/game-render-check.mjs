@@ -45,7 +45,8 @@ function measure(selector = '.sc-game') {
   const pad = getComputedStyle(hud), s = box(stage);
   const safe = { x: s.x + parseFloat(pad.paddingLeft), y: s.y + parseFloat(pad.paddingTop), right: s.right - parseFloat(pad.paddingRight), bottom: s.bottom - parseFloat(pad.paddingBottom) };
   const ctx = canvas.getContext('2d'), sx = canvas.width / canvas.clientWidth, sy = canvas.height / canvas.clientHeight;
-  const plates = [...stage.querySelectorAll('.sc-game__plate')].map(plate => {
+  // Only plates that are drawn: a hidden skip control or an empty title card is not on screen.
+  const plates = [...stage.querySelectorAll('.sc-game__plate')].filter(plate => plate.getClientRects().length > 0).map(plate => {
     const style = getComputedStyle(plate), surface = parse(style.backgroundColor), b = box(plate);
     // Opaque all the way up: nothing between the plate and the stage fades, blurs or blends it.
     const see = []; for (let n = plate; n && n !== stage.parentElement; n = n.parentElement) { const c = getComputedStyle(n); if (c.opacity !== '1' || c.filter !== 'none' || c.backdropFilter !== 'none' || c.mixBlendMode !== 'normal') see.push(n.className || n.tagName); }
@@ -70,14 +71,17 @@ function measure(selector = '.sc-game') {
     return { box: b, opaque: surface.a === 1, seeThrough: see, spills, border: style.borderTopStyle, art: samples.sort((a, b) => a - b)[7], runs, signature, label: plate.textContent.trim().slice(0, 30) };
   });
   const cross = stage.querySelector('.sc-game__crosshair'), cs = getComputedStyle(cross), cb = box(cross);
-  const hit = document.elementFromPoint(cb.x + cb.width / 2, cb.y + cb.height / 2);
+  const hit = document.elementFromPoint(s.x + s.width / 2, s.y + s.height / 2);   // the stage centre (where the crosshair is asserted to be; a cinematic hides it)
   return { stage: s, viewport: { width: innerWidth, height: innerHeight }, pageWidth: document.documentElement.scrollWidth, safe, plates,
     cross: cb, crossShown: cs.visibility === 'visible' && cs.opacity === '1' && cs.display !== 'none', crossAbove: Number(cs.zIndex) > Number(getComputedStyle(hud).zIndex),
     centreHit: hit === canvas, hudEvents: getComputedStyle(hud).pointerEvents, touch: getComputedStyle(canvas).touchAction,
     scroll: [stage.scrollTop, stage.scrollLeft], columns: getComputedStyle(hud).gridTemplateColumns.split(' ').length,
     slots: [...hud.querySelectorAll(':scope > .sc-game__slot')].map(slot => ({ name: slot.className, box: box(slot) })),
     capture: stage.getAttribute('data-sc-capture'), scene: stage.getAttribute('data-sc-game-scene'), theme: document.documentElement.dataset.theme,
-    moving: [...document.querySelectorAll('[class*="sc-game"]')].filter(el => { const c = getComputedStyle(el); return c.animationName !== 'none' || c.transitionDuration.split(',').some(t => parseFloat(t) > 0); }).map(el => el.className) };
+    // What moves: every game element and the stage's letterbox ::before. The
+    // documented opt-ins (an --animate milestones, the cinematic bars) are
+    // reported apart, so a scenario can allow them with motion and forbid them without.
+    moving: [...document.querySelectorAll('[class*="sc-game"]')].flatMap(el => [[el, null], [el, '::before']]).filter(([el, pseudo]) => { const c = getComputedStyle(el, pseudo); return (pseudo === null || c.content !== 'none') && (c.animationName !== 'none' || c.transitionDuration.split(',').some(t => parseFloat(t) > 0)); }).map(([el, pseudo]) => ({ name: el.className + (pseudo || ''), optIn: !!el.closest('.sc-game__milestones--animate') || pseudo === '::before' })) };
 }
 const overlaps = (a, b) => Math.min(a.right, b.right) - Math.max(a.x, b.x) > .5 && Math.min(a.bottom, b.bottom) - Math.max(a.y, b.y) > .5;
 // short: a screen too short for every plate. The shell then guarantees no
@@ -86,12 +90,18 @@ const overlaps = (a, b) => Math.min(a.right, b.right) - Math.max(a.x, b.x) > .5 
 // covered: a layer is open over the stage, so the centre belongs to it.
 // embedded: the stage sits in a longer page, whose own overflow is not the
 // stage's to answer for — the stage itself must still fit the viewport.
-function assertGeometry(m, label, { short = false, slots = 8, covered = false, embedded = false } = {}) {
+// cinematic: a cinematic moment hides the crosshair and centres a title card
+// over the play area, so the centre belongs to the card (which lets the
+// pointer through to the canvas).
+function assertGeometry(m, label, { short = false, slots = 8, covered = false, embedded = false, cinematic = false } = {}) {
   if (embedded) assert(m.stage.x >= -1 && m.stage.right <= m.viewport.width + 1, `${label}: the stage fits the viewport width`);
   else assert(m.pageWidth <= m.viewport.width + 1, `${label}: no page-level horizontal overflow`);
   assert.deepEqual(m.scroll, [0, 0], `${label}: the stage itself never scrolls`);
-  assert(Math.abs(m.cross.x + m.cross.width / 2 - (m.stage.x + m.stage.width / 2)) <= 1 && Math.abs(m.cross.y + m.cross.height / 2 - (m.stage.y + m.stage.height / 2)) <= 1, `${label}: crosshair centre equals stage centre`);
-  assert(m.crossShown && m.crossAbove, `${label}: the crosshair is drawn, above the HUD`);
+  if (cinematic) assert(!m.crossShown, `${label}: a cinematic moment hides the crosshair`);
+  else {
+    assert(Math.abs(m.cross.x + m.cross.width / 2 - (m.stage.x + m.stage.width / 2)) <= 1 && Math.abs(m.cross.y + m.cross.height / 2 - (m.stage.y + m.stage.height / 2)) <= 1, `${label}: crosshair centre equals stage centre`);
+    assert(m.crossShown && m.crossAbove, `${label}: the crosshair is drawn, above the HUD`);
+  }
   assert(m.hudEvents === 'none' && m.touch === 'none', `${label}: the HUD lets pointer input through and the canvas owns touch`);
   assert.equal(m.slots.length, slots, `${label}: ${slots} populated slots`);
   for (let i = 0; i < m.slots.length; i++) for (let j = i + 1; j < m.slots.length; j++) assert(!overlaps(m.slots[i].box, m.slots[j].box), `${label}: ${m.slots[i].name} overlaps ${m.slots[j].name}`);
@@ -103,10 +113,10 @@ function assertGeometry(m, label, { short = false, slots = 8, covered = false, e
     assert(p.box.x >= -1 && p.box.right <= m.viewport.width + 1, `${label}: plate "${p.label}" inside the viewport width`);
     if (short) continue;
     assert(p.box.y >= m.safe.y - 1 && p.box.bottom <= m.safe.bottom + 1 && p.box.bottom <= m.viewport.height + 1, `${label}: plate "${p.label}" inside the safe padding and the viewport`);
-    assert(!overlaps(p.box, m.cross), `${label}: plate "${p.label}" leaves the crosshair clear`);
+    if (!cinematic) assert(!overlaps(p.box, m.cross), `${label}: plate "${p.label}" leaves the crosshair clear`);
   }
   if (!short) {
-    for (const slot of m.slots) assert(!overlaps(slot.box, m.cross), `${label}: ${slot.name} leaves the crosshair clear`);
+    if (!cinematic) for (const slot of m.slots) assert(!overlaps(slot.box, m.cross), `${label}: ${slot.name} leaves the crosshair clear`);
     if (!covered) assert(m.centreHit, `${label}: a pointer at the stage centre reaches the canvas`);
   }
 }
@@ -157,6 +167,9 @@ const closedDialog = page => page.evaluate(() => { const d = document.getElement
 async function untilCapture(page, state) { await page.waitForFunction(value => document.querySelector('.sc-game').getAttribute('data-sc-capture') === value, state, { timeout: 4000 }); }
 async function tabTo(page, count) { for (let i = 0; i < count; i++) await page.keyboard.press('Tab'); return active(page); }
 
+// 8 widths x themes, 2 refusals, native lock, results, 2 short screens, 15
+// embedded stages, 2 meter, 3 cinematic, reduced motion + forced colours.
+const TOTAL = 35;
 export async function checkGameShell(browser, base, shots) {
   const shot = (page, name, options = {}) => shots ? page.screenshot({ path: join(shots, `game-${name}.png`), ...options }) : null;
   let scenarios = 0;
@@ -190,7 +203,7 @@ export async function checkGameShell(browser, base, shots) {
       m = await page.evaluate(measure);
       assertGeometry(m, label);
       assertContrast(m, label, 'bright');
-      assert.deepEqual(m.moving, [], `${label}: nothing in the band animates or transitions`);
+      assert.deepEqual(m.moving.filter(x => !x.optIn).map(x => x.name), [], `${label}: nothing in the band animates or transitions but its documented opt-ins`);
       (signatures[width] ||= {})[theme] = m.plates.map(p => p.signature);
       await shot(page, `${width}-${theme}-bright`);
       await page.evaluate(() => document.querySelector('[data-sc-game-scene-choice="dark"]').click());
@@ -207,7 +220,7 @@ export async function checkGameShell(browser, base, shots) {
       assert.deepEqual(await levelOneHeadings(page), ['First snow'], `${label}: the level heading stays in the accessibility tree while paused`);
       if (width === 1280) {
         await page.emulateMedia({ media: 'print' });
-        const printed = await page.evaluate(() => ({ canvas: getComputedStyle(document.querySelector('.sc-game__canvas')).display, layer: getComputedStyle(document.querySelector('[data-sc-game-capture-layer]')).display, hud: getComputedStyle(document.querySelector('.sc-game__hud')).position, plates: [...document.querySelectorAll('.sc-game__plate')].every(p => getComputedStyle(p).display !== 'none' && p.getBoundingClientRect().height > 0) }));
+        const printed = await page.evaluate(() => ({ canvas: getComputedStyle(document.querySelector('.sc-game__canvas')).display, layer: getComputedStyle(document.querySelector('[data-sc-game-capture-layer]')).display, hud: getComputedStyle(document.querySelector('.sc-game__hud')).position, plates: [...document.querySelectorAll('.sc-game__plate:not([hidden])')].every(p => getComputedStyle(p).display !== 'none' && p.getBoundingClientRect().height > 0) }));
         assert(printed.canvas === 'none' && printed.layer === 'none' && printed.hud === 'static' && printed.plates, `${label}: print drops art and layers and keeps plates in flow`);
         await page.emulateMedia({ media: 'screen' });
       }
@@ -278,7 +291,27 @@ export async function checkGameShell(browser, base, shots) {
       assert(Math.abs(dialog.box[0]) <= 1 && Math.abs(dialog.box[1]) <= 1 && Math.abs(dialog.box[2] - 1280) <= 1 && Math.abs(dialog.box[3] - 800) <= 1 && dialog.panel, 'results: the layer covers the viewport and the panel is visible');
       assert(dialog.border === 'none' && dialog.background === 'rgba(0, 0, 0, 0)' && dialog.backdrop !== 'rgba(0, 0, 0, 0)', 'results: no UA chrome; the backdrop carries the wash');
       assert.equal(dialog.focus, 'Next level', 'results: the primary action takes focus on open');
-      assert.equal(dialog.stars, 3, 'results: three star slots on an ordinary card');
+      assert.equal(dialog.stars, 4, 'results: the two coin stars under the milestones and the two other star slots, on an ordinary card');
+      // The count-up: it starts from zero, steps (never jumps past a marker
+      // unlit), lights each marker and its written star as it passes, glides
+      // the fill (motion allowed here) and announces the total once, at the end.
+      const counting = await page.evaluate(() => { const b = document.querySelector('#game-results .sc-game__milestones'); return { state: b.getAttribute('data-sc-game-count'), value: Number(b.querySelector('.sc-game__milestones-value').textContent), status: document.querySelector('[data-sc-game-count-status]').textContent, glides: getComputedStyle(b.querySelector('.sc-game__milestones-fill')).transitionDuration }; });
+      assert(counting.state === 'counting' && counting.value < 12 && counting.status === '' && parseFloat(counting.glides) > 0, `results: the coin count counts up from zero with a gliding fill and says nothing yet (${JSON.stringify(counting)})`);
+      const seen = await page.evaluate(() => new Promise(resolve => {
+        const b = document.querySelector('#game-results .sc-game__milestones'), out = [], at = Math.round(1 / 3 * 24);
+        const look = () => {
+          const n = Number(b.querySelector('.sc-game__milestones-value').textContent), lit = b.querySelector('[data-sc-game-milestone="explorer"].sc-game__milestones-marker').classList.contains('is-earned'), star = b.querySelector('li[data-sc-game-milestone="explorer"]');
+          out.push({ n, agree: lit === (n >= at) && star.classList.contains('is-earned') === lit && /earned/.test(star.textContent) === lit, status: document.querySelector('[data-sc-game-count-status]').textContent });
+          if (b.getAttribute('data-sc-game-count') === 'done') resolve(out); else requestAnimationFrame(look);
+        };
+        look();
+      }));
+      assert(seen.every(s => s.agree), 'results: each marker and its written star light exactly as the count passes the threshold');
+      assert(seen.every((s, i) => i === 0 || s.n >= seen[i - 1].n), 'results: the count only goes up');
+      assert(seen.slice(0, -1).every(s => s.status === ''), 'results: nothing is announced while counting');
+      const done = await page.evaluate(() => { const b = document.querySelector('#game-results .sc-game__milestones'); return { value: b.querySelector('.sc-game__milestones-value').textContent, fill: getComputedStyle(b).getPropertyValue('--sc-game-milestones-value').trim(), lit: [...b.querySelectorAll('.sc-game__milestones-marker')].map(m => m.classList.contains('is-earned')), status: document.querySelector('[data-sc-game-count-status]').textContent }; });
+      assert(done.value === '12' && Number(done.fill) === 0.5 && done.lit.join() === 'true,false', `results: the count ends at 12 of 24, half the track, explorer lit and collector not (${JSON.stringify(done)})`);
+      assert(/^12 of 24 coins\. explorer star earned; collector star not yet\.$/.test(done.status), `results: the total is announced once, at the end ("${done.status}")`);
       await shot(page, 'results-1280');
       await page.keyboard.press('Escape');
       assert.deepEqual(await page.evaluate(() => [document.getElementById('game-results').open, document.activeElement.hasAttribute('data-sc-game-results-open')]), [false, true], 'results: Escape closes and returns focus to the opener');
@@ -288,7 +321,113 @@ export async function checkGameShell(browser, base, shots) {
       assert.deepEqual(await closedDialog(page), { open: false, display: 'none', size: 0 }, 'results: closed by its primary action, the dialog is not drawn');
       assert.deepEqual(errors, [], 'results: no page errors');
       scenarios++;
-      console.log('  ok game results dialog: undrawn while closed, modal, one primary, focus on open, focus restored on Escape and on close');
+      console.log(`  ok game results dialog: undrawn while closed, modal, one primary, focus on open, focus restored on Escape and on close; the coin count stepped through ${seen.length} frames from ${seen[0].n} to 12, markers and stars lit with it, one announcement at the end`);
+    } finally { await context.close(); }
+  }
+
+  // Meter states over the art, on the template's compact in-play stage: each
+  // state changes the word, the glyph's shape and the fill's thickness (colour
+  // only repeats them); the text reads at 4.5:1, the fill against its track and
+  // the glyph against the plate at 3:1; the accessibility tree has one named
+  // meter per state whose value carries the word; the coin track sits above.
+  for (const [width, theme] of [[390, 'dark'], [1280, 'light']]) {
+    const label = `game meter ${width}px ${theme}`;
+    const { context, page, errors } = await open(browser, base, { width, height: HEIGHT[width], theme });
+    try {
+      await page.evaluate(() => document.getElementById('game-meters-stage').scrollIntoView({ block: 'center' }));
+      await page.waitForFunction(() => { const c = document.querySelector('#game-meters-stage .sc-game__canvas'); return c.width === Math.round(c.clientWidth * Math.min(devicePixelRatio, 2)); });
+      const looks = {};
+      for (const state of ['calm', 'alert', 'danger']) {
+        const look = await page.evaluate(id => {
+          const parse = v => (v.match(/-?[\d.]+/g) || []).slice(0, 3).map(Number);
+          const lum = rgb => { const l = rgb.map(c => { c /= 255; return c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4; }); return .2126 * l[0] + .7152 * l[1] + .0722 * l[2]; };
+          const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
+          const m = document.getElementById(id), q = s => m.querySelector(s), cs = s => getComputedStyle(q(s));
+          const plate = parse(getComputedStyle(m).backgroundColor), track = parse(cs('.sc-game__meter-track').backgroundColor), fill = q('.sc-game__meter-fill').getBoundingClientRect(), inner = q('.sc-game__meter-track').getBoundingClientRect();
+          return { state: m.dataset.state, word: q('.sc-game__meter-state').textContent, valuetext: m.getAttribute('aria-valuetext'), shape: cs('.sc-game__meter-glyph').clipPath, height: Math.round(fill.height * 10) / 10, width: fill.width / (inner.width - 2), now: Number(m.getAttribute('aria-valuenow')),
+            fillVsTrack: ratio(parse(cs('.sc-game__meter-fill').backgroundColor), track), glyphVsPlate: ratio(parse(cs('.sc-game__meter-glyph').backgroundColor), plate), wordVsPlate: ratio(parse(cs('.sc-game__meter-state').color), plate) };
+        }, `game-meters-${state}-meter`);
+        assert(look.state === state && look.word && look.valuetext.includes(look.word), `${label}: ${state} is written ("${look.word}") and carried by aria-valuetext`);
+        assert(Math.abs(look.width - look.now / 100) <= 0.02, `${label}: the ${state} fill is drawn at the reported value (${look.width.toFixed(3)} vs ${look.now}%)`);
+        assert(look.fillVsTrack >= 3 && look.glyphVsPlate >= 3 && look.wordVsPlate >= 4.5, `${label}: ${state} contrast — fill ${look.fillVsTrack.toFixed(2)}:1, glyph ${look.glyphVsPlate.toFixed(2)}:1, word ${look.wordVsPlate.toFixed(2)}:1`);
+        looks[state] = look;
+      }
+      assert(new Set(Object.values(looks).map(l => l.shape)).size === 3, `${label}: the glyph takes three different shapes`);
+      assert(looks.calm.height < looks.alert.height && looks.alert.height < looks.danger.height, `${label}: the fill thickens with the state (${looks.calm.height} < ${looks.alert.height} < ${looks.danger.height}px)`);
+      const cdp = await page.context().newCDPSession(page);
+      try {
+        const { nodes } = await cdp.send('Accessibility.getFullAXTree');
+        const meters = nodes.filter(n => !n.ignored && n.role?.value === 'meter').map(n => [n.name?.value, String((n.properties || []).find(p => p.name === 'valuetext')?.value?.value ?? '')]);
+        assert(meters.length === 3 && meters.every(([name]) => name === 'awareness') && ['calm', 'alert', 'danger'].every(st => meters.some(([, v]) => v.includes(looks[st].word))), `${label}: three named meters in the accessibility tree, each value carrying its word (${JSON.stringify(meters)})`);
+      } finally { await cdp.detach(); }
+      const m = await page.evaluate(measure, '#game-meters-stage');
+      assertGeometry(m, label, { slots: 4, embedded: true });
+      assertContrast(m, label, 'bright', { art: false });
+      await shot(page, `meters-${width}-${theme}`, { clip: await page.evaluate(() => { const r = document.getElementById('game-meters-stage').getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height }; }) });
+      assert.deepEqual(errors, [], `${label}: no page errors`);
+      scenarios++;
+      console.log(`  ok ${label}: calm, alert and danger differ in word, glyph shape and fill thickness (${looks.calm.height} < ${looks.alert.height} < ${looks.danger.height}px); fill, glyph and word contrast; three named meters in the AX tree; the coin track above them clear of the crosshair`);
+    } finally { await context.close(); }
+  }
+
+  // A cinematic moment over the full specimen: letterbox bars under the HUD
+  // that take no input, only the caption, skip control and title card on
+  // screen, a caption at most 60ch wide at the bottom centre, a centred title
+  // card, the skip control in the bottom-right taking focus, Escape that does
+  // not skip, Space that does, and focus back on the opener.
+  for (const [width, theme, reducedMotion] of [[390, 'dark', 'no-preference'], [1280, 'light', 'no-preference'], [1280, 'dark', 'reduce']]) {
+    const label = `game cinematic ${width}px ${theme}${reducedMotion === 'reduce' ? ' reduced motion' : ''}`;
+    const { context, page, errors } = await open(browser, base, { width, height: HEIGHT[width], theme, reducedMotion });
+    try {
+      await tabTo(page, 2); await page.keyboard.press('Enter'); await untilCapture(page, 'captured');
+      // The first frame of the moment: with motion the bars start from nothing (they grow in); without, they are already there.
+      const firstBars = await page.evaluate(() => { document.querySelector('[data-sc-game-cinematic-open]').click(); return parseFloat(getComputedStyle(document.querySelector('.sc-game'), '::before').borderTopWidth); });
+      await page.waitForFunction(() => parseFloat(getComputedStyle(document.querySelector('.sc-game'), '::before').borderTopWidth) >= 16 && !document.querySelector('.sc-game').getAnimations({ subtree: true }).length, null, { timeout: 4000 });
+      assert(reducedMotion === 'reduce' ? firstBars >= 16 : firstBars < 16, `${label}: the bars ${reducedMotion === 'reduce' ? 'are drawn at once' : 'grow in from the edges'} (first frame ${firstBars}px)`);
+      const moment = await page.evaluate(() => {
+        const stage = document.querySelector('.sc-game'), bars = getComputedStyle(stage, '::before'), s = stage.getBoundingClientRect(), hud = document.querySelector('.sc-game__hud');
+        const box = el => { const r = el.getBoundingClientRect(); return { x: r.x, y: r.y, right: r.right, bottom: r.bottom, width: r.width, height: r.height }; };
+        const caption = document.querySelector('.sc-game__caption'), title = document.querySelector('.sc-game__title-card > .sc-game__plate'), skip = document.querySelector('.sc-game__skip');
+        const probe = document.createElement('span'); probe.style.cssText = 'display:inline-block;inline-size:60ch;block-size:0'; caption.append(probe); const ch60 = probe.getBoundingClientRect().width; probe.remove();
+        const pad = getComputedStyle(hud), safe = { right: s.right - parseFloat(pad.paddingRight), bottom: s.bottom - parseFloat(pad.paddingBottom) };
+        const visible = [...stage.querySelectorAll('.sc-game__plate')].filter(p => p.getClientRects().length).map(p => p.className);
+        const a = document.activeElement, ring = getComputedStyle(a);
+        return { cinematic: stage.classList.contains('sc-game--cinematic'), bars: { top: parseFloat(bars.borderTopWidth), bottom: parseFloat(bars.borderBottomWidth), events: bars.pointerEvents, z: bars.zIndex, transition: bars.transitionDuration, colour: bars.borderTopColor },
+          hudZ: getComputedStyle(hud).zIndex, stage: box(stage), safe, caption: box(caption), ch60, title: box(title), skip: box(skip), visible,
+          focus: { text: a.textContent.trim(), inSkip: !!a.closest('.sc-game__skip'), outline: ring.outlineStyle, width: parseFloat(ring.outlineWidth) }, centreHit: document.elementFromPoint(s.x + s.width / 2, s.y + s.height / 2) === stage.querySelector('.sc-game__canvas') };
+      });
+      assert(moment.cinematic && moment.bars.top >= 16 && moment.bars.top === moment.bars.bottom && moment.bars.events === 'none' && Number(moment.bars.z) <= Number(moment.hudZ), `${label}: letterbox bars, equal top and bottom, under the HUD and never taking input (${JSON.stringify(moment.bars)})`);
+      assert(reducedMotion === 'reduce' ? parseFloat(moment.bars.transition) === 0 : parseFloat(moment.bars.transition) > 0, `${label}: the bars ${reducedMotion === 'reduce' ? 'appear at once under reduced motion' : 'grow in when motion is allowed'}`);
+      assert.deepEqual(moment.visible.sort(), ['sc-game__plate', 'sc-game__plate sc-game__caption', 'sc-game__plate sc-game__skip'], `${label}: only the caption, the skip control and the title card are on screen`);
+      assert(moment.caption.width <= moment.ch60 + 1 && Math.abs(moment.caption.x + moment.caption.width / 2 - (moment.stage.x + moment.stage.width / 2)) <= 1, `${label}: the caption is centred and at most 60ch wide (${moment.caption.width.toFixed(0)} of ${moment.ch60.toFixed(0)}px)`);
+      assert(moment.caption.y > moment.stage.y + moment.stage.height / 2 && moment.caption.bottom <= moment.safe.bottom + 1, `${label}: the caption sits low, inside the safe area`);
+      assert(Math.abs(moment.title.x + moment.title.width / 2 - (moment.stage.x + moment.stage.width / 2)) <= 1 && Math.abs(moment.title.y + moment.title.height / 2 - (moment.stage.y + moment.stage.height / 2)) <= 1, `${label}: the title card is centred on the stage`);
+      assert(Math.abs(moment.skip.right - moment.safe.right) <= 1 && moment.skip.bottom <= moment.safe.bottom + 1 && moment.skip.x > moment.stage.x + moment.stage.width / 2 && moment.skip.y > moment.stage.y + moment.stage.height / 2, `${label}: the skip control sits in the bottom-right, inside the safe area`);
+      assert(moment.focus.inSkip && moment.focus.text === 'Skip' && moment.focus.outline !== 'none' && moment.focus.width >= 2, `${label}: the skip button takes focus with a visible ring`);
+      assert(moment.centreHit, `${label}: the title card lets a pointer at the centre through to the canvas`);
+      const m = await page.evaluate(measure);
+      assertGeometry(m, label, { cinematic: true });
+      assertContrast(m, label, 'bright', { art: false });
+      await shot(page, `cinematic-${width}-${theme}${reducedMotion === 'reduce' ? '-reduced' : ''}`);
+      // Rendered negative controls: bars or a title card that take pointer input, and a caption let out past
+      // 60ch, are caught by the same measurements (each planted rule is removed again).
+      const planted = await page.evaluate(() => {
+        const stage = document.querySelector('.sc-game'), s = stage.getBoundingClientRect(), canvas = stage.querySelector('.sc-game__canvas'), caption = document.querySelector('.sc-game__caption');
+        const centre = () => document.elementFromPoint(s.x + s.width / 2, s.y + s.height / 2) === canvas;
+        const plant = (css, read) => { const style = document.createElement('style'); style.textContent = css; document.head.append(style); const out = read(); style.remove(); return out; };
+        const probe = document.createElement('span'); probe.style.cssText = 'display:inline-block;inline-size:60ch;block-size:0'; caption.append(probe); const ch60 = probe.getBoundingClientRect().width; probe.remove();
+        return { bars: plant('.sc-game--cinematic::before { pointer-events: auto !important; }', centre), card: plant('.sc-game__title-card { pointer-events: auto !important; }', centre), wide: caption.parentElement.getBoundingClientRect().width <= ch60 + 1 ? 'n/a: the slot is narrower than 60ch' : plant('.sc-game__caption { max-inline-size: none !important; } .sc-game__caption-line::after { content: " and it has been rolling round this kitchen since breakfast, so keep an eye on it"; }', () => caption.getBoundingClientRect().width > ch60 + 1), clean: centre() };
+      });
+      assert(!planted.bars && !planted.card && planted.wide && planted.clean, `${label}: rendered negative controls are caught — bars or a title card taking input block the centre, an unbounded caption passes 60ch (${JSON.stringify(planted)})`);
+      await page.keyboard.press('Escape');
+      assert(await page.evaluate(() => document.querySelector('.sc-game').classList.contains('sc-game--cinematic')), `${label}: Escape does not skip (it pauses in a game)`);
+      await page.evaluate(() => document.querySelector('.sc-game__skip button').focus());
+      await page.keyboard.press('Space');
+      const after = await page.evaluate(() => ({ cinematic: document.querySelector('.sc-game').classList.contains('sc-game--cinematic'), captions: document.querySelector('.sc-game__captions').childElementCount, title: document.querySelector('.sc-game__title-card').childElementCount, skipHidden: document.querySelector('.sc-game__skip').hidden, focus: document.activeElement.hasAttribute('data-sc-game-cinematic-open'), crosshair: getComputedStyle(document.querySelector('.sc-game__crosshair')).display }));
+      assert(!after.cinematic && after.captions === 0 && after.title === 0 && after.skipHidden && after.focus && after.crosshair !== 'none', `${label}: Space on Skip ends the moment, clears it, restores the HUD and returns focus to the opener (${JSON.stringify(after)})`);
+      assert.deepEqual(errors, [], `${label}: no page errors`);
+      scenarios++;
+      console.log(`  ok ${label}: bars ${moment.bars.top}px under the HUD, only caption/skip/title on screen, 60ch caption at the bottom centre, centred title card, skip bottom-right with focus, Escape keeps the moment, Space skips and focus returns`);
     } finally { await context.close(); }
   }
 
@@ -314,7 +453,7 @@ export async function checkGameShell(browser, base, shots) {
       assertGeometry(m, label, { short: true });
       const inside = m.plates.filter(p => p.box.y >= m.safe.y - 1 && p.box.bottom <= m.safe.bottom + 1).length;
       await shot(page, `${name}-hud`);
-      const controls = await page.evaluate(() => document.querySelectorAll('.sc-game__hud :is(a[href], button, input, select, summary, textarea, [tabindex])').length);
+      const controls = await page.evaluate(() => [...document.querySelector('.sc-game__hud').querySelectorAll(':is(a[href], button, input, select, summary, textarea, [tabindex])')].filter(c => c.getClientRects().length > 0).length);
       assert(controls > 0, `${label}: the HUD has a control to reach`);
       for (let i = 0; i < controls; i++) {
         await page.keyboard.press('Tab');
@@ -333,8 +472,13 @@ export async function checkGameShell(browser, base, shots) {
   // The compact stage embedded in the style guide and the visual library, at
   // phone widths, and a 320px stage inside a wide page: the layout follows the
   // STAGE's width (a container query), not the viewport's.
-  const embedded = [['styleguide.html', '#guide-game-stage', 320], ['styleguide.html', '#guide-game-stage', 390], ['visual-library.html', '#library-game-stage', 320], ['visual-library.html', '#library-game-stage', 390], ['styleguide.html', '#guide-game-stage', 1280, 320]];
-  for (const [file, selector, width, stageWidth] of embedded) {
+  // The cinematic and meter stages follow the same rules: the cinematic one
+  // hides its crosshair and centres its title card over the play area.
+  const SLOTS = { 'game-stage': { slots: 5 }, 'game-cinema-stage': { slots: 2, cinematic: true }, 'game-meters-stage': { slots: 4 } };
+  const embedded = [];
+  for (const [file, prefix] of [['styleguide.html', 'guide'], ['visual-library.html', 'library']]) for (const kind of Object.keys(SLOTS)) for (const width of [320, 390]) embedded.push([file, `#${prefix}-${kind}`, width, undefined, SLOTS[kind]]);
+  for (const kind of Object.keys(SLOTS)) embedded.push(['styleguide.html', `#guide-${kind}`, 1280, 320, SLOTS[kind]]);
+  for (const [file, selector, width, stageWidth, options] of embedded) {
     const label = `game embedded in ${file} at ${width}px${stageWidth ? `, stage ${stageWidth}px wide` : ''}`;
     const { context, page, errors } = await open(browser, base, { width, height: width === 1280 ? 800 : 844, theme: 'light', path: file });
     try {
@@ -342,12 +486,12 @@ export async function checkGameShell(browser, base, shots) {
       await page.waitForFunction(sel => { const c = document.querySelector(sel + ' .sc-game__canvas'); return c.width === Math.round(c.clientWidth * Math.min(devicePixelRatio, 2)); }, selector);
       const m = await page.evaluate(measure, selector);
       if (stageWidth) assert(Math.abs(m.stage.width - stageWidth) <= 1 && m.columns === 2, `${label}: a narrow stage in a wide page takes the two-column layout`);
-      assertGeometry(m, label, { slots: 5, embedded: true });
+      assertGeometry(m, label, { ...options, embedded: true });
       assertContrast(m, label, 'bright', { art: false });
-      if (shots && (width === 320 || stageWidth)) await page.locator(selector).screenshot({ path: join(shots, `game-embedded-${file.replace('.html', '')}-${stageWidth ? `${stageWidth}-in-${width}` : width}.png`) });
+      if (shots && (width === 320 || stageWidth)) await page.locator(selector).screenshot({ path: join(shots, `game-embedded-${file.replace('.html', '')}-${selector.slice(1)}-${stageWidth ? `${stageWidth}-in-${width}` : width}.png`) });
       assert.deepEqual(errors, [], `${label}: no page errors`);
       scenarios++;
-      console.log(`  ok ${label}: ${m.columns} columns, centred and unobstructed crosshair, no overlap, no clipping, opaque plates`);
+      console.log(`  ok ${label} (${selector}): ${m.columns} columns, ${options.cinematic ? 'crosshair hidden for the moment, title card centred' : 'centred and unobstructed crosshair'}, no overlap, no clipping, opaque plates`);
     } finally { await context.close(); }
   }
 
@@ -358,16 +502,23 @@ export async function checkGameShell(browser, base, shots) {
     try {
       await tabTo(page, 2); await page.keyboard.press('Enter'); await untilCapture(page, 'captured');
       const m = await page.evaluate(measure);
-      assert.deepEqual(m.moving, [], `${label}: nothing moves under reduced motion`);
+      assert.deepEqual(m.moving.map(x => x.name), [], `${label}: nothing moves under reduced motion, not even the opt-ins`);
       assertGeometry(m, label);
       await page.emulateMedia({ forcedColors: 'active' });
-      const forced = await page.evaluate(() => { const plate = document.querySelector('.sc-game__plate'), cross = document.querySelector('.sc-game__crosshair'), glyphs = [...document.querySelectorAll('.sc-game__star-glyph')]; const p = getComputedStyle(plate), c = getComputedStyle(cross), dot = getComputedStyle(cross, '::after'); return { plateBorder: p.borderTopStyle !== 'none' && parseFloat(p.borderTopWidth) > 0, cross: c.forcedColorAdjust === 'none' && c.boxShadow !== 'none' && c.borderTopStyle === 'solid', dot: dot.backgroundColor !== 'rgba(0, 0, 0, 0)', glyphs: glyphs.every(g => getComputedStyle(g).forcedColorAdjust === 'none' && getComputedStyle(g).backgroundColor !== 'rgba(0, 0, 0, 0)') }; });
-      assert(forced.plateBorder && forced.cross && forced.dot && forced.glyphs, `${label}: plates, crosshair and star glyphs stay visible in forced colours`);
+      const forced = await page.evaluate(() => { const plate = document.querySelector('.sc-game__plate'), cross = document.querySelector('.sc-game__crosshair'), glyphs = [...document.querySelectorAll('.sc-game__star-glyph, .sc-game__meter-glyph, .sc-game__meter-fill, .sc-game__milestones-marker, .sc-game__milestones-fill')]; const p = getComputedStyle(plate), c = getComputedStyle(cross), dot = getComputedStyle(cross, '::after'); return { plateBorder: p.borderTopStyle !== 'none' && parseFloat(p.borderTopWidth) > 0, cross: c.forcedColorAdjust === 'none' && c.boxShadow !== 'none' && c.borderTopStyle === 'solid', dot: dot.backgroundColor !== 'rgba(0, 0, 0, 0)', glyphs: glyphs.length >= 8 && glyphs.every(g => getComputedStyle(g).forcedColorAdjust === 'none' && getComputedStyle(g).backgroundColor !== 'rgba(0, 0, 0, 0)'), tracks: [...document.querySelectorAll('.sc-game__meter-track, .sc-game__milestones-track')].every(t => getComputedStyle(t).borderTopStyle === 'solid') }; });
+      assert(forced.plateBorder && forced.cross && forced.dot && forced.glyphs && forced.tracks, `${label}: plates, crosshair, star and meter glyphs, fills and milestone markers stay visible in forced colours (${JSON.stringify(forced)})`);
       await shot(page, 'forced-colors-390');
+      // The results count-up under reduced motion: the end at once, announced once.
+      await page.emulateMedia({ forcedColors: 'none' });
+      await page.evaluate(() => { document.querySelector('[data-sc-game-results-open]').click(); });
+      const instant = await page.evaluate(() => { const b = document.querySelector('#game-results .sc-game__milestones'); return { state: b.getAttribute('data-sc-game-count'), value: b.querySelector('.sc-game__milestones-value').textContent, status: document.querySelector('[data-sc-game-count-status]').textContent, glide: getComputedStyle(b.querySelector('.sc-game__milestones-fill')).transitionDuration }; });
+      assert(instant.state === 'done' && instant.value === '12' && /^12 of 24 coins/.test(instant.status) && parseFloat(instant.glide) === 0, `${label}: under reduced motion the results show the final count at once, static, announced once (${JSON.stringify(instant)})`);
+      await page.keyboard.press('Escape');
       assert.deepEqual(errors, [], `${label}: no page errors`);
       scenarios++;
       console.log(`  ok ${label}: no animation, plates keep a border, crosshair and glyphs draw in system colours`);
     } finally { await context.close(); }
   }
-  console.log(`game-render-check: ${scenarios}/20 rendered game-shell scenarios passed`);
+  assert.equal(scenarios, TOTAL, `game-render-check: ${scenarios} of ${TOTAL} scenarios ran`);
+  console.log(`game-render-check: ${scenarios}/${TOTAL} rendered game-shell scenarios passed`);
 }

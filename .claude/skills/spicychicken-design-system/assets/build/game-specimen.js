@@ -117,20 +117,102 @@
       play.focus();
     });
   }
+  // A cinematic moment: letterbox bars, a caption, a title card and the skip
+  // control. Skip is a real button and takes focus; leaving returns focus to
+  // the opener. No key listener: the specimen relies on the focused button.
+  function wireCinematic(stage) {
+    var opener = document.querySelector('[data-sc-game-cinematic-open][aria-controls="' + stage.id + '"]');
+    var skip = stage.querySelector('[data-sc-game-skip]'), captions = stage.querySelector('.sc-game__captions');
+    var title = stage.querySelector('.sc-game__title-card'), layer = stage.querySelector('[data-sc-game-capture-layer]');
+    if (!opener || !skip || !captions || !title) return;
+    var button = skip.querySelector('button'), restore = null;
+    function plate(className, parts) {
+      var p = document.createElement(className === 'caption' ? 'p' : 'div');
+      p.className = className === 'caption' ? 'sc-game__plate sc-game__caption' : 'sc-game__plate';
+      parts.forEach(function (part) { var el = document.createElement(part[0]); el.className = part[1]; el.textContent = part[2]; if (part[3]) el.id = part[3]; p.appendChild(el); });
+      return p;
+    }
+    opener.addEventListener('click', function () {
+      if (restore) return;
+      restore = { layer: layer ? layer.hidden : true, inert: button.inert };
+      if (layer) layer.hidden = true;
+      button.inert = false;
+      stage.classList.add('sc-game--cinematic');
+      title.replaceChildren(plate('title', [['p', 'sc-eyebrow', 'level 2 · illustrative'], ['h2', 'sc-game__title-card-title', 'The ice cave', stage.id + '-title-card-title']]));
+      captions.replaceChildren(plate('caption', [['span', 'sc-game__caption-speaker', 'Grandma'], ['span', 'sc-game__caption-line', 'Mind the window, love — that snowball has a mind of its own.']]));
+      skip.hidden = false;
+      stage.setAttribute('data-sc-game-moment', 'playing');
+      button.focus({ preventScroll: true });
+    });
+    button.addEventListener('click', function () {
+      if (!restore) return;
+      stage.classList.remove('sc-game--cinematic');
+      title.replaceChildren(); captions.replaceChildren();
+      skip.hidden = true;
+      if (layer) layer.hidden = restore.layer;
+      button.inert = restore.inert;
+      restore = null;
+      stage.setAttribute('data-sc-game-moment', 'skipped');
+      opener.focus();
+    });
+  }
+  // The results count-up: the count steps from zero to the authored value,
+  // the fill follows (the band glides it only when motion is allowed) and
+  // each marker lights its written star as the count reaches it. Reduced
+  // motion shows the end at once. The total is announced once, at the end.
+  function countUp(dialog) {
+    var block = dialog.querySelector('.sc-game__milestones[data-sc-game-count-to]');
+    if (!block) return { start: function () {}, finish: function () {} };
+    var to = Number(block.getAttribute('data-sc-game-count-to')), total = Number(block.getAttribute('data-sc-game-count-total'));
+    var value = block.querySelector('.sc-game__milestones-value'), status = dialog.querySelector('[data-sc-game-count-status]');
+    var markers = Array.prototype.map.call(block.querySelectorAll('.sc-game__milestones-marker'), function (m) {
+      var name = m.getAttribute('data-sc-game-milestone');
+      return { el: m, at: Math.round(parseFloat(m.style.getPropertyValue('--sc-game-milestone-at')) * total), star: block.querySelector('li[data-sc-game-milestone="' + name + '"]'), name: name };
+    });
+    var timer = 0, count = 0;
+    function show(n) {
+      count = n;
+      value.textContent = String(n);
+      block.style.setProperty('--sc-game-milestones-value', String(total ? n / total : 0));
+      markers.forEach(function (m) {
+        var lit = n >= m.at;
+        m.el.classList.toggle('is-earned', lit);
+        if (m.star) { m.star.classList.toggle('is-earned', lit); m.star.querySelector('.sc-game__star-state').textContent = lit ? 'earned this run' : 'not yet'; }
+      });
+    }
+    function finish() {
+      clearTimeout(timer); timer = 0;
+      show(to);
+      block.setAttribute('data-sc-game-count', 'done');
+      if (status) status.textContent = to + ' of ' + total + ' coins. ' + markers.map(function (m) { return m.name + (to >= m.at ? ' star earned' : ' star not yet'); }).join('; ') + '.';
+    }
+    function step() { if (count >= to) { finish(); return; } show(count + 1); timer = setTimeout(step, Math.max(40, Math.min(160, 1200 / Math.max(1, to)))); }
+    return {
+      start: function () {
+        clearTimeout(timer);
+        if (status) status.textContent = '';
+        block.setAttribute('data-sc-game-count', 'counting');
+        var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (still) { finish(); return; }
+        show(0); timer = setTimeout(step, 240);
+      },
+      finish: finish
+    };
+  }
   function wireResults() {
     Array.prototype.forEach.call(document.querySelectorAll('[data-sc-game-results-open]'), function (opener) {
       var dialog = document.getElementById(opener.getAttribute('aria-controls'));
       if (!dialog || typeof dialog.showModal !== 'function') { opener.hidden = true; return; }
-      var primary = dialog.querySelector('[data-sc-game-results-next]');
-      opener.addEventListener('click', function () { dialog.showModal(); if (primary) primary.focus(); });
-      dialog.addEventListener('close', function () { opener.focus(); });
+      var primary = dialog.querySelector('[data-sc-game-results-next]'), counter = countUp(dialog);
+      opener.addEventListener('click', function () { dialog.showModal(); if (primary) primary.focus(); counter.start(); });
+      dialog.addEventListener('close', function () { counter.finish(); opener.focus(); });
       Array.prototype.forEach.call(dialog.querySelectorAll('[data-sc-game-results-next], [data-sc-game-results-close]'), function (button) {
         button.addEventListener('click', function () { dialog.close(); });
       });
     });
   }
   var stages = Array.prototype.slice.call(document.querySelectorAll('[data-sc-game-specimen]'));
-  stages.forEach(function (stage) { paint(stage); wireScene(stage); wireCapture(stage); });
+  stages.forEach(function (stage) { paint(stage); wireScene(stage); wireCapture(stage); wireCinematic(stage); });
   wireResults();
   if (window.ResizeObserver) {
     var observer = new ResizeObserver(function (entries) {

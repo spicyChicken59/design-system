@@ -1872,10 +1872,21 @@ html[data-sc-motion-paused="true"] .sc-disclosure[open] > .sc-disclosure__body {
      · timer, measurement, count, star and hint furniture whose meaning is
        always WRITTEN — words and shapes, never colour alone;
      · a capture/pause layer (a plain div or a native dialog) that centres a
-       composed .sc-card and scrolls on a short landscape screen.
+       composed .sc-card and scrolls on a short landscape screen;
+     · cinematic moments: a stage modifier with letterbox bars that leaves
+       only captions, a skip control and a title card on screen; subtitles on
+       a plate with a written speaker; a centred, plate-backed title card;
+     · a labelled meter whose states differ in shape and words, and a
+       milestones track whose threshold markers light as a count passes them.
    Opt-in by class only: no element, :root or body rule, no global
    touch-action, user-select, cursor or pointer-events, no new token. Nothing
-   here animates. The stage is a named size container (sc-game), so the HUD
+   moves unless the reader allows motion: the only transitions are the
+   cinematic bars and an opt-in milestones fill, both inside
+   prefers-reduced-motion: no-preference and both off on a .sc-game--still
+   stage (the game's own reduced-motion setting). Values reach the band
+   through custom properties the consumer sets inline and the band only
+   reads (--sc-game-meter-value, --sc-game-milestones-value,
+   --sc-game-milestone-at). The stage is a named size container (sc-game), so the HUD
    and the controls legend switch layout on the STAGE's width — an embedded
    stage in a wide page gets the narrow layout too. The optional sc-game.js sets data-sc-capture on the stage;
    this band deliberately styles nothing from it, so a page looks the same
@@ -2039,8 +2050,9 @@ html[data-sc-motion-paused="true"] .sc-disclosure[open] > .sc-disclosure__body {
 .sc-game__timer-state { color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.4 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; }
 
 /* Measurement: a mono label, a tabular figure with a smaller unit in <small>,
-   one line of guidance. Progress toward a threshold composes the existing
-   .sc-benchmark or progress.sc-progress — there is no game meter. */
+   one line of guidance. A size against a limit composes the existing
+   .sc-benchmark or progress.sc-progress; a level that rises and falls with a
+   written state (awareness, stamina, heat) is .sc-game__meter below. */
 .sc-game__measure { display: grid; color: var(--sc-heading); min-inline-size: 0; }
 .sc-game__measure-label { margin: 0; color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.4 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; }
 .sc-game__measure-value { margin: 0; font: 700 var(--sc-h3)/1.15 var(--sc-font-body); font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -2126,18 +2138,185 @@ dialog.sc-game__layer:modal { position: fixed; }
 dialog.sc-game__layer:not([open]) { display: none; }   /* .sc-game__layer's grid would otherwise draw a closed dialog */
 .sc-game__layer::backdrop { background: var(--sc-ink); background: color-mix(in srgb, var(--sc-ink) 86%, transparent); }
 
+/* Meter: one level that rises and falls (awareness, stamina, heat), on a
+   plate. role="meter" with aria-valuenow and an aria-valuetext that carries
+   the written state; the consumer sets --sc-game-meter-value (0..1) inline.
+   data-state calm | alert | danger changes three things besides tone: the
+   WORD, the glyph's SHAPE (an open ring, an open triangle, a solid triangle
+   with a knocked-out "!") and the fill's THICKNESS (a third, two thirds,
+   the whole track) — so no state depends on colour. Static: it moves only
+   when the consumer moves the value. */
+.sc-game__meter {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--sc-s0) var(--sc-s1);
+  min-inline-size: min(100%, 13rem);
+  color: var(--sc-heading);
+  text-align: start;   /* the same reading order in any slot */
+}
+.sc-game__meter-label { grid-column: 1 / -1; margin: 0; color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.4 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; }
+.sc-game__meter-glyph {
+  inline-size: 16px;
+  block-size: 16px;
+  background: var(--sc-text-2);
+  clip-path: path(evenodd, "M0.5 8a7.5 7.5 0 1 0 15 0a7.5 7.5 0 1 0 -15 0Z M3.5 8a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0Z");
+}
+.sc-game__meter-state { margin: 0; color: var(--sc-heading); font: 600 var(--sc-text-sm)/1.35 var(--sc-font-body); }
+.sc-game__meter-track { grid-column: 1 / -1; position: relative; display: block; block-size: 12px; overflow: hidden; border: 1px solid var(--sc-border-control); border-radius: var(--sc-r-sm); background: var(--sc-raised); }
+.sc-game__meter-fill {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  display: block;
+  inline-size: calc(clamp(0, var(--sc-game-meter-value, 0), 1) * 100%);
+  block-size: 33.333%;
+  background: var(--sc-chart-emphasis);
+}
+.sc-game__meter[data-state="alert"] .sc-game__meter-glyph { background: var(--sc-warn); clip-path: path(evenodd, "M8 0.8L15.6 14.6L0.4 14.6Z M8 5.1L11.9 12.4L4.1 12.4Z"); }
+.sc-game__meter[data-state="alert"] .sc-game__meter-fill { block-size: 66.667%; background: var(--sc-warn); }
+.sc-game__meter[data-state="danger"] .sc-game__meter-glyph { background: var(--sc-danger); clip-path: path(evenodd, "M8 0.8L15.6 14.6L0.4 14.6Z M7 5.2L9 5.2L9 9.8L7 9.8Z M7 11L9 11L9 13L7 13Z"); }
+.sc-game__meter[data-state="danger"] .sc-game__meter-fill { block-size: 100%; background: var(--sc-danger); }
+
+/* Milestones: a count moving along a track toward thresholds — coin stars on
+   a HUD plate or a results card. The count is written (__milestones-count),
+   the thresholds are written (a __milestones-note naming the next one, an
+   ol.sc-game__stars, or both) and the track is aria-hidden. The consumer sets
+   --sc-game-milestones-value (count / total, 0..1) on the block and
+   --sc-game-milestone-at (threshold / total) on each marker, and adds
+   .is-earned to a marker once the count reaches it: an outlined star becomes
+   a filled one. --animate lets the fill glide between the values a count-up
+   steps through, and a marker grow as it lights — only when motion is
+   allowed; otherwise it is static. Announce the final count once (a polite
+   status after the count-up), never every step. */
+.sc-game__milestones { display: grid; gap: var(--sc-s1); min-inline-size: 0; margin: 0; }
+.sc-game__milestones-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0 var(--sc-s1); margin: 0; }
+.sc-game__milestones-label { color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.4 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; }
+.sc-game__milestones-count { color: var(--sc-heading); font: 500 var(--sc-text-sm)/1.4 var(--sc-font-body); }
+.sc-game__milestones-value { font-size: var(--sc-text-lg); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sc-game__milestones-track { position: relative; display: block; block-size: 8px; margin-block-start: 17px; border: 1px solid var(--sc-border-control); border-radius: var(--sc-r-pill); background: var(--sc-raised); }
+.sc-game__milestones-fill {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  display: block;
+  inline-size: calc(clamp(0, var(--sc-game-milestones-value, 0), 1) * 100%);
+  border-radius: inherit;
+  background: var(--sc-chart-emphasis);
+}
+.sc-game__milestones-marker {
+  position: absolute;
+  bottom: calc(100% + 3px);
+  left: clamp(7px, calc(clamp(0, var(--sc-game-milestone-at, 1), 1) * 100%), calc(100% - 7px));
+  display: block;
+  inline-size: 14px;
+  block-size: 14px;
+  translate: -50% 0;
+  scale: .86;
+  background: var(--sc-brand);
+  clip-path: path(evenodd, "M7 0.34L8.65 5.43L14 5.43L9.68 8.57L11.32 13.66L7 10.52L2.68 13.66L4.32 8.57L0 5.43L5.35 5.43Z M7 4.11L7.8 6.6L10.41 6.6L8.3 8.13L9.11 10.6L7 9.07L4.89 10.6L5.7 8.13L3.59 6.6L6.2 6.6Z");
+}
+.sc-game__milestones-marker.is-earned { scale: 1; background: var(--sc-heading); clip-path: path("M7 0.34L8.65 5.43L14 5.43L9.68 8.57L11.32 13.66L7 10.52L2.68 13.66L4.32 8.57L0 5.43L5.35 5.43Z"); }
+.sc-game__milestones-note { margin: 0; color: var(--sc-text-2); font-size: var(--sc-text-sm); line-height: 1.4; }
+.sc-game__milestones .sc-game__stars { margin-block-start: var(--sc-s0); }
+
+/* Cinematic moments. .sc-game--cinematic on the stage draws letterbox bars
+   (one ::before with ink top and bottom borders, under the HUD, never taking
+   pointer input), hides the crosshair and every HUD slot's content except
+   captions and the skip control, and widens the centre column for subtitles.
+   A title card is a direct child of a HUD, outside the slots. Escape keeps its
+   meaning (it pauses); the skip control is a real button, and the consumer
+   may also map Space and Enter to it while the moment plays. */
+.sc-game--cinematic::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-block: 24px solid var(--sc-ink);
+  border-block-width: clamp(16px, 7cqi, 96px);
+  pointer-events: none;
+}
+.sc-game--cinematic > .sc-game__crosshair { display: none; }
+.sc-game--cinematic .sc-game__slot > :not(.sc-game__captions, .sc-game__caption, .sc-game__skip) { display: none; }
+.sc-game--cinematic .sc-game__hud { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr); }
+@container sc-game (max-width: 600px) {
+  .sc-game--cinematic .sc-game__hud { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .sc-game--cinematic .sc-game__hud { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Captions: subtitles on a plate, bottom centre, at most about 60 characters a
+   line. The speaker is a WRITTEN label on its own line (mono, weight), never a
+   colour. aria-live="polite" sits on the persistent .sc-game__captions
+   container, which stays in the document while lines come and go; replace its
+   plate once per line with the final text (never type it out letter by
+   letter), so each line is announced once. */
+.sc-game__captions { display: grid; justify-items: center; gap: var(--sc-s1); inline-size: 100%; }
+.sc-game__caption {
+  max-inline-size: min(100%, 60ch);
+  padding: var(--sc-s1) var(--sc-s2);
+  text-align: center;
+  color: var(--sc-heading);
+  font-size: var(--sc-text-md);
+  font-size: clamp(var(--sc-text-md), .75rem + .55cqi, var(--sc-text-lg));
+  line-height: 1.45;
+}
+.sc-game__caption-speaker { display: block; margin-block-end: 2px; color: var(--sc-text-2); font: 600 var(--sc-text-xs)/1.4 var(--sc-font-mono); letter-spacing: .4px; }
+.sc-game__caption-line { display: block; }
+
+/* Skip: a plate in the bottom-right slot with a real button and the keys
+   written beside it. Never Escape — Escape pauses. */
+.sc-game__skip { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--sc-s0) var(--sc-s1); }
+.sc-game__skip-hint { color: var(--sc-text-2); font-size: var(--sc-text-sm); line-height: 1.4; }
+.sc-game__skip-hint kbd { white-space: nowrap; }
+
+/* Title card: centred over the stage on a plate — an eyebrow and a title.
+   The .sc-game__title-card box is the persistent region (it may carry
+   aria-live="polite"); it draws nothing until a plate is put inside it. */
+.sc-game__title-card {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: max(var(--sc-s3), env(safe-area-inset-top, 0px)) max(var(--sc-s3), env(safe-area-inset-right, 0px)) max(var(--sc-s3), env(safe-area-inset-bottom, 0px)) max(var(--sc-s3), env(safe-area-inset-left, 0px));
+  pointer-events: none;
+}
+.sc-game__title-card > .sc-game__plate { max-inline-size: min(100%, 36rem); padding: var(--sc-s2) var(--sc-s3); text-align: center; }
+.sc-game__title-card .sc-eyebrow { margin-block-end: var(--sc-s1); }
+.sc-game__title-card .sc-game__title-card-title { margin: 0; font: 700 var(--sc-h2)/1.1 var(--sc-font-display); font-size: clamp(var(--sc-h3), .5rem + 4cqi, var(--sc-display)); letter-spacing: -.5px; overflow-wrap: anywhere; }
+
+/* Motion, only where the reader allows it and the game has not stilled the
+   stage: the bars grow in from the edges; an --animate fill glides and a
+   marker grows as it lights. Under reduced motion all of it is static. */
+@media (prefers-reduced-motion: no-preference) {
+  .sc-game--cinematic::before { transition: border-block-width var(--sc-motion-enter) var(--sc-ease-out); }
+  @starting-style {
+    .sc-game--cinematic::before { border-block-width: 0; }
+  }
+  .sc-game__milestones--animate .sc-game__milestones-fill { transition: inline-size var(--sc-motion-fast) linear; }
+  .sc-game__milestones--animate .sc-game__milestones-marker { transition: scale var(--sc-motion-fast) var(--sc-ease-out); }
+}
+.sc-game--still::before, .sc-game--still .sc-game__milestones-fill, .sc-game--still .sc-game__milestones-marker { transition: none; }
+
 @media (forced-colors: active) {
   .sc-game__plate { border-color: CanvasText; }
   .sc-game__crosshair { forced-color-adjust: none; border-color: CanvasText; box-shadow: 0 0 0 2px Canvas, inset 0 0 0 2px Canvas; }
   .sc-game__crosshair::after { forced-color-adjust: none; background: CanvasText; box-shadow: 0 0 0 2px Canvas; }
   .sc-game__star-glyph { forced-color-adjust: none; background: CanvasText; }
+  /* Marks keep their shape in system colours; the tracks keep an edge. The
+     letterbox bars become Canvas, so they read as frame, not content. */
+  .sc-game__meter-glyph, .sc-game__meter-fill, .sc-game__milestones-fill, .sc-game__milestones-marker { forced-color-adjust: none; background: CanvasText; }
+  .sc-game__meter-track, .sc-game__milestones-track { border-color: CanvasText; }
+  .sc-game--cinematic::before { forced-color-adjust: none; border-color: Canvas; }
 }
 /* Print keeps the record, not the moment: the canvas, crosshair and layers
    are interaction and art, so they go; plates print statically, in flow and
    in ink, exactly like the masthead. */
 @media print {
   .sc-game, .sc-game--viewport { block-size: auto; overflow: visible; container-type: normal; background: none; }
-  .sc-game__canvas, .sc-game__crosshair, .sc-game__layer, .sc-game::after { display: none; }
+  .sc-game__canvas, .sc-game__crosshair, .sc-game__layer, .sc-game::after, .sc-game::before { display: none; }
+  .sc-game__title-card { position: static; padding: 0; }
   .sc-game__hud { position: static; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8pt; overflow: visible; padding: 0; }
   .sc-game__slot { text-align: start; }
   .sc-game__plate { break-inside: avoid; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
