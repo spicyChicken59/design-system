@@ -10,9 +10,10 @@
 //      no current-state doc carries a two-part "vX.Y" (always a stale title);
 //      and origin actually has the vX.Y.Z tag the docs tell readers to pin
 //      (an error on main, a reminder on a branch, since the tag is cut last);
-//   2. generated files are fresh — tokens.json, styleguide.html, sc-theme.js
-//      and sc-charts.js
-//      equal a regeneration into a temp dir (line endings ignored);
+//   2. generated files are fresh — tokens.json, styleguide.html, sc-theme.js,
+//      sc-charts.js, sc-map.js, sc-activity.js, sc-game.js, the templates and
+//      the visual library equal a regeneration into a temp dir (line endings
+//      ignored);
 //   3. the theme script has one source — starter.html inlines build/theme.js
 //      verbatim and sc-theme.js carries it, and sc-charts.js carries
 //      build/charts.js;
@@ -69,7 +70,7 @@ for (const p of ['package.json', 'react/package.json', 'react/package-lock.json'
   if (v !== V) fail(`${p}: version ${v} != sc.css ${V}`);
 }
 const versionsIn = (text) => [...text.matchAll(/\bv(\d+\.\d+\.\d+)\b/g)].map(m => m[1]);
-for (const p of ['build/styleguide-body.html', 'index.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-activity.js', 'sc-motion.js', 'sc-reading.js']) {
+for (const p of ['build/styleguide-body.html', 'index.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-activity.js', 'sc-game.js', 'sc-motion.js', 'sc-reading.js']) {
   if (!existsSync(join(ROOT, p))) { fail(`${p}: missing`); continue; }
   const stale = versionsIn(read(p)).filter(v => v !== V);
   if (stale.length) fail(`${p}: mentions v${[...new Set(stale)].join(', v')} (current is v${V})`);
@@ -121,7 +122,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
     execFileSync(process.execPath, [join(HERE, 'assemble.mjs'), '--out', tmp], { stdio: 'pipe' });
     execFileSync(process.execPath, [join(HERE, 'templates.mjs'), '--out', tmp], { stdio: 'pipe' });
     execFileSync(process.execPath, [join(HERE, 'brand-assets.mjs'), '--out', tmp], { stdio: 'pipe' });
-    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-activity.js', 'visual-library.html', ...['landing','dashboard','screener','report','decision-brief','studio','media-dock'].map(p => `templates/${p}.html`), ...['ink','wine','paper'].map(p => `assets/sc-pattern-${p}.svg`)]) {
+    for (const f of ['tokens.json', 'styleguide.html', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-activity.js', 'sc-game.js', 'visual-library.html', ...['landing','dashboard','screener','report','deliverable','decision-brief','studio','media-dock','game'].map(p => `templates/${p}.html`), ...['ink','wine','paper'].map(p => `assets/sc-pattern-${p}.svg`)]) {
       const fresh = norm(readFileSync(join(tmp, f), 'utf8'));
       if (!existsSync(join(ROOT, f))) fail(`${f}: missing — run npm run build`);
       else if (read(f) !== fresh) fail(`${f}: stale — differs from a fresh generation; run npm run build`);
@@ -131,7 +132,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
   } finally {
     rmSync(tmp, { recursive: true, force: true });
   }
-  if (problems.length === before) ok('tokens.json, styleguide.html, sc-theme.js, sc-charts.js, sc-map.js are fresh');
+  if (problems.length === before) ok('tokens.json, styleguide.html, sc-theme.js, sc-charts.js, sc-map.js, sc-activity.js, sc-game.js, the templates and the visual library are fresh');
 }
 
 // --- 3. one theme script -----------------------------------------------------
@@ -193,7 +194,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
   scanHtml('brand-studio.html');
   scanHtml('visual-library.html');
   scanHtml('composition-studio.html');
-  for (const page of ['landing','dashboard','screener','report','decision-brief']) scanHtml(`templates/${page}.html`);
+  for (const page of ['landing','dashboard','screener','report','decision-brief','game']) scanHtml(`templates/${page}.html`);
   scanScript('build/styleguide.js');
   for (const f of readdirSync(join(ROOT, 'react', 'src'))) if (/\.tsx?$/.test(f) && !/generated/.test(f)) scanScript(join('react', 'src', f));
   const missing = [];
@@ -208,7 +209,7 @@ if (!problems.length) ok(`version v${V} everywhere`);
 // --- 6. line endings ----------------------------------------------------------
 {
   const CR = String.fromCharCode(13);
-  const bad = ['sc.css', 'starter.html', 'index.html', 'tokens.json', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-activity.js', 'styleguide.html', 'build/theme.js', 'build/charts.js', 'build/map.js']
+  const bad = ['sc.css', 'starter.html', 'index.html', 'tokens.json', 'sc-theme.js', 'sc-charts.js', 'sc-map.js', 'sc-activity.js', 'sc-game.js', 'styleguide.html', 'build/theme.js', 'build/charts.js', 'build/map.js', 'build/game.js']
     .filter(f => existsSync(join(ROOT, f)) && readFileSync(join(ROOT, f), 'utf8').includes(CR));
   if (bad.length) fail('CRLF line endings in: ' + bad.join(', ') + ' (see .gitattributes)');
   else ok('source and generated files are LF');
@@ -342,6 +343,10 @@ if (!problems.length) ok(`version v${V} everywhere`);
                               ['assets/templates/studio.html', 'templates/studio.html'],
                               ['assets/templates/media-dock.html', 'templates/media-dock.html'],
                               ['assets/build/media-dock-specimen.js', 'build/media-dock-specimen.js'],
+                              ['assets/sc-game.js', 'sc-game.js'],
+                              ['references/GAME-PATTERNS.md', 'GAME-PATTERNS.md'],
+                              ['assets/templates/game.html', 'templates/game.html'],
+                              ['assets/build/game-specimen.js', 'build/game-specimen.js'],
                               ['assets/sc-matrix-nav.js', 'sc-matrix-nav.js']]) {
       const p = join(SKILL, rel);
       if (!existsSync(join(ROOT, p))) fail(`${p}: missing — run node build/assemble.mjs`);
@@ -388,6 +393,9 @@ catch (e) { fail('selection/restore compositions: ' + (e.stderr?.toString().trim
 
 try { execFileSync(process.execPath, [join(HERE, 'reviewed-work-check.mjs')], { stdio: 'pipe' }); ok('dated-batch and pinned-task authored states and negative controls pass'); }
 catch (e) { fail('reviewed work compositions: ' + (e.stderr?.toString().trim() || e.message)); }
+
+try { const out = execFileSync(process.execPath, [join(HERE, 'game-check.mjs'), join(ROOT, 'sc-game.js')], { stdio: 'pipe', encoding: 'utf8' }); ok((/(\d+) runtime/.exec(out)?.[1] ?? '?') + ' game-shell runtime, formatter, markup and opt-in CSS scenarios pass, with negative controls'); }
+catch (e) { fail('game shell: ' + (e.stderr?.toString().trim() || e.message)); }
 
 if (warnings.length) {
   for (const w of warnings) console.log('  --  ' + w);

@@ -69,6 +69,9 @@ export function checkContrast(css) {
     const tc = (n) => toRgb(resolve('--sc-' + n, ctx), ink);
     check(mode, 'on-ink context on-accent on accent', tc('on-accent'), tc('accent'), 4.5);
     for (const [fg, bg] of [['brand', 'brand-fill'], ['accent', 'accent-fill'], ['info', 'info-fill'], ['good', 'good-fill'], ['warn', 'warn-fill'], ['danger', 'danger-fill'], ['heading', 'surface'], ['text', 'surface'], ['text-2', 'surface']]) check(mode, 'on-ink context ' + fg + ' on ' + bg, tc(fg), tc(bg), 4.5);
+    // Marks and control edges inside ink (a benchmark point on a plate, an input in a masthead).
+    for (const s of ['raised', 'surface']) check(mode, `on-ink context chart-emphasis vs ${s}`, tc('chart-emphasis'), tc(s), 3);
+    check(mode, 'on-ink context border-control vs ink', tc('border-control'), ink, 3);
     for (const n of ['chart-1', 'chart-2', 'chart-3', 'chart-4', 'chart-5', 'chart-emphasis', 'chart-context']) check(mode, `${n} vs surface`, t(n), t('surface'), 3);
   }
   // Brand covers have local colour scopes independent of the page theme.

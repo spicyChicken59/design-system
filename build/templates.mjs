@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { decisionBrief } from './decision-brief.mjs';
 import { studioExamples } from './studio-examples.mjs';
 import { dockExample } from './media-dock-examples.mjs';
+import { gameStage, gameNotes, gameGuide } from './game-examples.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const flag = process.argv.indexOf('--out');
 const out = flag < 0 ? root : process.argv[flag + 1];
@@ -48,16 +49,23 @@ const deliverable = shell('Deliverable', `<main id="main" class="sc-sheet-stack"
 const decision = shell('Decision brief', `${head('SpicyChicken', 'the decision studio · design specimen')}<main class="sc-wrap sc-wrap--wide sc-page" id="main">${decisionBrief({ assets: '../assets/', heading: 1 })}</main>${foot}`, '<script src="../sc-matrix-nav.js" defer></script>');
 const studio = shell('Studio patterns', `${head('SpicyChicken', 'a working studio · design specimen')}<main class="sc-wrap sc-page" id="main"><header class="sc-title"><p class="sc-eyebrow">dated activity and task sessions</p><h1>A workspace stays readable while work is in progress.</h1><p class="sc-dek">Illustrative data demonstrates inspection, truthful save states and an action that fits a phone.</p></header>${studioExamples()}</main>${foot}`, '<script src="../sc-activity.js" defer></script><script src="../sc-reading.js" defer></script>');
 const mediaDock = shell('Intrinsic media and mobile dock', dockExample(), '<script src="../build/media-dock-specimen.js" defer></script>');
-for (const [name, contents] of Object.entries({ landing, dashboard, screener, report, deliverable, studio, 'media-dock':mediaDock, 'decision-brief': decision })) writeFileSync(join(out, 'templates', `${name}.html`), contents.replace(/></g, ">\n<"));
-// Only this recipe is generated; the rest of the catalog remains authored HTML.
+const game = shell('Game shell', `<main id="main">${gameStage()}${head('SpicyChicken', 'game shell · design specimen')}${gameNotes()}</main>${foot}`, '<script src="../sc-game.js" defer></script><script src="../build/game-specimen.js" defer></script>');
+for (const [name, contents] of Object.entries({ landing, dashboard, screener, report, deliverable, studio, 'media-dock':mediaDock, game, 'decision-brief': decision })) writeFileSync(join(out, 'templates', `${name}.html`), contents.replace(/></g, ">\n<"));
+// Only the decision-brief and game-shell recipes are generated; the rest of the
+// catalog remains authored HTML.
 const brief = decisionBrief();
 const escaped = brief.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+// The game-shell recipe is generated the same way, from build/game-examples.mjs.
+const gameRecipe = gameGuide('library-game', 4);
+const gameEscaped = gameRecipe.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const catalogSource = readFileSync(join(root, 'visual-library.html'), 'utf8');
-for (const part of ['preview', 'code']) for (const edge of ['start', 'end']) {
-  if (catalogSource.split(`<!-- decision-brief:${part}:${edge} -->`).length !== 2) throw new Error(`Decision brief ${part} ${edge} marker must occur exactly once`);
+for (const recipe of ['decision-brief', 'game-shell']) for (const part of ['preview', 'code']) for (const edge of ['start', 'end']) {
+  if (catalogSource.split(`<!-- ${recipe}:${part}:${edge} -->`).length !== 2) throw new Error(`${recipe} ${part} ${edge} marker must occur exactly once`);
 }
 const catalog = catalogSource
   .replace(/<!-- decision-brief:preview:start -->[\s\S]*?<!-- decision-brief:preview:end -->/, `<!-- decision-brief:preview:start -->\n${brief}\n<!-- decision-brief:preview:end -->`)
-  .replace(/<!-- decision-brief:code:start -->[\s\S]*?<!-- decision-brief:code:end -->/, `<!-- decision-brief:code:start --><code>${escaped}</code><!-- decision-brief:code:end -->`);
+  .replace(/<!-- decision-brief:code:start -->[\s\S]*?<!-- decision-brief:code:end -->/, `<!-- decision-brief:code:start --><code>${escaped}</code><!-- decision-brief:code:end -->`)
+  .replace(/<!-- game-shell:preview:start -->[\s\S]*?<!-- game-shell:preview:end -->/, `<!-- game-shell:preview:start -->${gameRecipe}<!-- game-shell:preview:end -->`)
+  .replace(/<!-- game-shell:code:start -->[\s\S]*?<!-- game-shell:code:end -->/, `<!-- game-shell:code:start --><code>${gameEscaped}</code><!-- game-shell:code:end -->`);
 writeFileSync(join(out, 'visual-library.html'), catalog);
-console.log('templates: website, dashboard, screener, report, deliverable and decision brief compositions');
+console.log('templates: website, dashboard, screener, report, deliverable, studio, media dock, game shell and decision brief compositions');

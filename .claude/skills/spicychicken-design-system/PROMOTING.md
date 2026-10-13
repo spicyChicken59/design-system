@@ -7,6 +7,11 @@ A consumer is where design gets decided under real pressure — real data, a rea
 reader, a real deadline. Most of what gets decided there is generic and stays
 stranded. This is how it comes home.
 
+Every game and app owes this loop by default. The repository's `AGENTS.md` writes
+the reciprocal rule down — need, then reuse or extend a shared pattern, then
+source files, then tests, then documented local exceptions — and the game shell
+(`GAME-PATTERNS.md`, v2.16.0) is the most recent thing it brought home.
+
 ## 1. Find what is stranded
 
 ```sh

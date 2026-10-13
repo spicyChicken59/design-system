@@ -22,11 +22,15 @@ composition; [motion](MOTION.md) explains safe, purposeful animation.
 | `visual-library.html` | Searchable, copyable live recipes across identity, layout, data, motion, and states. |
 | `sc-motion.js` | Optional, dependency-free reveals, sequencing and pause controls. Content stays visible without it. |
 | `build/vendor.mjs` | Copy a committed design snapshot, original assets and provenance into any static website. |
-| `sc.css` | The system — tokens, base styles, components. One file; consumers need no build step. Header carries the version (`v2.15.0`). |
+| `sc.css` | The system — tokens, base styles, components. One file; consumers need no build step. Header carries the version (`v2.16.0`). |
 | `sc-map.js` | The map layer: an Albers projection for the lower 48, a quantized-topojson reader, a geodesic ring, box fitting, and a pan/zoom view engine. The geo half is pure — it runs in Node. |
 | `sc-activity.js` | Optional dated-activity keyboard inspection; native buttons/table remain readable without it. |
 | `STUDIO-PATTERNS.md` | Dated activity, task/checklist sessions, selection/bulk review, field restore, reviewed dated batches, pinned task continuation and responsive workspace action/navigation contracts. |
 | `templates/media-dock.html` | Complete intrinsic-media and reserved mobile dock specimen, with illustrative source geometry. |
+| `sc-game.js` | Optional game-shell runtime: an explicit-gesture pointer-capture lifecycle (`SC.game.capture`) and truncating time/measure formatters. Loading it adds no listener. Source: `build/game.js`. |
+| `GAME-PATTERNS.md` | The game shell contract: stage, HUD slots, plates, crosshair, timer/measure/stars, capture layer, the world/canvas colour rule, and what stays in the game. |
+| `templates/game.html` | Complete full-screen game-shell specimen over illustrative bright and dark art, with the capture layer, refusal path and a results dialog. No engine. |
+| `AGENTS.md` | How to build and check, the reciprocal contribution rule for games and apps, and the snapshot/provenance rule. |
 | `templates/studio.html` | Complete accessible specimen with illustrative activity, truthful save states, selection/field differences, a dated batch and prepared pinned continuation. |
 | `sc-charts.js` | Chart and native-table presentation bundle: unchanged chart primitives plus criterion navigation for eligible signal matrices. Composed from `build/charts.js`, `sc-matrix-nav.js`, and `build/matrix-auto.js`; see [automatic matrix behavior and opt-out](VISUAL-RECIPES.md#when-the-page-already-uses-charts). |
 | `sc-theme.js` | The theme script: saved choice before paint, toggle wiring, print swap. Link it or inline it. Source: `build/theme.js`. |
@@ -45,7 +49,7 @@ composition; [motion](MOTION.md) explains safe, purposeful animation.
 
 ## The family
 
-Five projects share this standard. A page from any of them should look like it came from the
+Six projects share this standard. A page from any of them should look like it came from the
 same house.
 
 | Project | What it is | How it consumes the system |
@@ -54,6 +58,7 @@ same house.
 | **SpicyStock** | market screening and analysis | vendored snapshot + `provenance.json` |
 | **SpicyHome** | property search and evaluation | vendored snapshot |
 | **SpicyBod** | private health studio | verified snapshot; generic dated activity and task-session patterns |
+| **Untitled Snowball Game** | a third-person 3D browser game (in development) | verified snapshot, being adopted with v2.16.0; the game shell, `sc-game.js` and the world/canvas colour rule |
 | **SpicyArchitect** | a pre-sales Solutions Architect copilot for manufacturing on Databricks | vendored snapshot + `provenance.json`, inlined into every customer page it ships (decks, leave-behinds and a Databricks App must open offline); its own site links a second, byte-identical copy under `docs/` |
 
 SpicyArchitect is the one consumer that publishes to an audience outside the family: the pages it
@@ -64,7 +69,7 @@ leaves the house.
 
 ## Use it in a project
 
-**Current source snapshot: v2.15.0.** SpicyCar, SpicyStock and SpicyArchitect use checked-in
+**Current source snapshot: v2.16.0.** SpicyCar, SpicyStock and SpicyArchitect use checked-in
 design assets with their source commit and SHA-256 hashes in `provenance.json`.
 The standalone release tag is not yet published. Use the snapshot workflow now;
 the CDN examples below apply only after the matching release tag exists.
@@ -89,8 +94,8 @@ the entire snapshot together; no consumer build step is required.
 Pin a release — tags are served by jsDelivr:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.15.0/sc.css">
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.15.0/sc-theme.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.16.0/sc.css">
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.16.0/sc-theme.js"></script>
 ```
 
 `@2` follows the newest 2.x tag. The Pages URL is **latest** and may change on a major — fine for
@@ -108,13 +113,15 @@ Assets are at `https://spicychicken59.github.io/design-system/assets/<file>` (ta
 
 ## Maintain
 
+Contributors and agents start with [AGENTS.md](AGENTS.md): the build/check commands, the reciprocal contribution rule every game and app follows, and why vendored files are never hand-edited.
+
 - `npm run setup` — once after cloning: installs the wrappers' dev dependencies (`npm --prefix react ci`).
 - `npm run build` — regenerates `tokens.json`, `styleguide.html` and `sc-theme.js` (edit `build/theme.js`, never `sc-theme.js`) from `sc.css` + `build/`, then builds `react/`.
 - `npm run check` — regenerates into a temp dir and diffs against the committed files; verifies every
   `sc-*` class used by the style guide, starter and wrappers exists in the sheet; checks the version strings agree.
 - `.github/workflows/check.yml` runs the same gate plus the wrapper build on every push; `.gitattributes` keeps every checkout LF.
 - `npm run build:react` — the wrappers alone.
-- `node build/visual-check.mjs --browser --shots /tmp/sc-brief` — six real Chromium renders of the decision brief, at 390/820/1280px in light/dark, plus eight instrument/dossier scenarios at 320/390/820/1280px covering exact counts, contrast, wrapping, keyboard focus, reduced motion, print and forced colors. Requires separately installed Playwright 1.56.1 and Chromium; a missing browser reports SKIP and exits nonzero. Captures use offline font fallbacks and original local SVGs.
+- `node build/visual-check.mjs --browser --shots /tmp/sc-brief` — six real Chromium renders of the decision brief, at 390/820/1280px in light/dark, plus eight instrument/dossier scenarios at 320/390/820/1280px covering exact counts, contrast, wrapping, keyboard focus, reduced motion, print and forced colors, and twenty game-shell scenarios (320/390/820/1280px in both themes, the refusal path in both themes, native pointer lock, the results dialog, 640 × 360 and 320 × 568 short screens, reduced motion and forced colours, and the compact stage embedded in the style guide and the visual library at 320/390px and at 320px inside a 1280px page). Requires separately installed Playwright 1.56.1 and Chromium; a missing browser reports SKIP and exits nonzero. Captures use offline font fallbacks and original local SVGs.
 - Releases: bump the `sc.css` header (and both `package.json` versions), add the changelog entry in
   `AUDIT-AND-ROADMAP.md` §5, rebuild, tag `vX.Y.Z`. One number everywhere; repo-only changes bump the patch.
 - Node ≥ 20. No Python.

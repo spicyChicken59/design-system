@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SpicyChicken Design System — sc.css  v2.15.0
+   SpicyChicken Design System — sc.css  v2.16.0
    SpicyChicken · github.com/spicyChicken59
 
    One file, no build step. Drop it in (or link it) and every page shares the
@@ -14,6 +14,8 @@
      4. Components   — .sc-* classes. Reproduce these; don't invent new ones.
      4b. Components added in 2.1 — title block, chart host, sparkline, frame,
                       media row, empty state, figure/note, quiet link, doc/TOC.
+     4i. Game shell (2.16) — opt-in stage, HUD plates and capture layer over a
+                      canvas the game owns.
      5. Utilities    — small helpers.
 
    Rules of the system (the short version — DESIGN_SYSTEM.md has the rest):
@@ -283,8 +285,11 @@
    Ink surfaces are dark in both modes, so anything nested in them (headings,
    links, strong, eyebrows, buttons) re-reads the page tokens as on-ink ones.
    Add .sc-on-ink to any other ink-filled block to get the same treatment.
+   A game HUD plate (4i) is an ink surface over art the system cannot see, so
+   it takes exactly this re-scope too — including the surface tokens that a
+   benchmark, progress bar, chip or kbd inside it reads.
    -------------------------------------------------------------------------- */
-.sc-masthead, .sc-foot, .sc-tooltip, .sc-callout--ink, .sc-on-ink {
+.sc-masthead, .sc-foot, .sc-tooltip, .sc-callout--ink, .sc-game__plate, .sc-on-ink {
   --sc-heading:      var(--sc-on-ink);
   --sc-text:         var(--sc-on-ink);
   --sc-text-2:       var(--sc-on-ink-2);
@@ -307,6 +312,10 @@
   --sc-good:         #4EA954;               --sc-good-fill:   #1A2C1A;
   --sc-warn:         #D59800;               --sc-warn-fill:   #31240E;
   --sc-danger:       #EE5A66;               --sc-danger-fill: #381E1E;
+  /* Marks and control edges read the dark-mode values too, so a benchmark
+     point or an input inside ink is the same in both page modes. */
+  --sc-chart-emphasis: var(--sc-cobalt-400);   /* 5.1:1 on the raised track */
+  --sc-border-control: #5B6E86;                /* 3.2:1 against ink */
 }
 
 /* --------------------------------------------------------------------------
@@ -1843,6 +1852,293 @@ html[data-sc-motion-paused="true"] .sc-disclosure[open] > .sc-disclosure__body {
   .sc-dock-layout { display: block; block-size: auto; overflow: visible; }
   .sc-dock-layout__body { overflow: visible; }
   .sc-bottom-dock { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   4i. GAME SHELL — the interface over a canvas the game owns
+   A browser game draws its world on a canvas the system cannot see: white
+   snow one moment, a near-black cave the next. Nothing on that canvas is a
+   token, a status or a chart slot — it is ART, owned by the game. What the
+   system owns is the readable layer above it, so this band supplies:
+     · a stage (.sc-game) that holds the canvas, the HUD and any layer;
+     · plates — the ONLY thing that guarantees contrast over a canvas. Opaque
+       flat ink with the 2c on-ink re-scope, identical in both page modes,
+       so a benchmark, progress bar, chip or kbd inside one stays readable;
+     · a 3×3 HUD grid of named slots that wraps instead of overlapping, inset
+       by the safe area, keeps the stage centre for the play area, and gives
+       pointer input back only to real controls;
+     · a decorative two-tone crosshair at the exact stage centre, painted
+       above the HUD so a crowded HUD can never hide it;
+     · timer, measurement, count, star and hint furniture whose meaning is
+       always WRITTEN — words and shapes, never colour alone;
+     · a capture/pause layer (a plain div or a native dialog) that centres a
+       composed .sc-card and scrolls on a short landscape screen.
+   Opt-in by class only: no element, :root or body rule, no global
+   touch-action, user-select, cursor or pointer-events, no new token. Nothing
+   here animates. The stage is a named size container (sc-game), so the HUD
+   and the controls legend switch layout on the STAGE's width — an embedded
+   stage in a wide page gets the narrow layout too. The optional sc-game.js sets data-sc-capture on the stage;
+   this band deliberately styles nothing from it, so a page looks the same
+   with or without the runtime. The engine owns input, physics, rules,
+   timing, saves and every colour on the canvas. See GAME-PATTERNS.md.
+   -------------------------------------------------------------------------- */
+.sc-game {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;              /* never a scroll container: the canvas and crosshair cannot be scrolled off centre */
+  container: sc-game / inline-size;
+  min-inline-size: 0;
+  background: var(--sc-ink);   /* flat ink before the first frame is drawn */
+}
+.sc-game--viewport { block-size: 100vh; }
+@supports (block-size: 100dvh) {
+  .sc-game--viewport { block-size: 100dvh; }
+}
+.sc-game__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  touch-action: none;   /* this element only: the page around it still scrolls */
+}
+/* Keyboard users can focus the canvas. A ring over unknown art needs two
+   tones that do not depend on the page mode: spice-400 (--sc-on-ink-accent,
+   6.8:1 against ink, 8:1 against a near-black cave) and an ink ring just
+   inside it (16:1 against white snow). The page's --sc-focus is spice-700 in
+   light mode, which would vanish into dark art. */
+.sc-game__canvas:focus-visible { outline: 3px solid var(--sc-on-ink-accent); outline-offset: -3px; border-radius: 0; }
+.sc-game:has(> .sc-game__canvas:focus-visible)::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  z-index: 4;
+  border: 2px solid var(--sc-ink);
+  pointer-events: none;
+}
+
+/* The HUD: a 3×3 grid of named slots, inset by the safe area. The middle row
+   is 1fr with an automatic minimum, so a tall slot pushes the grid instead of
+   sliding under its neighbour. Only real controls take pointer input back.
+   When a short screen cannot hold every plate, the grid runs past the stage
+   edge; the HUD clips it and scrolls only itself (never the stage) to bring
+   a focused control into view. It is not user-scrollable: show fewer plates. */
+.sc-game__hud {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: "tl top tr" "left . right" "bl bottom br";
+  gap: var(--sc-s1);
+  padding: max(var(--sc-s3), env(safe-area-inset-top, 0px)) max(var(--sc-s3), env(safe-area-inset-right, 0px)) max(var(--sc-s3), env(safe-area-inset-bottom, 0px)) max(var(--sc-s3), env(safe-area-inset-left, 0px));
+  pointer-events: none;
+  min-inline-size: 0;
+}
+.sc-game__hud :is(a, button, input, select, summary, textarea, [tabindex]) { pointer-events: auto; }
+.sc-game__slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sc-s1);
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+.sc-game__slot > * { max-inline-size: 100%; }
+.sc-game__slot--tl     { grid-area: tl;     align-self: start;  align-items: flex-start; }
+.sc-game__slot--top    { grid-area: top;    align-self: start;  align-items: center;     text-align: center; }
+.sc-game__slot--tr     { grid-area: tr;     align-self: start;  align-items: flex-end;   text-align: end; }
+.sc-game__slot--left   { grid-area: left;   align-self: center; align-items: flex-start; }
+.sc-game__slot--right  { grid-area: right;  align-self: center; align-items: flex-end;   text-align: end; }
+.sc-game__slot--bl     { grid-area: bl;     align-self: end;    align-items: flex-start; }
+.sc-game__slot--bottom { grid-area: bottom; align-self: end;    align-items: center;     text-align: center; }
+.sc-game__slot--br     { grid-area: br;     align-self: end;    align-items: flex-end;   text-align: end; }
+/* A narrow stage (600px and below) has two columns around a clear play area:
+   tl beside tr with top under tr, then left — above the centre; then the 1fr
+   play area that holds the crosshair; then right, bottom, and bl | br — below
+   it. Put the taller side slot where its half has room. The @media copy is
+   the fallback for a browser without container queries. */
+@container sc-game (max-width: 600px) {
+  .sc-game__hud {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto auto 1fr auto auto auto;
+    grid-template-areas: "tl tr" "tl top" "left left" ". ." "right right" "bottom bottom" "bl br";
+  }
+  .sc-game__slot--top { align-items: flex-end; text-align: end; }
+}
+@media (max-width: 600px) {
+  .sc-game__hud {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto auto 1fr auto auto auto;
+    grid-template-areas: "tl tr" "tl top" "left left" ". ." "right right" "bottom bottom" "bl br";
+  }
+  .sc-game__slot--top { align-items: flex-end; text-align: end; }
+}
+
+/* Plates: opaque flat ink, a hairline, the 2c on-ink re-scope (declared with
+   the other ink surfaces). No translucency, blur or gradient — a plate must
+   read the same over white snow and over a dark cave. */
+.sc-game__plate {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  margin: 0;
+  padding: var(--sc-s1) calc(var(--sc-s1) + var(--sc-s0));
+  border: 1px solid var(--sc-ink-line);
+  border-radius: var(--sc-r-md);
+  background: var(--sc-ink);
+  color: var(--sc-text);
+  font-size: var(--sc-text-sm);
+  line-height: 1.45;
+}
+.sc-game__plate p { margin: 0 0 var(--sc-s0); }
+.sc-game__plate > :last-child { margin-bottom: 0; }
+.sc-game__plate .sc-eyebrow { margin-bottom: var(--sc-s0); }
+.sc-game__plate :is(h1, h2, h3, h4) { margin: 0 0 var(--sc-s0); font: 700 var(--sc-text-lg)/1.2 var(--sc-font-display); letter-spacing: -.2px; }
+
+/* The crosshair is a navigation reference, not a weapon: a small two-tone ring
+   and dot (ink outside, on-ink inside) at the exact stage centre, readable on
+   white and on near-black. Decorative and still: no spread, no hit marker.
+   It paints above the HUD (and below a layer): the layout keeps the centre
+   clear, and if a crowded HUD reaches it anyway the reference stays visible. */
+.sc-game__crosshair {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  inline-size: 20px;
+  block-size: 20px;
+  translate: -50% -50%;
+  border: 2px solid var(--sc-on-ink);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px var(--sc-ink), inset 0 0 0 1.5px var(--sc-ink);
+  pointer-events: none;
+}
+.sc-game__crosshair::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  inline-size: 4px;
+  block-size: 4px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--sc-on-ink);
+  box-shadow: 0 0 0 1.5px var(--sc-ink);
+}
+
+/* Stopwatch. role="timer" in markup (never assertive); the state is always a
+   word. Tabular figures are deliberate here: a running clock in proportional
+   digits jitters every tick. The value never wraps; colour comes from the
+   block so .sc-estimate (4h) can still win on a wrapped value. */
+.sc-game__timer { display: grid; gap: 2px; color: var(--sc-heading); }
+.sc-game__timer-value { display: block; font: 700 clamp(1.25rem, 1rem + 1.25vw, 1.75rem)/1.1 var(--sc-font-body); font-variant-numeric: tabular-nums; letter-spacing: -.01em; white-space: nowrap; }
+.sc-game__timer-state { color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.4 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; }
+
+/* Measurement: a mono label, a tabular figure with a smaller unit in <small>,
+   one line of guidance. Progress toward a threshold composes the existing
+   .sc-benchmark or progress.sc-progress — there is no game meter. */
+.sc-game__measure { display: grid; color: var(--sc-heading); min-inline-size: 0; }
+.sc-game__measure-label { margin: 0; color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.4 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; }
+.sc-game__measure-value { margin: 0; font: 700 var(--sc-h3)/1.15 var(--sc-font-body); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sc-game__measure-value small { margin-inline-start: .15em; color: var(--sc-text-2); font: 500 var(--sc-text-sm)/1 var(--sc-font-body); }
+.sc-game__measure-note { margin: 0; color: var(--sc-text-2); font-size: var(--sc-text-sm); }
+
+/* Collectible count: the words ("12 / 24 coins") are in the markup. */
+.sc-game__count { margin: 0; color: var(--sc-heading); font: 500 var(--sc-text-sm)/1.4 var(--sc-font-body); }
+.sc-game__count-value { font-size: var(--sc-text-lg); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Star slots. Earned and not-yet differ in SHAPE (filled vs outlined), in
+   heading/brand ink — never a gold — and the state is written beside it. */
+.sc-game__stars { display: grid; gap: var(--sc-s0); margin: 0; padding: 0; list-style: none; text-align: start; }
+.sc-game__star { position: relative; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--sc-s1); min-inline-size: 0; padding-inline-start: calc(18px + var(--sc-s1)); }
+.sc-game__star-glyph {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 1px;
+  inline-size: 18px;
+  block-size: 18px;
+  background: var(--sc-brand);
+  clip-path: path(evenodd, "M9 0.44L11.12 6.98L18 6.98L12.44 11.02L14.56 17.56L9 13.52L3.44 17.56L5.56 11.02L0 6.98L6.88 6.98Z M9 5.29L10.03 8.48L13.38 8.48L10.67 10.45L11.71 13.63L9 11.66L6.29 13.63L7.33 10.45L4.62 8.48L7.97 8.48Z");
+}
+.sc-game__star.is-earned .sc-game__star-glyph { background: var(--sc-heading); clip-path: path("M9 0.44L11.12 6.98L18 6.98L12.44 11.02L14.56 17.56L9 13.52L3.44 17.56L5.56 11.02L0 6.98L6.88 6.98Z"); }
+.sc-game__star-label { color: var(--sc-heading); font: 600 var(--sc-text-sm)/1.4 var(--sc-font-body); }
+.sc-game__star-state { color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.4 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; }
+.sc-game__star.is-earned .sc-game__star-state { color: var(--sc-heading); }
+.sc-game__star-rule { flex: 1 0 100%; color: var(--sc-text-2); font-size: var(--sc-text-sm); line-height: 1.4; }
+
+/* Contextual hint and controls legend. Both read on a plate and on a card. */
+.sc-game__hint { margin: 0; color: var(--sc-text); font-size: var(--sc-text-sm); line-height: 1.6; }
+.sc-game__hint kbd, .sc-game__keys kbd { white-space: nowrap; }
+.sc-game__keys { display: grid; grid-template-columns: minmax(0, max-content) minmax(0, 1fr); gap: var(--sc-s1) var(--sc-s2); align-items: baseline; margin: 0; }
+.sc-game__keys > div { display: contents; }
+.sc-game__keys dt { grid-column: 1; margin: 0; color: var(--sc-heading); line-height: 1.9; }
+.sc-game__keys dd { grid-column: 2; margin: 0; color: var(--sc-text); font-size: var(--sc-text-sm); }
+/* One column on a narrow stage, and on a narrow viewport (a legend on an
+   ordinary card outside any stage has only the viewport to go by). */
+@container sc-game (max-width: 480px) {
+  .sc-game__keys { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
+  .sc-game__keys :is(dt, dd) { grid-column: 1; }
+  .sc-game__keys dd { margin-block-end: var(--sc-s1); }
+}
+@media (max-width: 480px) {
+  .sc-game__keys { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
+  .sc-game__keys :is(dt, dd) { grid-column: 1; }
+  .sc-game__keys dd { margin-block-end: var(--sc-s1); }
+}
+
+/* Capture / pause layer: a full-stage flat wash that centres one composed
+   .sc-card (.sc-game__panel sets its measure) and scrolls when the panel is
+   taller than a short landscape screen. Auto margins centre it without ever
+   pushing its top out of reach. --sc-scrim is a caption gradient for photos;
+   a layer is flat, so it mixes ink instead (opaque ink where color-mix is
+   unsupported). As a native dialog, open it with showModal(): the UA chrome
+   goes, the ::backdrop carries the same wash, and the panel is the surface. */
+.sc-game__layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: max(var(--sc-s3), env(safe-area-inset-top, 0px)) max(var(--sc-s3), env(safe-area-inset-right, 0px)) max(var(--sc-s3), env(safe-area-inset-bottom, 0px)) max(var(--sc-s3), env(safe-area-inset-left, 0px));
+  background: var(--sc-ink);
+  background: color-mix(in srgb, var(--sc-ink) 86%, transparent);
+  color: var(--sc-text);
+  pointer-events: auto;
+}
+.sc-game__layer > * { margin: auto; min-inline-size: 0; }
+.sc-game__panel { inline-size: 100%; max-inline-size: 36rem; }
+dialog.sc-game__layer {
+  inline-size: auto;
+  block-size: auto;
+  max-inline-size: none;
+  max-block-size: none;
+  margin: 0;
+  border: 0;
+  background: transparent;
+}
+dialog.sc-game__layer:modal { position: fixed; }
+dialog.sc-game__layer:not([open]) { display: none; }   /* .sc-game__layer's grid would otherwise draw a closed dialog */
+.sc-game__layer::backdrop { background: var(--sc-ink); background: color-mix(in srgb, var(--sc-ink) 86%, transparent); }
+
+@media (forced-colors: active) {
+  .sc-game__plate { border-color: CanvasText; }
+  .sc-game__crosshair { forced-color-adjust: none; border-color: CanvasText; box-shadow: 0 0 0 2px Canvas, inset 0 0 0 2px Canvas; }
+  .sc-game__crosshair::after { forced-color-adjust: none; background: CanvasText; box-shadow: 0 0 0 2px Canvas; }
+  .sc-game__star-glyph { forced-color-adjust: none; background: CanvasText; }
+}
+/* Print keeps the record, not the moment: the canvas, crosshair and layers
+   are interaction and art, so they go; plates print statically, in flow and
+   in ink, exactly like the masthead. */
+@media print {
+  .sc-game, .sc-game--viewport { block-size: auto; overflow: visible; container-type: normal; background: none; }
+  .sc-game__canvas, .sc-game__crosshair, .sc-game__layer, .sc-game::after { display: none; }
+  .sc-game__hud { position: static; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8pt; overflow: visible; padding: 0; }
+  .sc-game__slot { text-align: start; }
+  .sc-game__plate { break-inside: avoid; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
 /* --------------------------------------------------------------------------

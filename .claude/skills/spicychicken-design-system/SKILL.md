@@ -1,6 +1,6 @@
 ---
 name: spicychicken-design-system
-description: "The SpicyChicken visual standard (sc.css v2.15.0) — cobalt structure, one spice accent, dark by default. Use this skill for ANY visual or written artifact the user asks for — HTML pages, dashboards, reports, one-pagers, READMEs, decks, docs, email, charts, React components, prototypes, mockups, landing pages, or anything with a UI. Trigger it even when the user says nothing about design, branding, or styling; this is their house style and it applies by default to everything they ship. Also trigger on mentions of SpicyChicken, sc.css, sc- classes, the chick mark, or 'my design system'."
+description: "The SpicyChicken visual standard (sc.css v2.16.0) — cobalt structure, one spice accent, dark by default. Use this skill for ANY visual or written artifact the user asks for — HTML pages, dashboards, reports, one-pagers, READMEs, decks, docs, email, charts, React components, prototypes, mockups, landing pages, or anything with a UI. Trigger it even when the user says nothing about design, branding, or styling; this is their house style and it applies by default to everything they ship. Also trigger on mentions of SpicyChicken, sc.css, sc- classes, the chick mark, or 'my design system'."
 license: "MIT for the code; the SpicyChicken mark and assets/ are all rights reserved."
 ---
 
@@ -184,6 +184,45 @@ Use `.sc-session` and `.sc-task-list` for a timer/status header and checklist ro
 
 Use `.sc-media-stage` with `.sc-media-stage__frame` for intrinsic instructional media. Supply real width/height metadata; matching frames retain one geometry, and the application owns their aria-hidden/playback state. Use `.sc-dock-layout` with `.sc-dock-layout__head`, `.sc-dock-layout__body` and `.sc-bottom-dock` for an opt-in phone header/body/dock row layout. Reuse existing named navigation and action-bar primitives; no viewport-fixed overlay or copied bottom offset. See `references/STUDIO-PATTERNS.md`.
 
+### Game shell (a HUD over a canvas the game owns)
+
+Read `references/GAME-PATTERNS.md`. The canvas is the game's ART: snow, timber, coins and coloured
+keys are world materials, never `--sc-*` tokens, status colours, chart slots or HUD text. Name a
+world colour in words ("purple key") and give it a silhouette on the canvas.
+
+`.sc-game` is the stage (add `.sc-game--viewport` for full screen; give an embedded stage a block
+size). Inside it: `.sc-game__canvas` (focusable, `touch-action: none` on itself only), a decorative
+`.sc-game__crosshair` with `aria-hidden="true"`, and `.sc-game__hud` holding `.sc-game__slot`
+children placed with `.sc-game__slot--tl`, `.sc-game__slot--top`, `.sc-game__slot--tr`,
+`.sc-game__slot--left`, `.sc-game__slot--right`, `.sc-game__slot--bl`, `.sc-game__slot--bottom` and
+`.sc-game__slot--br`. The stage is a size container, so on a stage 600px wide or narrower the HUD
+takes two columns with `tl`, `tr`, `top` and `left` above the play area and `right`, `bottom`, `bl`
+and `br` below it: keep each half shorter than half the stage, and put the taller side plate in the
+lighter half, so the crosshair stays clear. On a short screen show fewer plates. Put every readout on
+a `.sc-game__plate` — opaque ink with the on-ink re-scope, the only contrast guarantee over art. Readouts: `.sc-game__timer` (`role="timer"`, a
+`.sc-game__timer-value` `<time>` and a written `.sc-game__timer-state`); `.sc-game__measure` with
+`.sc-game__measure-label`, `.sc-game__measure-value` (unit in `<small>`) and
+`.sc-game__measure-note`, composing `.sc-benchmark` or `progress.sc-progress` for a threshold;
+`.sc-game__count` with `.sc-game__count-value` and the words in the markup; `ol.sc-game__stars` of
+`.sc-game__star` (`.is-earned`) with `.sc-game__star-glyph` (aria-hidden), `.sc-game__star-label`,
+`.sc-game__star-rule` and `.sc-game__star-state`; `.sc-game__hint` (`aria-live="polite"`, `kbd`
+inside); `dl.sc-game__keys` for the controls legend. `.sc-game__layer` is the start/pause layer —
+a plain div (make the canvas and the HUD's controls `inert` while open — never the whole HUD, which
+holds the level heading and readouts) or a `dialog` opened with `showModal()` —
+centring a `.sc-card` with `.sc-game__panel`, one `.sc-actionbar` primary ("Click to play"), how to
+release ("Escape releases the mouse and pauses") and, after a refusal, a `.sc-notice` with a
+keyboard path.
+
+**How to wire capture:** load `assets/sc-game.js` (it adds nothing until called), then
+`const c = SC.game.capture(stage, { target: canvas, resumeControl: playButton, onCapture, onRelease,
+onDenied })` and call `c.request()` only from the Play/Resume click. `onRelease(reason)` receives
+`'escape'`, `'blur'` or `'api'`; focus returns to `resumeControl`; `c.release()` and `c.dispose()`
+clean up (a lock granted after a mid-request `dispose()` is exited too). It never listens for keys — the engine owns input and must clear held keys on blur.
+Display times and sizes with `SC.game.formatElapsed(ms)` / `SC.game.formatMeasure(v)`, which
+truncate; compare RAW values for every rule. `assets/templates/game.html` is the complete specimen.
+Physics, levels, rules and saves stay in the game; anything a game needs that the system lacks
+follows the reciprocal rule in the repository's `AGENTS.md`.
+
 ## Token vocabulary
 
 Reference **semantic** tokens only. Primitives (`--sc-cobalt-*`, `--sc-gray-*`, `--sc-night-*`,
@@ -264,9 +303,11 @@ Read these when the summary above isn't enough:
 - `references/PLAIN-HTML.md` — inline-style equivalents for email and exported HTML.
 - `references/CHECKLIST.md` — the pre-ship gate.
 - `references/MOTION.md` — motion recipes, loading rules, reduced-motion behavior.
+- `references/GAME-PATTERNS.md` — the game shell contract, the world/canvas colour rule and the capture lifecycle.
+- `assets/sc-game.js` — optional pointer-capture lifecycle and truncating formatters for a game over a canvas.
 - `assets/sc-reading.js` — optional chapter location highlighting; native links remain usable without it.
 - `assets/sc-motion.js` — optional motion runtime; use with the matching stylesheet.
-- `assets/sc.css` — the sheet itself (v2.15.0). Read it to confirm a class or token exists before
+- `assets/sc.css` — the sheet itself (v2.16.0). Read it to confirm a class or token exists before
   using it. Never invent an `sc-*` name.
 - `assets/sc-charts.js` — the chart primitives, if the page draws charts.
 - `assets/sc-map.js` — the map layer, if the page draws a map. `SC.geo.albersUsa48`,

@@ -1,4 +1,4 @@
-# SpicyChicken Design System — v2.15.0
+# SpicyChicken Design System — v2.16.0
 
 **The visual standard for everything shipped under SpicyChicken.**
 
@@ -10,10 +10,11 @@ Files in this folder:
 
 | File | What it is |
 |---|---|
-| `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.15.0`. |
+| `sc.css` | The system. Tokens + base + components, dark default, light mode. One file, no build step for consumers. Header says `v2.16.0`. |
 | `sc-map.js` | `SC.geo` (projection, topojson, geodesic ring, box fitting — all pure) and `SC.mapView` (pan, zoom, and the marks that must not scale with it). Optional; needed only by a page that draws a map. |
 | `sc-charts.js` | The chart primitives the sheet's `.sc-chart` / `.sc-spark` / `.sc-tooltip` contracts were always describing. Optional; load it after `sc.css`. |
 | `sc-theme.js` | The theme script (source: `build/theme.js`). Reads the saved choice before paint, wires the toggle, and swaps a pinned-dark page to light for printing. Link it or inline it. |
+| `sc-game.js` | The optional game-shell runtime (source: `build/game.js`): `SC.game.capture()` for an explicit-gesture pointer-capture lifecycle and the truncating `SC.game.formatElapsed()` / `formatMeasure()`. Loading it adds no listener. See `GAME-PATTERNS.md`. |
 | `tokens.json` | The same tokens in W3C Design Tokens format, resolved per mode — for Figma variables / Tokens Studio. Generated from the CSS; edit the CSS. |
 | `starter.html` | The page skeleton every project starts from: head snippet, masthead, theme toggle, title block, footer with watermark. |
 | `styleguide.html` | Living reference — every token and component rendered in both modes. Generated from `build/`. |
@@ -21,6 +22,8 @@ Files in this folder:
 | `build/` | Maintainer tooling, Node only (`check.mjs` + `contrast.mjs` are the gate behind `npm run check` and CI): `node build/gen-tokens.mjs` rebuilds `tokens.json`, `node build/assemble.mjs` rebuilds `styleguide.html` and `sc-theme.js` (from `theme.js`) from `styleguide-body.html` + `styleguide-page.css` + `styleguide.js` + `theme.js`; `color.mjs` is the OKLCH/contrast math. `npm run build` runs them all; `npm run check` diffs the generated files against the committed ones (§11). |
 | `react/` | Optional thin React wrappers that emit the exact `sc-*` markup. Private, unpublished; the CSS stays the source of truth. `npm run build:react`. |
 | `templates/deliverable.html` | Three explicit Letter sheets with repeated document furniture, folios and controlled print breaks. |
+| `templates/game.html` · `GAME-PATTERNS.md` | The full-screen game-shell specimen over illustrative art, and its contract. |
+| `AGENTS.md` | Build/check commands, the reciprocal contribution rule for games and apps, and the snapshot/provenance rule. |
 | `DESIGN_SYSTEM.md` | This document. |
 | `PLAIN-HTML.md` | Inline-style equivalents of the eyebrow, chip, card and callout for email and exported HTML, both modes. |
 | `AUDIT-AND-ROADMAP.md` | Where this came from, what was changed and why, what's next, changelog. |
@@ -99,7 +102,9 @@ on-ink-2, `--sc-text-3` → on-ink-3, `--sc-brand` → on-ink-2, `--sc-brand-str
 `--sc-accent`/`--sc-focus` → spice-400 (6.8:1 on ink), `--sc-raised` → cobalt-900, `--sc-hover` →
 ink-fill, `--sc-border`/`--sc-border-strong` → ink-line-strong, `--sc-on-accent` → night-950, and the filled
 components switch to the dark set (`--sc-surface` → cobalt-900; the brand, accent, info and status fills and
-the status colours take their dark values) so chips, inputs, tabs and primary buttons stay readable. So base
+the status colours take their dark values, and `--sc-chart-emphasis` → cobalt-400 and `--sc-border-control` →
+`#5B6E86` so a benchmark point or an input edge matches dark mode) so chips, inputs, tabs, marks and primary
+buttons stay readable and identical in both page modes. So base
 headings, links, `strong`, eyebrows, chips and
 buttons work inside ink without per-component patches — including a cover block in light mode.
 
@@ -107,6 +112,16 @@ buttons work inside ink without per-component patches — including a cover bloc
 - **Cobalt is structure.** Surfaces, headings, eyebrows, rules, table headers, the emphasized series.
 - **Spice is heat.** Links, the primary button, focus rings, the one "look here" moment. Used sparingly:
   if everything is spicy, nothing is. Spice never colors body text, headings, or large fills.
+
+### The world is art, not tokens (games and canvases)
+A game's canvas is **art owned by the game**. The interface over it keeps the semantic tokens above;
+the world under it does not borrow them. Snow whites, ice, timber, gold coins and coloured keys are
+world materials: never `--sc-*` tokens, never status colours, never chart slots, never HUD text,
+plate fills or focus rings. HUD meaning is carried by words, shapes and plates — `.sc-game__plate` is
+opaque ink with the on-ink re-scope, so it reads the same over white snow and a near-black cave. A
+world colour the HUD must mention ("the purple key") is **named in words** and drawn on the canvas
+with a distinct silhouette. Do not turn the suite white for a snow level, and do not add UI gradients.
+See `GAME-PATTERNS.md`.
 
 ---
 
@@ -216,6 +231,9 @@ attribute now beats every component's `display`, so hide with `hidden`, never wi
 | Bento / editorial | `.sc-bento` + `__main` / `__aside`; `.sc-editorial` + `__body` / `__art` | Let unequal content have unequal space; tracks wrap to their container width. Keep decorative art separate from selectable copy. |
 | Intrinsic media | `.sc-media-stage` / `__frame` | Full source ratio from real dimensions; matching frame pairs retain geometry, active state remains consumer-owned. |
 | Reserved mobile dock | `.sc-dock-layout` (`__head`, `__body`); `.sc-bottom-dock` | Header, scrolling body and action/navigation occupy real rows on phones; safe area, wrapping and print are explicit. |
+| Game stage / HUD | `.sc-game` (`--viewport`) · `__canvas` · `__hud` · `__slot` (`--tl` `--top` `--tr` `--left` `--right` `--bl` `--bottom` `--br`) · `__plate` · `__crosshair` | Opt-in shell over a canvas the game owns. The stage never scrolls and is a size container, so the HUD follows the stage's width. The HUD is a safe-area-padded grid that wraps instead of overlapping, keeps the centre for the play area (on a narrow stage: `tl`/`tr`/`top`/`left` above it, `right`/`bottom`/`bl`/`br` below), and gives pointer input back only to real controls; `touch-action: none` on the canvas only. Plates are opaque ink with the on-ink re-scope — the only contrast guarantee over art. The crosshair is decorative, two-tone, still, and paints above the HUD. See `GAME-PATTERNS.md`. |
+| Game readouts | `.sc-game__timer` (`-value` `-state`) · `__measure` (`-label` `-value` `-note`) · `__count` (`-value`) · `__stars` / `__star` (`.is-earned`, `-glyph` `-label` `-rule` `-state`) · `__hint` · `__keys` | `role="timer"`, a `<time>` and a written state; tabular figures with the unit in `<small>`; counts and star states in words, earned/not-yet differ in shape; progress composes `.sc-benchmark` or `.sc-progress`. Display values truncate (`sc-game.js`); rules compare raw values. |
+| Game capture / pause layer | `.sc-game__layer` · `.sc-game__panel` | A flat ink wash centring one `.sc-card` with an `.sc-actionbar`; scrolls on a short landscape screen. A plain `div` (make the canvas and the HUD's controls `inert` while open — not the whole HUD, which holds the level heading) or a native `dialog` opened with `showModal()` (`::backdrop` wash, UA chrome removed). Optional `sc-game.js` adds the capture lifecycle and `data-sc-capture`. |
 | Dated activity | `.sc-activity` (`__grid`, `__day`, `__selection`, `__legend`) | Native date buttons, written selected value, explicit zero/missing states, table twin; optional `sc-activity.js` adds keyboard inspection. See `STUDIO-PATTERNS.md`. |
 | Task session | `.sc-session`; `.sc-task-list` / `.sc-task` | Timer/status presentation and native or accessible-primitive checklist rows; applications own timing, save state and interpretation. |
 | Reviewed work compositions | Existing `.sc-session`, `.sc-task`, `.sc-facts`, `.sc-disclosure`, `.sc-actionbar` | Dated batch review and prepared pinned continuation compose the existing primitives. State source identity, exact apply/Undo scope, remaining work and focus handoff; no scheduler, timer or persistence runtime. See `STUDIO-PATTERNS.md`. |
@@ -316,7 +334,7 @@ Validated with the `dataviz` method; re-run the checks if a slot ever changes. C
 ## 9. Marks & watermark
 
 **Expanded compositions:** [VISUAL-RECIPES.md](VISUAL-RECIPES.md) and
-[the brand studio](brand-studio.html) demonstrate the v2.15.0 additions. `.sc-cover`
+[the brand studio](brand-studio.html) demonstrate the v2.16.0 additions. `.sc-cover`
 uses ink, wine, or warm paper; `.sc-brand-panel` provides a dedicated mark texture;
 `.sc-ghost` reserves blank space for a mono mark; `.sc-signature` credits the maker
 outside chart plots. `.sc-chapter`, `.sc-stat-strip`, `.sc-facts`,
@@ -379,6 +397,15 @@ Measured, not assumed — the numbers are WCAG 2 contrast ratios from the curren
   can override either direction. **Forced colours** (Windows High Contrast) keep the pressed toggle
   and tab as `Highlight`/`HighlightText`, underline the current nav item, keep legend keys, tooltip
   keys, chart series and sparkline marks coloured, and hand the select back its native arrow.
+- **Games and canvases:** HUD text sits on opaque `.sc-game__plate` ink, never directly on art, so its contrast is the
+  on-ink contrast above whatever the canvas shows; meaning is written (timer state, star state, "purple key"), never
+  a world colour. Pointer capture is requested only from an explicit Play/Resume activation; Escape releases it, focus
+  returns to the resume control, and a refusal offers a keyboard path. While a start/pause layer covers the stage, only
+  the canvas and the HUD's controls go `inert`, so the level heading and readouts stay in the accessibility tree. The
+  focused canvas has a two-tone ring (spice-400 and ink, the same in both page modes) that reads at 3:1 over white
+  snow and a near-black cave; nothing
+  in the game band animates; forced colours keep plates, the crosshair and star glyphs in system colours. Clearing
+  held input on blur or release, and local-only saves, are the game's job (`GAME-PATTERNS.md`).
 - `hidden` works on every component; `.sc-sr-only` and `.sc-skip` are complete.
 
 ---
@@ -388,10 +415,10 @@ Measured, not assumed — the numbers are WCAG 2 contrast ratios from the curren
 **Link a pinned version.** Tags are served by jsDelivr; pin the exact release and upgrade on purpose:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.15.0/sc.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.16.0/sc.css">
 ```
 
-`@2` in place of `@v2.15.0` follows the newest 2.x tag (non-breaking upgrades, re-resolved by the CDN
+`@2` in place of `@v2.16.0` follows the newest 2.x tag (non-breaking upgrades, re-resolved by the CDN
 within hours). The GitHub Pages URL `https://spicychicken59.github.io/design-system/sc.css` is
 **latest** — it is what the style guide runs on and it may change on a major, so it is for
 prototypes, not production. Vendoring (copy `sc.css` next to the page) is the third option; note the
@@ -410,8 +437,8 @@ version from its header when you refresh it.
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.15.0/sc.css">
-<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.15.0/sc-theme.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.16.0/sc.css">
+<script src="https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.16.0/sc-theme.js"></script>
 ```
 
 Order matters: `color-scheme` first so the browser paints the right default before CSS arrives, the
@@ -425,7 +452,7 @@ code changes the attribute), and swaps a pinned-dark page to light for printing.
 nothing else.
 
 **Assets** — every file in `assets/`, at `https://spicychicken59.github.io/design-system/assets/<file>`
-or `https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.15.0/assets/<file>`:
+or `https://cdn.jsdelivr.net/gh/spicyChicken59/design-system@v2.16.0/assets/<file>`:
 
 | File | Where it goes |
 |---|---|

@@ -1,8 +1,9 @@
 // Visual deliverables: local references, document outlines and unchanged mark geometry.
 // Add --browser for the rendered gates — the decision brief, the instrument deck,
-// the print table, the matrix, the pick's press resolution and the record
-// comparison's differing rows and sticky identities; --shots <directory> saves
-// actual browser captures. Playwright + Chromium must be installed separately.
+// the print table, the matrix, the pick's press resolution, the record
+// comparison's differing rows and sticky identities, and the game shell's
+// geometry, plate contrast, capture/refusal paths and dialog focus;
+// --shots <directory> saves actual browser captures. Playwright + Chromium must be installed separately.
 // A requested browser run without a working browser reports SKIP and exits 1.
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
@@ -17,9 +18,10 @@ import { checkComparePair } from './compare-pair-check.mjs';
 import { checkParsed } from './parse-check.mjs';
 import { checkMatrixCriteria, checkMatrixLifecycle, checkMatrixWithoutJS } from './matrix-nav-check.mjs';
 import { checkMatrixBundleSource, checkAutomaticMatrixBundle } from './matrix-bundle-check.mjs';
+import { checkGameShell } from './game-render-check.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 checkMatrixBundleSource(root);
-const files = ['brand-studio.html', 'visual-library.html', 'composition-studio.html', ...['landing','dashboard','screener','report','deliverable','decision-brief','studio','media-dock'].map(p => `templates/${p}.html`)];
+const files = ['brand-studio.html', 'visual-library.html', 'composition-studio.html', ...['landing','dashboard','screener','report','deliverable','decision-brief','studio','media-dock','game'].map(p => `templates/${p}.html`)];
 for (const name of files) {
   const path = join(root, name), html = readFileSync(path, 'utf8');
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1, `${name}: one page h1`);
@@ -159,6 +161,7 @@ async function checkRenderedDecisionBrief() {
     await checkMatrixLifecycle(browser, root);
     await checkMatrixWithoutJS(browser, base);
     await checkAutomaticMatrixBundle(browser, root, base);
+    await checkGameShell(browser, base, shots);
     console.log(`visual-check: ${scenarios}/6 rendered decision-brief scenarios passed in Chromium (offline fallback fonts)${shots ? `; screenshots: ${shots}` : ''}`);
   } finally {
     await browser.close();
