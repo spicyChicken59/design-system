@@ -162,7 +162,7 @@
   // motion shows the end at once. The total is announced once, at the end.
   function countUp(dialog) {
     var block = dialog.querySelector('.sc-game__milestones[data-sc-game-count-to]');
-    if (!block) return { start: function () {}, finish: function () {} };
+    if (!block) return { start: function () {}, finish: function () {}, reset: function () {} };
     var to = Number(block.getAttribute('data-sc-game-count-to')), total = Number(block.getAttribute('data-sc-game-count-total'));
     var value = block.querySelector('.sc-game__milestones-value'), status = dialog.querySelector('[data-sc-game-count-status]');
     var markers = Array.prototype.map.call(block.querySelectorAll('.sc-game__milestones-marker'), function (m) {
@@ -186,7 +186,8 @@
       block.setAttribute('data-sc-game-count', 'done');
       if (status) status.textContent = to + ' of ' + total + ' coins. ' + markers.map(function (m) { return m.name + (to >= m.at ? ' star earned' : ' star not yet'); }).join('; ') + '.';
     }
-    function step() { if (count >= to) { finish(); return; } show(count + 1); timer = setTimeout(step, Math.max(40, Math.min(160, 1200 / Math.max(1, to)))); }
+    var stepMs = Math.round(Math.max(40, Math.min(160, 1200 / Math.max(1, to))));
+    function step() { if (count >= to) { finish(); return; } show(count + 1); timer = setTimeout(step, stepMs); }
     return {
       start: function () {
         clearTimeout(timer);
@@ -194,7 +195,15 @@
         block.setAttribute('data-sc-game-count', 'counting');
         var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (still) { finish(); return; }
-        show(0); timer = setTimeout(step, 240);
+        timer = setTimeout(step, 240);
+      },
+      // Called BEFORE the dialog opens: showModal() computes styles (to focus the primary action), and a
+      // fill already drawn at the end would visibly rewind to zero. The fill glides exactly one step.
+      reset: function () {
+        var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (still) return;
+        block.style.setProperty('--sc-game-milestones-step', stepMs + 'ms');
+        show(0);
       },
       finish: finish
     };
@@ -204,7 +213,7 @@
       var dialog = document.getElementById(opener.getAttribute('aria-controls'));
       if (!dialog || typeof dialog.showModal !== 'function') { opener.hidden = true; return; }
       var primary = dialog.querySelector('[data-sc-game-results-next]'), counter = countUp(dialog);
-      opener.addEventListener('click', function () { dialog.showModal(); if (primary) primary.focus(); counter.start(); });
+      opener.addEventListener('click', function () { counter.reset(); dialog.showModal(); if (primary) primary.focus(); counter.start(); });
       dialog.addEventListener('close', function () { counter.finish(); opener.focus(); });
       Array.prototype.forEach.call(dialog.querySelectorAll('[data-sc-game-results-next], [data-sc-game-results-close]'), function (button) {
         button.addEventListener('click', function () { dialog.close(); });

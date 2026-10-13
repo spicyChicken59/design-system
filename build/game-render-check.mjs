@@ -301,13 +301,18 @@ export async function checkGameShell(browser, base, shots) {
         const b = document.querySelector('#game-results .sc-game__milestones'), out = [], at = Math.round(1 / 3 * 24);
         const look = () => {
           const n = Number(b.querySelector('.sc-game__milestones-value').textContent), lit = b.querySelector('[data-sc-game-milestone="explorer"].sc-game__milestones-marker').classList.contains('is-earned'), star = b.querySelector('li[data-sc-game-milestone="explorer"]');
-          out.push({ n, agree: lit === (n >= at) && star.classList.contains('is-earned') === lit && /earned/.test(star.textContent) === lit, status: document.querySelector('[data-sc-game-count-status]').textContent });
+          const fill = b.querySelector('.sc-game__milestones-fill').getBoundingClientRect(), track = b.querySelector('.sc-game__milestones-track').getBoundingClientRect();
+          out.push({ n, drawn: fill.width / (track.width - 2), agree: lit === (n >= at) && star.classList.contains('is-earned') === lit && /earned/.test(star.textContent) === lit, status: document.querySelector('[data-sc-game-count-status]').textContent });
           if (b.getAttribute('data-sc-game-count') === 'done') resolve(out); else requestAnimationFrame(look);
         };
         look();
       }));
       assert(seen.every(s => s.agree), 'results: each marker and its written star light exactly as the count passes the threshold');
       assert(seen.every((s, i) => i === 0 || s.n >= seen[i - 1].n), 'results: the count only goes up');
+      // The drawn fill keeps pace (--sc-game-milestones-step): never ahead of the count — a fill drawn at the
+      // end before the dialog opened would rewind from there — and never more than two steps behind.
+      const ahead = seen.filter(s => s.drawn > s.n / 24 + 0.01), behind = seen.filter(s => s.drawn < s.n / 24 - 2 / 24 - 0.01);
+      assert(!ahead.length && !behind.length, `results: the fill keeps pace with the count (ahead ${JSON.stringify(ahead.slice(0, 3))}, behind ${JSON.stringify(behind.slice(0, 3))})`);
       assert(seen.slice(0, -1).every(s => s.status === ''), 'results: nothing is announced while counting');
       const done = await page.evaluate(() => { const b = document.querySelector('#game-results .sc-game__milestones'); return { value: b.querySelector('.sc-game__milestones-value').textContent, fill: getComputedStyle(b).getPropertyValue('--sc-game-milestones-value').trim(), lit: [...b.querySelectorAll('.sc-game__milestones-marker')].map(m => m.classList.contains('is-earned')), status: document.querySelector('[data-sc-game-count-status]').textContent }; });
       assert(done.value === '12' && Number(done.fill) === 0.5 && done.lit.join() === 'true,false', `results: the count ends at 12 of 24, half the track, explorer lit and collector not (${JSON.stringify(done)})`);
@@ -419,6 +424,14 @@ export async function checkGameShell(browser, base, shots) {
         return { bars: plant('.sc-game--cinematic::before { pointer-events: auto !important; }', centre), card: plant('.sc-game__title-card { pointer-events: auto !important; }', centre), wide: caption.parentElement.getBoundingClientRect().width <= ch60 + 1 ? 'n/a: the slot is narrower than 60ch' : plant('.sc-game__caption { max-inline-size: none !important; } .sc-game__caption-line::after { content: " and it has been rolling round this kitchen since breakfast, so keep an eye on it"; }', () => caption.getBoundingClientRect().width > ch60 + 1), clean: centre() };
       });
       assert(!planted.bars && !planted.card && planted.wide && planted.clean, `${label}: rendered negative controls are caught — bars or a title card taking input block the centre, an unbounded caption passes 60ch (${JSON.stringify(planted)})`);
+      if (reducedMotion === 'reduce') {
+        // Forced colours: the bars become Canvas (a frame, not content) and the plates keep their edge.
+        await page.emulateMedia({ forcedColors: 'active' });
+        const forced = await page.evaluate(() => { const bars = getComputedStyle(document.querySelector('.sc-game'), '::before'), plates = [...document.querySelectorAll('.sc-game__caption, .sc-game__skip, .sc-game__title-card > .sc-game__plate')].map(p => getComputedStyle(p)); return { adjust: bars.forcedColorAdjust, width: parseFloat(bars.borderTopWidth), plates: plates.every(p => p.borderTopStyle === 'solid' && parseFloat(p.borderTopWidth) > 0) }; });
+        assert(forced.adjust === 'none' && forced.width >= 16 && forced.plates, `${label}: in forced colours the bars stay drawn as Canvas and every plate keeps a border (${JSON.stringify(forced)})`);
+        await shot(page, 'cinematic-forced-colors-1280');
+        await page.emulateMedia({ forcedColors: 'none' });
+      }
       await page.keyboard.press('Escape');
       assert(await page.evaluate(() => document.querySelector('.sc-game').classList.contains('sc-game--cinematic')), `${label}: Escape does not skip (it pauses in a game)`);
       await page.evaluate(() => document.querySelector('.sc-game__skip button').focus());

@@ -217,7 +217,8 @@ keyboard path.
 (`.sc-game__milestones-count`) moving along an aria-hidden `.sc-game__milestones-track` whose
 `.sc-game__milestones-marker` stars light (`.is-earned`: outlined to filled) as the count passes each
 threshold; write the thresholds in a `.sc-game__milestones-note` or an `ol.sc-game__stars`, set
-`--sc-game-milestones-value` and `--sc-game-milestone-at` inline, and announce a count-up's total once.
+`--sc-game-milestones-value` and `--sc-game-milestone-at` inline (and `--sc-game-milestones-step` for a
+count-up drawn from zero before it is shown), and announce a count-up's total once.
 `.sc-game__meter` is a `role="meter"` plate (`data-state` calm, alert or danger: word, glyph shape
 and fill thickness all change) with its state in `aria-valuetext`. `.sc-game--cinematic` on the
 stage draws letterbox bars and keeps only `.sc-game__captions` (a persistent polite region holding

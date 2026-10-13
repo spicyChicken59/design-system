@@ -251,9 +251,13 @@ collector stars, on a HUD plate and on a results card.
 - **Counting up.** `--animate` lets the fill glide between the values a count-up
   steps through and a marker grow as it lights — only under
   `prefers-reduced-motion: no-preference` and never on a `.sc-game--still`
-  stage. Step the number yourself (one step per frame or per coin), light each
-  marker and its star as the count passes the threshold, and under reduced
-  motion show the end at once. **Announce once**: the count readout is never a
+  stage. Step the number yourself (one step per coin), set
+  `--sc-game-milestones-step` to the step's duration (`"60ms"`) so the fill
+  keeps pace instead of trailing, light each marker and its star as the count
+  passes the threshold, and under reduced motion show the end at once. **Draw
+  the start before you show the block**: `showModal()` computes styles to focus
+  the primary action, so a fill still drawn at the end would visibly rewind to
+  zero. **Announce once**: the count readout is never a
   live region (it would announce every step); put the final sentence in one
   polite status when the count stops ("12 of 24 coins. Explorer star earned;
   collector star not yet."). Every total works — a level with 30 coins puts
@@ -545,7 +549,9 @@ while the layer is open and while paused; and a results dialog that is not drawn
 while closed. The results count-up starts from zero, only goes up, lights each
 marker and its written star exactly as the count passes the threshold, says
 nothing until it stops and then announces the total once; under reduced motion
-it shows the end at once, static. The meter scenarios (390 and 1280px) find three
+it shows the end at once, static. The drawn fill keeps pace — never ahead of the
+count (a negative control that resets after `showModal()` is caught rewinding)
+and never more than two steps behind. The meter scenarios (390 and 1280px) find three
 named meters in the accessibility tree whose values carry their words, three
 glyph shapes, fills that thicken with the state and are drawn at the reported
 value, and 3:1 marks with 4.5:1 words. The cinematic scenarios (390 and 1280px,
@@ -554,7 +560,8 @@ grow in only when motion is allowed, nothing on screen but the caption, the skip
 control and the title card, a caption centred low and at most `60ch` wide, a
 centred title card that lets a pointer through to the canvas, focus on Skip with
 a visible ring, Escape that does not skip, Space that does and focus back on the
-opener — and rendered negative controls (bars or a title card that take input, a
+opener; in forced colours, bars drawn as Canvas and every plate keeping its edge
+— and rendered negative controls (bars or a title card that take input, a
 caption let out past `60ch`) caught by the same measurements. The compact
 cinematic and meter stages embedded in the style guide and the visual library
 pass the same geometry at 320 and 390px and as a 320px stage in a 1280px page.

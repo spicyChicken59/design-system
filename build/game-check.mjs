@@ -550,6 +550,7 @@ export function assertMomentsCss(band) {
   const moving = rules.filter(r => declarations(r.body).some(d => /^(?:transition|animation)(?:-|$)/.test(d.prop) && !/^none\b/.test(d.value)));
   assert(moving.length >= 3, 'the bars, the milestones fill and its markers carry their motion');
   for (const r of moving) assert(allowed.has(`${r.sel}{${r.body}`), `motion only behind prefers-reduced-motion: no-preference: "${r.sel}"`);
+  assert(/var\(--sc-game-milestones-step\b/.test(valuesFor(rulesOf(motion), '.sc-game__milestones--animate .sc-game__milestones-fill', 'transition').join()), 'the milestones fill glides for the consumer\'s step (--sc-game-milestones-step), so it keeps pace with a count-up');
   const stilled = new Set(rules.filter(r => declarations(r.body).some(d => d.prop === 'transition' && d.value === 'none')).flatMap(r => splitSelectors(r.sel)).filter(s => s.startsWith('.sc-game--still')).map(movedPart));
   for (const r of moving) for (const s of splitSelectors(r.sel)) assert(stilled.has(movedPart(s)), `a .sc-game--still stage holds ${movedPart(s)} still`);
   const forced = rulesOf(cssBlock(band, '@media (forced-colors: active)'));
@@ -598,6 +599,7 @@ await check('moments CSS negative controls are rejected', () => {
     'a cinematic that hides its title card': `${band}\n.sc-game--cinematic .sc-game__title-card { display: none; }\n`,
     'a transition that ignores reduced motion': `${band}\n.sc-game__meter-fill { transition: inline-size .2s linear; }\n`,
     'an animation outside the motion query': `${band}\n.sc-game__caption { animation: sc-game-rise .3s; }\n`,
+    'a fill that glides at its own pace, not the count-up\'s': band.replace('var(--sc-game-milestones-step, var(--sc-motion-fast))', 'var(--sc-motion-fast)'),
     'a still stage that still moves': band.replace(/\.sc-game--still::before, [^{]*\{ transition: none; \}/, ''),
     'a meter fill that vanishes in forced colours': band.replace('.sc-game__meter-glyph, .sc-game__meter-fill, .sc-game__milestones-fill', '.sc-game__meter-glyph, .sc-game__milestones-fill')
   };
