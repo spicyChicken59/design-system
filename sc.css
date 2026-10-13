@@ -2033,7 +2033,9 @@ html[data-sc-motion-paused="true"] .sc-disclosure[open] > .sc-disclosure__body {
    digits jitters every tick. The value never wraps; colour comes from the
    block so .sc-estimate (4h) can still win on a wrapped value. */
 .sc-game__timer { display: grid; gap: 2px; color: var(--sc-heading); }
-.sc-game__timer-value { display: block; font: 700 clamp(1.25rem, 1rem + 1.25vw, 1.75rem)/1.1 var(--sc-font-body); font-variant-numeric: tabular-nums; letter-spacing: -.01em; white-space: nowrap; }
+/* The figure follows the STAGE's width (cqi; vw is the fallback without container units),
+   so a narrow embedded stage never pushes it out of its plate in a wide window. */
+.sc-game__timer-value { display: block; font: 700 clamp(1.25rem, 1rem + 1.25vw, 1.75rem)/1.1 var(--sc-font-body); font-size: clamp(1.125rem, .75rem + 2.5cqi, 1.75rem); font-variant-numeric: tabular-nums; letter-spacing: -.01em; white-space: nowrap; }
 .sc-game__timer-state { color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.4 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; }
 
 /* Measurement: a mono label, a tabular figure with a smaller unit in <small>,
