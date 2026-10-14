@@ -2285,12 +2285,14 @@ dialog.sc-game__layer:not([open]) { display: none; }   /* .sc-game__layer's grid
 .sc-game__skip-hint { color: var(--sc-text-2); font-size: var(--sc-text-sm); line-height: 1.4; }
 .sc-game__skip-hint kbd { white-space: nowrap; }
 
-/* Title card: centred over the stage on a plate — an eyebrow and a title.
+/* Title card: on a plate — an eyebrow and a title — centred across the
+   stage and in its upper three quarters, so captions below never meet it (on
+   a narrow stage the skip control wraps under the captions and lifts them).
    The .sc-game__title-card box is the persistent region (it may carry
    aria-live="polite"); it draws nothing until a plate is put inside it. */
 .sc-game__title-card {
   position: absolute;
-  inset: 0;
+  inset: 0 0 25%;
   display: grid;
   place-items: center;
   padding: max(var(--sc-s3), env(safe-area-inset-top, 0px)) max(var(--sc-s3), env(safe-area-inset-right, 0px)) max(var(--sc-s3), env(safe-area-inset-bottom, 0px)) max(var(--sc-s3), env(safe-area-inset-left, 0px));

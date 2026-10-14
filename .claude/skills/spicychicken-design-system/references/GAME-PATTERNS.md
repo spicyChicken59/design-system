@@ -356,9 +356,11 @@ A cutscene, a story beat or a level intro over the live canvas.
   skips** — Escape pauses, as it does everywhere else in the shell. An
   unskippable moment hides the plate.
 - **Title card** — `.sc-game__title-card` is a direct child of a HUD, outside
-  the slots: a persistent, centred region (it may carry `aria-live="polite"`)
-  that draws nothing until a plate with an eyebrow and a heading is put inside
-  it. It lets the pointer through. Its title scales with the stage (20–56px).
+  the slots: a persistent region (it may carry `aria-live="polite"`) that draws
+  nothing until a plate with an eyebrow and a heading is put inside it, centred
+  across the stage and in its upper three quarters, so captions below never meet
+  it (on a narrow stage the skip control wraps under them and lifts them). It
+  lets the pointer through. Its title scales with the stage (20–56px).
   On a short stage, show a title card and a caption one after the other rather
   than together.
 - The engine owns the script: when lines change, how long they stay, what
@@ -564,12 +566,12 @@ value, and 3:1 marks with 4.5:1 words. The cinematic scenarios (390 and 1280px,
 both themes, and reduced motion) find equal letterbox bars under the HUD that
 grow in only when motion is allowed, nothing on screen but the caption, the skip
 control and the title card, a caption centred low and at most `60ch` wide, a
-centred title card that lets a pointer through to the canvas, focus on Skip with
+title card centred across the stage in its upper three quarters, above the caption, that lets a pointer through to the canvas, focus on Skip with
 a visible ring, a skip plate that hugs its button and keys (a planted wrapping
 row is caught stretching it on a phone), the page's motion pause stilling the
 bars and markers, Escape that does not skip, Space that does and focus back on
 the opener; in forced colours, bars drawn as Canvas and every plate keeping its edge
 — and rendered negative controls (bars or a title card that take input, a
-caption let out past `60ch`) caught by the same measurements. The compact
+title card centred on the whole stage, a caption let out past `60ch`) caught by the same measurements. The compact
 cinematic and meter stages embedded in the style guide and the visual library
 pass the same geometry at 320 and 390px and as a 320px stage in a 1280px page.

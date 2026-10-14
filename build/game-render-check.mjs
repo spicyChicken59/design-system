@@ -91,8 +91,8 @@ const overlaps = (a, b) => Math.min(a.right, b.right) - Math.max(a.x, b.x) > .5 
 // embedded: the stage sits in a longer page, whose own overflow is not the
 // stage's to answer for — the stage itself must still fit the viewport.
 // cinematic: a cinematic moment hides the crosshair and centres a title card
-// over the play area, so the centre belongs to the card (which lets the
-// pointer through to the canvas).
+// across the play area in its upper three quarters (clear of the captions
+// below), letting the pointer through to the canvas.
 function assertGeometry(m, label, { short = false, slots = 8, covered = false, embedded = false, cinematic = false } = {}) {
   if (embedded) assert(m.stage.x >= -1 && m.stage.right <= m.viewport.width + 1, `${label}: the stage fits the viewport width`);
   else assert(m.pageWidth <= m.viewport.width + 1, `${label}: no page-level horizontal overflow`);
@@ -415,7 +415,8 @@ export async function checkGameShell(browser, base, shots) {
       assert.deepEqual(moment.visible.sort(), ['sc-game__plate', 'sc-game__plate sc-game__caption', 'sc-game__plate sc-game__skip'], `${label}: only the caption, the skip control and the title card are on screen`);
       assert(moment.caption.width <= moment.ch60 + 1 && Math.abs(moment.caption.x + moment.caption.width / 2 - (moment.stage.x + moment.stage.width / 2)) <= 1, `${label}: the caption is centred and at most 60ch wide (${moment.caption.width.toFixed(0)} of ${moment.ch60.toFixed(0)}px)`);
       assert(moment.caption.y > moment.stage.y + moment.stage.height / 2 && moment.caption.bottom <= moment.safe.bottom + 1, `${label}: the caption sits low, inside the safe area`);
-      assert(Math.abs(moment.title.x + moment.title.width / 2 - (moment.stage.x + moment.stage.width / 2)) <= 1 && Math.abs(moment.title.y + moment.title.height / 2 - (moment.stage.y + moment.stage.height / 2)) <= 1, `${label}: the title card is centred on the stage`);
+      assert(Math.abs(moment.title.x + moment.title.width / 2 - (moment.stage.x + moment.stage.width / 2)) <= 1 && Math.abs(moment.title.y + moment.title.height / 2 - (moment.stage.y + moment.stage.height * 0.375)) <= 1, `${label}: the title card is centred across the stage, in its upper three quarters (centre at 37.5% of its height)`);
+      assert(moment.title.bottom < moment.caption.y, `${label}: the title card ends above the caption`);
       assert(Math.abs(moment.skip.right - moment.safe.right) <= 1 && moment.skip.bottom <= moment.safe.bottom + 1 && moment.skip.x > moment.stage.x + moment.stage.width / 2 && moment.skip.y > moment.stage.y + moment.stage.height / 2, `${label}: the skip control sits in the bottom-right, inside the safe area`);
       assert(moment.focus.inSkip && moment.focus.text === 'Skip' && moment.focus.outline !== 'none' && moment.focus.width >= 2, `${label}: the skip button takes focus with a visible ring`);
       assert(moment.centreHit, `${label}: the title card lets a pointer at the centre through to the canvas`);
@@ -430,9 +431,9 @@ export async function checkGameShell(browser, base, shots) {
         const centre = () => document.elementFromPoint(s.x + s.width / 2, s.y + s.height / 2) === canvas;
         const plant = (css, read) => { const style = document.createElement('style'); style.textContent = css; document.head.append(style); const out = read(); style.remove(); return out; };
         const probe = document.createElement('span'); probe.style.cssText = 'display:inline-block;inline-size:60ch;block-size:0'; caption.append(probe); const ch60 = probe.getBoundingClientRect().width; probe.remove();
-        return { bars: plant('.sc-game--cinematic::before { pointer-events: auto !important; }', centre), card: plant('.sc-game__title-card { pointer-events: auto !important; }', centre), wide: caption.parentElement.getBoundingClientRect().width <= ch60 + 1 ? 'n/a: the slot is narrower than 60ch' : plant('.sc-game__caption { max-inline-size: none !important; } .sc-game__caption-line::after { content: " and it has been rolling round this kitchen since breakfast, so keep an eye on it"; }', () => caption.getBoundingClientRect().width > ch60 + 1), clean: centre() };
+        return { bars: plant('.sc-game--cinematic::before { pointer-events: auto !important; }', centre), card: plant('.sc-game__title-card { pointer-events: auto !important; }', centre), midStage: plant('.sc-game__title-card { inset: 0 !important; }', () => { const t = document.querySelector('.sc-game__title-card > .sc-game__plate').getBoundingClientRect(); return Math.abs(t.y + t.height / 2 - (s.y + s.height * 0.375)) <= 1; }), wide: caption.parentElement.getBoundingClientRect().width <= ch60 + 1 ? 'n/a: the slot is narrower than 60ch' : plant('.sc-game__caption { max-inline-size: none !important; } .sc-game__caption-line::after { content: " and it has been rolling round this kitchen since breakfast, so keep an eye on it"; }', () => caption.getBoundingClientRect().width > ch60 + 1), clean: centre() };
       });
-      assert(!planted.bars && !planted.card && planted.wide && planted.clean, `${label}: rendered negative controls are caught — bars or a title card taking input block the centre, an unbounded caption passes 60ch (${JSON.stringify(planted)})`);
+      assert(!planted.bars && !planted.card && !planted.midStage && planted.wide && planted.clean, `${label}: rendered negative controls are caught — bars or a title card taking input block the centre, a title card centred on the whole stage leaves the upper three quarters, an unbounded caption passes 60ch (${JSON.stringify(planted)})`);
       // The skip plate hugs its button and keys in any corner: one row where it fits, the keys under the
       // button where it does not. Rendered negative control: a wrapping flex row stretches the plate to the
       // slot once it wraps (only a narrow corner wraps, so only there can it be caught).
@@ -477,7 +478,7 @@ export async function checkGameShell(browser, base, shots) {
       assert(!after.cinematic && after.captions === 0 && after.title === 0 && after.skipHidden && after.focus && after.crosshair !== 'none', `${label}: Space on Skip ends the moment, clears it, restores the HUD and returns focus to the opener (${JSON.stringify(after)})`);
       assert.deepEqual(errors, [], `${label}: no page errors`);
       scenarios++;
-      console.log(`  ok ${label}: bars ${moment.bars.top}px under the HUD, only caption/skip/title on screen, 60ch caption at the bottom centre, centred title card, skip bottom-right with focus and hugging its keys in ${hug.clean.rows} row(s), motion pause honoured, Escape keeps the moment, Space skips and focus returns`);
+      console.log(`  ok ${label}: bars ${moment.bars.top}px under the HUD, only caption/skip/title on screen, 60ch caption at the bottom centre, title card centred across and above it, skip bottom-right with focus and hugging its keys in ${hug.clean.rows} row(s), motion pause honoured, Escape keeps the moment, Space skips and focus returns`);
     } finally { await context.close(); }
   }
 
@@ -523,7 +524,7 @@ export async function checkGameShell(browser, base, shots) {
   // phone widths, and a 320px stage inside a wide page: the layout follows the
   // STAGE's width (a container query), not the viewport's.
   // The cinematic and meter stages follow the same rules: the cinematic one
-  // hides its crosshair and centres its title card over the play area.
+  // hides its crosshair and centres its title card across the play area, clear of its captions.
   const SLOTS = { 'game-stage': { slots: 5 }, 'game-cinema-stage': { slots: 2, cinematic: true }, 'game-meters-stage': { slots: 4 } };
   const embedded = [];
   for (const [file, prefix] of [['styleguide.html', 'guide'], ['visual-library.html', 'library']]) for (const kind of Object.keys(SLOTS)) for (const width of [320, 390]) embedded.push([file, `#${prefix}-${kind}`, width, undefined, SLOTS[kind]]);
@@ -541,7 +542,7 @@ export async function checkGameShell(browser, base, shots) {
       if (shots && (width === 320 || stageWidth)) await page.locator(selector).screenshot({ path: join(shots, `game-embedded-${file.replace('.html', '')}-${selector.slice(1)}-${stageWidth ? `${stageWidth}-in-${width}` : width}.png`) });
       assert.deepEqual(errors, [], `${label}: no page errors`);
       scenarios++;
-      console.log(`  ok ${label} (${selector}): ${m.columns} columns, ${options.cinematic ? 'crosshair hidden for the moment, title card centred' : 'centred and unobstructed crosshair'}, no overlap, no clipping, opaque plates`);
+      console.log(`  ok ${label} (${selector}): ${m.columns} columns, ${options.cinematic ? 'crosshair hidden for the moment, title card centred across and clear of the captions' : 'centred and unobstructed crosshair'}, no overlap, no clipping, opaque plates`);
     } finally { await context.close(); }
   }
 
