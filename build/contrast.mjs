@@ -69,7 +69,24 @@ export function checkContrast(css) {
     const tc = (n) => toRgb(resolve('--sc-' + n, ctx), ink);
     check(mode, 'on-ink context on-accent on accent', tc('on-accent'), tc('accent'), 4.5);
     for (const [fg, bg] of [['brand', 'brand-fill'], ['accent', 'accent-fill'], ['info', 'info-fill'], ['good', 'good-fill'], ['warn', 'warn-fill'], ['danger', 'danger-fill'], ['heading', 'surface'], ['text', 'surface'], ['text-2', 'surface']]) check(mode, 'on-ink context ' + fg + ' on ' + bg, tc(fg), tc(bg), 4.5);
+    // Marks and control edges inside ink (a benchmark point on a plate, an input in a masthead).
+    for (const s of ['raised', 'surface']) check(mode, `on-ink context chart-emphasis vs ${s}`, tc('chart-emphasis'), tc(s), 3);
+    check(mode, 'on-ink context border-control vs ink', tc('border-control'), ink, 3);
     for (const n of ['chart-1', 'chart-2', 'chart-3', 'chart-4', 'chart-5', 'chart-emphasis', 'chart-context']) check(mode, `${n} vs surface`, t(n), t('surface'), 3);
+    // Game moments (4i). On a plate (the on-ink context over ink): caption, skip
+    // and title-card text; the meter's fill against its track and its glyph
+    // against the plate in each state; milestone markers against the plate.
+    // On a results card (page tokens): the milestones fill against its track
+    // and the markers against the card.
+    for (const [label, fg] of [['caption speaker', 'text-2'], ['caption line', 'heading'], ['skip hint', 'text-2'], ['title card', 'heading'], ['meter state', 'heading'], ['meter label', 'text-2'], ['milestones count', 'heading']]) check(mode, `game ${label} (${fg}) on a plate`, tc(fg), ink, 4.5);
+    for (const [state, fill, glyph] of [['calm', 'chart-emphasis', 'text-2'], ['alert', 'warn', 'warn'], ['danger', 'danger', 'danger']]) {
+      check(mode, `game meter ${state} fill (${fill}) vs its track`, tc(fill), tc('raised'), 3);
+      check(mode, `game meter ${state} glyph (${glyph}) vs the plate`, tc(glyph), ink, 3);
+    }
+    check(mode, 'game milestones fill vs its track, on a plate', tc('chart-emphasis'), tc('raised'), 3);
+    for (const [label, fg] of [['unlit marker', 'brand'], ['lit marker', 'heading']]) check(mode, `game milestones ${label} (${fg}) vs the plate`, tc(fg), ink, 3);
+    check(mode, 'game milestones fill vs its track, on a card', t('chart-emphasis'), t('raised'), 3);
+    for (const [label, fg] of [['unlit marker', 'brand'], ['lit marker', 'heading']]) check(mode, `game milestones ${label} (${fg}) vs a card`, t(fg), t('surface'), 3);
   }
   // Brand covers have local colour scopes independent of the page theme.
   const paper = block(css, /\.sc-cover--paper \{([\s\S]*?)\n\}/);

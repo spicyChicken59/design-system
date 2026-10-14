@@ -708,3 +708,7 @@ separating any permitted per-visit choice. Reuse the existing session, facts,
 task, disclosure and actionbar primitives. See the [batch contract](STUDIO-PATTERNS.md#review-a-dated-batch-from-a-saved-starting-point),
 [prepared-task contract](STUDIO-PATTERNS.md#prepare-the-exact-task-including-pinned-continuation)
 and illustrative [studio states](templates/studio.html#studio-batch).
+
+# Game shell recipe
+
+The visual library's **A game HUD over unknown art** recipe and `templates/game.html` compose the game shell documented in `GAME-PATTERNS.md`: a stage, a canvas the game paints, named HUD slots holding opaque ink plates, a still two-tone crosshair, a capture layer and a native results dialog. The specimen art is illustrative flat 2D painting (`build/game-specimen.js`) that switches between a bright snow field and a dark cave to prove the plates over both. The recipe is a compact in-play HUD — level, coins, timer, a measure with its benchmark, a hint — with the stars on an ordinary card beneath it, which keeps the play area clear on a 246px-wide phone column; it has no capture layer. The full specimen adds the stars on a plate, the capture layer with the optional `sc-game.js` lifecycle and a keyboard path when the browser refuses. World colours stay on the canvas and meaning stays in words. Give an embedded stage a block size, or use `.sc-game--viewport` for full screen; progress toward a limit composes `.sc-benchmark`.

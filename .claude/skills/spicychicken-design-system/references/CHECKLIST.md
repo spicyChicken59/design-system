@@ -45,6 +45,13 @@ guide, it's a new component — fold it into the system or take it out.
 - [ ] Prepared task preview and Start resolve the same content/source witness; pinned continuation uses the saved identity and targets, counts only remaining work, and separates per-visit choices.
 - [ ] Task reviews invalidate stale account/date/source responses, show loading/error/ready state, return focus on Cancel and hand focus to the active task on Start; imperative dialogs supply their own opener reference.
 
+- [ ] A game's world colours (snow, timber, coins, keys) stay on the canvas: no `--sc-*` token, status colour or chart slot paints them, and no HUD text wears them; a world colour the HUD mentions is named in words.
+- [ ] Every HUD readout sits on an opaque `.sc-game__plate`, and was checked over the brightest and the darkest art the game draws, in both page modes; timer state, star state and counts are written, not colour-only.
+- [ ] HUD slots do not overlap at 320–1440px, plates stay inside the safe area, and no plate covers the crosshair (on a narrow stage each half of the HUD fits in half the stage). On a short screen (640 × 360, 320 × 568) the game shows fewer plates: the shell keeps the stage still and every HUD control reachable by Tab, but it does not choose what to hide.
+- [ ] While a plain-div start/pause layer is open, only the canvas and the HUD's controls are `inert`; the level heading and readouts stay in the accessibility tree.
+- [ ] Pointer capture starts only from an explicit Play/Resume activation; Escape releases and pauses; focus returns to the resume control; a refusal explains the keyboard path; the canvas is focusable with a visible ring; the engine clears held input on blur and release.
+- [ ] Displayed times and measures truncate (`SC.game.formatElapsed` / `formatMeasure`), and every rule — time stars, size limits, thresholds — compares the raw value.
+
 ## Visual composition and motion
 
 - [ ] The primary finding has clear hierarchy; supporting evidence does not compete with it.

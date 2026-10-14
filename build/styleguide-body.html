@@ -2,7 +2,7 @@
 <header class="sc-masthead">
   <a class="sc-brand" href="#top">
     <img class="sc-mark" src="assets/sc-mark-color-dark.svg" alt="">
-    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.15.0</span></span>
+    <span><span class="sc-brand__name">SpicyChicken</span><span class="sc-brand__sub">design system · v2.16.0</span></span>
   </a>
   <div class="sc-masthead__right">
     <span class="sc-hide-sm">Living reference</span>
@@ -18,7 +18,7 @@
 <section class="sg-cover sc-on-ink" id="top">
   <div class="sg-cover__inner sg-cover__inner--brand">
     <div class="sc-cover sc-on-ink sg-brand-cover">
-      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.15.0</span><span>212 named tokens</span><span>119 component blocks</span></div></div>
+      <div class="sc-cover__content"><div class="sc-eyebrow">the SpicyChicken design system</div><h1 class="sc-cover__title">Clear thinking.<br>Distinct character.</h1><p class="sc-cover__dek">Cobalt structure, one spice accent, and the chick that ties it all together. A visual toolkit for websites, dashboards, and reports that feel unmistakably yours.</p><div class="sc-cover__actions"><a class="sc-btn sc-btn--primary" href="brand-studio.html">Explore the brand studio <span aria-hidden="true">↗</span></a><a class="sc-btn sc-btn--ghost" href="#components">Browse components</a></div><div class="sg-cover__meta"><span>sc.css · v2.16.0</span><span>212 named tokens</span><span>120 component blocks</span></div></div>
       <div class="sc-cover__art" aria-hidden="true"><img src="assets/sc-mark-color-dark.svg" alt="" width="342" height="405"><span class="sc-cover__caption">one mark. every creation.</span></div>
     </div>
     <div class="sg-palette-footer"><div class="sg-bar" id="cover-bar" aria-label="The cobalt ramp and spice accent"></div><span class="sc-hint">The familiar palette. A richer set of compositions.</span></div>
@@ -49,7 +49,7 @@
   <main class="sg-main" id="main-content">
 
     <section class="sg-section" id="brand-compositions">
-      <div class="sc-eyebrow">the visual language · new in v2.15.0</div>
+      <div class="sc-eyebrow">the visual language · new in v2.16.0</div>
       <h2>A brand that lives inside the page.</h2>
       <p class="sc-dek">Use a strong opener, quieter evidence, and a signature at the close. Every composition below is available in HTML and the visual React wrappers.</p>
       <div class="sc-cover sc-cover--paper sc-cover--compact">
@@ -904,6 +904,8 @@
 
     <section class="sg-section" id="media-dock-patterns"><div class="sc-eyebrow">source geometry and reachable actions</div><h2>Keep the full source and reserve the action row.</h2><p class="sc-dek">Intrinsic media preserves the asset shape. A phone dock gets its own row, so content and focus do not live beneath it.</p><!-- media-dock-patterns --><p class="sc-hint">Names: <code>.sc-media-stage</code>, <code>.sc-media-stage__frame</code>, <code>.sc-dock-layout</code>, <code>.sc-dock-layout__head</code>, <code>.sc-dock-layout__body</code> and <code>.sc-bottom-dock</code>. The dock reuses <code>.sc-workspace-nav--compact</code> and <code>.sc-actionbar</code>.</p><p><a href="templates/media-dock.html">Open the complete phone dock specimen</a> · <a href="STUDIO-PATTERNS.md">Read the layout contract</a></p></section>
 
+<section class="sg-section" id="game-shell"><div class="sc-eyebrow">games over a canvas</div><h2>The world is art. The interface stays SpicyChicken.</h2><p class="sc-dek">Opaque ink plates, named HUD slots and a capture layer read the same over white snow and a near-black cave. Meaning is written in words and shapes, never in a world colour.</p><!-- game-shell --><p class="sc-hint">Names: <code>.sc-game</code> and <code>.sc-game--viewport</code> (the stage); <code>.sc-game__canvas</code>; <code>.sc-game__hud</code> with <code>.sc-game__slot</code> and <code>.sc-game__slot--tl</code>, <code>.sc-game__slot--top</code>, <code>.sc-game__slot--tr</code>, <code>.sc-game__slot--left</code>, <code>.sc-game__slot--right</code>, <code>.sc-game__slot--bl</code>, <code>.sc-game__slot--bottom</code>, <code>.sc-game__slot--br</code>; <code>.sc-game__plate</code>; <code>.sc-game__crosshair</code>; <code>.sc-game__timer</code>, <code>.sc-game__timer-value</code>, <code>.sc-game__timer-state</code>; <code>.sc-game__measure</code>, <code>.sc-game__measure-label</code>, <code>.sc-game__measure-value</code>, <code>.sc-game__measure-note</code>; <code>.sc-game__count</code>, <code>.sc-game__count-value</code>; <code>.sc-game__stars</code>, <code>.sc-game__star</code>, <code>.sc-game__star-glyph</code>, <code>.sc-game__star-label</code>, <code>.sc-game__star-state</code>, <code>.sc-game__star-rule</code> with <code>.is-earned</code>; <code>.sc-game__hint</code>; <code>.sc-game__keys</code>; <code>.sc-game__layer</code> (a div, or a native dialog opened with <code>showModal()</code>) and <code>.sc-game__panel</code>; <code>.sc-game__milestones</code> (<code>.sc-game__milestones--animate</code>) with <code>.sc-game__milestones-head</code>, <code>.sc-game__milestones-label</code>, <code>.sc-game__milestones-count</code>, <code>.sc-game__milestones-value</code>, <code>.sc-game__milestones-track</code>, <code>.sc-game__milestones-fill</code>, <code>.sc-game__milestones-marker</code> (<code>.is-earned</code>) and <code>.sc-game__milestones-note</code>, reading <code>--sc-game-milestones-value</code> and <code>--sc-game-milestone-at</code> (drawn as set, never transitioned); <code>.sc-game__meter</code> (<code>role="meter"</code>, <code>data-state</code> calm, alert or danger) with <code>.sc-game__meter-label</code>, <code>.sc-game__meter-glyph</code>, <code>.sc-game__meter-state</code>, <code>.sc-game__meter-track</code> and <code>.sc-game__meter-fill</code>, reading <code>--sc-game-meter-value</code>; cinematic moments: <code>.sc-game--cinematic</code> (letterbox bars; only captions, skip and a title card stay), <code>.sc-game__captions</code> (the persistent polite region) holding <code>.sc-game__caption</code> with <code>.sc-game__caption-speaker</code> and <code>.sc-game__caption-line</code>, <code>.sc-game__skip</code> with <code>.sc-game__skip-hint</code>, and <code>.sc-game__title-card</code> with <code>.sc-game__title-card-title</code>; <code>.sc-game--still</code> holds the stage still when the game's own reduced-motion setting is on. Plates take the on-ink re-scope, so a <code>.sc-benchmark</code>, <code>.sc-progress</code>, <code>.sc-chip</code> or <code>kbd</code> inside one reads in both modes. The optional <code>sc-game.js</code> adds <code>SC.game.capture()</code> and the truncating <code>SC.game.formatElapsed()</code> / <code>SC.game.formatMeasure()</code>; it sets <code>data-sc-capture</code> on the stage and nothing else.</p><p><a href="templates/game.html">Open the full-screen game specimen</a> · <a href="GAME-PATTERNS.md">Read the game shell contract</a></p></section>
+
 <section class="sg-section" id="dont">
       <div class="sc-eyebrow">10 · Ship</div>
       <h2>Do / don't</h2>
@@ -917,6 +919,6 @@
 </div>
 
 <footer class="sc-foot">
-  <span>SpicyChicken Design System · v2.15.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
+  <span>SpicyChicken Design System · v2.16.0 · sc.css · sc-theme.js · tokens.json · DESIGN_SYSTEM.md</span>
   <a class="sc-watermark" href="https://github.com/spicyChicken59" rel="author"><img class="sc-mark" src="assets/sc-mark-mono-cream.svg" alt=""><span class="sc-watermark__name">SpicyChicken</span></a>
 </footer>
