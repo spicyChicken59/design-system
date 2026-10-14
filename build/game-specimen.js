@@ -157,7 +157,7 @@
     });
   }
   // The results count-up: the count steps from zero to the authored value,
-  // the fill follows (the band glides it only when motion is allowed) and
+  // the fill is drawn with it (never transitioned) and
   // each marker lights its written star as the count reaches it. Reduced
   // motion shows the end at once. The total is announced once, at the end.
   function countUp(dialog) {
@@ -197,13 +197,10 @@
         if (still) { finish(); return; }
         timer = setTimeout(step, 240);
       },
-      // Called BEFORE the dialog opens: showModal() computes styles (to focus the primary action), and a
-      // fill already drawn at the end would visibly rewind to zero. The fill glides exactly one step.
+      // Called BEFORE the dialog opens, so its first frame already shows the start, not the end.
       reset: function () {
         var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (still) return;
-        block.style.setProperty('--sc-game-milestones-step', stepMs + 'ms');
-        show(0);
+        if (!still) show(0);
       },
       finish: finish
     };

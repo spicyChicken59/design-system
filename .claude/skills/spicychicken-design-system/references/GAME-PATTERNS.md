@@ -248,16 +248,16 @@ collector stars, on a HUD plate and on a results card.
   **outlined** star in brand ink, slightly smaller — shape, not a new gold. Each
   `.sc-game__star` in a list beside it says the same thing in words
   ("explorer · earned this run · 8 of 24 coins").
-- **Counting up.** `--animate` lets the fill glide between the values a count-up
-  steps through and a marker grow as it lights — only under
-  `prefers-reduced-motion: no-preference` and never on a `.sc-game--still`
-  stage. Step the number yourself (one step per coin), set
-  `--sc-game-milestones-step` to the step's duration (`"60ms"`) so the fill
-  keeps pace instead of trailing, light each marker and its star as the count
-  passes the threshold, and under reduced motion show the end at once. **Draw
-  the start before you show the block**: `showModal()` computes styles to focus
-  the primary action, so a fill still drawn at the end would visibly rewind to
-  zero. **Announce once**: the count readout is never a
+- **Counting up.** The count-up is the animation: step the number yourself (one
+  step per coin, or per frame), set the value with it, light each marker and its
+  star as the count passes the threshold, and under reduced motion show the end
+  at once. The band draws the fill exactly where the value says and **never
+  transitions it**: a count-up retargets it every step, and a transition
+  retargeted faster than frames arrive — a game drawing a few frames a second
+  behind the panel — starts over each time and never moves. `--animate` only
+  lets a marker grow as it lights, under `prefers-reduced-motion:
+  no-preference` and never on a `.sc-game--still` stage. **Draw the start
+  before you show the block**, so its first frame is not the end. **Announce once**: the count readout is never a
   live region (it would announce every step); put the final sentence in one
   polite status when the count stops ("12 of 24 coins. Explorer star earned;
   collector star not yet."). Every total works — a level with 30 coins puts
@@ -475,7 +475,8 @@ behaviour stays in the consumer.
   otherwise; the shell neither reads nor writes storage.
 - **Reduced motion.** Only two things in the band move, and only under
   `prefers-reduced-motion: no-preference`: the cinematic letterbox bars grow in,
-  and an `--animate` milestones fill glides while its markers grow as they light.
+  and an `--animate` milestones marker grows as it lights. A fill (meter or
+  milestones) is drawn where its value says, never transitioned.
   `.sc-game--still` on the stage stops both, for a game whose own setting says
   reduced motion. Keep camera shake, screen flashes and other HUD motion behind
   that setting in the game.
@@ -549,9 +550,8 @@ while the layer is open and while paused; and a results dialog that is not drawn
 while closed. The results count-up starts from zero, only goes up, lights each
 marker and its written star exactly as the count passes the threshold, says
 nothing until it stops and then announces the total once; under reduced motion
-it shows the end at once, static. The drawn fill keeps pace — never ahead of the
-count (a negative control that resets after `showModal()` is caught rewinding)
-and never more than two steps behind. The meter scenarios (390 and 1280px) find three
+it shows the end at once, static. The drawn fill is exactly the count at every
+frame (a planted fill transition is caught trailing it). The meter scenarios (390 and 1280px) find three
 named meters in the accessibility tree whose values carry their words, three
 glyph shapes, fills that thicken with the state and are drawn at the reported
 value, and 3:1 marks with 4.5:1 words. The cinematic scenarios (390 and 1280px,

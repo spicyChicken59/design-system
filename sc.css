@@ -1881,12 +1881,14 @@ html[data-sc-motion-paused="true"] .sc-disclosure[open] > .sc-disclosure__body {
    Opt-in by class only: no element, :root or body rule, no global
    touch-action, user-select, cursor or pointer-events, no new token. Nothing
    moves unless the reader allows motion: the only transitions are the
-   cinematic bars and an opt-in milestones fill, both inside
-   prefers-reduced-motion: no-preference and both off on a .sc-game--still
-   stage (the game's own reduced-motion setting). Values reach the band
-   through custom properties the consumer sets inline and the band only
-   reads (--sc-game-meter-value, --sc-game-milestones-value,
-   --sc-game-milestone-at, --sc-game-milestones-step). The stage is a named size container (sc-game), so the HUD
+   cinematic bars and opt-in milestone markers growing as they light, both
+   inside prefers-reduced-motion: no-preference and both off on a
+   .sc-game--still stage (the game's own reduced-motion setting). Values
+   reach the band through custom properties the consumer sets inline and the
+   band only reads (--sc-game-meter-value, --sc-game-milestones-value,
+   --sc-game-milestone-at) — and draws exactly where they say, never
+   transitioned: a transition retargeted faster than frames arrive (a busy
+   game draws a few a second) never moves. The stage is a named size container (sc-game), so the HUD
    and the controls legend switch layout on the STAGE's width — an embedded
    stage in a wide page gets the narrow layout too. The optional sc-game.js sets data-sc-capture on the stage;
    this band deliberately styles nothing from it, so a page looks the same
@@ -2185,12 +2187,12 @@ dialog.sc-game__layer:not([open]) { display: none; }   /* .sc-game__layer's grid
    --sc-game-milestones-value (count / total, 0..1) on the block and
    --sc-game-milestone-at (threshold / total) on each marker, and adds
    .is-earned to a marker once the count reaches it: an outlined star becomes
-   a filled one. --animate lets the fill glide between the values a count-up
-   steps through (set --sc-game-milestones-step to the step's duration so it
-   keeps pace), and a marker grow as it lights — only when motion is allowed;
-   otherwise it is static. Draw the start before the block is shown, or the
-   fill rewinds from the end. Announce the final count once (a polite status
-   after the count-up), never every step. */
+   a filled one. A count-up IS the animation: step the value with the count
+   and the fill is drawn exactly there (never transitioned — retargeted every
+   step, a transition starves on a slow frame rate and stays at zero).
+   --animate only lets a marker grow as it lights, and only when motion is
+   allowed. Draw the start before the block is shown. Announce the final
+   count once (a polite status after the count-up), never every step. */
 .sc-game__milestones { display: grid; gap: var(--sc-s1); min-inline-size: 0; margin: 0; text-align: start; }   /* one reading order in any slot */
 .sc-game__milestones-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0 var(--sc-s1); margin: 0; }
 .sc-game__milestones-label { color: var(--sc-text-2); font: 500 var(--sc-text-xs)/1.4 var(--sc-font-mono); letter-spacing: .3px; text-transform: lowercase; }
@@ -2289,17 +2291,16 @@ dialog.sc-game__layer:not([open]) { display: none; }   /* .sc-game__layer's grid
 .sc-game__title-card .sc-game__title-card-title { margin: 0; font: 700 var(--sc-h2)/1.1 var(--sc-font-display); font-size: clamp(var(--sc-h3), .5rem + 4cqi, var(--sc-display)); letter-spacing: -.5px; overflow-wrap: anywhere; }
 
 /* Motion, only where the reader allows it and the game has not stilled the
-   stage: the bars grow in from the edges; an --animate fill glides and a
-   marker grows as it lights. Under reduced motion all of it is static. */
+   stage: the bars grow in from the edges; an --animate marker grows as it
+   lights. Under reduced motion all of it is static. */
 @media (prefers-reduced-motion: no-preference) {
   .sc-game--cinematic::before { transition: border-block-width var(--sc-motion-enter) var(--sc-ease-out); }
   @starting-style {
     .sc-game--cinematic::before { border-block-width: 0; }
   }
-  .sc-game__milestones--animate .sc-game__milestones-fill { transition: inline-size var(--sc-game-milestones-step, var(--sc-motion-fast)) linear; }
   .sc-game__milestones--animate .sc-game__milestones-marker { transition: scale var(--sc-motion-fast) var(--sc-ease-out); }
 }
-.sc-game--still::before, .sc-game--still .sc-game__milestones-fill, .sc-game--still .sc-game__milestones-marker { transition: none; }
+.sc-game--still::before, .sc-game--still .sc-game__milestones-marker { transition: none; }
 
 @media (forced-colors: active) {
   .sc-game__plate { border-color: CanvasText; }

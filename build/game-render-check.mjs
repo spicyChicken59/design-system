@@ -293,10 +293,10 @@ export async function checkGameShell(browser, base, shots) {
       assert.equal(dialog.focus, 'Next level', 'results: the primary action takes focus on open');
       assert.equal(dialog.stars, 4, 'results: the two coin stars under the milestones and the two other star slots, on an ordinary card');
       // The count-up: it starts from zero, steps (never jumps past a marker
-      // unlit), lights each marker and its written star as it passes, glides
-      // the fill (motion allowed here) and announces the total once, at the end.
-      const counting = await page.evaluate(() => { const b = document.querySelector('#game-results .sc-game__milestones'); return { state: b.getAttribute('data-sc-game-count'), value: Number(b.querySelector('.sc-game__milestones-value').textContent), status: document.querySelector('[data-sc-game-count-status]').textContent, glides: getComputedStyle(b.querySelector('.sc-game__milestones-fill')).transitionDuration }; });
-      assert(counting.state === 'counting' && counting.value < 12 && counting.status === '' && parseFloat(counting.glides) > 0, `results: the coin count counts up from zero with a gliding fill and says nothing yet (${JSON.stringify(counting)})`);
+      // unlit), lights each marker and its written star as it passes, draws the
+      // fill with the count and announces the total once, at the end.
+      const counting = await page.evaluate(() => { const b = document.querySelector('#game-results .sc-game__milestones'); return { state: b.getAttribute('data-sc-game-count'), value: Number(b.querySelector('.sc-game__milestones-value').textContent), status: document.querySelector('[data-sc-game-count-status]').textContent, still: getComputedStyle(b.querySelector('.sc-game__milestones-fill')).transitionDuration }; });
+      assert(counting.state === 'counting' && counting.value < 12 && counting.status === '' && parseFloat(counting.still) === 0, `results: the coin count counts up from zero, its fill never transitioned, and says nothing yet (${JSON.stringify(counting)})`);
       const seen = await page.evaluate(() => new Promise(resolve => {
         const b = document.querySelector('#game-results .sc-game__milestones'), out = [], at = Math.round(1 / 3 * 24);
         const look = () => {
@@ -309,10 +309,10 @@ export async function checkGameShell(browser, base, shots) {
       }));
       assert(seen.every(s => s.agree), 'results: each marker and its written star light exactly as the count passes the threshold');
       assert(seen.every((s, i) => i === 0 || s.n >= seen[i - 1].n), 'results: the count only goes up');
-      // The drawn fill keeps pace (--sc-game-milestones-step): never ahead of the count — a fill drawn at the
-      // end before the dialog opened would rewind from there — and never more than two steps behind.
-      const ahead = seen.filter(s => s.drawn > s.n / 24 + 0.01), behind = seen.filter(s => s.drawn < s.n / 24 - 2 / 24 - 0.01);
-      assert(!ahead.length && !behind.length, `results: the fill keeps pace with the count (ahead ${JSON.stringify(ahead.slice(0, 3))}, behind ${JSON.stringify(behind.slice(0, 3))})`);
+      // The drawn fill is the count, frame by frame: nothing transitions it, so it can neither rewind from
+      // the end nor trail behind (a transition retargeted every step starves on a slow frame rate).
+      const off = seen.filter(s => Math.abs(s.drawn - s.n / 24) > 0.01);
+      assert(!off.length, `results: the drawn fill is exactly the count (${JSON.stringify(off.slice(0, 3))})`);
       assert(seen.slice(0, -1).every(s => s.status === ''), 'results: nothing is announced while counting');
       const done = await page.evaluate(() => { const b = document.querySelector('#game-results .sc-game__milestones'); return { value: b.querySelector('.sc-game__milestones-value').textContent, fill: getComputedStyle(b).getPropertyValue('--sc-game-milestones-value').trim(), lit: [...b.querySelectorAll('.sc-game__milestones-marker')].map(m => m.classList.contains('is-earned')), status: document.querySelector('[data-sc-game-count-status]').textContent }; });
       assert(done.value === '12' && Number(done.fill) === 0.5 && done.lit.join() === 'true,false', `results: the count ends at 12 of 24, half the track, explorer lit and collector not (${JSON.stringify(done)})`);
@@ -324,6 +324,15 @@ export async function checkGameShell(browser, base, shots) {
       await opener.click(); await page.locator('[data-sc-game-results-next]').click();
       assert.deepEqual(await page.evaluate(() => [document.getElementById('game-results').open, document.activeElement.hasAttribute('data-sc-game-results-open')]), [false, true], 'results: the primary action closes and returns focus');
       assert.deepEqual(await closedDialog(page), { open: false, display: 'none', size: 0 }, 'results: closed by its primary action, the dialog is not drawn');
+      // Rendered negative control: a planted transition on the fill is caught trailing the count.
+      const trailing = await page.evaluate(() => new Promise(resolve => {
+        const style = document.createElement('style'); style.textContent = '.sc-game__milestones-fill { transition: inline-size .5s linear !important; }'; document.head.append(style);
+        document.querySelector('[data-sc-game-results-open]').click();
+        const b = document.querySelector('#game-results .sc-game__milestones'); let off = 0;
+        const look = () => { const f = b.querySelector('.sc-game__milestones-fill').getBoundingClientRect(), t = b.querySelector('.sc-game__milestones-track').getBoundingClientRect(); if (Math.abs(f.width / (t.width - 2) - Number(b.querySelector('.sc-game__milestones-value').textContent) / 24) > 0.01) off++; if (b.getAttribute('data-sc-game-count') === 'done') { style.remove(); document.getElementById('game-results').close(); resolve(off); } else requestAnimationFrame(look); };
+        look();
+      }));
+      assert(trailing > 0, 'results: negative control — a transitioned fill is caught out of step with the count');
       assert.deepEqual(errors, [], 'results: no page errors');
       scenarios++;
       console.log(`  ok game results dialog: undrawn while closed, modal, one primary, focus on open, focus restored on Escape and on close; the coin count stepped through ${seen.length} frames from ${seen[0].n} to 12, markers and stars lit with it, one announcement at the end`);
@@ -524,7 +533,7 @@ export async function checkGameShell(browser, base, shots) {
       // The results count-up under reduced motion: the end at once, announced once.
       await page.emulateMedia({ forcedColors: 'none' });
       await page.evaluate(() => { document.querySelector('[data-sc-game-results-open]').click(); });
-      const instant = await page.evaluate(() => { const b = document.querySelector('#game-results .sc-game__milestones'); return { state: b.getAttribute('data-sc-game-count'), value: b.querySelector('.sc-game__milestones-value').textContent, status: document.querySelector('[data-sc-game-count-status]').textContent, glide: getComputedStyle(b.querySelector('.sc-game__milestones-fill')).transitionDuration }; });
+      const instant = await page.evaluate(() => { const b = document.querySelector('#game-results .sc-game__milestones'); return { state: b.getAttribute('data-sc-game-count'), value: b.querySelector('.sc-game__milestones-value').textContent, status: document.querySelector('[data-sc-game-count-status]').textContent, glide: getComputedStyle(b.querySelector('.sc-game__milestones-marker')).transitionDuration }; });
       assert(instant.state === 'done' && instant.value === '12' && /^12 of 24 coins/.test(instant.status) && parseFloat(instant.glide) === 0, `${label}: under reduced motion the results show the final count at once, static, announced once (${JSON.stringify(instant)})`);
       await page.keyboard.press('Escape');
       assert.deepEqual(errors, [], `${label}: no page errors`);
