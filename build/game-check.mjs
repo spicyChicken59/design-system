@@ -467,8 +467,12 @@ const GAME_CLASS = /\.sc-game(?:__|--|(?![\w-]))/;
 const subjectOf = selector => { const { parts } = compounds(selector); return bare(parts[parts.length - 1] || ''); };
 // In scope: the first compound is a .sc-game class, and a sibling combinator
 // (~ or +) only ever leads to another .sc-game compound — so the subject is a
-// game element or a descendant of one, never a sibling of the stage.
+// game element or a descendant of one, never a sibling of the stage. The
+// page's motion pause (sc-motion.js sets it on the root) may lead a selector:
+// it only ever stills a game element, it never styles the root.
+export const MOTION_PAUSED = ':root[data-sc-motion-paused="true"] ';
 export function scoped(selector) {
+  if (selector.startsWith(MOTION_PAUSED)) selector = selector.slice(MOTION_PAUSED.length);
   const { parts, joins } = compounds(selector);
   if (!/^[a-z]*\.sc-game(?:__|--|(?![\w-]))/.test(bare(parts[0] || ''))) return false;
   return joins.every((join, i) => !/[~+]/.test(join) || GAME_CLASS.test(bare(parts[i + 1])));
@@ -552,8 +556,14 @@ export function assertMomentsCss(band) {
   for (const r of moving) assert(allowed.has(`${r.sel}{${r.body}`), `motion only behind prefers-reduced-motion: no-preference: "${r.sel}"`);
   // A count-up retargets the fill every step; a transition retargeted faster than frames arrive never moves.
   assert(!rules.some(r => splitSelectors(r.sel).some(s => /\.sc-game__(?:milestones|meter)-fill\b/.test(subjectOf(s))) && declarations(r.body).some(d => /^transition/.test(d.prop) && d.value !== 'none')), 'a milestones or meter fill is drawn where its value says, never transitioned');
-  const stilled = new Set(rules.filter(r => declarations(r.body).some(d => d.prop === 'transition' && d.value === 'none')).flatMap(r => splitSelectors(r.sel)).filter(s => s.startsWith('.sc-game--still')).map(movedPart));
-  for (const r of moving) for (const s of splitSelectors(r.sel)) assert(stilled.has(movedPart(s)), `a .sc-game--still stage holds ${movedPart(s)} still`);
+  const stills = rules.filter(r => declarations(r.body).some(d => d.prop === 'transition' && d.value === 'none')).flatMap(r => splitSelectors(r.sel));
+  const stilled = new Set(stills.filter(s => s.startsWith('.sc-game--still')).map(movedPart));
+  // The page's motion pause (sc-motion.js) stops the band too, as it stops hover lifts and disclosures.
+  const paused = new Set(stills.filter(s => s.startsWith(MOTION_PAUSED)).map(s => movedPart(s.slice(MOTION_PAUSED.length))));
+  for (const r of moving) for (const s of splitSelectors(r.sel)) {
+    assert(stilled.has(movedPart(s)), `a .sc-game--still stage holds ${movedPart(s)} still`);
+    assert(paused.has(movedPart(s)), `the page's motion pause holds ${movedPart(s)} still`);
+  }
   const forced = rulesOf(cssBlock(band, '@media (forced-colors: active)'));
   for (const s of ['.sc-game__meter-glyph', '.sc-game__meter-fill', '.sc-game__milestones-fill', '.sc-game__milestones-marker']) assert(valuesFor(forced, s, 'forced-color-adjust').includes('none') && valuesFor(forced, s, 'background').includes('CanvasText'), `${s} keeps its shape in forced colours`);
 }
@@ -601,7 +611,9 @@ await check('moments CSS negative controls are rejected', () => {
     'a transition that ignores reduced motion': `${band}\n.sc-game__meter-fill { transition: inline-size .2s linear; }\n`,
     'an animation outside the motion query': `${band}\n.sc-game__caption { animation: sc-game-rise .3s; }\n`,
     'a transitioned milestones fill (it starves on a slow frame rate)': band.replace('@media (prefers-reduced-motion: no-preference) {', '@media (prefers-reduced-motion: no-preference) {\n  .sc-game__milestones--animate .sc-game__milestones-fill { transition: inline-size var(--sc-motion-fast) linear; }'),
-    'a still stage that still moves': band.replace(/\.sc-game--still::before, [^{]*\{ transition: none; \}/, ''),
+    'a still stage that still moves': band.replace('.sc-game--still::before, .sc-game--still .sc-game__milestones-marker,', ''),
+    'bars that ignore the page\'s motion pause': band.replace(':root[data-sc-motion-paused="true"] .sc-game::before,', ''),
+    'markers that ignore the page\'s motion pause': band.replace(',\n:root[data-sc-motion-paused="true"] .sc-game__milestones-marker', ''),
     'a meter fill that vanishes in forced colours': band.replace('.sc-game__meter-glyph, .sc-game__meter-fill, .sc-game__milestones-fill', '.sc-game__meter-glyph, .sc-game__milestones-fill')
   };
   for (const [label, sheet] of Object.entries(planted)) { assert.notEqual(sheet, band, `planted: ${label}`); rejects(label, () => assertMomentsCss(sheet)); }
@@ -625,7 +637,9 @@ await check('CSS negative controls are rejected', () => {
     'an :is() escape hatch': ':is(.sc-game__hint, nav) kbd { cursor: help; }',
     'a sibling of the stage': '.sc-game ~ * { user-select: none; pointer-events: none; cursor: none; }',
     'the next element after the stage': '.sc-game + main { pointer-events: none; }',
-    'a sibling escape through :is()': '.sc-game__hud ~ :is(.sc-game__x, div) { cursor: none; }'
+    'a sibling escape through :is()': '.sc-game__hud ~ :is(.sc-game__x, div) { cursor: none; }',
+    'the motion pause styling the root itself': ':root[data-sc-motion-paused="true"] { cursor: none; }',
+    'the motion pause reaching past the stage': ':root[data-sc-motion-paused="true"] main { pointer-events: none; }'
   };
   for (const [label, rule] of Object.entries(opted)) rejects(label, () => assertOptInBand(`${band}\n${rule}\n`));
   const contract = {

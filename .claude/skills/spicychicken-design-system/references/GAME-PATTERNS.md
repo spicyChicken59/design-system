@@ -336,7 +336,8 @@ A cutscene, a story beat or a level intro over the live canvas.
   it was. The bars grow in from the edges only under
   `prefers-reduced-motion: no-preference`; add **`.sc-game--still`** to the stage
   when the game's own reduced-motion setting is on, and nothing in the band
-  moves at all.
+  moves at all. The page's motion pause (`data-sc-motion-paused` from
+  `sc-motion.js`) stills it too.
 - **Captions** are subtitles on a plate, bottom centre, at most `60ch` wide (two
   lines of about 60 characters at most). The speaker is a **written label** on
   its own line — mono, weight — never a colour. `aria-live="polite"` (with
@@ -345,11 +346,15 @@ A cutscene, a story beat or a level intro over the live canvas.
   per line with the **final** text, never letter by letter, so each line is
   announced once. Leave it empty between lines.
 - **Skip** is a plate in the bottom-right slot with a real button and its keys
-  written beside it. Move focus to it when the moment starts and back to where
-  it was when the moment ends. A game may also map <kbd>Space</kbd> and
-  <kbd>Enter</kbd> to it while the moment plays (ignore repeats, and keys aimed
-  at an open dialog). **Escape never skips** — Escape pauses, as it does
-  everywhere else in the shell. An unskippable moment hides the plate.
+  written beside it — in one row where the corner has room, the keys under the
+  button where it does not (a stage up to 900px wide), the plate hugging them
+  either way. Move focus to it when the moment starts and back to where it was
+  when the moment ends. A game may also map <kbd>Space</kbd> and
+  <kbd>Enter</kbd> to it while the moment plays (ignore repeats, and every key
+  while a dialog such as the pause menu is open: a moment that is paused cannot
+  be skipped, and a press it ignored must not use up the skip). **Escape never
+  skips** — Escape pauses, as it does everywhere else in the shell. An
+  unskippable moment hides the plate.
 - **Title card** — `.sc-game__title-card` is a direct child of a HUD, outside
   the slots: a persistent, centred region (it may carry `aria-live="polite"`)
   that draws nothing until a plate with an eyebrow and a heading is put inside
@@ -478,7 +483,8 @@ behaviour stays in the consumer.
   and an `--animate` milestones marker grows as it lights. A fill (meter or
   milestones) is drawn where its value says, never transitioned.
   `.sc-game--still` on the stage stops both, for a game whose own setting says
-  reduced motion. Keep camera shake, screen flashes and other HUD motion behind
+  reduced motion, and so does the page's motion pause (`data-sc-motion-paused`
+  on the root, set by `sc-motion.js`). Keep camera shake, screen flashes and other HUD motion behind
   that setting in the game.
 - **Forced colours.** Plates keep a CanvasText border on Canvas; the crosshair,
   star glyphs, meter glyph and fill, and milestones markers and fill opt out of
@@ -528,7 +534,7 @@ child of a HUD. In CSS: three meter glyph shapes and fill thicknesses, filled vs
 outlined markers, a `60ch` caption, a cinematic that hides the crosshair and
 every slot but captions and skip (never the title card), bars under the HUD that
 take no input, motion only inside `prefers-reduced-motion: no-preference` and
-stopped by `.sc-game--still`, and marks that keep their shape in forced colours.
+stopped by `.sc-game--still` and by the page's motion pause, and marks that keep their shape in forced colours.
 `build/contrast.mjs` checks the moments' text on a plate at 4.5:1 and their
 marks (meter fills against the track and glyphs against the plate in each state,
 milestones fill and markers on a plate and on a card) at 3:1, in both modes.
@@ -559,8 +565,10 @@ both themes, and reduced motion) find equal letterbox bars under the HUD that
 grow in only when motion is allowed, nothing on screen but the caption, the skip
 control and the title card, a caption centred low and at most `60ch` wide, a
 centred title card that lets a pointer through to the canvas, focus on Skip with
-a visible ring, Escape that does not skip, Space that does and focus back on the
-opener; in forced colours, bars drawn as Canvas and every plate keeping its edge
+a visible ring, a skip plate that hugs its button and keys (a planted wrapping
+row is caught stretching it on a phone), the page's motion pause stilling the
+bars and markers, Escape that does not skip, Space that does and focus back on
+the opener; in forced colours, bars drawn as Canvas and every plate keeping its edge
 — and rendered negative controls (bars or a title card that take input, a
 caption let out past `60ch`) caught by the same measurements. The compact
 cinematic and meter stages embedded in the style guide and the visual library

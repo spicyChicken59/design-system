@@ -1883,7 +1883,8 @@ html[data-sc-motion-paused="true"] .sc-disclosure[open] > .sc-disclosure__body {
    moves unless the reader allows motion: the only transitions are the
    cinematic bars and opt-in milestone markers growing as they light, both
    inside prefers-reduced-motion: no-preference and both off on a
-   .sc-game--still stage (the game's own reduced-motion setting). Values
+   .sc-game--still stage (the game's own reduced-motion setting) and while
+   the page's motion is paused (data-sc-motion-paused, sc-motion.js). Values
    reach the band through custom properties the consumer sets inline and the
    band only reads (--sc-game-meter-value, --sc-game-milestones-value,
    --sc-game-milestone-at) — and draws exactly where they say, never
@@ -2270,8 +2271,17 @@ dialog.sc-game__layer:not([open]) { display: none; }   /* .sc-game__layer's grid
 .sc-game__caption-line { display: block; }
 
 /* Skip: a plate in the bottom-right slot with a real button and the keys
-   written beside it. Never Escape — Escape pauses. */
-.sc-game__skip { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--sc-s0) var(--sc-s1); }
+   written beside it. Never Escape — Escape pauses. Where the corner is too
+   narrow for one row (a cinematic gives it a quarter of a stage up to 900px
+   wide, half of a phone's), the keys go under the button and the plate still
+   hugs them: a wrapped row would stretch it to the slot's width. */
+.sc-game__skip { display: grid; grid-auto-flow: column; align-items: center; justify-content: end; justify-items: end; gap: var(--sc-s0) var(--sc-s1); }
+@container sc-game (max-width: 900px) {
+  .sc-game__skip { grid-auto-flow: row; }
+}
+@media (max-width: 900px) {
+  .sc-game__skip { grid-auto-flow: row; }
+}
 .sc-game__skip-hint { color: var(--sc-text-2); font-size: var(--sc-text-sm); line-height: 1.4; }
 .sc-game__skip-hint kbd { white-space: nowrap; }
 
@@ -2290,9 +2300,10 @@ dialog.sc-game__layer:not([open]) { display: none; }   /* .sc-game__layer's grid
 .sc-game__title-card .sc-eyebrow { margin-block-end: var(--sc-s1); }
 .sc-game__title-card .sc-game__title-card-title { margin: 0; font: 700 var(--sc-h2)/1.1 var(--sc-font-display); font-size: clamp(var(--sc-h3), .5rem + 4cqi, var(--sc-display)); letter-spacing: -.5px; overflow-wrap: anywhere; }
 
-/* Motion, only where the reader allows it and the game has not stilled the
-   stage: the bars grow in from the edges; an --animate marker grows as it
-   lights. Under reduced motion all of it is static. */
+/* Motion, only where the reader allows it, the game has not stilled the
+   stage and the page has not paused motion: the bars grow in from the edges;
+   an --animate marker grows as it lights. Under reduced motion all of it is
+   static. */
 @media (prefers-reduced-motion: no-preference) {
   .sc-game--cinematic::before { transition: border-block-width var(--sc-motion-enter) var(--sc-ease-out); }
   @starting-style {
@@ -2300,7 +2311,9 @@ dialog.sc-game__layer:not([open]) { display: none; }   /* .sc-game__layer's grid
   }
   .sc-game__milestones--animate .sc-game__milestones-marker { transition: scale var(--sc-motion-fast) var(--sc-ease-out); }
 }
-.sc-game--still::before, .sc-game--still .sc-game__milestones-marker { transition: none; }
+.sc-game--still::before, .sc-game--still .sc-game__milestones-marker,
+:root[data-sc-motion-paused="true"] .sc-game::before,
+:root[data-sc-motion-paused="true"] .sc-game__milestones-marker { transition: none; }
 
 @media (forced-colors: active) {
   .sc-game__plate { border-color: CanvasText; }

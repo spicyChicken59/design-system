@@ -433,6 +433,34 @@ export async function checkGameShell(browser, base, shots) {
         return { bars: plant('.sc-game--cinematic::before { pointer-events: auto !important; }', centre), card: plant('.sc-game__title-card { pointer-events: auto !important; }', centre), wide: caption.parentElement.getBoundingClientRect().width <= ch60 + 1 ? 'n/a: the slot is narrower than 60ch' : plant('.sc-game__caption { max-inline-size: none !important; } .sc-game__caption-line::after { content: " and it has been rolling round this kitchen since breakfast, so keep an eye on it"; }', () => caption.getBoundingClientRect().width > ch60 + 1), clean: centre() };
       });
       assert(!planted.bars && !planted.card && planted.wide && planted.clean, `${label}: rendered negative controls are caught — bars or a title card taking input block the centre, an unbounded caption passes 60ch (${JSON.stringify(planted)})`);
+      // The skip plate hugs its button and keys in any corner: one row where it fits, the keys under the
+      // button where it does not. Rendered negative control: a wrapping flex row stretches the plate to the
+      // slot once it wraps (only a narrow corner wraps, so only there can it be caught).
+      const hug = await page.evaluate(() => {
+        const skip = document.querySelector('.sc-game__skip');
+        const read = () => {
+          const r = skip.getBoundingClientRect(), cs = getComputedStyle(skip), kids = [...skip.children].map(k => k.getBoundingClientRect());
+          const inner = r.width - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - parseFloat(cs.borderLeftWidth) - parseFloat(cs.borderRightWidth);
+          // Items on one row overlap vertically (centred, so their tops differ); a new row starts below the last.
+          let rows = 0, floor = -Infinity;
+          for (const k of [...kids].sort((x, y) => x.top - y.top)) if (k.top >= floor - 1) { rows++; floor = k.bottom; } else floor = Math.max(floor, k.bottom);
+          const content = rows > 1 ? Math.max(...kids.map(k => k.width)) : kids.reduce((a, k) => a + k.width, 0) + (parseFloat(cs.columnGap) || 0) * (kids.length - 1);
+          return { rows, slack: Math.round(inner - content) };
+        };
+        const clean = read();
+        const style = document.createElement('style'); style.textContent = '.sc-game__skip { display: flex !important; flex-wrap: wrap !important; justify-content: flex-end !important; }'; document.head.append(style);
+        const wrapped = read(); style.remove();
+        return { clean, wrapped };
+      });
+      assert(hug.clean.slack <= 1 && (hug.wrapped.rows === 1 || hug.wrapped.slack > 1), `${label}: the skip plate hugs its button and keys (${hug.clean.rows} row(s)); a wrapping row is caught stretching it (${JSON.stringify(hug)})`);
+      // The page's motion pause (sc-motion.js) stills the band as reduced motion does.
+      const paused = await page.evaluate(() => {
+        const root = document.documentElement, marker = document.querySelector('.sc-game__milestones--animate .sc-game__milestones-marker');
+        const read = () => ({ bars: parseFloat(getComputedStyle(document.querySelector('.sc-game'), '::before').transitionDuration), marker: parseFloat(getComputedStyle(marker).transitionDuration) });
+        const before = read(); root.setAttribute('data-sc-motion-paused', 'true'); const during = read(); root.removeAttribute('data-sc-motion-paused');
+        return { before, during };
+      });
+      assert(paused.during.bars === 0 && paused.during.marker === 0 && (reducedMotion === 'reduce' || (paused.before.bars > 0 && paused.before.marker > 0)), `${label}: the page's motion pause stills the bars and the milestone markers (${JSON.stringify(paused)})`);
       if (reducedMotion === 'reduce') {
         // Forced colours: the bars become Canvas (a frame, not content) and the plates keep their edge.
         await page.emulateMedia({ forcedColors: 'active' });
@@ -449,7 +477,7 @@ export async function checkGameShell(browser, base, shots) {
       assert(!after.cinematic && after.captions === 0 && after.title === 0 && after.skipHidden && after.focus && after.crosshair !== 'none', `${label}: Space on Skip ends the moment, clears it, restores the HUD and returns focus to the opener (${JSON.stringify(after)})`);
       assert.deepEqual(errors, [], `${label}: no page errors`);
       scenarios++;
-      console.log(`  ok ${label}: bars ${moment.bars.top}px under the HUD, only caption/skip/title on screen, 60ch caption at the bottom centre, centred title card, skip bottom-right with focus, Escape keeps the moment, Space skips and focus returns`);
+      console.log(`  ok ${label}: bars ${moment.bars.top}px under the HUD, only caption/skip/title on screen, 60ch caption at the bottom centre, centred title card, skip bottom-right with focus and hugging its keys in ${hug.clean.rows} row(s), motion pause honoured, Escape keeps the moment, Space skips and focus returns`);
     } finally { await context.close(); }
   }
 
